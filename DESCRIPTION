@@ -1,7 +1,7 @@
 Package: multcomp
 Title: Multiple Tests and Simultaneous Confidence Intervals 
-Version: 0.3-6
-Date: $Date: 2003/02/04 09:50:47 $
+Version: 0.3-7
+Date: $Date: 2003/02/12 10:25:53 $
 Author: Frank Bretz <bretz@ifgb.uni-hannover.de>,
  Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de> and 
  Peter Westfall <WESTFALL@ba.ttu.edu>

@@ -1,4 +1,4 @@
-# $Id: simtest.R,v 1.43 2002/09/18 09:07:29 hothorn Exp $
+# $Id: simtest.R,v 1.45 2003/02/12 10:24:41 hothorn Exp $
 
 simtest <- function(y, ...) UseMethod("simtest")
 
@@ -11,6 +11,7 @@ simtest.default <- function(y, x=NULL, type=c("Dunnett", "Tukey",
 
 {
     ctype <- match.arg(type)
+    alternative <- match.arg(alternative)
 
     xpxi   <- mginv(t(x) %*% x)
     rankx  <- sum(diag((xpxi %*% (t(x) %*% x))))
@@ -150,7 +151,7 @@ csimtest <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
                         if (min(diff) == 2)
                             in1 <- cbind(as.matrix(in1),as.matrix(locbin))
                         else {
-                            mindx <- min(which(diff == min(diff)))
+                            mindx <- which.min(diff)
                             if (sum(check[,mindx]) == -1) 
                                 in1[,mindx] <- locbin
                         }
@@ -252,7 +253,7 @@ csimtest <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
     glsp   <- apply(glsbig,2,max)
     glsin  <- 1:ncol(glsbig)
     for (i in 1:ncol(glsbig)) {
-        glsin[i]  <- which(glsbig[,i] == max(glsbig[,i]))
+        glsin[i]  <- which.max(glsbig[,i])
     }
     glsin  <- t(glsin)  
     stdgls <- t(stdgls)  
