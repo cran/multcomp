@@ -1,4 +1,4 @@
-# $Id: contrMat.R,v 1.14 2002/04/10 06:46:39 hothorn Exp $
+# $Id: contrMat.R,v 1.15 2002/07/05 16:35:57 hothorn Exp $
 
 contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
                                "Changepoint", "Williams", "Marcus",
@@ -112,11 +112,10 @@ contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
 	    }
         }
     },)
-    CM <- cbind(rep(0, nrow(CM)), CM)
     rownames(CM) <- rnames
-    if (type != "Tetrade")
-      colnames(CM) <- c("Intercept", varnames)
-    else
+    if (type=="Tetrade")
       colnames(CM) <- NULL
+    else 
+      colnames(CM) <- varnames
     CM
 }

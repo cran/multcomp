@@ -71,11 +71,18 @@ C7  <- c( 0,  0,  0,  0,  0, -1,  1,  0,  0 )
 C8  <- c( 0,  0,  0, -1,  1,  0,  0,  0,  0 )
 C9  <- c( 0,  0,  0,  0,  0,  0,  0, -1,  1 )
 
+# contrast matrix, note: first column is zero and corresponds to the
+# intercept implicitly given in the formula
 C   <- rbind(C1, C2, C3, C4, C5, C6, C7, C8, C9)   
+
 # numerate the contrasts
 colnames(C) <- NULL
 rownames(C) <- c("Overall", "Older", "Younger", "Good Init", "Poor Init",
                  "Old x Good", "Old x Poor", "Young x Good", "Young x Poor") 
+
+# remove the intercept (not needed, simtest can deal with contrast matrices
+# with and without a column of zeros for the intercept
+C <- C[,-1]
 
 summary(simtest(Score ~ Treatment:AgeGroup:InitHealth,
                 data=respiratory, ttype="logical",

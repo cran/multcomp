@@ -1,7 +1,7 @@
 # Copyright (C) 1994-9  W. N. Venables and B. D. Ripley.
 # Copied from VR_6.3-2
 
-ginv <-  function(X, tol = sqrt(.Machine$double.eps))
+mginv <-  function(X, tol = sqrt(.Machine$double.eps))
      {
      ## Generalized Inverse of a Matrix
        dnx <- dimnames(X)

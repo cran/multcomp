@@ -6,8 +6,9 @@ Computes simultaneous intervals for several multiple procedures based on
 precomputed parameter estimates. 
 }
 \usage{
-csimint(estpar, df, covm, cmatrix = NULL, ctype = "user-defined",
-        conf.level = 0.95, alternative = c("two.sided", "less", "greater"),
+csimint(estpar, df, covm, cmatrix = NULL, 
+        ctype = "user-defined", conf.level = 0.95, 
+        alternative = c("two.sided", "less", "greater"),
         asympt = FALSE, eps = 0.001, maxpts = 1e+06)
 }
 \arguments{

@@ -9,9 +9,10 @@
 \method{simint}{default}(y, x=NULL, type=c("Dunnett", "Tukey",
        "Sequen", "AVE", "Changepoint", "Williams", "Marcus",
        "McDermott","Tetrade"), cmatrix=NULL, conf.level=0.95,
-       alternative=c("two.sided","less", "greater"), asympt=FALSE,
-       eps=0.001, maxpts=1000000, nlevel=NULL, ...)
-\method{simint}{formula}(formula, data=list(), subset, na.action, ...)
+       alternative=c("two.sided","less", "greater"), 
+       asympt=FALSE, eps=0.001, maxpts=1e+06, nlevel=NULL, 
+       nzerocol=c(0,0),...)
+\method{simint}{formula}(formula, data=list(), subset, na.action, whichf, ...)
 }
 
 \arguments{
@@ -30,6 +31,11 @@ the normal approximation should be used.}
   \item{maxpts}{maximum number of function values as integer.}
   \item{nlevel}{a vector containing the number of levels for each factor for
 \code{type == "Tetrade"}.}
+  \item{nzerocol}{ a vector of two elements defining the number of
+zero-columns to add to the contrast matrix from left (the first element,
+usually 1 for the intercept) and right (usually 0 if no covariables are
+specified). \code{nzerocol} is automatically determined by
+\code{simint.formula}.}
   \item{formula}{a symbolic description of the model to be fit.}
   \item{data}{an optional data frame containing the variables in the model.
               By default the variables are taken from
@@ -40,6 +46,9 @@ the normal approximation should be used.}
   \item{na.action}{a function which indicates what should happen when the
          data contain \code{NA}'s.  Defaults to
   \code{GetOption("na.action")}.}
+  \item{whichf}{if more than one factor is given in the right hand side of
+\code{formula}, \code{whichf} can be used to defined the factor to compute
+contrasts of.}
   \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
@@ -55,6 +64,9 @@ The interface allows the use of the multiple comparison procedures as for
 example Dunnett and Tukey. 
 The resulting confidence intervals are not associated with the p-values from
 \code{\link{simtest}}.
+
+See \code{\link{simtest}} for detailed information on the formula interface.
+
 }
 \value{ an object of class \code{hmtest} }
 \references{ 
@@ -66,13 +78,47 @@ availability of multiple comparison procedures. \emph{Biometrical Journal},
 }
 \author{ Frank Bretz <bretz@ifgb.uni-hannover.de> and  \cr 
  Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de> }
+\seealso{
+ \code{\link{TukeyHSD}} for the special case of Tukey contrasts.
+}
+
 \examples{
-data(recover)
+data(recovery)
 
 # one-sided simultaneous confidence intervals for Dunnett 
 # in the one-way layout
-summary(simint(minutes~blanket, data=recover, type="Dunnett", conf.level=0.9, 
+summary(simint(minutes~blanket, data=recovery, type="Dunnett", conf.level=0.9, 
        alternative="less",eps=0.0001))
+
+# Tukey confidence intervals, compare with TukeyHSD
+
+data(warpbreaks)
+fm1 <- aov(breaks ~ wool + tension, data = warpbreaks)
+tHSD <- TukeyHSD(fm1, "tension", ordered = FALSE)
+print(tHSD)
+
+mcHSD <- simint(breaks ~ wool + tension, data = warpbreaks, whichf="tension",
+type="Tukey")
+print(mcHSD)
+
+\testonly{
+  tlow <- tHSD$tension[,2]
+  tupp <- tHSD$tension[,3]
+  mclow <- mcHSD$conf.int[,1]
+  mcupp <- mcHSD$conf.int[,2]
+
+  a <- round(tlow, 1) 
+  b <- round(mclow, 1)
+  names(a) <- NULL
+  names(b) <- NULL
+  stopifnot(all.equal(a, b))
+
+  a <- round(tupp, 1) 
+  b <- round(mcupp, 1)
+  names(a) <- NULL
+  names(b) <- NULL
+  stopifnot(all.equal(a, b))
+}
 
 }
 \keyword{htest}

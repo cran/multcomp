@@ -12,7 +12,7 @@
   This data frame contains the following variables
   \describe{
     \item{make}{Tire brand at 2 levels: \code{A} and \code{B}.}
-    \item{mph}{Miles per Hour as predictor variable}
+    \item{mph}{Miles per Hour as predictor variable.}
     \item{cost}{Response variable: operating costs per mile.}
   }
 }
@@ -32,7 +32,7 @@ for ( x in seq(15,70,5) ) { C <- rbind( C,c(0,1,-1,0,x,-x) ) }
 rownames(C) <- paste("C", 1:nrow(C), sep="")
 
 # simultaneous confidence intervals for difference of regression functions
-summary(simint(cost ~ make + mph + make:mph, data=tire,
+summary(simint(cost ~ make*mph, data=tire,
                cmatrix=C, eps=0.001))
 }
 \keyword{datasets}

@@ -1,4 +1,4 @@
-# $Id: simint.R,v 1.28 2002/04/12 08:17:27 hothorn Exp $
+# $Id: simint.R,v 1.35 2002/07/23 07:51:57 hothorn Exp $
 
 simint <- function(y, ...) UseMethod("simint")
 
@@ -6,13 +6,14 @@ simint.default <- function(y, x=NULL, type=c("Dunnett", "Tukey",
                      "Sequen", "AVE", "Changepoint", "Williams", "Marcus",
                      "McDermott","Tetrade"), cmatrix=NULL, conf.level=0.95,
                      alternative=c("two.sided","less","greater"), asympt=FALSE,
-                     eps=0.001, maxpts=1000000, nlevel=NULL, ...)
+                     eps=0.001, maxpts=1e+06, nlevel=NULL, nzerocol=c(0,0),
+                     ...)
 {
     ctype <- match.arg(type)
 
     # Compute the parameter estimates and their covariance
 
-    xpxi   <- ginv(t(x) %*% x)
+    xpxi   <- mginv(t(x) %*% x)
     rankx  <- sum(diag((xpxi %*% (t(x) %*% x))))
     n      <- nrow(x)
     p      <- ncol(x)
@@ -25,10 +26,17 @@ simint.default <- function(y, x=NULL, type=c("Dunnett", "Tukey",
 
     if (!is.null(cmatrix)) ctype <- "user-defined"
 
-    nobs  <- apply(x, 2, sum)[2:p]	# omit Intercept
-    if (is.null(cmatrix)) 
-        cm <- contrMat(nobs, ctype, nlevel) 
-    else cm <- cmatrix 
+    if (is.null(cmatrix)) {
+        nobs <- apply(x[,(nzerocol[1] + 1):(ncol(x) - nzerocol[2])], 2, sum)
+        cm <- contrMat(nobs, ctype, nlevel)
+    } else {
+        cm <- cmatrix
+    }
+
+    if (nzerocol[1] != 0)
+      cm <- cbind(matrix(0, ncol=nzerocol[1], nrow=nrow(cm)), cm)
+    if (nzerocol[2] != 0)
+      cm <- cbind(cm, matrix(0, ncol=nzerocol[2], nrow=nrow(cm)))
 
     csimint(estpar, as.integer(df), covm, cm, ctype, conf.level, alternative,
             asympt, eps, maxpts)
@@ -113,7 +121,7 @@ csimint <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
     colnames(cint) <- c("lower", "upper")
     attr(cint, "conf.level") <- conf.level
 
-    RET <- list(cmatrix = cm[,2:p], ctype = ifelse(is.null(cmatrix), ctype, NA), 
+    RET <- list(cmatrix = cm, ctype = ifelse(is.null(cmatrix), ctype, NA), 
                 estimate = ests, sd = ses, statistics = tvals,
                 p.value.raw = rawp, p.value.bon = bonp,
                 p.value.adj = adjp, conf.int = cint, eps=eps, calpha=calpha)
@@ -122,92 +130,18 @@ csimint <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
 }
 
 simint.formula <-
-function(formula, data=list(), subset, na.action, ...)
+function(formula, data=list(), subset, na.action, whichf, ...)
 {
-    if(missing(na.action))
-        na.action <- getOption("na.action")
-    mt <- terms(formula, data=data)
-    m <- match.call(expand.dots = FALSE)
-    if(is.matrix(eval(m$data, parent.frame())))
-        m$data <- as.data.frame(data) 
-    m[[1]] <- as.name("model.frame")
-    m$... <- NULL
-    mf <- eval(m, parent.frame())
-    namD <- names(mf)
-    dnames <- "Intercept"
-    nlevel <- c()
-    COVAR <- FALSE
-    INTERACTIONS <- !is.null(grep(":", as.character(formula[3])))
-    for(nn in namD[-1]) {
-        if (is.factor(mf[[nn]])) {
-            contrasts(mf[[nn]]) <- "ct"
-            dnames <- c(dnames, levels(mf[[nn]]))
-            nlevel <- c(nlevel, nlevels(mf[[nn]]))
-        } else {
-            # stop("no covariable allowed")
-            COVAR <- TRUE
-            dnames <- c(dnames, nn)
-        }
-    }
-    cargs <- list(...)
-    if (!is.null(nlevel)) cargs$nlevel <- nlevel
-    response <- attr(attr(mf, "terms"), "response")
-    y <- mf[[response]]
-    x <- model.matrix(mt, mf)
+    cl <- match.call()
+    pf <- parseformula(formula, data, subset, na.action, whichf, ...)
+    x <- pf$x
+    y <- pf$y
+    cargs <- pf$cargs
 
-#    <FIXME: Tetrade contrasts assume x-cols to be ordered in another way as
-#   model.matrix returns> 
-    col <- 0
-    if (!is.null(cargs$type)) {
-      if (cargs$type == "Tetrade") {
-        tx <- x[,2:ncol(x)]
-	col <- 0
-        if (length(nlevel) == 2) {
-          newx <- c()
-          for (i in 1:ncol(tx))
-            newx <- rbind(newx, tx[tx[,i] == 1,])
-	  tx <- newx
-          for (i in 1:nlevel[2]) {
-            for (j in 1:nlevel[1]) {
-              col <- col + 1
-              newx[, i + nlevel[2]*(j-1)] <- tx[,col]
-            }
-          }
-          x <- cbind(1, newx)
-        } else {
-          stop("can use Tetrade contrasts with two factors only")
-        }
-
-      }
-    }
-#   </FIXME> 
-
-    if (is.null(cargs$cmatrix)) {
-      if (COVAR)             
-        stop("cmatrix not given but covariables specified")
-    } else { 
-      if (is.matrix(cargs$cmatrix)) {
-        if (ncol(cargs$cmatrix) != ncol(x)) 
-          stop("dimensions of x and cmatrix do not match")
-      }
-      if (is.vector(cargs$cmatrix)) {
-        if (length(cargs$cmatrix) != ncol(x))
-          stop("dimensions of x and cmatrix do not match")
-      }                                     
-    }
-
-    # <FIXME>: problem with interactions!!!
-    if (!INTERACTIONS)
-      colnames(x)[1:length(dnames)] <- dnames
-    # </FIXME>
     attr(x, "contrasts") <- NULL
     attr(x, "assign") <- NULL
     y <- do.call("simint", c(list(y=y, x=x), cargs))
-    if (length(namD) > 2) {
-        y$DNAME <- paste(namD[1], "by", paste(namD[-1],
-                 collapse = " + "))
-    } else {
-        y$DNAME <- paste(namD, collapse = " by ")
-    }
+    y$DNAME <- cl
+    y$FNAMES <- pf$fnames
     y
 }

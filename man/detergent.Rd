@@ -32,16 +32,17 @@ N <- rep(2, 5)
 
 # BIBD: prepare the contrast matrix = all-pair comparisons for 
 # the 5 levels of detergent
-C <- contrMat(N, type="Tukey")
-# the additional 10 columns of are for the 10 blocks
-C <- cbind( matrix(0, ncol=10, nrow=10), C )
-# numerate the contrasts
-colnames(C) <- NULL
-rownames(C) <- paste("C", 1:nrow(C), sep="")
 
-# adjusted p-values
-summary(simtest(plates ~ block+detergent, data=detergent,
+C <- contrMat(N, type="Tukey")
+
+# adjusted p-values: either using the contrast matrix C
+summary(simtest(plates ~ block+detergent, data=detergent, whichf="detergent",
                 ttype="logical", cmatrix=C))
+
+# or, more easily, type="Tukey"
+summary(simtest(plates ~ detergent + block, data=detergent,
+        whichf="detergent", type="Tukey", ttype="logical"))
+
 
 }
 \keyword{datasets}
