@@ -1,27 +1,26 @@
-MultipleEndpoints       Multiple Endpoints Data Set 
-angina                  Dose Response Data Set 
-cholesterol             Cholesterol Reduction Data Set 
-contrMat                Contrast Matrices 
+MultipleEndpoints       Multiple Endpoints Data Set
+angina                  Dose Response Data Set
+cholesterol             Cholesterol Reduction Data Set
+contrMat                Contrast Matrices
 csimint                 Simultaneous Confidence Intervals Based on
-                        Parameter Estimates 
+                        Parameter Estimates
 csimtest                Simultaneous Comparisons Based on Parameter
-                        Estimates. 
-detergent               Detergent Durability Data Set 
+                        Estimates.
+detergent               Detergent Durability Data Set
 diet                    Diet data
-halothane               Repeated Measures Data Set 
-litter                  Litter Weights Data Set 
-mginv                   Generalized Inverse of a Matrix 
-multcomp-internal       Internal multcomp functions
+halothane               Repeated Measures Data Set
+litter                  Litter Weights Data Set
+mginv                   Generalized Inverse of a Matrix
 multcomp                General Information on the multcomp Package
-plot.hmtest             Plot Simultaneous Confidence Intervals 
+plot.hmtest             Plot Simultaneous Confidence Intervals
 print.hmtest            Print Method for hmtest Object
 print.hmtestp           Print Method for hmtestp Object
-rainforest              Rainforest Dataset 
-recovery                Recovery Time Data Set 
-respiratory             Respiratory Health Data Set 
-simint                  Simultaneous Confidence Intervals 
-simtest                 Simultaneous Comparisons 
+rainforest              Rainforest Dataset
+recovery                Recovery Time Data Set
+respiratory             Respiratory Health Data Set
+simint                  Simultaneous Confidence Intervals
+simtest                 Simultaneous Comparisons
 summary.hmtest          Summarizing Simultaneous Confidence Intervals
 summary.hmtestp         Summarizing Simultaneous Confidence Intervals
-tire                    Tire Wear Data Set 
-waste                   Industrial Waste Data Set 
+tire                    Tire Wear Data Set
+waste                   Industrial Waste Data Set
