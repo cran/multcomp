@@ -1,0 +1,96 @@
+$Id: CHANGES,v 1.21 2002/06/19 07:16:49 hothorn Exp $
+
+	0.0-1 (08.07.2001)
+
+	package `mtest' created, `contrMat' translated from SAS code by Frank
+
+	0.1-2 (09.07.2001)
+
+        Williams, Ave, McDermott, Marcus added
+
+	0.1-3 (23.07.2001)
+
+	simint.{R,Rd} added
+        Williams, Ave, McDermott, Marcus added
+
+	0.1-4 (20.09.2001)
+
+	full.model.matrix returns singular ANOVA-design matrices from
+	formula objects, included in simint.R (with formula based interface)
+
+	0.1-5 (21.09.2001)
+	
+	further improvments to full.model.matrix (colnames, attr etc)
+
+	0.1-6 (27.10.2001)
+
+	waste example added
+
+	0.1-7 (22.01.2002)
+
+	simint is now generic and has a nice formula based interface which
+	handles the full design matrix (full.model.matrix.R removed). simint
+	returns an object of class "hmtest" which has a print method.
+
+	0.1-8 (27.01.2002)
+
+	changes labels in print/summary methods, alternative=c("two.sided",
+	"less", "greater") is R-style, print only digits up to eps
+
+	0.1-9 (21.02.2002)
+
+	angina$dose is a factor
+
+	compute nlevel for type=Tetrade in sim{int,test}.formula and pass
+        them to sim{int,test}.default. 
+
+	renamed "nlevels" to "nlevel" (conflict with function nlevels())
+
+	detergent${detergent,block} now are factors
+
+	example(respiratory) throws an error in mvt ?!?
+
+	dimensions does not fit in sim{int,test}.default when Tetrade is
+        used
+
+	{summary,print} for simtest results added
+
+	0.1-10 (28.02.2002)
+
+	added quantile to summary.hmtest
+
+	Tetrade in waste example works now
+
+        9.3.02 Respiratory Bsp geht jetzt. Beschreibung simtest, 
+        simint besser.
+
+	0.1-11 (14.03.2002)
+
+	functions csimint, csimtest added for direct calucations with
+        parameter estimates and covariance matrices (not yet documented)
+
+	0.1-12 (18.03.2002)
+
+	csim{int,test}: nlevels, ... removed and documented.
+
+	0.2-0 (08.04.2002)
+
+	add meaningful labels to hmtestp-objects and some cosmetics 
+
+	0.2-1 (08.04.2002)
+
+	renamed package `mtest' to `multcomp'
+
+	0.2-2 (10.04.2002)
+
+	bugfix McDermott and nice labels in respiratory
+
+	0.2-5 (17.07.2002)
+
+	Comments from Peter added, typos and cosmetrics
+	Prepare for first release.
+
+	0.2-6 (19.07.2002)
+
+	First release for CRAN, cosmetics only.
+

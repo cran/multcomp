@@ -1,0 +1,23 @@
+MultipleEndpoints       Multiple Endpoints Data Set 
+angina                  Dose Response Data Set 
+cholesterol             Cholesterol Reduction Data Set 
+contrMat                Contrast Matrices 
+csimint                 Simultaneous Confidence Intervals Based on
+                        Parameter Estimates 
+csimtest                Simultaneous Comparisons Based on Parameter
+                        Estimates. 
+detergent               Detergent Durability Data Set 
+ginv                    Generalized Inverse of a Matrix 
+halothane               Repeated Measures Data Set 
+litter                  Litter Weights Data Set 
+multcomp-internal       Internal multcomp functions
+print.hmtest            Print Method for hmtest Object
+print.hmtestp           Print Method for hmtestp Object
+recover                 Recovery Time Data Set 
+respiratory             Respiratory Health Data Set 
+simint                  Simultaneous Confidence Intervals 
+simtest                 Simultaneous Comparisons 
+summary.hmtest          Summarizing Simultaneous Confidence Intervals
+summary.hmtestp         Summarizing Simultaneous Confidence Intervals
+tire                    Tire Wear Data Set 
+waste                   Industrial Waste Data Set 
