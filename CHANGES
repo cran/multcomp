@@ -1,5 +1,9 @@
 $Id: CHANGES,v 1.32 2002/09/18 09:07:45 hothorn Exp $
 
+	0.3-3 (23.10.2002)
+
+	documentation fixes
+
 	0.3-2 (18.09.2002)
 
 	is.integer(df) -> all.equal(df - floor(df), 0) in csim{int,test}
