@@ -1,4 +1,5 @@
 \name{contrMat}
+\alias{contr.Dunnett}
 \alias{contrMat}
 \title{ Contrast Matrices }
 \description{
@@ -7,13 +8,20 @@
 \usage{
 contrMat(n, type=c("Dunnett", "Tukey", "Sequen", "AVE", 
                    "Changepoint", "Williams", "Marcus", 
-                   "McDermott", "Tetrade"), nlevel=NULL)
+                   "McDermott", "Tetrade"), nlevel = NULL, base = 1)
+contr.Dunnett(n, base = 1, contrasts=TRUE)
 }
 \arguments{
-  \item{n}{ a (possibly named) vector of sample sizes for each group. }
+  \item{n}{ a (possibly named) vector of sample sizes for each group or a
+            vector of factor levels. }
   \item{type}{ type of contrast. }
   \item{nlevel}{ number of levels of two factors (for \code{type="Tetrade"}
                   only).}
+  \item{contrasts}{ a logical indicating whether contrasts should be
+                  computed.}
+  \item{base}{ an integer specifying which group is considered the baseline
+          group for Dunnett contrasts. Ignored if \code{contrasts} is \code{FALSE}.}
+
 }
 \details{
   Computes the requested matrix of contrasts.
@@ -34,6 +42,8 @@ contrMat(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
  b <- 3
  names(n) <- paste("group", 1:4, sep="")
  contrMat(n)	# Dunnett is default
+ contrMat(n, base=2)	# use second level as baseline
+ contr.Dunnett(names(n))  # it Moore-Penrose Inverse
  contrMat(n, type="Tukey")
  contrMat(n, type="Sequen")
  contrMat(n, type="AVE")

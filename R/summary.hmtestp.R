@@ -1,4 +1,4 @@
-# $Id: summary.hmtestp.R,v 1.7 2002/09/18 09:30:12 hothorn Exp $
+# $Id: summary.hmtestp.R,v 1.8 2003/05/13 10:29:13 hothorn Exp $
 
 summary.hmtestp <- function(object, ...)
 {
@@ -15,7 +15,10 @@ print.summary.hmtestp <- function(x, digits = max(3, getOption("digits")-3),
       type <- paste(x$ctype,"contrasts")
     else
       type <- "user-defined contrasts"
-    cat("\t Simultaneous tests:", type, "\n")
+    if (x$asympt)
+      cat("\t Asymptotic simultaneous tests:", type, "\n")
+    else
+      cat("\t Simultaneous tests:", type, "\n")
     cat("\n")
     if (!is.null(x$DNAME)) {
       cat("Call: \n")

@@ -30,9 +30,9 @@ data(waste)
 summary(aov(waste ~ envir + temp + envir*temp, data=waste))
 
 summary(simint(waste ~ envir:temp, data=waste,
-               type="Tetrade", eps=0.01))
+               type="Tetrade", eps=0.1))
 summary(simtest(waste ~ envir:temp, data=waste,
-                type="Tetrade", eps=0.01))
+                type="Tetrade", eps=0.1))
 
 }
 

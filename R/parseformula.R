@@ -1,4 +1,4 @@
-# $Id: parseformula.R,v 1.7 2003/02/17 17:12:38 hothorn Exp $
+# $Id: parseformula.R,v 1.15 2003/08/13 16:24:25 hothorn Exp $
 
 parseformula <- function(formula, data=list(), subset, na.action, 
                          whichf=NULL, ...) {
@@ -24,7 +24,14 @@ parseformula <- function(formula, data=list(), subset, na.action,
     # get the model.frame
     m <- match.call(expand.dots = FALSE)
     m$whichf <- NULL
-    if(missing(subset)) m$subset <- NULL
+    if(missing(subset)) 
+        m$subset <- NULL
+    else 
+        m$subset <- subset
+    if(missing(na.action)) 
+        m$na.action <- NULL
+    else  
+        m$na.action <- na.action
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m[[1]] <- as.name("model.frame")
@@ -46,6 +53,17 @@ parseformula <- function(formula, data=list(), subset, na.action,
     response <- attr(attr(mf, "terms"), "response")
     y <- mf[[response]]
 
+    # handle offsets
+    offset <- model.offset(mf)
+    if(!is.null(offset) && length(offset) != length(y)) {
+      stop("Number of offsets is ", length(offset),
+           ", should equal ", length(y), " (number of observations)")
+    }
+
+    if (!is.null(offset)) {
+      y <- y - offset
+    }
+
     ncovar <- c(0,0)
     nlevel <- NULL
     nobs <- NULL
@@ -58,6 +76,9 @@ parseformula <- function(formula, data=list(), subset, na.action,
 
     # determine, which variables are factors
     fact <- unlist(lapply(mf[xvars], is.factor))
+
+    # remove unused factor levels (e.g. induced by `subset')
+    mf[xvars[fact]] <- lapply(mf[xvars[fact]], factor)
 
     # check if any matches whichf, if given
     if (!missing(whichf)) {
@@ -120,13 +141,13 @@ parseformula <- function(formula, data=list(), subset, na.action,
             # ok, everything is in interactions
             # this is allowed for TETRADE or CMATRIX 
             if (CMATRIX) {
-              mainF <- rhs[!rhs %in% xvars]
-              coVar <- rhs[rhs != mainF]
+              mainF <- unlist(strsplit(rhs[!rhs %in% xvars], ":"))
+              coVar <- rhs[rhs != rhs[!rhs %in% xvars]]
             } else {
               if (TETRADE) {
                 if(sum(fact) == 2) {
-                  mainF <- rhs[!rhs %in% xvars]
-                  coVar <- rhs[rhs != mainF]
+                  mainF <- unlist(strsplit(rhs[!rhs %in% xvars], ":"))
+                  coVar <- rhs[rhs != rhs[!rhs %in% xvars]]
                 } else {
                   stop("Tetrade assumes 2 factors in one interaction term")
                 }
@@ -139,22 +160,46 @@ parseformula <- function(formula, data=list(), subset, na.action,
       } 
     } 
 
+    ncovar <- c(0,0)
+
+    ### <FIXME> check if contrasts to mainF have been previously defined
+    ### via C() or contrasts()
+    ### </FIXME>
+
     if (!is.null(mainF)) {
-      # in cases of using the whole rhs, iterate
-      if (length(mainF) == 1) {
-        formulaEff <- as.formula(paste(deparse(formula[[2]], width=500), "~",
-                                     mainF, "-1"))
-        x <- model.matrix(terms(formulaEff, data=data), mf)
-      } else {
-        x <- c()
-        for (i in 1:length(mainF)) {
-          formulaEff <- as.formula(paste(deparse(formula[[2]], width=500), "~",
-                                   mainF[i], "-1"))
-          x <- cbind(x, model.matrix(terms(formulaEff, data=data), mf))
-        }
+      eval(parse(text=paste("thisctrs <- list(", 
+                         paste(mainF, "=\"ct\"", collapse=", "), ")")))
+      x <- model.matrix(attr(mf, "terms"), mf, contrasts=thisctrs)
+
+      ### search for interactions when the length of mainF is > 1
+      if (length(mainF) == 1) 
+          mainFindx <- grep(mainF, colnames(x))
+      else
+          mainFindx <- grep(paste(mainF, ".*", collapse="", sep=""), 
+                            colnames(x))
+      intera <- grep(":", colnames(x)[mainFindx])
+      if (length(intera) > 0 & (length(intera) < length(mainFindx))) {
+        mainFindx <- mainFindx[-intera]
       }
+
+      nobs <- apply(x[,mainFindx], 2, sum)
+
+      # get number of covariables
+      ncovar[1] <- mainFindx[1] - 1
+      ncovar[2] <- ncol(x) - max(mainFindx)
+
+      # get the number of observations at each factor level
+      # NOT needed for Tetrade in contrMatr
+      nobs <- apply(x[,mainFindx], 2, sum)
+
+      if (length(mainF) > 1) mainF <- paste(mainF, collapse = ":")
+
       if (TETRADE) {
-        tx <- x
+        if (INTERCEPT) {
+          tx <- x[,-1]
+        } else {
+          tx <- x
+        }
         col <- 0
         newx <- c()
         for (i in 1:ncol(tx))
@@ -166,36 +211,19 @@ parseformula <- function(formula, data=list(), subset, na.action,
             newx[, i + nlevel[2]*(j-1)] <- tx[,col]
           }
         }
-        x <- newx
+        if (INTERCEPT) {
+            x <- cbind(x[,1],newx)
+        } else {
+            x <- newx
+        }
       }
       xall <- x
     } else {
       stop("Could not find main effect")
     }
 
-    # get the number of observations at each factor level
-    # NOT needed for Tetrade in contrMatr
-    nobs <- apply(x, 2, sum)
-
-    xcov <- NULL
-    ncovar <- c(0,0)
-    if (!is.null(coVar)) {
-      if (length(coVar) > 0) {
-        coVar <- nicepaste(coVar, "+")
-        formulaCov <- paste(deparse(formula[[2]], width=500), "~",
-                            coVar, "-1")
-        formulaCov <- as.formula(formulaCov)
-        xcov <- model.matrix(terms(formulaCov, data=data), mf)
-        xall <- cbind(x, xcov)
-        ncovar[2] <- ncol(xcov)
-      }
-    }
-
-    if (INTERCEPT) {
-      xall <- cbind(1, xall)
-      colnames(xall)[1] <- "(Intercept)"
-      ncovar[1] <- 1
-    }
+    xall <- x
+    x <- x[,mainFindx]
 
     if (CMATRIX) {
       # sanity checks here: we need to reject contrast matrices of 
@@ -207,12 +235,19 @@ parseformula <- function(formula, data=list(), subset, na.action,
           # the dimensions of cmatrix match the dimension of the complete
           # design matrix, therefore information on the number of
           # covariables obsolete
-          if (ncol(cargs$cmatrix) == ncol(xall))
+
+          # <FIXME> this may be completly wrong since the variables
+          # may have been reordered
+          if (ncol(cargs$cmatrix) == ncol(xall)) {
+            colnames(cargs$cmatrix) <- colnames(xall)
             ncovar <- c(0,0)
+          }
+          # </FIXME>
         }
       }
       if (is.vector(cargs$cmatrix)) {
-        if (length(cargs$cmatrix) != ncol(xall) && length(cargs$cmatrix) != ncol(x) ) {
+        if (length(cargs$cmatrix) != ncol(xall) 
+            && length(cargs$cmatrix) != ncol(x) ) {
           stop("dimensions of x and cmatrix do not match")
         } else {
           if (length(cargs$cmatrix) == ncol(xall))
@@ -224,6 +259,7 @@ parseformula <- function(formula, data=list(), subset, na.action,
     cargs$nlevel <- nlevel
     cargs$nzerocol <- ncovar
     cargs$nobs <- nobs
+    if (length(coVar) > 1) coVar <- nicepaste(coVar, "+")
 
     fnames <- list(response = resp, mainF = mainF, coVar=coVar)
 

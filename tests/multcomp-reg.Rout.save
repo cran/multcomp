@@ -1,0 +1,290 @@
+
+R : Copyright 2003, The R Development Core Team
+Version 1.8.0 Under development (unstable) (2003-08-12)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+>  
+> library(multcomp)
+Loading required package: mvtnorm 
+> 
+> set.seed(290875)
+> 
+> y <- rnorm(40)
+> x <- factor(c(rep(0,10), rep(1, 10), rep(2, 10), rep(3,10)))
+> lmod <- lm(y ~ x, contrasts=list(x = "contr.Dunnett"))
+> glmod <- glm(y ~ x, contrasts=list(x = "contr.Dunnett"), family=gaussian)
+> 
+> simint(y ~ x, type="Dunnett")
+
+	Simultaneous confidence intervals: Dunnett contrasts
+
+Call: 
+simint.formula(formula = y ~ x, type = "Dunnett")
+
+	95 % confidence intervals
+
+      Estimate lower CI upper CI
+x1-x0    0.037   -1.154    1.228
+x2-x0    0.563   -0.628    1.754
+x3-x0    0.040   -1.150    1.231
+> simint(y ~ x, type="Dunnett", base = 2)
+
+	Simultaneous confidence intervals: Dunnett contrasts
+
+Call: 
+simint.formula(formula = y ~ x, type = "Dunnett", base = 2)
+
+	95 % confidence intervals
+
+      Estimate lower CI upper CI
+x0-x1   -0.037   -1.228    1.154
+x2-x1    0.526   -0.665    1.717
+x3-x1    0.003   -1.188    1.194
+> simint(lmod, psubset=2:4)
+
+	Simultaneous confidence intervals: model contrasts
+
+	95 % confidence intervals
+
+     Estimate lower CI upper CI
+x1-0    0.037   -1.154    1.228
+x2-0    0.563   -0.628    1.754
+x3-0    0.040   -1.150    1.231
+> simint(lmod, psubset=names(coef(lmod))[2:4])
+
+	Simultaneous confidence intervals: model contrasts
+
+	95 % confidence intervals
+
+     Estimate lower CI upper CI
+x1-0    0.037   -1.154    1.228
+x2-0    0.563   -0.628    1.754
+x3-0    0.040   -1.151    1.232
+> cmatrix <- cbind(0, diag(3))
+> rownames(cmatrix) <- names(coef(lmod))[2:4]
+> simint(lmod, cmatrix=cmatrix)
+
+	Simultaneous confidence intervals: model contrasts
+
+	95 % confidence intervals
+
+     Estimate lower CI upper CI
+x1-0    0.037   -1.154    1.228
+x2-0    0.563   -0.628    1.754
+x3-0    0.040   -1.150    1.231
+> stopifnot(all(round(confint(lmod)[2,], 3) == 
++               round(simint(lmod, psubset=2)$conf.int, 3)))
+> 
+> simtest(y ~ x, type="Dunnett")
+
+	Simultaneous tests: Dunnett contrasts
+
+Call: 
+simtest.formula(formula = y ~ x, type = "Dunnett")
+
+Contrast matrix:
+        x0 x1 x2 x3
+x1-x0 0 -1  1  0  0
+x2-x0 0 -1  0  1  0
+x3-x0 0 -1  0  0  1
+
+Adjusted P-Values
+
+      p adj
+x2-x0 0.521
+x3-x0 0.995
+x1-x0 0.995
+> simtest(y ~ x, type="Dunnett", base = 2)
+
+	Simultaneous tests: Dunnett contrasts
+
+Call: 
+simtest.formula(formula = y ~ x, type = "Dunnett", base = 2)
+
+Contrast matrix:
+        x1 x0 x2 x3
+x0-x1 0  1 -1  0  0
+x2-x1 0  0 -1  1  0
+x3-x1 0  0 -1  0  1
+
+Adjusted P-Values
+
+      p adj
+x2-x1 0.573
+x0-x1 0.996
+x3-x1 0.996
+> simtest(lmod, psubset=2:4)
+
+	Simultaneous tests: model contrasts
+
+Contrast matrix:
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+
+Adjusted P-Values
+
+     p adj
+[1,] 0.521
+[2,] 0.995
+[3,] 0.995
+> simtest(lmod, psubset=names(coef(lmod))[2:4])
+
+	Simultaneous tests: model contrasts
+
+Contrast matrix:
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+
+Adjusted P-Values
+
+     p adj
+[1,] 0.521
+[2,] 0.995
+[3,] 0.995
+> simtest(lmod, cmatrix=cmatrix)
+
+	Simultaneous tests: model contrasts
+
+Contrast matrix:
+     [,1] [,2] [,3] [,4]
+x1-0    0    1    0    0
+x2-0    0    0    1    0
+x3-0    0    0    0    1
+
+Adjusted P-Values
+
+     p adj
+x2-0 0.521
+x3-0 0.995
+x1-0 0.995
+> 
+> simint(y ~ x, type="Dunnett")
+
+	Simultaneous confidence intervals: Dunnett contrasts
+
+Call: 
+simint.formula(formula = y ~ x, type = "Dunnett")
+
+	95 % confidence intervals
+
+      Estimate lower CI upper CI
+x1-x0    0.037   -1.154    1.228
+x2-x0    0.563   -0.628    1.754
+x3-x0    0.040   -1.150    1.231
+> simint(glmod, psubset=2:4, asympt=FALSE)
+
+	Simultaneous confidence intervals: model contrasts
+
+	95 % confidence intervals
+
+     Estimate lower CI upper CI
+x1-0    0.037   -1.154    1.228
+x2-0    0.563   -0.628    1.754
+x3-0    0.040   -1.150    1.231
+> simint(glmod, psubset=names(coef(lmod))[2:4], asympt=FALSE)
+
+	Simultaneous confidence intervals: model contrasts
+
+	95 % confidence intervals
+
+     Estimate lower CI upper CI
+x1-0    0.037   -1.154    1.228
+x2-0    0.563   -0.628    1.754
+x3-0    0.040   -1.150    1.231
+> simint(glmod, psubset=2:4)
+
+	Simultaneous confidence intervals: model contrasts
+
+	95 % confidence intervals
+
+     Estimate lower CI upper CI
+x1-0    0.037   -1.154    1.228
+x2-0    0.563   -0.628    1.754
+x3-0    0.040   -1.150    1.231
+> simint(glmod, cmatrix=cmatrix)
+
+	Simultaneous confidence intervals: model contrasts
+
+	95 % confidence intervals
+
+     Estimate lower CI upper CI
+x1-0    0.037   -1.154    1.228
+x2-0    0.563   -0.628    1.754
+x3-0    0.040   -1.150    1.231
+> simint(glmod, psubset=names(coef(lmod))[2:4])
+
+	Simultaneous confidence intervals: model contrasts
+
+	95 % confidence intervals
+
+     Estimate lower CI upper CI
+x1-0    0.037   -1.154    1.228
+x2-0    0.563   -0.628    1.754
+x3-0    0.040   -1.150    1.231
+> 
+> simtest(y ~ x, type="Dunnett", asympt = TRUE)
+
+	Asymptotic simultaneous tests: Dunnett contrasts
+
+Call: 
+simtest.formula(formula = y ~ x, type = "Dunnett", asympt = TRUE)
+
+Contrast matrix:
+        x0 x1 x2 x3
+x1-x0 0 -1  1  0  0
+x2-x0 0 -1  0  1  0
+x3-x0 0 -1  0  0  1
+
+Adjusted P-Values
+
+      p adj
+x2-x0 0.513
+x3-x0 0.995
+x1-x0 0.995
+> simtest(glmod, psubset=2:4)
+
+	Simultaneous tests: model contrasts
+
+Contrast matrix:
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+
+Adjusted P-Values
+
+     p adj
+[1,] 0.521
+[2,] 0.995
+[3,] 0.995
+> simtest(glmod, psubset=names(coef(lmod))[2:4])
+
+	Simultaneous tests: model contrasts
+
+Contrast matrix:
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+
+Adjusted P-Values
+
+     p adj
+[1,] 0.521
+[2,] 0.995
+[3,] 0.995
+> 

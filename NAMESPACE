@@ -1,7 +1,7 @@
 
 export(contrMat, mginv, csimint, csimtest, simint, simint.default,
        simint.formula, simtest.default, simtest.formula, simtest, 
-       ct)
+       ct, simint.lm, simint.glm, simtest.lm, simtest.glm, contr.Dunnett)
 
 S3method(print, hmtest)
 S3method(print, hmtestp)

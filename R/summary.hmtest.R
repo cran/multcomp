@@ -1,4 +1,4 @@
-# $Id: summary.hmtest.R,v 1.9 2002/09/18 09:30:12 hothorn Exp $
+# $Id: summary.hmtest.R,v 1.10 2003/05/13 10:29:13 hothorn Exp $
 
 summary.hmtest <- function(object, ...)
 {
@@ -18,9 +18,14 @@ print.summary.hmtest <- function(x, digits = max(3, getOption("digits")-3),
     cint <- round(x$conf.int, digits=digits)
     conf.level <- attr(cint, "conf.level")
     attr(cint, "conf.level") <- NULL
-    writeLines(strwrap(paste("Simultaneous ", format(100 * conf.level),
-                       "\% confidence intervals: ", type, sep=""),
-                       prefix="\t"))
+    if (x$asympt) 
+      writeLines(strwrap(paste("Asymptotic simultaneous ", format(100 * conf.level),
+                         "\% confidence intervals: ", type, sep=""),
+                         prefix="\t"))
+    else 
+      writeLines(strwrap(paste("Simultaneous ", format(100 * conf.level),
+                         "\% confidence intervals: ", type, sep=""),
+                         prefix="\t"))
     cat("\n")
     if (!is.null(x$DNAME)) {
       cat("Call: \n")

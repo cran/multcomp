@@ -1,4 +1,4 @@
-# $Id: print.hmtestp.R,v 1.5 2002/09/18 09:30:12 hothorn Exp $
+# $Id: print.hmtestp.R,v 1.7 2003/05/13 10:29:13 hothorn Exp $
 
 print.hmtestp <- function(x, digits=4, ...)
 {
@@ -8,8 +8,12 @@ print.hmtestp <- function(x, digits=4, ...)
       type <- paste(x$ctype,"contrasts")
     else
       type <- "user-defined contrasts"
-    writeLines(strwrap(paste("Simultaneous tests:", type),
-                       prefix="\t"))
+    if (x$asympt)
+      writeLines(strwrap(paste("Asymptotic simultaneous tests:", type),
+                         prefix="\t"))
+    else
+      writeLines(strwrap(paste("Simultaneous tests:", type),
+                         prefix="\t"))
     cat("\n")
     if (!is.null(x$DNAME)) {
       cat("Call: \n")
@@ -24,6 +28,8 @@ print.hmtestp <- function(x, digits=4, ...)
         cat("\nAdjusted P-Values\n")
         cat("\n")
         colnames(padj) <- "p adj"
+        if (is.null(rownames(x$estimate)))
+           rownames(padj) <- rownames(x$estimate)
         print(padj)
     }
 }
