@@ -1,4 +1,9 @@
-$Id: CHANGES,v 1.42 2003/02/19 16:36:49 hothorn Exp $
+$Id: CHANGES,v 1.43 2003/03/24 14:14:03 hothorn Exp $
+
+	0.3-10 (24.03.2003)
+
+	sim{int,test} failed for factors at two levels only (spotted by 
+	Peter B. Mandeville <mandevip@uaslp.mx>).
 
 	0.3-9 (19.02.2003)
 

@@ -1,4 +1,4 @@
-# $Id: simtest.R,v 1.47 2003/02/19 15:12:11 hothorn Exp $
+# $Id: simtest.R,v 1.48 2003/03/24 14:12:54 hothorn Exp $
 
 simtest <- function(y, ...) UseMethod("simtest")
 
@@ -63,7 +63,9 @@ csimtest <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
     if (asympt) df <- 0                          
  
     covm  <- cm %*% covm %*% t(cm)                            
-    d     <- diag(1/sqrt(diag(covm)))              
+    d     <- 1/sqrt(diag(covm))                            
+    if (length(d) > 1)
+      d <- diag(d)              
     cr    <- d %*% covm %*% d
 
     ests  <- cm %*% estpar
