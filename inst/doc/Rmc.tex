@@ -1,0 +1,163 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage[round]{natbib}
+\renewcommand{\baselinestretch}{1.5}
+%%\thispagestyle{empty}
+
+\newcommand{\bbeta}{\mbox{\boldmath $\beta$}}
+\newcommand{\bepsilon}{\mbox{\boldmath $\epsilon$}}
+\newcommand{\bc}{{\mathbf{c}}}
+\newcommand{\bC}{{\mathbf{C}}}
+\newcommand{\bD}{{\mathbf{D}}}
+\newcommand{\bI}{{\mathbf{I}}}
+\newcommand{\bR}{{\mathbf{R}}}
+\newcommand{\bX}{{\mathbf{X}}}
+\newcommand{\bY}{{\mathbf{Y}}}
+\newcommand{\bzero}{{\mathbf{0}}}
+
+%%\VignetteIndexEntry{How to do multiple comparisions with the multcomp package}
+%%\VignetteDepends{multcomp}
+
+
+\usepackage{/usr/local/lib/R/share/texmf/Sweave}
+\begin{document}
+
+
+
+\title{On Multiple Comparisons in \textsf{R} \thanks{This document is based
+on an article to appear in \textsf{R} News} }
+\author{by Frank Bretz, Torsten Hothorn and Peter Westfall}
+\date{}
+\maketitle
+
+
+\section{Description}
+
+The multiplicity problem arises when several inferences are considered
+simultaneously as a group.  If each inference has a $5\%$ error rate, 
+then the error rate over the entire group can be much higher than $5\%$.  
+This article shows practical examples of multiple comparisons 
+procedures that control the error of making any incorrect inference.
+
+The \texttt{multcomp} package for the \textsf{R} statistical
+environment allows for multiple comparisons of parameters whose
+estimates are generally correlated, including comparisons of $k$
+groups in general linear models. The package has many common
+multiple comparison procedures ``hard-coded'', including Dunnett,
+Tukey, sequential pairwise contrasts, comparisons with the
+average, changepoint analysis, Williams', Marcus', McDermott's,
+and tetrad contrasts. In addition, a free input interface for the
+contrast matrix allows for more general comparisons.
+
+The comparisons themselves are not restricted to balanced or simple
+designs. Instead, the package is designed to provide general
+multiple comparisons, thus allowing for covariates, nested
+effects, correlated means, likelihood-based estimates, and missing
+values. For the homoscedastic normal linear models, the functions in the package
+account for the correlations between test statistics by using the
+exact multivariate $t$-distribution. The resulting procedures are
+therefore more powerful than the Bonferroni and Holm methods;
+adjusted p-values for these methods are reported for reference.
+For more general models,  the program accounts for correlations
+using the asymptotic multivariate normal distribution; examples
+include multiple comparisons based on rank transformations,
+logistic regression, GEEs, and proportional hazards models.  In
+the asymptotic case, the user must supply the estimates, the
+asymptotic covariance matrix, and the contrast matrix.
+
+Basically, the package provides two functions. The first, \texttt{simint}, computes 
+confidence
+intervals for the common single-step procedures.
+This approach is uniformly improved by the second function
+(\texttt{simtest}), which utilizes logical constraints and is
+closely related to closed testing. However, no confidence
+intervals are available for the \texttt{simtest} function. 
+For testing and validation purposes, some 
+examples from \cite{multiple-c:1999} are included in the package.
+
+\section{Details}
+
+Assume the general linear model
+$$
+\bY = \bX \bbeta + \bepsilon,
+$$
+where $\bY$ is the $n \times 1$ observation vector, $\bX$ is the
+fixed and known $n\times p$ design matrix, $\bbeta$ is the fixed
+and unknown $p \times 1$ parameter vector and $\bepsilon$ is the
+random, unobservable $n \times 1$ error vector, distributed as
+$N_n(\bzero, \sigma^2\bI_n)$. We assume the usual estimates
+$$
+\hat{\bbeta} = (\bX^t \bX)^-\bX^t\bY
+$$
+and
+$$
+\hat{\sigma}^2 = (\bY-\bX\hat{\bbeta})^t(\bY-\bX\hat{\bbeta})/\nu,
+$$
+where $\nu = n - \mbox{rank}(\bX)$. Our focus is on multiple
+comparisons for parameters of the general form $\bc^t \bbeta$.
+Its variance is given through
+$$
+\mbox{Var}(\bc^t \hat{\bbeta}) = \hat{\sigma}^2\bc^t(\bX^t \bX)^-\bc.
+$$
+
+In simultaneous inferences we are faced with a given family of
+estimable parameters $\{\bc_1^t \bbeta, \ldots, \bc_k^t \bbeta\}$.
+We thus use the pivotal test statistics
+$$
+T_i = \frac{\bc_i^t \hat{\bbeta}-\bc_i^t
+\bbeta}{\hat{\sigma}\sqrt{\bc_i^t(\bX^t \bX)^-\bc_i}}.
+$$
+For a general account on multiple comparison procedures we refer
+to \cite{HochbergTamhane:1987}. The joint distribution of $\{T_1,
+\ldots, T_k\}$ is multivariate $t$ with degrees of freedom $\nu$
+and correlation matrix $\bR = \bD\bC(\bX^t \bX)^-\bC^t\bD$, where
+$\bC^t = (c_1, \ldots, c_k)$ and $\bD = \mbox{diag}(\bc_i^t(\bX^t
+\bX)^-\bc_i)^{-1/2}$. In the asymptotic case $\nu \rightarrow
+\infty$ or if $\sigma$ is known, the corresponding limiting
+multivariate normal distribution holds. The numerical evaluation
+of the multivariate $t$ and normal distribution is available with
+the \textsf{R} package \texttt{mvtnorm}, see \cite{hothornetal:2001}.
+
+The function \texttt{simint} provides simultaneous confidence
+intervals for the estimable functions $\bc_i^t \bbeta$ in the
+(two-sided) form
+$$
+\left[ \bc_i^t \hat{\bbeta}-c_{1-\alpha}\hat{\sigma}\sqrt{\bc_i^t(\bX^t
+\bX)^-\bc_i};
+\bc_i^t \hat{\bbeta}+c_{1-\alpha}\hat{\sigma}\sqrt{\bc_i^t(\bX^t
+\bX)^-\bc_i} \right],
+$$
+where $c_{1-\alpha}$ is the critical value at level $1-\alpha$, as
+derived under the distributional assumptions above. If lower or
+upper tailed tests are used, the corresponding interval bounds are
+set to $-\infty$ and $\infty$, respectively.
+
+The second function \texttt{simtest} provides more powerful test
+decisions than \texttt{simint} yet it does not provide
+simultaneous confidence intervals. It uses the stepwise methods of
+\cite{westfall:1997}, which take the logical constraints between the
+hypotheses into account and which are closely related to the
+closed testing principle of \cite{Marcusetal:1976}. In addition, the
+stochastic dependencies of the test statistics are incorporated,
+thus allowing imbalance, covariates and more general models.
+Again, any collection of linear combinations of the estimable
+parameters is allowed, not just pairwise comparisons. We refer to
+\cite{westfall:1997} for the algebraic and algorithmic details.
+
+\section{Example}
+
+We illustrate some of the capabilities of the \texttt{multcomp}
+package using the \texttt{recovery} dataset. Three
+different heating blankets $b_1, b_2, b_3$ for post-surgery
+treatment are compared to a standard blanket $b_0$. The variable
+of interest in this simple one-way layout was recovery time in
+minutes of patients allocated randomly to one of the four
+treatments. The standard approach for comparing several treatments
+against a control is the many-to-one test of Dunnett (1955). The
+Dunnett test is one of the ``hard-coded'' procedures available for
+one-factor models in \texttt{multcomp}. To obtain simultaneous
+confidence intervals for the comparisons $\beta_i - \beta_1$ on
+simply calls:
+\small
+\begin{Sinput}
+>library(multcomp)

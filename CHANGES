@@ -1,4 +1,9 @@
-$Id: CHANGES,v 1.32 2002/09/18 09:07:45 hothorn Exp $
+$Id: CHANGES,v 1.35 2002/11/22 14:57:27 hothorn Exp $
+
+	0.3-4 (22.11.2002)
+
+	the package now owns a vignette
+	depends mvtnorm >= 0.5-7
 
 	0.3-3 (23.10.2002)
 
