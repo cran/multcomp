@@ -69,7 +69,7 @@ simint(minutes ~ blanket, data=recovery, conf.level=0.9,
 x <- gl(3,10,30)
 levels(x) <-c(" G1","G2","G3")
 y <- rbinom(30,1,prob=c(rep(.8,10),rep(.2,10),rep(.5,10)))
-toy.glm <- glm(y ~x, family=binomial)
+toy.glm <- glm(y ~x, family=binomial, control = glm.control(epsilon=1e-4))
 csimint(estpar=coef(toy.glm)[2:3],df=toy.glm$df.residual,
         covm=vcov(toy.glm)[2:3,2:3],
         cmatrix=contrMat(c(10,10),type="Tukey"),asympt=TRUE)
