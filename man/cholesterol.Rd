@@ -52,10 +52,10 @@ covm[2:6,1] <- rep(0.02893521, 5)
 covm[1,1] <- 0.14467606
 for (i in  2:6) { covm[i,i] <- 0.83912115 } 
 
-# use the work-horse directly
+# use the work-horse directly (and add zero column for the intercept)
 
-csimint(estpar=parm, df=nu, covm=covm, cmatrix=contrast)    
-csimtest(estpar=parm, df=nu, covm=covm, cmatrix=contrast,
+csimint(estpar=parm, df=nu, covm=covm, cmatrix=cbind(0, contrast))    
+csimtest(estpar=parm, df=nu, covm=covm, cmatrix=cbind(0, contrast),
          ttype="logical")      
 
 }

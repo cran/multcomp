@@ -1,4 +1,4 @@
-# $Id: summary.hmtestp.R,v 1.4 2002/04/08 15:20:25 hothorn Exp $
+# $Id: summary.hmtestp.R,v 1.6 2002/07/11 12:56:53 hothorn Exp $
 
 summary.hmtestp <- function(object, ...)
 {
@@ -17,7 +17,18 @@ print.summary.hmtestp <- function(x, digits = max(3, getOption("digits")-3),
       type <- "user-defined contrasts"
     cat("\t Simultaneous tests:", type, "\n")
     cat("\n")
-    cat("Data: ", x$DNAME, "\n")
+    cat("Call: \n")
+    print(x$DNAME)
+    cat("\n")
+    cat("\t", type, "for factor",  x$FNAME$mainF)
+    if (length(x$FNAME$coVar) > 0) {
+      if (length(grep("[+]", x$FNAME$coVar)) > 0)
+        cat(", covariables: ", x$FNAME$coVar, "\n")
+      else
+        cat(", covariable: ", x$FNAME$coVar, "\n")
+    } else {
+      cat("\n")
+    }
     cat("\n")
     cat("Contrast matrix:")
     cat("\n")

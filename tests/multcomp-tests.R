@@ -86,8 +86,8 @@ for (i in  2:6) { covm[i,i] <- 0.83912115 }
 
 # use the work-horse directly
 
-csimint(estpar=parm, df=nu, covm=covm, cmatrix=contrast)    
-csimtest(estpar=parm, df=nu, covm=covm, cmatrix=contrast,
+csimint(estpar=parm, df=nu, covm=covm, cmatrix=cbind(0,contrast))    
+csimtest(estpar=parm, df=nu, covm=covm, cmatrix=cbind(0,contrast),
          ttype="logical")      
 
 
@@ -109,24 +109,24 @@ rownames(C) <- paste("C", 1:nrow(C), sep="")
 
 # adjusted p-values
 summary(simtest(plates ~ block+detergent, data=detergent,
-                ttype="logical", cmatrix=C))
+whichf="detergent", type="Tukey", ttype="logical")) # , cmatrix=C))
 
 
 ## Keywords: 'datasets'.
 
 
-cleanEx(); ..nameEx <- "recover"
-###--- >>> `recover' <<<----- Recovery Time Data Set
+cleanEx(); ..nameEx <- "recovery"
+###--- >>> `recovery' <<<----- Recovery Time Data Set
 
-	## alias	 help(recover)
+	## alias	 help(recovery)
 
 ##___ Examples ___:
 
-data(recover)
+data(recovery)
 
 # one-sided simultaneous confidence intervals for Dunnett 
 # in the one-way layout
-simint(minutes~blanket, data=recover, conf.level=0.9, 
+simint(minutes~blanket, data=recovery, conf.level=0.9, 
        alternative="less",eps=0.0001)
 
 # same results, but specifying the contrast matrix by hand
@@ -134,7 +134,7 @@ C <- c(0, 0, 0, -1, -1, -1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 C <- matrix(C, ncol=5)
 # numerate the contrasts
 rownames(C) <- paste("C", 1:nrow(C), sep="")
-test <- simint(minutes~blanket, data=recover, conf.level=0.9, 
+test <- simint(minutes~blanket, data=recovery, conf.level=0.9, 
                alternative="less",eps=0.0001, cmatrix=C)
 print(test)
 
@@ -216,11 +216,11 @@ cleanEx(); ..nameEx <- "simint"
 
 ##___ Examples ___:
 
-data(recover)
+data(recovery)
 
 # one-sided simultaneous confidence intervals for Dunnett 
 # in the one-way layout
-summary(simint(minutes~blanket, data=recover, type="Dunnett", conf.level=0.9, 
+summary(simint(minutes~blanket, data=recovery, type="Dunnett", conf.level=0.9, 
        alternative="less",eps=0.0001))
 
 

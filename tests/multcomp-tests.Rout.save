@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.5.0  (2002-04-29)
+Version 1.5.1  (2002-06-17)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -13,6 +13,7 @@ Type `demo()' for some demos, `help()' for on-line help, or
 `help.start()' for a HTML browser interface to help.
 Type `q()' to quit R.
 
+> T <- F <- NULL
 > attach(NULL, name = "CheckExEnv")
 > assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
 > ## This plot.new() patch has no effect yet for persp();
@@ -61,14 +62,18 @@ Loading required package: mvtnorm
 
 	Simultaneous 95% confidence intervals: Williams contrasts
 
-Data:  response by dose 
+Call: 
+simint.formula(formula = response ~ dose, data = angina, alternative = "greater", 
+    type = "Williams")
+
+	 Williams contrasts for factor dose
 
 Contrast matrix:
-   dose1 dose2     dose3     dose4     dose5
-C1    -1  0.00 0.0000000 0.0000000 1.0000000
-C2    -1  0.00 0.0000000 0.5000000 0.5000000
-C3    -1  0.00 0.3333333 0.3333333 0.3333333
-C4    -1  0.25 0.2500000 0.2500000 0.2500000
+     dose0 dose1     dose2     dose3     dose4
+C1 0    -1  0.00 0.0000000 0.0000000 1.0000000
+C2 0    -1  0.00 0.0000000 0.5000000 0.5000000
+C3 0    -1  0.00 0.3333333 0.3333333 0.3333333
+C4 0    -1  0.25 0.2500000 0.2500000 0.2500000
 
 Absolute Error Tolerance:  0.001 
 
@@ -79,7 +84,7 @@ Coefficients:
 C1   10.499   7.435    Inf   6.778    1.549     0      0     0
 C2    7.747   5.093    Inf   5.775    1.341     0      0     0
 C3    6.297   3.795    Inf   4.979    1.265     0      0     0
-C4    5.246   2.824    Inf   4.284    1.225     0      0     0
+C4    5.247   2.824    Inf   4.284    1.225     0      0     0
 > 
 > # compute now adjusted p-values for McDermott's test on trend
 > summary(simtest(response~dose, data=angina, type="McDermott",
@@ -87,14 +92,18 @@ C4    5.246   2.824    Inf   4.284    1.225     0      0     0
 
 	 Simultaneous tests: McDermott contrasts 
 
-Data:  response by dose 
+Call: 
+simtest.formula(formula = response ~ dose, data = angina, type = "McDermott", 
+    alternative = "greater", ttype = "logical")
+
+	 McDermott contrasts for factor dose
 
 Contrast matrix:
-        dose1      dose2      dose3 dose4 dose5
-C1 -1.0000000  1.0000000  0.0000000  0.00     0
-C2 -0.5000000 -0.5000000  1.0000000  0.00     0
-C3 -0.3333333 -0.3333333 -0.3333333  1.00     0
-C4 -0.2500000 -0.2500000 -0.2500000 -0.25     1
+          dose0      dose1      dose2 dose3 dose4
+C1 0 -1.0000000  1.0000000  0.0000000  0.00     0
+C2 0 -0.5000000 -0.5000000  1.0000000  0.00     0
+C3 0 -0.3333333 -0.3333333 -0.3333333  1.00     0
+C4 0 -0.2500000 -0.2500000 -0.2500000 -0.25     1
 
 
 Absolute Error Tolerance:  0.001 
@@ -103,7 +112,7 @@ Coefficients:
    Estimate t value Std.Err. p raw p Bonf p adj
 C4    7.877   6.433    1.549 0.000  0.000 0.000
 C3    3.164   2.502    1.341 0.008  0.024 0.024
-C2    2.349   1.751    1.265 0.043  0.087 0.085
+C2    2.350   1.751    1.265 0.043  0.087 0.085
 C1    2.095   1.353    1.225 0.091  0.091 0.091
 > 
 > ## Keywords: 'datasets'.
@@ -125,34 +134,36 @@ C1    2.095   1.353    1.225 0.091  0.091 0.091
 
 	Simultaneous tests: Tukey contrasts
 
-data:  response by trt 
+Call: 
+simtest.formula(formula = response ~ trt, data = cholesterol, 
+    type = "Tukey", ttype = "logical")
 
 Contrast matrix:
-          trt1 trt2 trt3 trt4 trt5
-trt2-trt1   -1    1    0    0    0
-trt3-trt1   -1    0    1    0    0
-trt4-trt1   -1    0    0    1    0
-trt5-trt1   -1    0    0    0    1
-trt3-trt2    0   -1    1    0    0
-trt4-trt2    0   -1    0    1    0
-trt5-trt2    0   -1    0    0    1
-trt4-trt3    0    0   -1    1    0
-trt5-trt3    0    0   -1    0    1
-trt5-trt4    0    0    0   -1    1
+            trtA trtB trtC trtD trtE
+trtB-trtA 0   -1    1    0    0    0
+trtC-trtA 0   -1    0    1    0    0
+trtD-trtA 0   -1    0    0    1    0
+trtE-trtA 0   -1    0    0    0    1
+trtC-trtB 0    0   -1    1    0    0
+trtD-trtB 0    0   -1    0    1    0
+trtE-trtB 0    0   -1    0    0    1
+trtD-trtC 0    0    0   -1    1    0
+trtE-trtC 0    0    0   -1    0    1
+trtE-trtD 0    0    0    0   -1    1
 
 Adjusted P-Values
 
           p adj
-trt5-trt1 0.000
-trt5-trt2 0.000
-trt4-trt1 0.000
-trt5-trt3 0.000
-trt3-trt1 0.000
-trt4-trt2 0.000
-trt5-trt4 0.001
-trt2-trt1 0.042
-trt3-trt2 0.042
-trt4-trt3 0.044
+trtE-trtA 0.000
+trtE-trtB 0.000
+trtD-trtA 0.000
+trtE-trtC 0.000
+trtC-trtA 0.000
+trtD-trtB 0.000
+trtE-trtD 0.001
+trtB-trtA 0.042
+trtC-trtB 0.042
+trtD-trtC 0.044
 > 
 > # adjusted p-values all-pairwise comparisons in a one-way layout 
 > # (tests for free combinations -> p-values will be larger)
@@ -161,34 +172,36 @@ trt4-trt3 0.044
 
 	Simultaneous tests: Tukey contrasts
 
-data:  response by trt 
+Call: 
+simtest.formula(formula = response ~ trt, data = cholesterol, 
+    type = "Tukey", ttype = "free")
 
 Contrast matrix:
-          trt1 trt2 trt3 trt4 trt5
-trt2-trt1   -1    1    0    0    0
-trt3-trt1   -1    0    1    0    0
-trt4-trt1   -1    0    0    1    0
-trt5-trt1   -1    0    0    0    1
-trt3-trt2    0   -1    1    0    0
-trt4-trt2    0   -1    0    1    0
-trt5-trt2    0   -1    0    0    1
-trt4-trt3    0    0   -1    1    0
-trt5-trt3    0    0   -1    0    1
-trt5-trt4    0    0    0   -1    1
+            trtA trtB trtC trtD trtE
+trtB-trtA 0   -1    1    0    0    0
+trtC-trtA 0   -1    0    1    0    0
+trtD-trtA 0   -1    0    0    1    0
+trtE-trtA 0   -1    0    0    0    1
+trtC-trtB 0    0   -1    1    0    0
+trtD-trtB 0    0   -1    0    1    0
+trtE-trtB 0    0   -1    0    0    1
+trtD-trtC 0    0    0   -1    1    0
+trtE-trtC 0    0    0   -1    0    1
+trtE-trtD 0    0    0    0   -1    1
 
 Adjusted P-Values
 
           p adj
-trt5-trt1 0.000
-trt5-trt2 0.000
-trt4-trt1 0.000
-trt5-trt3 0.000
-trt3-trt1 0.000
-trt4-trt2 0.001
-trt5-trt4 0.001
-trt2-trt1 0.057
-trt3-trt2 0.063
-trt4-trt3 0.063
+trtE-trtA 0.000
+trtE-trtB 0.000
+trtD-trtA 0.000
+trtE-trtC 0.000
+trtC-trtA 0.000
+trtD-trtB 0.001
+trtE-trtD 0.001
+trtB-trtA 0.057
+trtC-trtB 0.063
+trtD-trtC 0.063
 > 
 > # enter now the estimates as parameters
 > # begin with degrees of freedom
@@ -207,11 +220,12 @@ trt4-trt3 0.063
 > 
 > # use the work-horse directly
 > 
-> csimint(estpar=parm, df=nu, covm=covm, cmatrix=contrast)    
+> csimint(estpar=parm, df=nu, covm=covm, cmatrix=cbind(0,contrast))    
 
 	Simultaneous confidence intervals: user-defined contrasts
 
-data:  
+Call: 
+NULL
 
 	95 % confidence intervals
 
@@ -226,25 +240,26 @@ data:
 4-3    2.986   -1.115    7.088
 5-3    8.573    4.471   12.674
 5-4    5.586    1.485    9.688
-> csimtest(estpar=parm, df=nu, covm=covm, cmatrix=contrast,
+> csimtest(estpar=parm, df=nu, covm=covm, cmatrix=cbind(0,contrast),
 +          ttype="logical")      
 
 	Simultaneous tests: user-defined contrasts
 
-data:  
+Call: 
+NULL
 
 Contrast matrix:
-     1  2  3  4 5
-2-1 -1  1  0  0 0
-3-1 -1  0  1  0 0
-4-1 -1  0  0  1 0
-5-1 -1  0  0  0 1
-3-2  0 -1  1  0 0
-4-2  0 -1  0  1 0
-5-2  0 -1  0  0 1
-4-3  0  0 -1  1 0
-5-3  0  0 -1  0 1
-5-4  0  0  0 -1 1
+       1  2  3  4 5
+2-1 0 -1  1  0  0 0
+3-1 0 -1  0  1  0 0
+4-1 0 -1  0  0  1 0
+5-1 0 -1  0  0  0 1
+3-2 0  0 -1  1  0 0
+4-2 0  0 -1  0  1 0
+5-2 0  0 -1  0  0 1
+4-3 0  0  0 -1  1 0
+5-3 0  0  0 -1  0 1
+5-4 0  0  0  0 -1 1
 
 Adjusted P-Values
 
@@ -279,98 +294,106 @@ Adjusted P-Values
 > 
 > # adjusted p-values
 > summary(simtest(plates ~ block+detergent, data=detergent,
-+                 ttype="logical", cmatrix=C))
++ whichf="detergent", type="Tukey", ttype="logical")) # , cmatrix=C))
 
-	 Simultaneous tests: Dunnett contrasts 
+	 Simultaneous tests: Tukey contrasts 
 
-Data:  plates by block + detergent 
+Call: 
+simtest.formula(formula = plates ~ block + detergent, data = detergent, 
+    whichf = "detergent", type = "Tukey", ttype = "logical")
+
+	 Tukey contrasts for factor detergent, covariable:  block 
 
 Contrast matrix:
-    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-C1     0    0    0    0    0    0    0    0    0     0    -1     1     0     0
-C2     0    0    0    0    0    0    0    0    0     0    -1     0     1     0
-C3     0    0    0    0    0    0    0    0    0     0    -1     0     0     1
-C4     0    0    0    0    0    0    0    0    0     0    -1     0     0     0
-C5     0    0    0    0    0    0    0    0    0     0     0    -1     1     0
-C6     0    0    0    0    0    0    0    0    0     0     0    -1     0     1
-C7     0    0    0    0    0    0    0    0    0     0     0    -1     0     0
-C8     0    0    0    0    0    0    0    0    0     0     0     0    -1     1
-C9     0    0    0    0    0    0    0    0    0     0     0     0    -1     0
-C10    0    0    0    0    0    0    0    0    0     0     0     0     0    -1
-    [,15]
-C1      0
-C2      0
-C3      0
-C4      1
-C5      0
-C6      0
-C7      1
-C8      0
-C9      1
-C10     1
+                        detergent1 detergent2 detergent3 detergent4 detergent5
+detergent2-detergent1 0         -1          1          0          0          0
+detergent3-detergent1 0         -1          0          1          0          0
+detergent4-detergent1 0         -1          0          0          1          0
+detergent5-detergent1 0         -1          0          0          0          1
+detergent3-detergent2 0          0         -1          1          0          0
+detergent4-detergent2 0          0         -1          0          1          0
+detergent5-detergent2 0          0         -1          0          0          1
+detergent4-detergent3 0          0          0         -1          1          0
+detergent5-detergent3 0          0          0         -1          0          1
+detergent5-detergent4 0          0          0          0         -1          1
+                                         
+detergent2-detergent1 0 0 0 0 0 0 0 0 0 0
+detergent3-detergent1 0 0 0 0 0 0 0 0 0 0
+detergent4-detergent1 0 0 0 0 0 0 0 0 0 0
+detergent5-detergent1 0 0 0 0 0 0 0 0 0 0
+detergent3-detergent2 0 0 0 0 0 0 0 0 0 0
+detergent4-detergent2 0 0 0 0 0 0 0 0 0 0
+detergent5-detergent2 0 0 0 0 0 0 0 0 0 0
+detergent4-detergent3 0 0 0 0 0 0 0 0 0 0
+detergent5-detergent3 0 0 0 0 0 0 0 0 0 0
+detergent5-detergent4 0 0 0 0 0 0 0 0 0 0
 
 
 Absolute Error Tolerance:  0.001 
 
 Coefficients:
-    Estimate t value Std.Err. p raw p Bonf p adj
-C9    -7.933  -9.140    0.868 0.000  0.000 0.000
-C10   -6.533  -7.527    0.868 0.000  0.000 0.000
-C5     5.733  -6.606    0.868 0.000  0.000 0.000
-C4    -4.333  -4.993    0.868 0.000  0.001 0.000
-C6     4.333  -4.993    0.868 0.000  0.001 0.000
-C2     3.600  -4.148    0.868 0.001  0.003 0.003
-C7    -2.200  -2.535    0.868 0.022  0.044 0.043
-C3     2.200  -2.535    0.868 0.022  0.044 0.043
-C1    -2.133  -2.458    0.868 0.026  0.052 0.049
-C8    -1.400  -1.613    0.868 0.126  0.126 0.126
+                      Estimate t value Std.Err. p raw p Bonf p adj
+detergent5-detergent3   -7.933  -9.140    0.868 0.000  0.000 0.000
+detergent5-detergent4   -6.533  -7.527    0.868 0.000  0.000 0.000
+detergent3-detergent2    5.733  -6.606    0.868 0.000  0.000 0.000
+detergent4-detergent2    4.333  -4.993    0.868 0.000  0.000 0.000
+detergent5-detergent1   -4.333  -4.993    0.868 0.000  0.001 0.000
+detergent3-detergent1    3.600  -4.148    0.868 0.001  0.003 0.003
+detergent4-detergent1    2.200  -2.535    0.868 0.022  0.044 0.043
+detergent5-detergent2   -2.200  -2.535    0.868 0.022  0.044 0.043
+detergent2-detergent1   -2.133  -2.458    0.868 0.026  0.052 0.050
+detergent4-detergent3   -1.400  -1.613    0.868 0.126  0.126 0.126
 > 
 > 
 > ## Keywords: 'datasets'.
 > 
 > 
-> cleanEx(); ..nameEx <- "recover"
-> ###--- >>> `recover' <<<----- Recovery Time Data Set
+> cleanEx(); ..nameEx <- "recovery"
+> ###--- >>> `recovery' <<<----- Recovery Time Data Set
 > 
-> 	## alias	 help(recover)
+> 	## alias	 help(recovery)
 > 
 > ##___ Examples ___:
 > 
-> data(recover)
+> data(recovery)
 > 
 > # one-sided simultaneous confidence intervals for Dunnett 
 > # in the one-way layout
-> simint(minutes~blanket, data=recover, conf.level=0.9, 
+> simint(minutes~blanket, data=recovery, conf.level=0.9, 
 +        alternative="less",eps=0.0001)
 
 	Simultaneous confidence intervals: Dunnett contrasts
 
-data:  minutes by blanket 
+Call: 
+simint.formula(formula = minutes ~ blanket, data = recovery, 
+    conf.level = 0.9, alternative = "less", eps = 1e-04)
 
 	90 % confidence intervals
 
-                  Estimate lower CI upper CI
-blanket2-blanket1  -2.1333     -Inf   0.8226
-blanket3-blanket1  -7.4667     -Inf  -4.5108
-blanket4-blanket1  -1.6667     -Inf  -0.0360
+                    Estimate lower CI upper CI
+blanketb1-blanketb0  -2.1333     -Inf   0.8225
+blanketb2-blanketb0  -7.4667     -Inf  -4.5108
+blanketb3-blanketb0  -1.6667     -Inf  -0.0360
 > 
 > # same results, but specifying the contrast matrix by hand
 > C <- c(0, 0, 0, -1, -1, -1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 > C <- matrix(C, ncol=5)
 > # numerate the contrasts
 > rownames(C) <- paste("C", 1:nrow(C), sep="")
-> test <- simint(minutes~blanket, data=recover, conf.level=0.9, 
+> test <- simint(minutes~blanket, data=recovery, conf.level=0.9, 
 +                alternative="less",eps=0.0001, cmatrix=C)
 > print(test)
 
 	Simultaneous confidence intervals: user-defined contrasts
 
-data:  minutes by blanket 
+Call: 
+simint.formula(formula = minutes ~ blanket, data = recovery, 
+    conf.level = 0.9, alternative = "less", eps = 1e-04, cmatrix = C)
 
 	90 % confidence intervals
 
    Estimate lower CI upper CI
-C1  -2.1333     -Inf   0.8226
+C1  -2.1333     -Inf   0.8225
 C2  -7.4667     -Inf  -4.5108
 C3  -1.6667     -Inf  -0.0360
 > 
@@ -379,21 +402,25 @@ C3  -1.6667     -Inf  -0.0360
 
 	Simultaneous 90% confidence intervals: user-defined contrasts
 
-Data:  minutes by blanket 
+Call: 
+simint.formula(formula = minutes ~ blanket, data = recovery, 
+    conf.level = 0.9, alternative = "less", eps = 1e-04, cmatrix = C)
+
+	 user-defined contrasts for factor blanket
 
 Contrast matrix:
-   [,1] [,2] [,3] [,4]
-C1   -1    1    0    0
-C2   -1    0    1    0
-C3   -1    0    0    1
+   [,1] [,2] [,3] [,4] [,5]
+C1    0   -1    1    0    0
+C2    0   -1    0    1    0
+C3    0   -1    0    0    1
 
 Absolute Error Tolerance:  1e-04 
 
- 90 % quantile:  1.8431 
+ 90 % quantile:  1.843 
 
 Coefficients:
    Estimate low CI,  upp CI t value Std.Err.  p raw p Bonf  p adj
-C1  -2.1333    -Inf  0.8226 -1.3302   1.6038 0.0958 0.2874 0.2412
+C1  -2.1333    -Inf  0.8225 -1.3302   1.6038 0.0958 0.2874 0.2412
 C2  -7.4667    -Inf -4.5108 -4.6556   1.6038 0.0000 0.0001 0.0001
 C3  -1.6667    -Inf -0.0360 -1.8837   0.8848 0.0337 0.1012 0.0924
 > 
@@ -460,31 +487,36 @@ C3  -1.6667    -Inf -0.0360 -1.8837   0.8848 0.0337 0.1012 0.0924
 +                 data=respiratory, ttype="logical",
 +                 alternative="greater", cmatrix=C))
 
-	 Simultaneous tests: Dunnett contrasts 
+	 Simultaneous tests: user-defined contrasts 
 
-Data:  Score by Treatment + AgeGroup + InitHealth 
+Call: 
+simtest.formula(formula = Score ~ Treatment:AgeGroup:InitHealth, 
+    data = respiratory, ttype = "logical", alternative = "greater", 
+    cmatrix = C)
+
+	 user-defined contrasts for factor Treatment:AgeGroup:InitHealth
 
 Contrast matrix:
-        [,1]       [,2]      [,3]       [,4]      [,5]       [,6]      [,7]
-C1 0.2407407 -0.2456140 0.2037037 -0.2105263 0.2407407 -0.3333333 0.3148148
-C2 0.5000000 -0.4242424 0.0000000  0.0000000 0.5000000 -0.5757576 0.0000000
-C3 0.0000000  0.0000000 0.3928571 -0.5000000 0.0000000  0.0000000 0.6071429
-C4 0.5416667 -0.5384615 0.4583333 -0.4615385 0.0000000  0.0000000 0.0000000
-C5 0.0000000  0.0000000 0.0000000  0.0000000 0.4333333 -0.6129032 0.5666667
-C6 1.0000000 -1.0000000 0.0000000  0.0000000 0.0000000  0.0000000 0.0000000
-C7 0.0000000  0.0000000 0.0000000  0.0000000 1.0000000 -1.0000000 0.0000000
-C8 0.0000000  0.0000000 1.0000000 -1.0000000 0.0000000  0.0000000 0.0000000
-C9 0.0000000  0.0000000 0.0000000  0.0000000 0.0000000  0.0000000 1.0000000
-         [,8]
-C1 -0.2105263
-C2  0.0000000
-C3 -0.5000000
-C4  0.0000000
-C5 -0.3870968
-C6  0.0000000
-C7  0.0000000
-C8  0.0000000
-C9 -1.0000000
+   [,1]      [,2]       [,3]      [,4]       [,5]      [,6]       [,7]
+C1    0 0.2407407 -0.2456140 0.2037037 -0.2105263 0.2407407 -0.3333333
+C2    0 0.5000000 -0.4242424 0.0000000  0.0000000 0.5000000 -0.5757576
+C3    0 0.0000000  0.0000000 0.3928571 -0.5000000 0.0000000  0.0000000
+C4    0 0.5416667 -0.5384615 0.4583333 -0.4615385 0.0000000  0.0000000
+C5    0 0.0000000  0.0000000 0.0000000  0.0000000 0.4333333 -0.6129032
+C6    0 1.0000000 -1.0000000 0.0000000  0.0000000 0.0000000  0.0000000
+C7    0 0.0000000  0.0000000 0.0000000  0.0000000 1.0000000 -1.0000000
+C8    0 0.0000000  0.0000000 1.0000000 -1.0000000 0.0000000  0.0000000
+C9    0 0.0000000  0.0000000 0.0000000  0.0000000 0.0000000  0.0000000
+        [,8]       [,9]
+C1 0.3148148 -0.2105263
+C2 0.0000000  0.0000000
+C3 0.6071429 -0.5000000
+C4 0.0000000  0.0000000
+C5 0.5666667 -0.3870968
+C6 0.0000000  0.0000000
+C7 0.0000000  0.0000000
+C8 0.0000000  0.0000000
+C9 1.0000000 -1.0000000
 
 
 Absolute Error Tolerance:  0.001 
@@ -492,13 +524,13 @@ Absolute Error Tolerance:  0.001
 Coefficients:
    Estimate t value Std.Err. p raw p Bonf p adj
 C2    1.073   4.074    0.191 0.000  0.000 0.000
-C1    0.736   3.857    0.263 0.000  0.001 0.000
-C5    0.861   3.346    0.279 0.001  0.003 0.003
+C1    0.736   3.857    0.263 0.000  0.001 0.001
+C5    0.861   3.346    0.279 0.001  0.003 0.002
 C6    1.219   3.149    0.284 0.001  0.006 0.005
-C9    0.870   2.296    0.257 0.012  0.059 0.044
-C7    0.815   2.255    0.387 0.013  0.059 0.045
-C4    0.609   2.142    0.362 0.017  0.059 0.045
-C3    0.319   1.142    0.419 0.128  0.256 0.196
+C9    0.870   2.296    0.257 0.012  0.059 0.048
+C7    0.815   2.255    0.387 0.013  0.059 0.048
+C4    0.609   2.142    0.362 0.017  0.059 0.048
+C3    0.319   1.142    0.419 0.128  0.256 0.195
 C8   -0.105  -0.249    0.379 0.598  0.598 0.598
 > 
 > ## Keywords: 'datasets'.
@@ -513,36 +545,41 @@ C8   -0.105  -0.249    0.379 0.598  0.598 0.598
 > 
 > ##___ Examples ___:
 > 
-> data(recover)
+> data(recovery)
 > 
 > # one-sided simultaneous confidence intervals for Dunnett 
 > # in the one-way layout
-> summary(simint(minutes~blanket, data=recover, type="Dunnett", conf.level=0.9, 
+> summary(simint(minutes~blanket, data=recovery, type="Dunnett", conf.level=0.9, 
 +        alternative="less",eps=0.0001))
 
 	Simultaneous 90% confidence intervals: Dunnett contrasts
 
-Data:  minutes by blanket 
+Call: 
+simint.formula(formula = minutes ~ blanket, data = recovery, 
+    type = "Dunnett", conf.level = 0.9, alternative = "less", 
+    eps = 1e-04)
+
+	 Dunnett contrasts for factor blanket
 
 Contrast matrix:
-                  blanket1 blanket2 blanket3 blanket4
-blanket2-blanket1       -1        1        0        0
-blanket3-blanket1       -1        0        1        0
-blanket4-blanket1       -1        0        0        1
+                      blanketb0 blanketb1 blanketb2 blanketb3
+blanketb1-blanketb0 0        -1         1         0         0
+blanketb2-blanketb0 0        -1         0         1         0
+blanketb3-blanketb0 0        -1         0         0         1
 
 Absolute Error Tolerance:  1e-04 
 
  90 % quantile:  1.843 
 
 Coefficients:
-                  Estimate low CI,  upp CI t value Std.Err.  p raw p Bonf
-blanket2-blanket1  -2.1333    -Inf  0.8225 -1.3302   1.6038 0.0958 0.2874
-blanket3-blanket1  -7.4667    -Inf -4.5108 -4.6556   1.6038 0.0000 0.0001
-blanket4-blanket1  -1.6667    -Inf -0.0360 -1.8837   0.8848 0.0337 0.1012
-                   p adj
-blanket2-blanket1 0.2412
-blanket3-blanket1 0.0001
-blanket4-blanket1 0.0924
+                    Estimate low CI,  upp CI t value Std.Err.  p raw p Bonf
+blanketb1-blanketb0  -2.1333    -Inf  0.8225 -1.3302   1.6038 0.0958 0.2874
+blanketb2-blanketb0  -7.4667    -Inf -4.5108 -4.6556   1.6038 0.0000 0.0001
+blanketb3-blanketb0  -1.6667    -Inf -0.0360 -1.8837   0.8848 0.0337 0.1012
+                     p adj
+blanketb1-blanketb0 0.2412
+blanketb2-blanketb0 0.0001
+blanketb3-blanketb0 0.0924
 > 
 > 
 > ## Keywords: 'htest'.
@@ -565,34 +602,36 @@ blanket4-blanket1 0.0924
 
 	Simultaneous tests: Tukey contrasts
 
-data:  response by trt 
+Call: 
+simtest.formula(formula = response ~ trt, data = cholesterol, 
+    type = "Tukey", ttype = "logical")
 
 Contrast matrix:
-          trt1 trt2 trt3 trt4 trt5
-trt2-trt1   -1    1    0    0    0
-trt3-trt1   -1    0    1    0    0
-trt4-trt1   -1    0    0    1    0
-trt5-trt1   -1    0    0    0    1
-trt3-trt2    0   -1    1    0    0
-trt4-trt2    0   -1    0    1    0
-trt5-trt2    0   -1    0    0    1
-trt4-trt3    0    0   -1    1    0
-trt5-trt3    0    0   -1    0    1
-trt5-trt4    0    0    0   -1    1
+            trtA trtB trtC trtD trtE
+trtB-trtA 0   -1    1    0    0    0
+trtC-trtA 0   -1    0    1    0    0
+trtD-trtA 0   -1    0    0    1    0
+trtE-trtA 0   -1    0    0    0    1
+trtC-trtB 0    0   -1    1    0    0
+trtD-trtB 0    0   -1    0    1    0
+trtE-trtB 0    0   -1    0    0    1
+trtD-trtC 0    0    0   -1    1    0
+trtE-trtC 0    0    0   -1    0    1
+trtE-trtD 0    0    0    0   -1    1
 
 Adjusted P-Values
 
           p adj
-trt5-trt1 0.000
-trt5-trt2 0.000
-trt4-trt1 0.000
-trt5-trt3 0.000
-trt3-trt1 0.000
-trt4-trt2 0.000
-trt5-trt4 0.001
-trt2-trt1 0.042
-trt3-trt2 0.042
-trt4-trt3 0.044
+trtE-trtA 0.000
+trtE-trtB 0.000
+trtD-trtA 0.000
+trtE-trtC 0.000
+trtC-trtA 0.000
+trtD-trtB 0.000
+trtE-trtD 0.001
+trtB-trtA 0.042
+trtC-trtB 0.042
+trtD-trtC 0.044
 > 
 > 
 > ## Keywords: 'htest'.
@@ -617,23 +656,27 @@ trt4-trt3 0.044
 
 	Simultaneous 95% confidence intervals: user-defined contrasts
 
-Data:  cost by make + mph 
+Call: 
+simint.formula(formula = cost ~ make + mph + make:mph, data = tire, 
+    cmatrix = C, eps = 0.001)
+
+	 user-defined contrasts for factor make, covariables:  mph + make:mph 
 
 Contrast matrix:
-    [,1] [,2] [,3] [,4] [,5]
-C1     1   -1    0   10  -10
-C2     1   -1    0   15  -15
-C3     1   -1    0   20  -20
-C4     1   -1    0   25  -25
-C5     1   -1    0   30  -30
-C6     1   -1    0   35  -35
-C7     1   -1    0   40  -40
-C8     1   -1    0   45  -45
-C9     1   -1    0   50  -50
-C10    1   -1    0   55  -55
-C11    1   -1    0   60  -60
-C12    1   -1    0   65  -65
-C13    1   -1    0   70  -70
+    [,1] [,2] [,3] [,4] [,5] [,6]
+C1     0    1   -1    0   10  -10
+C2     0    1   -1    0   15  -15
+C3     0    1   -1    0   20  -20
+C4     0    1   -1    0   25  -25
+C5     0    1   -1    0   30  -30
+C6     0    1   -1    0   35  -35
+C7     0    1   -1    0   40  -40
+C8     0    1   -1    0   45  -45
+C9     0    1   -1    0   50  -50
+C10    0    1   -1    0   55  -55
+C11    0    1   -1    0   60  -60
+C12    0    1   -1    0   65  -65
+C13    0    1   -1    0   70  -70
 
 Absolute Error Tolerance:  0.001 
 
@@ -641,19 +684,19 @@ Absolute Error Tolerance:  0.001
 
 Coefficients:
     Estimate low CI, upp CI t value Std.Err. p raw p Bonf p adj
-C1    -4.107  -6.543 -1.670  -4.492    0.914 0.000  0.006 0.001
-C2    -3.454  -5.608 -1.300  -4.272    0.808 0.001  0.009 0.002
-C3    -2.801  -4.693 -0.909  -3.945    0.710 0.001  0.017 0.004
-C4    -2.148  -3.808 -0.488  -3.448    0.623 0.004  0.047 0.010
+C1    -4.107  -6.544 -1.670  -4.492    0.914 0.000  0.006 0.001
+C2    -3.454  -5.609 -1.299  -4.272    0.808 0.001  0.009 0.002
+C3    -2.801  -4.694 -0.908  -3.945    0.710 0.001  0.017 0.004
+C4    -2.148  -3.809 -0.488  -3.448    0.623 0.004  0.047 0.010
 C5    -1.496  -2.968 -0.023  -2.707    0.552 0.016  0.211 0.046
 C6    -0.843  -2.190  0.504  -1.668    0.505 0.116  1.000 0.266
-C7    -0.190  -1.492  1.112  -0.389    0.489 0.703  1.000 0.924
-C8     0.463  -0.884  1.810   0.916    0.505 0.374  1.000 0.654
-C9     1.116  -0.357  2.588   2.019    0.552 0.062  0.802 0.154
-C10    1.768   0.108  3.428   2.838    0.623 0.012  0.162 0.036
-C11    2.421   0.529  4.313   3.410    0.710 0.004  0.050 0.012
-C12    3.074   0.920  5.228   3.802    0.808 0.002  0.023 0.006
-C13    3.727   1.290  6.163   4.076    0.914 0.001  0.013 0.003
+C7    -0.190  -1.493  1.113  -0.389    0.489 0.703  1.000 0.924
+C8     0.463  -0.884  1.810   0.916    0.505 0.374  1.000 0.653
+C9     1.116  -0.357  2.588   2.019    0.552 0.062  0.802 0.155
+C10    1.768   0.108  3.429   2.838    0.623 0.012  0.162 0.036
+C11    2.421   0.528  4.314   3.410    0.710 0.004  0.050 0.012
+C12    3.074   0.919  5.229   3.802    0.808 0.002  0.023 0.006
+C13    3.727   1.290  6.164   4.076    0.914 0.001  0.013 0.003
 > 
 > ## Keywords: 'datasets'.
 > 
@@ -680,71 +723,75 @@ Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1
 
 	Simultaneous 95% confidence intervals: Tetrade contrasts
 
-Data:  waste by envir + temp 
+Call: 
+simint.formula(formula = waste ~ envir:temp, data = waste, type = "Tetrade", 
+    eps = 0.01)
+
+	 Tetrade contrasts for factor envir:temp
 
 Contrast matrix:
                 [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
-(11-12)-(21-22)    1   -1    0   -1    1    0    0    0    0     0     0     0
-(11-13)-(21-23)    1    0   -1   -1    0    1    0    0    0     0     0     0
-(12-13)-(22-23)    0    1   -1    0   -1    1    0    0    0     0     0     0
-(11-12)-(31-32)    1   -1    0    0    0    0   -1    1    0     0     0     0
-(11-13)-(31-33)    1    0   -1    0    0    0   -1    0    1     0     0     0
-(12-13)-(32-33)    0    1   -1    0    0    0    0   -1    1     0     0     0
-(11-12)-(41-42)    1   -1    0    0    0    0    0    0    0    -1     1     0
-(11-13)-(41-43)    1    0   -1    0    0    0    0    0    0    -1     0     1
-(12-13)-(42-43)    0    1   -1    0    0    0    0    0    0     0    -1     1
-(11-12)-(51-52)    1   -1    0    0    0    0    0    0    0     0     0     0
-(11-13)-(51-53)    1    0   -1    0    0    0    0    0    0     0     0     0
-(12-13)-(52-53)    0    1   -1    0    0    0    0    0    0     0     0     0
-(21-22)-(31-32)    0    0    0    1   -1    0   -1    1    0     0     0     0
-(21-23)-(31-33)    0    0    0    1    0   -1   -1    0    1     0     0     0
-(22-23)-(32-33)    0    0    0    0    1   -1    0   -1    1     0     0     0
-(21-22)-(41-42)    0    0    0    1   -1    0    0    0    0    -1     1     0
-(21-23)-(41-43)    0    0    0    1    0   -1    0    0    0    -1     0     1
-(22-23)-(42-43)    0    0    0    0    1   -1    0    0    0     0    -1     1
-(21-22)-(51-52)    0    0    0    1   -1    0    0    0    0     0     0     0
-(21-23)-(51-53)    0    0    0    1    0   -1    0    0    0     0     0     0
-(22-23)-(52-53)    0    0    0    0    1   -1    0    0    0     0     0     0
-(31-32)-(41-42)    0    0    0    0    0    0    1   -1    0    -1     1     0
-(31-33)-(41-43)    0    0    0    0    0    0    1    0   -1    -1     0     1
-(32-33)-(42-43)    0    0    0    0    0    0    0    1   -1     0    -1     1
-(31-32)-(51-52)    0    0    0    0    0    0    1   -1    0     0     0     0
-(31-33)-(51-53)    0    0    0    0    0    0    1    0   -1     0     0     0
-(32-33)-(52-53)    0    0    0    0    0    0    0    1   -1     0     0     0
-(41-42)-(51-52)    0    0    0    0    0    0    0    0    0     1    -1     0
-(41-43)-(51-53)    0    0    0    0    0    0    0    0    0     1     0    -1
-(42-43)-(52-53)    0    0    0    0    0    0    0    0    0     0     1    -1
-                [,13] [,14] [,15]
-(11-12)-(21-22)     0     0     0
-(11-13)-(21-23)     0     0     0
-(12-13)-(22-23)     0     0     0
-(11-12)-(31-32)     0     0     0
-(11-13)-(31-33)     0     0     0
-(12-13)-(32-33)     0     0     0
-(11-12)-(41-42)     0     0     0
-(11-13)-(41-43)     0     0     0
-(12-13)-(42-43)     0     0     0
-(11-12)-(51-52)    -1     1     0
-(11-13)-(51-53)    -1     0     1
-(12-13)-(52-53)     0    -1     1
-(21-22)-(31-32)     0     0     0
-(21-23)-(31-33)     0     0     0
-(22-23)-(32-33)     0     0     0
-(21-22)-(41-42)     0     0     0
-(21-23)-(41-43)     0     0     0
-(22-23)-(42-43)     0     0     0
-(21-22)-(51-52)    -1     1     0
-(21-23)-(51-53)    -1     0     1
-(22-23)-(52-53)     0    -1     1
-(31-32)-(41-42)     0     0     0
-(31-33)-(41-43)     0     0     0
-(32-33)-(42-43)     0     0     0
-(31-32)-(51-52)    -1     1     0
-(31-33)-(51-53)    -1     0     1
-(32-33)-(52-53)     0    -1     1
-(41-42)-(51-52)    -1     1     0
-(41-43)-(51-53)    -1     0     1
-(42-43)-(52-53)     0    -1     1
+(11-12)-(21-22)    0    1   -1    0   -1    1    0    0    0     0     0     0
+(11-13)-(21-23)    0    1    0   -1   -1    0    1    0    0     0     0     0
+(12-13)-(22-23)    0    0    1   -1    0   -1    1    0    0     0     0     0
+(11-12)-(31-32)    0    1   -1    0    0    0    0   -1    1     0     0     0
+(11-13)-(31-33)    0    1    0   -1    0    0    0   -1    0     1     0     0
+(12-13)-(32-33)    0    0    1   -1    0    0    0    0   -1     1     0     0
+(11-12)-(41-42)    0    1   -1    0    0    0    0    0    0     0    -1     1
+(11-13)-(41-43)    0    1    0   -1    0    0    0    0    0     0    -1     0
+(12-13)-(42-43)    0    0    1   -1    0    0    0    0    0     0     0    -1
+(11-12)-(51-52)    0    1   -1    0    0    0    0    0    0     0     0     0
+(11-13)-(51-53)    0    1    0   -1    0    0    0    0    0     0     0     0
+(12-13)-(52-53)    0    0    1   -1    0    0    0    0    0     0     0     0
+(21-22)-(31-32)    0    0    0    0    1   -1    0   -1    1     0     0     0
+(21-23)-(31-33)    0    0    0    0    1    0   -1   -1    0     1     0     0
+(22-23)-(32-33)    0    0    0    0    0    1   -1    0   -1     1     0     0
+(21-22)-(41-42)    0    0    0    0    1   -1    0    0    0     0    -1     1
+(21-23)-(41-43)    0    0    0    0    1    0   -1    0    0     0    -1     0
+(22-23)-(42-43)    0    0    0    0    0    1   -1    0    0     0     0    -1
+(21-22)-(51-52)    0    0    0    0    1   -1    0    0    0     0     0     0
+(21-23)-(51-53)    0    0    0    0    1    0   -1    0    0     0     0     0
+(22-23)-(52-53)    0    0    0    0    0    1   -1    0    0     0     0     0
+(31-32)-(41-42)    0    0    0    0    0    0    0    1   -1     0    -1     1
+(31-33)-(41-43)    0    0    0    0    0    0    0    1    0    -1    -1     0
+(32-33)-(42-43)    0    0    0    0    0    0    0    0    1    -1     0    -1
+(31-32)-(51-52)    0    0    0    0    0    0    0    1   -1     0     0     0
+(31-33)-(51-53)    0    0    0    0    0    0    0    1    0    -1     0     0
+(32-33)-(52-53)    0    0    0    0    0    0    0    0    1    -1     0     0
+(41-42)-(51-52)    0    0    0    0    0    0    0    0    0     0     1    -1
+(41-43)-(51-53)    0    0    0    0    0    0    0    0    0     0     1     0
+(42-43)-(52-53)    0    0    0    0    0    0    0    0    0     0     0     1
+                [,13] [,14] [,15] [,16]
+(11-12)-(21-22)     0     0     0     0
+(11-13)-(21-23)     0     0     0     0
+(12-13)-(22-23)     0     0     0     0
+(11-12)-(31-32)     0     0     0     0
+(11-13)-(31-33)     0     0     0     0
+(12-13)-(32-33)     0     0     0     0
+(11-12)-(41-42)     0     0     0     0
+(11-13)-(41-43)     1     0     0     0
+(12-13)-(42-43)     1     0     0     0
+(11-12)-(51-52)     0    -1     1     0
+(11-13)-(51-53)     0    -1     0     1
+(12-13)-(52-53)     0     0    -1     1
+(21-22)-(31-32)     0     0     0     0
+(21-23)-(31-33)     0     0     0     0
+(22-23)-(32-33)     0     0     0     0
+(21-22)-(41-42)     0     0     0     0
+(21-23)-(41-43)     1     0     0     0
+(22-23)-(42-43)     1     0     0     0
+(21-22)-(51-52)     0    -1     1     0
+(21-23)-(51-53)     0    -1     0     1
+(22-23)-(52-53)     0     0    -1     1
+(31-32)-(41-42)     0     0     0     0
+(31-33)-(41-43)     1     0     0     0
+(32-33)-(42-43)     1     0     0     0
+(31-32)-(51-52)     0    -1     1     0
+(31-33)-(51-53)     0    -1     0     1
+(32-33)-(52-53)     0     0    -1     1
+(41-42)-(51-52)     0    -1     1     0
+(41-43)-(51-53)    -1    -1     0     1
+(42-43)-(52-53)    -1     0    -1     1
 
 Absolute Error Tolerance:  0.01 
 
@@ -752,42 +799,42 @@ Absolute Error Tolerance:  0.01
 
 Coefficients:
                 Estimate low CI, upp CI t value Std.Err. p raw p Bonf p adj
-(11-12)-(21-22)    -1.78   -7.23   3.67   -1.16     1.53  0.26   1.00  0.95
-(11-13)-(21-23)    -0.22   -5.67   5.23   -0.14     1.53  0.89   1.00  1.00
-(12-13)-(22-23)     1.56   -3.89   7.01    1.02     1.53  0.32   1.00  0.98
-(11-12)-(31-32)    -2.37   -7.81   3.08   -1.54     1.53  0.14   1.00  0.81
-(11-13)-(31-33)    -1.72   -7.16   3.73   -1.12     1.53  0.28   1.00  0.96
-(12-13)-(32-33)     0.65   -4.80   6.10    0.42     1.53  0.68   1.00  1.00
-(11-12)-(41-42)     2.08   -3.37   7.53    1.36     1.53  0.19   1.00  0.89
-(11-13)-(41-43)     3.72   -1.73   9.17    2.43     1.53  0.03   0.85  0.32
-(12-13)-(42-43)     1.64   -3.81   7.09    1.07     1.53  0.30   1.00  0.97
-(11-12)-(51-52)     1.26   -4.19   6.71    0.82     1.53  0.42   1.00  0.99
-(11-13)-(51-53)     1.99   -3.46   7.44    1.30     1.53  0.21   1.00  0.91
-(12-13)-(52-53)     0.73   -4.72   6.18    0.48     1.53  0.64   1.00  1.00
-(21-22)-(31-32)    -0.59   -6.03   4.86   -0.38     1.53  0.71   1.00  1.00
-(21-23)-(31-33)    -1.50   -6.94   3.95   -0.98     1.53  0.34   1.00  0.98
-(22-23)-(32-33)    -0.91   -6.36   4.54   -0.59     1.53  0.56   1.00  1.00
-(21-22)-(41-42)     3.86   -1.59   9.31    2.52     1.53  0.02   0.71  0.28
-(21-23)-(41-43)     3.94   -1.51   9.39    2.57     1.53  0.02   0.64  0.26
-(22-23)-(42-43)     0.08   -5.37   5.53    0.05     1.53  0.96   1.00  1.00
-(21-22)-(51-52)     3.04   -2.41   8.49    1.98     1.53  0.07   1.00  0.56
-(21-23)-(51-53)     2.21   -3.24   7.66    1.44     1.53  0.17   1.00  0.85
-(22-23)-(52-53)    -0.83   -6.28   4.62   -0.54     1.53  0.60   1.00  1.00
-(31-32)-(41-42)     4.45   -1.00   9.89    2.90     1.53  0.01   0.33  0.15
-(31-33)-(41-43)     5.44   -0.01  10.88    3.55     1.53  0.00   0.09  0.04
-(32-33)-(42-43)     0.99   -4.46   6.44    0.65     1.53  0.53   1.00  1.00
-(31-32)-(51-52)     3.63   -1.82   9.07    2.36     1.53  0.03   0.96  0.36
-(31-33)-(51-53)     3.71   -1.74   9.15    2.42     1.53  0.03   0.87  0.33
-(32-33)-(52-53)     0.08   -5.37   5.53    0.05     1.53  0.96   1.00  1.00
-(41-42)-(51-52)    -0.82   -6.27   4.63   -0.53     1.53  0.60   1.00  1.00
-(41-43)-(51-53)    -1.73   -7.18   3.72   -1.13     1.53  0.28   1.00  0.96
-(42-43)-(52-53)    -0.91   -6.36   4.54   -0.59     1.53  0.56   1.00  1.00
+(11-12)-(21-22)    -1.78   -7.21   3.65   -1.16     1.53  0.26   1.00  0.95
+(11-13)-(21-23)    -0.22   -5.65   5.21   -0.14     1.53  0.89   1.00  1.00
+(12-13)-(22-23)     1.56   -3.87   6.99    1.02     1.53  0.32   1.00  0.98
+(11-12)-(31-32)    -2.37   -7.80   3.07   -1.54     1.53  0.14   1.00  0.81
+(11-13)-(31-33)    -1.72   -7.15   3.72   -1.12     1.53  0.28   1.00  0.96
+(12-13)-(32-33)     0.65   -4.78   6.08    0.42     1.53  0.68   1.00  1.00
+(11-12)-(41-42)     2.08   -3.35   7.51    1.36     1.53  0.19   1.00  0.89
+(11-13)-(41-43)     3.72   -1.71   9.15    2.43     1.53  0.03   0.85  0.32
+(12-13)-(42-43)     1.64   -3.79   7.07    1.07     1.53  0.30   1.00  0.97
+(11-12)-(51-52)     1.26   -4.17   6.69    0.82     1.53  0.42   1.00  0.99
+(11-13)-(51-53)     1.99   -3.44   7.42    1.30     1.53  0.21   1.00  0.91
+(12-13)-(52-53)     0.73   -4.70   6.16    0.48     1.53  0.64   1.00  1.00
+(21-22)-(31-32)    -0.59   -6.02   4.85   -0.38     1.53  0.71   1.00  1.00
+(21-23)-(31-33)    -1.50   -6.93   3.94   -0.98     1.53  0.34   1.00  0.98
+(22-23)-(32-33)    -0.91   -6.34   4.52   -0.59     1.53  0.56   1.00  1.00
+(21-22)-(41-42)     3.86   -1.57   9.29    2.52     1.53  0.02   0.71  0.28
+(21-23)-(41-43)     3.94   -1.49   9.37    2.57     1.53  0.02   0.64  0.26
+(22-23)-(42-43)     0.08   -5.35   5.51    0.05     1.53  0.96   1.00  1.00
+(21-22)-(51-52)     3.04   -2.39   8.47    1.98     1.53  0.07   1.00  0.56
+(21-23)-(51-53)     2.21   -3.22   7.64    1.44     1.53  0.17   1.00  0.86
+(22-23)-(52-53)    -0.83   -6.26   4.60   -0.54     1.53  0.60   1.00  1.00
+(31-32)-(41-42)     4.45   -0.99   9.88    2.90     1.53  0.01   0.33  0.16
+(31-33)-(41-43)     5.44    0.00  10.87    3.55     1.53  0.00   0.09  0.06
+(32-33)-(42-43)     0.99   -4.44   6.42    0.65     1.53  0.53   1.00  1.00
+(31-32)-(51-52)     3.63   -1.81   9.06    2.36     1.53  0.03   0.96  0.36
+(31-33)-(51-53)     3.71   -1.73   9.14    2.42     1.53  0.03   0.87  0.33
+(32-33)-(52-53)     0.08   -5.35   5.51    0.05     1.53  0.96   1.00  1.00
+(41-42)-(51-52)    -0.82   -6.25   4.61   -0.53     1.53  0.60   1.00  1.00
+(41-43)-(51-53)    -1.73   -7.16   3.70   -1.13     1.53  0.28   1.00  0.96
+(42-43)-(52-53)    -0.91   -6.34   4.52   -0.59     1.53  0.56   1.00  1.00
 > 
 > ## Keywords: 'datasets'.
 > 
 > 
 > cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\n")
-Time elapsed:  82.66 0.72 83.96 0 0 
+Time elapsed:  60.75 0.3 63.33 0 0 
 > dev.off(); quit('no')
 null device 
           1 

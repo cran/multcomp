@@ -6,10 +6,10 @@ Computes multiplicity adjusted p-values based on
 precomputed parameter estimates.
 }
 \usage{
-csimtest(estpar, df, covm, cmatrix = NULL, ctype = "user-defined",
-         ttype = c("free", "logical"), 
-         alternative = c("two.sided", "less", "greater"), asympt = FALSE,
-         eps = 0.001, maxpts = 1e+06)
+csimtest(estpar, df, covm, cmatrix = NULL, 
+         ctype = "user-defined", ttype = c("free", "logical"), 
+         alternative = c("two.sided", "less", "greater"), 
+         asympt = FALSE, eps = 0.001, maxpts = 1e+06)
 }
 \arguments{
   \item{estpar}{ estimated parameter vector. }

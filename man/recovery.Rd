@@ -1,8 +1,8 @@
-\name{recover}
-\alias{recover}
+\name{recovery}
+\alias{recovery}
 \non_function{}
 \title{ Recovery Time Data Set }
-\usage{data(recover)}
+\usage{data(recovery)}
 \description{
  Recovery time data set taken from Westfall 
  et al. (1999, p. 80). Many-to-one comparisons according to 
@@ -26,11 +26,11 @@
   Cary, NC: SAS Institute Inc.  
 }
 \examples{
-data(recover)
+data(recovery)
 
 # one-sided simultaneous confidence intervals for Dunnett 
 # in the one-way layout
-simint(minutes~blanket, data=recover, conf.level=0.9, 
+simint(minutes ~ blanket, data=recovery, conf.level=0.9, 
        alternative="less",eps=0.0001)
 
 # same results, but specifying the contrast matrix by hand
@@ -38,7 +38,7 @@ C <- c(0, 0, 0, -1, -1, -1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 C <- matrix(C, ncol=5)
 # numerate the contrasts
 rownames(C) <- paste("C", 1:nrow(C), sep="")
-test <- simint(minutes~blanket, data=recover, conf.level=0.9, 
+test <- simint(minutes~blanket, data=recovery, conf.level=0.9, 
                alternative="less",eps=0.0001, cmatrix=C)
 print(test)
 

@@ -28,7 +28,7 @@
 \examples{
 data(litter)
 
-# define the contrast matrix
+# define the contrast matrix, either completly
 C <- matrix(c(0,0,0,0,0,0,1,1,1,.75,.384,.887,-1,0,0,.25,.37,.113,
        0,-1,0,-.25,.246,-.339,0,0,-1,-.75,-1,-.661,0,0,0,
        0,0,0,0,0,0,0,0,0), ncol=7)
@@ -39,5 +39,14 @@ rownames(C) <- paste("C", 1:nrow(C), sep="")
 # in an ANCOVA
 summary(simint(weight ~ dose + gesttime + number, data=litter,
                alternative="greater", cmatrix=C))
+
+# or for dose only
+D <- matrix(c(1,1,1,.75,.384,.887,-1,0,0,.25,.37,.113,0,-1,0,-.25,
+              .246,-.339,0,0,-1,-.75,-1,-.661),ncol = 4)
+rownames(D) <- paste("D", 1:nrow(D), sep="")
+
+summary(simint(weight ~ dose + gesttime + number, data=litter,
+               whichf="dose", alternative="greater", cmatrix=D))
+
 }
 \keyword{datasets}

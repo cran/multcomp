@@ -2,8 +2,8 @@
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %
 % Copied from VR_6.3-2
-\name{ginv}
-\alias{ginv}
+\name{mginv}
+\alias{mginv}
 \title{
 Generalized Inverse of a Matrix
 }
@@ -12,7 +12,7 @@ Calculates the Moore-Penrose generalized inverse of a matrix
 \code{X}.
 }
 \usage{
-ginv(X, tol=sqrt(.Machine$double.eps))
+mginv(X, tol=sqrt(.Machine$double.eps))
 }
 \arguments{
 \item{X}{

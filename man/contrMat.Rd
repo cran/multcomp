@@ -2,11 +2,12 @@
 \alias{contrMat}
 \title{ Contrast Matrices }
 \description{
-  Computes contrast matrices for several pultiple comparision procedures.
+  Computes contrast matrices for several multiple comparision procedures.
 }
 \usage{
-contrMat(n, type=c("Dunnett", "Tukey", "Sequen", "AVE", "Changepoint",
-         "Williams", "Marcus", "McDermott", "Tetrade"), nlevel=NULL)
+contrMat(n, type=c("Dunnett", "Tukey", "Sequen", "AVE", 
+                   "Changepoint", "Williams", "Marcus", 
+                   "McDermott", "Tetrade"), nlevel=NULL)
 }
 \arguments{
   \item{n}{ a (possibly named) vector of sample sizes for each group. }
@@ -18,7 +19,7 @@ contrMat(n, type=c("Dunnett", "Tukey", "Sequen", "AVE", "Changepoint",
   Computes the requested matrix of contrasts.
 }
 \value{
-  The matrix of contrasts with appropriate rownames is returned.
+  The matrix of contrasts with appropriate rownames is returned. 
 }
 \references{
   Frank Bretz, Alan Genz and Ludwig A. Hothorn (2001), On the numerical 
