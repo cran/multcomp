@@ -1,17 +1,18 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.7.1  (2003-06-16)
+R : Copyright 2003, The R Foundation for Statistical Computing
+Version 1.9.0 Under development (unstable) (2003-12-18), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > 
 > actversion <- paste(R.version$major, R.version$minor, sep=".")
@@ -116,10 +117,10 @@ simint.formula(formula = minutes ~ blanket, data = recovery,
 
 	90 % confidence intervals
 
-                    Estimate lower CI upper CI
-blanketb1-blanketb0    -2.13     -Inf     0.60
-blanketb2-blanketb0    -6.30     -Inf    -3.03
-blanketb3-blanketb0    -1.23     -Inf     0.31
+                    Estimate   --  90 %
+blanketb1-blanketb0    -2.13 -Inf  0.60
+blanketb2-blanketb0    -6.30 -Inf -3.02
+blanketb3-blanketb0    -1.23 -Inf  0.31
 > simint(minutes ~ blanket, data=recovery, conf.level=0.9, 
 +        alternative="less", eps=0.01, subset = blanket != "b0", na.action =
 +        na.fail)
@@ -133,9 +134,9 @@ simint.formula(formula = minutes ~ blanket, data = recovery,
 
 	90 % confidence intervals
 
-                    Estimate lower CI upper CI
-blanketb2-blanketb1    -5.33     -Inf    -1.65
-blanketb3-blanketb1     0.47     -Inf     3.32
+                    Estimate   --  90 %
+blanketb2-blanketb1    -5.33 -Inf -1.65
+blanketb3-blanketb1     0.47 -Inf  3.32
 > 
 > ### spotted by Jamie Jarabek <jjarabek@stat.ufl.edu>
 > ### fixed in mvtnorm_0.6-1 (univariate pmvt with df = 0)
@@ -152,8 +153,8 @@ blanketb3-blanketb1     0.47     -Inf     3.32
 
 	95 % confidence intervals
 
-    Estimate lower CI upper CI
-2-1     9.18  -64.876   83.235
+    Estimate  2.5 % 97.5 %
+2-1    1.792 -0.615  4.198
 > 
 > ### whichf is part of a level of an factor treated as covariable
 > ### due to inconsistencies in `parseformula'
@@ -188,11 +189,31 @@ simint.formula(formula = Y ~ N + V + B, data = oats, whichf = "V",
 
 	95 % confidence intervals
 
-                         Estimate lower CI upper CI
-VMarvellous-VGolden.rain   5.2917  -5.3274  15.9107
-VVictory-VGolden.rain     -6.8750 -17.4941   3.7441
-VVictory-VMarvellous     -12.1667 -22.7857  -1.5476
+                         Estimate    2.5 %  97.5 %
+VMarvellous-VGolden.rain   5.2917  -5.3275 15.9108
+VVictory-VGolden.rain     -6.8750 -17.4941  3.7441
+VVictory-VMarvellous     -12.1667 -22.7858 -1.5475
 > cissi <- round(thsdsi$conf.int, 2)
 > attributes(cissi) <- NULL
 > stopifnot(all.equal(cis, cissi))
+> 
+> ### base argument may have caused incorrect estimates
+> ### spotted by Ludwig Hothorn <hothorn@ifgb.uni-hannover.de>
+> k1<-c( 1, 0, 0)
+> k2<-c( 0, 1, 0)
+> k3<-c( 0, 0, 1)
+> k4<-c(-1,-1,-1)
+> cc4<- cbind(k1,k2,k3,k4)
+> cc3<- cbind(k1,k2,k4,k3)
+> cc2<- cbind(k1,k4,k2,k3)
+> cc1<- cbind(k4,k1,k2,k3)
+> 
+> n = rep(3, 4)
+> a1 = all(contrMat(n, base = 1) == cc1)
+> a2 = all(contrMat(n, base = 2) == cc2)
+> a3 = all(contrMat(n, base = 3) == cc3)
+> a4 = all(contrMat(n, base = 4) == cc4)
+> stopifnot(all(c(a1, a2, a3, a4)))
+> 
+> 
 > 
