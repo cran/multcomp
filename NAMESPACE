@@ -1,0 +1,14 @@
+
+export(contrMat, mginv, csimint, csimtest, simint, simint.default,
+       simint.formula, simtest.default, simtest.formula, simtest, 
+       ct)
+
+S3method(print, hmtest)
+S3method(print, hmtestp)
+S3method(print, summary.hmtest)
+S3method(print, summary.hmtestp)
+S3method(plot, hmtest)
+S3method(summary, hmtest)
+S3method(summary, hmtestp)
+
+import(mvtnorm)

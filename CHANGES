@@ -1,4 +1,11 @@
-$Id: CHANGES,v 1.43 2003/03/24 14:14:03 hothorn Exp $
+$Id: CHANGES,v 1.45 2003/04/23 15:23:52 hothorn Exp $
+
+	0.3-11 (23.04.2003)
+
+	updates for R-1.7.0: svd now uses LAPACK which leads to small
+	differences for the estimated parameters.
+
+	the package is now in a NAMESPACE
 
 	0.3-10 (24.03.2003)
 

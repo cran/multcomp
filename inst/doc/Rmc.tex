@@ -159,17 +159,15 @@ one-factor models in \texttt{multcomp}. To obtain simultaneous
 confidence intervals for the comparisons $\beta_i - \beta_1$ on
 simply calls:
 \small
+\begin{Schunk}
 \begin{Sinput}
 >library(multcomp)
-\end{Sinput}
-\begin{Soutput}
-Loading required package: mvtnorm 
-\end{Soutput}
-\begin{Sinput}
 >data(recovery)
 >Dcirec <- simint(minutes ~ blanket, data = recovery, 
 +     conf.level = 0.9, alternative = "less")
 \end{Sinput}
+\end{Schunk}
+\begin{Schunk}
 \begin{Sinput}
 >print(Dcirec)
 \end{Sinput}
@@ -180,10 +178,11 @@ Loading required package: mvtnorm
 	90 % confidence intervals
 
                     Estimate lower CI upper CI
-blanketb1-blanketb0   -2.133     -Inf   -0.041
-blanketb2-blanketb0   -7.467     -Inf   -5.374
-blanketb3-blanketb0   -1.667     -Inf   -0.512
+blanketb1-blanketb0   -2.133     -Inf    0.823
+blanketb2-blanketb0   -7.467     -Inf   -4.511
+blanketb3-blanketb0   -1.667     -Inf   -0.036
 \end{Soutput}
+\end{Schunk}
 \normalsize
 Thus, blankets $b_2$ and $b_3$ lead to significant lower recovery
 times in comparison to the standard $b_0$, since the respective
@@ -195,6 +194,7 @@ than it is for $b_0$.
 A second way to obtain the same results is to define the contrast
 matrix $\bC$ explicitly:
 \small
+\begin{Schunk}
 \begin{Sinput}
 >C <- matrix(c(0, 0, 0, -1, -1, -1, 1, 0, 0, 0, 
 +     1, 0, 0, 0, 1), nc = 5)
@@ -203,6 +203,8 @@ matrix $\bC$ explicitly:
 +     conf.level = 0.9, alternative = "less", eps = 1e-04, 
 +     cmatrix = C)
 \end{Sinput}
+\end{Schunk}
+\begin{Schunk}
 \begin{Sinput}
 >print(Ccirec)
 \end{Sinput}
@@ -213,10 +215,11 @@ matrix $\bC$ explicitly:
 	90 % confidence intervals
 
    Estimate lower CI upper CI
-C1  -2.1333     -Inf  -0.0406
-C2  -7.4667     -Inf  -5.3739
-C3  -1.6667     -Inf  -0.5122
+C1  -2.1333     -Inf   0.8226
+C2  -7.4667     -Inf  -4.5107
+C3  -1.6667     -Inf  -0.0359
 \end{Soutput}
+\end{Schunk}
 \normalsize
 The first column of $\bC$ stands for the intercept $\beta_0$, the
 remaining columns are reserved for the 4 levels $\beta_1, \dots,
@@ -229,6 +232,7 @@ instead of the former three digits.
 
 More detailed output is available by using the summary method:
 \small
+\begin{Schunk}
 \begin{Sinput}
 >summary(Ccirec)
 \end{Sinput}
@@ -246,18 +250,19 @@ C3    0   -1    0    0    1
 
 Absolute Error Tolerance:  1e-04 
 
- 90 % quantile:  1.3049 
+ 90 % quantile:  1.8431 
 
 Coefficients:
    Estimate low CI,  upp CI t value Std.Err.  p raw p Bonf
-C1  -2.1333    -Inf -0.0406 -1.3302   1.6038 0.0958 0.0958
-C2  -7.4667    -Inf -5.3739 -4.6556   1.6038 0.0000 0.0000
-C3  -1.6667    -Inf -0.5122 -1.8837   0.8848 0.0337 0.0337
+C1  -2.1333    -Inf  0.8226 -1.3302   1.6038 0.0958 0.2874
+C2  -7.4667    -Inf -4.5107 -4.6556   1.6038 0.0000 0.0001
+C3  -1.6667    -Inf -0.0359 -1.8837   0.8848 0.0337 0.1012
     p adj
-C1 0.0958
-C2 0.0000
-C3 0.0337
+C1 0.2412
+C2 0.0001
+C3 0.0924
 \end{Soutput}
+\end{Schunk}
 \normalsize
 This output prints the user defined contrast matrix $\bC$ 
 and the quantile $c_{1-\alpha}$. In addition,
@@ -273,11 +278,14 @@ interval does not contain the 0.
 A more powerful approach is available using the \texttt{simtest}
 function. The call remains essentially the same, also no simultaneous confidence intervals are available:
 \small
+\begin{Schunk}
 \begin{Sinput}
 >Ctrec <- simtest(minutes ~ blanket, data = recovery, 
 +     conf.level = 0.9, alternative = "less", eps = 1e-04, 
 +     cmatrix = C)
 \end{Sinput}
+\end{Schunk}
+\begin{Schunk}
 \begin{Sinput}
 >summary(Ctrec)
 \end{Sinput}
@@ -301,6 +309,7 @@ C2  -7.4667 -4.6556   1.6038 0.0000 0.0001 0.0001
 C3  -1.6667 -1.8837   1.6038 0.0337 0.0675 0.0640
 C1  -2.1333 -1.3302   0.8848 0.0958 0.0958 0.0958
 \end{Soutput}
+\end{Schunk}
 \normalsize
 It transpires that the adjusted p-values are indeed
 uniformly lower in comparison to those from \texttt{simint}.
@@ -311,6 +320,7 @@ hand. In such cases, the core functions \texttt{csimint} and
 \texttt{csimtest} have to be called without using the
 \texttt{sim\{int,test\}} interfaces. The call 
 \small
+\begin{Schunk}
 \begin{Sinput}
 >parm <- c(14.8, 12.6667, 7.3333, 13.1333)
 >N <- c(20, 3, 3, 15)
@@ -328,10 +338,11 @@ hand. In such cases, the core functions \texttt{csimint} and
 	90 % confidence intervals
 
     Estimate lower CI upper CI
-2-1   -2.133     -Inf   -0.041
-3-1   -7.467     -Inf   -5.374
-4-1   -1.667     -Inf   -0.512
+2-1   -2.133     -Inf    0.823
+3-1   -7.467     -Inf   -4.511
+4-1   -1.667     -Inf   -0.036
 \end{Soutput}
+\end{Schunk}
 \normalsize 
 yields the same result as the first call above. The
 sample size vector $N$ and the mean square error $mse$ are only
