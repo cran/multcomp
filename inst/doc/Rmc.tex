@@ -19,7 +19,7 @@
 %%\VignetteDepends{multcomp}
 
 
-\usepackage{/var/tmp/Zeileis/Programs/R/share/texmf/Sweave}
+\usepackage{/usr/lib/R/share/texmf/Sweave}
 \begin{document}
 
 
@@ -197,7 +197,7 @@ Loading required package: mvtnorm
 	90 % confidence intervals
 
                     Estimate lower CI upper CI
-blanketb1-blanketb0   -2.133     -Inf    0.822
+blanketb1-blanketb0   -2.133     -Inf    0.823
 blanketb2-blanketb0   -7.467     -Inf   -4.511
 blanketb3-blanketb0   -1.667     -Inf   -0.036
 \end{Soutput}
@@ -234,7 +234,7 @@ matrix $\bC$ explicitly:
 	90 % confidence intervals
 
    Estimate lower CI upper CI
-C1  -2.1333     -Inf   0.8225
+C1  -2.1333     -Inf   0.8226
 C2  -7.4667     -Inf  -4.5108
 C3  -1.6667     -Inf  -0.0360
 \end{Soutput}
@@ -269,15 +269,15 @@ C3           0        -1         0         0         1
 
 Absolute Error Tolerance:  1e-04 
 
- 90 % quantile:  1.843 
+ 90 % quantile:  1.8431 
 
 Coefficients:
    Estimate low CI,  upp CI t value Std.Err.  p raw p Bonf
-C1  -2.1333    -Inf  0.8225 -1.3302   1.6038 0.0958 0.2874
+C1  -2.1333    -Inf  0.8226 -1.3302   1.6038 0.0958 0.2874
 C2  -7.4667    -Inf -4.5108 -4.6556   1.6038 0.0000 0.0001
 C3  -1.6667    -Inf -0.0360 -1.8837   0.8848 0.0337 0.1012
     p adj
-C1 0.2412
+C1 0.2411
 C2 0.0001
 C3 0.0924
 \end{Soutput}
@@ -355,7 +355,7 @@ Absolute Error Tolerance:  1e-04
 
 Coefficients:
    Estimate t value Std.Err.  p raw p Bonf  p adj
-C2  -7.4667 -4.6556   1.6038 0.0000 0.0001 0.0000
+C2  -7.4667 -4.6556   1.6038 0.0000 0.0001 0.0001
 C3  -1.6667 -1.8837   1.6038 0.0337 0.0675 0.0640
 C1  -2.1333 -1.3302   0.8848 0.0958 0.0958 0.0958
 \end{Soutput}
@@ -438,7 +438,7 @@ TreatFT      0.3060571  8.8200682
           Estimate lower CI upper CI
 Prewt        0.434    0.042    0.827
 TreatCont   -4.097   -8.708    0.514
-TreatFT      4.563   -0.632    9.759
+TreatFT      4.563   -0.632    9.758
 \end{Soutput}
 \begin{Sinput}
 >simint(lmod, cmatrix = cbind(0, diag(3)))
@@ -450,8 +450,8 @@ TreatFT      4.563   -0.632    9.759
 
    Estimate lower CI upper CI
 C1    0.434    0.042    0.827
-C2   -4.097   -8.709    0.514
-C3    4.563   -0.633    9.759
+C2   -4.097   -8.708    0.514
+C3    4.563   -0.632    9.758
 \end{Soutput}
 \end{Schunk}
 \normalsize

@@ -1,11 +1,18 @@
 $Id: CHANGES,v 1.52 2003/08/13 16:24:34 hothorn Exp $
 
+	0.4-1 (26.08.2003)
+
+	bugfix: the factor of interest was not correctly identified
+                when the name of the factor appeared in the levels
+                of any factor treated as covariable. 
+                Spotted by Brian D. Ripley <ripley@stats.ox.ac.uk>
+
 	0.4-0 (13.08.2003)
 
 	`simint' and `simtest' now have methods for `lm' and `glm'
         
-    the baseline level for Dunnett contrasts can be determined by the
-    `base' argument
+	the baseline level for Dunnett contrasts can be determined by the
+    	`base' argument
 
 	`contr.Dunnett' computes the MP-inverse for use with `contrasts'
 
