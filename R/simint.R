@@ -1,4 +1,4 @@
-# $Id: simint.R,v 1.38 2003/02/19 15:12:11 hothorn Exp $
+# $Id: simint.R,v 1.39 2003/03/24 14:12:54 hothorn Exp $
 
 simint <- function(y, ...) UseMethod("simint")
 
@@ -58,8 +58,10 @@ csimint <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
 
     if (asympt) df <- 0                          
  
-    covm  <- cm %*% covm %*% t(cm)                            
-    d     <- diag(1/sqrt(diag(covm)))              
+    covm  <- cm %*% covm %*% t(cm)
+    d     <- 1/sqrt(diag(covm))                            
+    if (length(d) > 1)
+      d <- diag(d)              
     cr    <- d %*% covm %*% d
 
     ests  <- cm %*% estpar
