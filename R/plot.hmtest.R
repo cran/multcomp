@@ -1,6 +1,7 @@
-# $Id: plot.hmtest.R,v 1.5 2004/03/01 17:10:22 hothorn Exp $
+# $Id: plot.hmtest.R,v 1.6 2004/03/08 07:35:03 hothorn Exp $
 
-plot.hmtest <- function(x, ltycint=2, ltyzero=3, ...) {
+plot.hmtest <- function(x, ltycint=2, ltyzero=3, 
+                        main = NULL, xlab = NULL, ...) {
   est <- x$estimate
   cint <- x$conf.int
   conf.level <- attr(cint, "conf.level")
@@ -24,16 +25,17 @@ plot.hmtest <- function(x, ltycint=2, ltyzero=3, ...) {
   }
   crange[1] <- ifelse(crange[1] > 0, crange[1]*0.9,crange[1]*1.1)
   crange[2] <- ifelse(crange[2] > 0, crange[2]*1.1, crange[2]*0.9)
-  if (ONE)
-    xlab <- paste(format(100 * conf.level), "\%", 
+  if (is.null(xlab)) {
+    if (ONE)
+      xlab <- paste(format(100 * conf.level), "\%", 
                  "one-sided", "confidence intervals")
-  else
-    xlab <- paste(format(100 * conf.level), "\%",
+    else
+      xlab <- paste(format(100 * conf.level), "\%",
                  "two-sided", "confidence intervals")     
-
+  }
 
   # <FIXME>
-  # strwidth needs and open graphic device.
+  # strwidth needs an open graphic device.
   # if (dev.cur() == 1) 
   plot.new()
   #  plot(1:n, type="n", ...)
@@ -52,14 +54,11 @@ plot.hmtest <- function(x, ltycint=2, ltyzero=3, ...) {
   if (mymai[2] < ywidth)
    mymai[2] <- ywidth
   par(mai=mymai, new=TRUE)
-  if (!is.null(args$main)) { type = args$main; args$main = NULL; }
-  if (!is.null(args$xlab)) { xlab = args$xlab; args$xlab = NULL; }
-  ylab = ""
-  if (!is.null(args$ylab)) { ylab = args$ylab; args$ylab = NULL; }
+  if (!is.null(main)) type = main
 
   pr = rbind(c(crange[1], 1), c(crange[2], n))
   pargs = c(list(x = pr[,1]), list(y=pr[,2]), 
-            type="n", axes=FALSE, xlab=xlab, ylab=ylab, main=type, args)
+            type="n", axes=FALSE, xlab=xlab, ylab = "", main=type, args)
   do.call("plot", pargs)
   axis(1, ...)
   axis(2, 1:n, rownames(est)[n:1], las=1, ...)

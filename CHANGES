@@ -1,4 +1,9 @@
-$Id: CHANGES,v 1.57 2004/03/02 10:43:04 hothorn Exp $
+$Id: CHANGES,v 1.58 2004/03/08 07:35:03 hothorn Exp $
+
+	0.4-6 (08.03.2004)
+
+	fix warnings caused by passing `main' to low-level plotting
+	functions
 
 	0.4-5 (02.03.2004)
 
