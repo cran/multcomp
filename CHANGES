@@ -1,4 +1,14 @@
-$Id: CHANGES,v 1.37 2003/02/04 09:50:47 hothorn Exp $
+$Id: CHANGES,v 1.39 2003/02/12 10:45:04 hothorn Exp $
+
+	0.3-7 (12.02.2003)
+
+	use which.{min,max} in csimtest (a report by Simon
+        Wotherspoon <spoon@hilbert.maths.utas.edu.au>)
+
+	<REMAINDER>
+		take care of LINPACK argument in R-1.7.0
+		for svd in mginv (wrt regression tests)
+	</REMAINDER
 
 	0.3-6 (03.02.2003)
 

@@ -13,7 +13,8 @@ assign("plot.new", function() { .Internal(plot.new())
 assign("cleanEx", function(env = .GlobalEnv) {
 	rm(list = ls(envir = env, all.names = TRUE), envir = env)
 	RNGkind("Wichmann-Hill", "default")
-	assign(".Random.seed", c(0,rep(7654,3)), pos=1)
+	set.seed(290875)
+	#	assign(".Random.seed", c(0,rep(7654,3)), pos=1)
        },
        env = .CheckExEnv)
 assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) #-- for now
