@@ -93,6 +93,8 @@ parseformula <- function(formula, data=list(), subset, na.action,
 
     nlevel <- unlist(lapply(mf[xvars[fact]], nlevels))
 
+    flevels <- lapply(mf[xvars[fact]], levels)
+
     # everything clear
     if (sum(fact) == 1) {
       mainF <- xvars[fact]
@@ -162,6 +164,7 @@ parseformula <- function(formula, data=list(), subset, na.action,
 
     ncovar <- c(0,0)
 
+
     ### <FIXME> check if contrasts to mainF have been previously defined
     ### via C() or contrasts()
     ### </FIXME>
@@ -172,11 +175,17 @@ parseformula <- function(formula, data=list(), subset, na.action,
       x <- model.matrix(attr(mf, "terms"), mf, contrasts=thisctrs)
 
       ### search for interactions when the length of mainF is > 1
-      if (length(mainF) == 1) 
-          mainFindx <- grep(mainF, colnames(x))
-      else
-          mainFindx <- grep(paste(mainF, ".*", collapse="", sep=""), 
-                            colnames(x))
+      if (length(mainF) == 1) {
+          ### determine which columns of the design matrix 
+          ### correspond to the factor of interest: not really
+          ### the way I would like to do this ...
+          mainFlevels <- unlist(flevels[mainF])
+          mainFnames <- paste(mainF, mainFlevels, sep = "")
+          mainFindx <- which(colnames(x) %in% mainFnames)
+      } else {
+          mainFindx <- grep(paste(mainF, ".*", collapse = ":", 
+                                  sep = ""), colnames(x))
+      }
       intera <- grep(":", colnames(x)[mainFindx])
       if (length(intera) > 0 & (length(intera) < length(mainFindx))) {
         mainFindx <- mainFindx[-intera]

@@ -74,3 +74,19 @@ csimint(estpar=coef(toy.glm)[2:3],df=toy.glm$df.residual,
         covm=vcov(toy.glm)[2:3,2:3],
         cmatrix=contrMat(c(10,10),type="Tukey"),asympt=TRUE)
 
+### whichf is part of a level of an factor treated as covariable
+### due to inconsistencies in `parseformula'
+### reported by Brian D. Ripley <ripley@stats.ox.ac.uk>
+### by means of an example in the script `ch06.R' (in VR/MASS/inst/scripts)
+load("oats.rda")
+oats1 <- aov(Y ~ N + V + B, data = oats)
+thsd <- TukeyHSD(oats1, which = "V")
+thsd
+cis <- round(thsd$V[,2:3], 2)
+attributes(cis) <- NULL
+thsdsi <- simint(Y ~ N + V + B, data = oats, whichf = "V", type = "Tukey",
+                 eps = 0.0001)
+thsdsi
+cissi <- round(thsdsi$conf.int, 2)
+attributes(cissi) <- NULL
+stopifnot(all.equal(cis, cissi))
