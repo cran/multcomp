@@ -1,4 +1,8 @@
-$Id: CHANGES,v 1.36 2002/12/18 07:49:26 hothorn Exp $
+$Id: CHANGES,v 1.37 2003/02/04 09:50:47 hothorn Exp $
+
+	0.3-6 (03.02.2003)
+
+	malformed DEPENDS field
 
 	0.3-5 (18.12.2002)
 
