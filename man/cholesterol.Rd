@@ -37,25 +37,36 @@ simtest(response ~ trt, data=cholesterol, type="Tukey",
 simtest(response ~ trt, data=cholesterol, type="Tukey",
         ttype="free")
 
-# enter now the estimates as parameters
-# begin with degrees of freedom
-nu <- as.integer(45)
-# estimates
-parm <- c(10.6151, -4.8331, -1.3901, 1.7597, 4.7461, 10.3325) 
-# build the covariance matrix
-N <- rep(2, 5)
-contrast <- contrMat(N, type="Tukey")
-covm <- rep(-0.20254649, 36)
-covm <- matrix(covm, ncol=6)
-covm[1,2:6] <- rep(0.02893521, 5)
-covm[2:6,1] <- rep(0.02893521, 5)
-covm[1,1] <- 0.14467606
-for (i in  2:6) { covm[i,i] <- 0.83912115 } 
+
+# the following lines illustrate the basic principles of
+# parameter estimation used in all functions in this package
+# and how the low-level functions can be used with raw parameter
+# estimates.
+
+# the full design matrix (with reduced rank!)
+x <- cbind(1, 
+           matrix(c(rep(c(rep(1,10), rep(0,50)), 4), 
+                    rep(1, 10)), nrow = 50))
+y <- cholesterol$response
+
+xpxi   <- mginv(t(x) \%*\% x)
+rankx  <- sum(diag((xpxi \%*\% (t(x) \%*\% x))))
+n      <- nrow(x)
+p      <- ncol(x)
+df     <- round(n-rankx)
+
+# parameter estimates and their correlation
+parm   <- xpxi \%*\% t(x) \%*\% y
+mse    <- t(y-x \%*\% parm) \%*\% (y-x \%*\% parm)/df
+covm   <- mse[1,1]*xpxi
+
+# the contrast matrix
+contrast <- contrMat(table(cholesterol$trt), type="Tukey")
 
 # use the work-horse directly (and add zero column for the intercept)
 
-csimint(estpar=parm, df=nu, covm=covm, cmatrix=cbind(0, contrast))    
-csimtest(estpar=parm, df=nu, covm=covm, cmatrix=cbind(0, contrast),
+csimint(estpar=parm, df=df, covm=covm, cmatrix=cbind(0, contrast))    
+csimtest(estpar=parm, df=df, covm=covm, cmatrix=cbind(0, contrast),
          ttype="logical")      
 
 }

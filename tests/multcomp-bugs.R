@@ -90,3 +90,23 @@ thsdsi
 cissi <- round(thsdsi$conf.int, 2)
 attributes(cissi) <- NULL
 stopifnot(all.equal(cis, cissi))
+
+### base argument may have caused incorrect estimates
+### spotted by Ludwig Hothorn <hothorn@ifgb.uni-hannover.de>
+k1<-c( 1, 0, 0)
+k2<-c( 0, 1, 0)
+k3<-c( 0, 0, 1)
+k4<-c(-1,-1,-1)
+cc4<- cbind(k1,k2,k3,k4)
+cc3<- cbind(k1,k2,k4,k3)
+cc2<- cbind(k1,k4,k2,k3)
+cc1<- cbind(k4,k1,k2,k3)
+
+n = rep(3, 4)
+a1 = all(contrMat(n, base = 1) == cc1)
+a2 = all(contrMat(n, base = 2) == cc2)
+a3 = all(contrMat(n, base = 3) == cc3)
+a4 = all(contrMat(n, base = 4) == cc4)
+stopifnot(all(c(a1, a2, a3, a4)))
+
+

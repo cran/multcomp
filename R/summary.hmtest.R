@@ -1,4 +1,4 @@
-# $Id: summary.hmtest.R,v 1.10 2003/05/13 10:29:13 hothorn Exp $
+# $Id: summary.hmtest.R,v 1.11 2003/11/19 18:24:50 hothorn Exp $
 
 summary.hmtest <- function(object, ...)
 {
@@ -58,7 +58,16 @@ print.summary.hmtest <- function(x, digits = max(3, getOption("digits")-3),
             pbon <- round(x$p.value.bon, digits=digits)
             padj <- round(x$p.value.adj, digits=digits)
             ecout <- cbind(est, cint, stat, sd, praw, pbon, padj)
-            colnames(ecout) <- c("Estimate", "low CI,", "upp CI", "t value",
+
+            a <- switch(x$alternative, 
+                        "two.sided" = c((1 - conf.level)/2,
+                                         1 - (1 - conf.level)/2),
+                        "less" = c(NA, conf.level),
+                        "greater" = c(1 - conf.level, NA))
+            a[!is.na(a)] <- paste(round(a[!is.na(a)]*100, 1), "%")
+            a[is.na(a)] <- "--"
+
+            colnames(ecout) <- c("Estimate", a, "t value",
                                  "Std.Err.", "p raw", "p Bonf", "p adj")   
             print(ecout)
         }

@@ -1,4 +1,4 @@
-# $Id: simint.R,v 1.45 2003/07/03 09:13:21 hothorn Exp $
+# $Id: simint.R,v 1.46 2003/11/19 18:24:50 hothorn Exp $
 
 simint <- function(y, ...) UseMethod("simint")
 
@@ -153,7 +153,7 @@ csimint <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
                 estimate = ests, sd = ses, statistics = tvals,
                 p.value.raw = rawp, p.value.bon = bonp,
                 p.value.adj = adjp, conf.int = cint, eps=eps, calpha=calpha,
-                asympt = asympt)
+                asympt = asympt, alternative = alternative)
     class(RET) <- "hmtest"
     RET
 }

@@ -17,18 +17,18 @@ contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
         varnames <- 1:length(n)
 
     kindx <- 1:k
-    if (base != 1 && type == "Dunnett") {
-      n <- c(n[base], n[-base])
-      varnames <- c(varnames[base], varnames[-base])
-      kindx <- c(base, (1:k)[-base])
-    }
+#    if (base != 1 && type == "Dunnett") {
+#      n <- c(n[base], n[-base])
+#      varnames <- c(varnames[base], varnames[-base])
+#      kindx <- c(base, (1:k)[-base])
+#    }
 
     type <- match.arg(type)
 
     switch(type, "Dunnett" = {
-        for(i in 2:k)
-            CM <- rbind(CM, as.numeric(kindx==i)-as.numeric(kindx==1))
-        rnames <- paste(varnames[2:k], "-", varnames[1], sep="")
+        for(i in kindx[-base])
+            CM <- rbind(CM, as.numeric(kindx == i) - as.numeric( kindx == base))
+        rnames <- paste(varnames[kindx[-base]], "-", varnames[base], sep="")
     }, "Tukey" = {
         for (i in 1:(k-1)) {
             for(j in (i+1):k) {

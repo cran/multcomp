@@ -1,4 +1,4 @@
-# $Id: print.hmtest.R,v 1.7 2003/05/13 10:29:13 hothorn Exp $
+# $Id: print.hmtest.R,v 1.8 2003/11/19 18:24:50 hothorn Exp $
 
 print.hmtest <- function(x, digits=4, ...)
 {
@@ -30,7 +30,14 @@ print.hmtest <- function(x, digits=4, ...)
                                "\% confidence intervals"), prefix="\t"))
             cat("\n")
             ecout <- cbind(est, cint)
-            colnames(ecout) <- c("Estimate", "lower CI", "upper CI")
+            a <- switch(x$alternative, 
+                        "two.sided" = c((1 - conf.level)/2, 
+                                         1 - (1 - conf.level)/2),
+                        "less" = c(NA, conf.level),
+                        "greater" = c(1 - conf.level, NA))
+            a[!is.na(a)] <- paste(round(a[!is.na(a)]*100, 1), "%")
+            a[is.na(a)] <- "--"
+            colnames(ecout) <- c("Estimate", a)
             print(ecout)
         }
     }

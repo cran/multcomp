@@ -1,10 +1,20 @@
-$Id: CHANGES,v 1.54 2003/09/11 14:42:04 hothorn Exp $
+$Id: CHANGES,v 1.55 2003/11/19 17:53:45 hothorn Exp $
+
+	0.4-4 (29.12.2003)
+
+	name confidence limits the way `confint' does. 
+	`base > 1' may have caused meaningless results for Dunnett contrasts
+	due to incorrect reordering.
+
+	0.4-3 (20.11.2003)
+
+	improve `cholesterol' example section
 
 	0.4-2 (11.09.2003)
 
 	use attr(<model.matrix>, "assign") to determine the columns
-    associated with the factor of interest instead of brain damaged
-    variable name pasting in `parseformula'.
+        associated with the factor of interest instead of brain damaged
+        variable name pasting in `parseformula'.
 
 	0.4-1 (26.08.2003)
 
