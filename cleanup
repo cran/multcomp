@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #for f in ./src/*.*o; do
 #    rm -f $f
