@@ -87,7 +87,11 @@ than one factor are the Tetrade contrasts for the analysis of two-fold
 interactions (see \code{\link{waste}} for an example). 
 In this case only the two-way layout model with interactions 
 may be specified on the right hand side of `formula' (continuous covariables 
-are possible). Some toy examples are given in the examples section.
+are possible). If a contrast matrix is specified (via \code{cmatrix}) and
+\code{whichf} is missing, the complete design matrix is derived from the
+right hand side of \code{formula} is used, whenever the their dimensions
+match with those of \code{cmatrix}.
+Some toy examples are given in the examples section.
 
 In all other cases \code{\link{csimtest}} or \code{\link{csimint}} 
 should be used which allow a greater flexibility and more potential
