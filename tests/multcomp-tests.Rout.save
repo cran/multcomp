@@ -1,6 +1,6 @@
 
-R : Copyright 2003, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2003-12-18), ISBN 3-900051-00-3
+R : Copyright 2004, The R Foundation for Statistical Computing
+Version 1.9.0 Under development (unstable) (2004-03-01), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -144,31 +144,31 @@ simtest.formula(formula = response ~ trt, data = cholesterol,
     type = "Tukey", ttype = "logical")
 
 Contrast matrix:
-            trtA trtB trtC trtD trtE
-trtB-trtA 0   -1    1    0    0    0
-trtC-trtA 0   -1    0    1    0    0
-trtD-trtA 0   -1    0    0    1    0
-trtE-trtA 0   -1    0    0    0    1
-trtC-trtB 0    0   -1    1    0    0
-trtD-trtB 0    0   -1    0    1    0
-trtE-trtB 0    0   -1    0    0    1
-trtD-trtC 0    0    0   -1    1    0
-trtE-trtC 0    0    0   -1    0    1
-trtE-trtD 0    0    0    0   -1    1
+                      trt1time trt2times trt4times trtdrugD trtdrugE
+trt2times-trt1time  0       -1         1         0        0        0
+trt4times-trt1time  0       -1         0         1        0        0
+trtdrugD-trt1time   0       -1         0         0        1        0
+trtdrugE-trt1time   0       -1         0         0        0        1
+trt4times-trt2times 0        0        -1         1        0        0
+trtdrugD-trt2times  0        0        -1         0        1        0
+trtdrugE-trt2times  0        0        -1         0        0        1
+trtdrugD-trt4times  0        0         0        -1        1        0
+trtdrugE-trt4times  0        0         0        -1        0        1
+trtdrugE-trtdrugD   0        0         0         0       -1        1
 
 Adjusted P-Values
 
-          p adj
-trtE-trtA 0.000
-trtE-trtB 0.000
-trtD-trtA 0.000
-trtE-trtC 0.000
-trtC-trtA 0.000
-trtD-trtB 0.000
-trtE-trtD 0.001
-trtB-trtA 0.042
-trtC-trtB 0.042
-trtD-trtC 0.044
+                    p adj
+trtdrugE-trt1time   0.000
+trtdrugE-trt2times  0.000
+trtdrugD-trt1time   0.000
+trtdrugE-trt4times  0.000
+trt4times-trt1time  0.000
+trtdrugD-trt2times  0.000
+trtdrugE-trtdrugD   0.001
+trt2times-trt1time  0.042
+trt4times-trt2times 0.042
+trtdrugD-trt4times  0.044
 > 
 > # adjusted p-values all-pairwise comparisons in a one-way layout 
 > # (tests for free combinations -> p-values will be larger)
@@ -182,31 +182,31 @@ simtest.formula(formula = response ~ trt, data = cholesterol,
     type = "Tukey", ttype = "free")
 
 Contrast matrix:
-            trtA trtB trtC trtD trtE
-trtB-trtA 0   -1    1    0    0    0
-trtC-trtA 0   -1    0    1    0    0
-trtD-trtA 0   -1    0    0    1    0
-trtE-trtA 0   -1    0    0    0    1
-trtC-trtB 0    0   -1    1    0    0
-trtD-trtB 0    0   -1    0    1    0
-trtE-trtB 0    0   -1    0    0    1
-trtD-trtC 0    0    0   -1    1    0
-trtE-trtC 0    0    0   -1    0    1
-trtE-trtD 0    0    0    0   -1    1
+                      trt1time trt2times trt4times trtdrugD trtdrugE
+trt2times-trt1time  0       -1         1         0        0        0
+trt4times-trt1time  0       -1         0         1        0        0
+trtdrugD-trt1time   0       -1         0         0        1        0
+trtdrugE-trt1time   0       -1         0         0        0        1
+trt4times-trt2times 0        0        -1         1        0        0
+trtdrugD-trt2times  0        0        -1         0        1        0
+trtdrugE-trt2times  0        0        -1         0        0        1
+trtdrugD-trt4times  0        0         0        -1        1        0
+trtdrugE-trt4times  0        0         0        -1        0        1
+trtdrugE-trtdrugD   0        0         0         0       -1        1
 
 Adjusted P-Values
 
-          p adj
-trtE-trtA 0.000
-trtE-trtB 0.000
-trtD-trtA 0.000
-trtE-trtC 0.000
-trtC-trtA 0.000
-trtD-trtB 0.000
-trtE-trtD 0.001
-trtB-trtA 0.057
-trtC-trtB 0.063
-trtD-trtC 0.063
+                    p adj
+trtdrugE-trt1time   0.000
+trtdrugE-trt2times  0.000
+trtdrugD-trt1time   0.000
+trtdrugE-trt4times  0.000
+trt4times-trt1time  0.000
+trtdrugD-trt2times  0.000
+trtdrugE-trtdrugD   0.001
+trt2times-trt1time  0.057
+trt4times-trt2times 0.063
+trtdrugD-trt4times  0.063
 > 
 > # the following lines illustrate the basic principles of
 > # parameter estimation used in all functions in this package
@@ -241,48 +241,48 @@ trtD-trtC 0.063
 
 	95 % confidence intervals
 
-    Estimate  2.5 % 97.5 %
-B-A    3.443 -0.659  7.545
-C-A    6.593  2.491 10.695
-D-A    9.579  5.477 13.681
-E-A   15.166 11.064 19.267
-C-B    3.150 -0.952  7.252
-D-B    6.136  2.034 10.238
-E-B   11.723  7.621 15.824
-D-C    2.986 -1.115  7.088
-E-C    8.573  4.471 12.675
-E-D    5.586  1.485  9.688
+              Estimate  2.5 % 97.5 %
+2times-1time     3.443 -0.659  7.545
+4times-1time     6.593  2.491 10.695
+drugD-1time      9.579  5.477 13.681
+drugE-1time     15.166 11.064 19.267
+4times-2times    3.150 -0.952  7.252
+drugD-2times     6.136  2.034 10.238
+drugE-2times    11.723  7.621 15.824
+drugD-4times     2.986 -1.115  7.088
+drugE-4times     8.573  4.471 12.675
+drugE-drugD      5.586  1.485  9.688
 > csimtest(estpar=parm, df=df, covm=covm, cmatrix=cbind(0, contrast),
 +          ttype="logical")      
 
 	Simultaneous tests: user-defined contrasts
 
 Contrast matrix:
-       A  B  C  D E
-B-A 0 -1  1  0  0 0
-C-A 0 -1  0  1  0 0
-D-A 0 -1  0  0  1 0
-E-A 0 -1  0  0  0 1
-C-B 0  0 -1  1  0 0
-D-B 0  0 -1  0  1 0
-E-B 0  0 -1  0  0 1
-D-C 0  0  0 -1  1 0
-E-C 0  0  0 -1  0 1
-E-D 0  0  0  0 -1 1
+                1time 2times 4times drugD drugE
+2times-1time  0    -1      1      0     0     0
+4times-1time  0    -1      0      1     0     0
+drugD-1time   0    -1      0      0     1     0
+drugE-1time   0    -1      0      0     0     1
+4times-2times 0     0     -1      1     0     0
+drugD-2times  0     0     -1      0     1     0
+drugE-2times  0     0     -1      0     0     1
+drugD-4times  0     0      0     -1     1     0
+drugE-4times  0     0      0     -1     0     1
+drugE-drugD   0     0      0      0    -1     1
 
 Adjusted P-Values
 
-    p adj
-E-A 0.000
-E-B 0.000
-D-A 0.000
-E-C 0.000
-C-A 0.000
-D-B 0.000
-E-D 0.001
-B-A 0.042
-C-B 0.042
-D-C 0.044
+              p adj
+drugE-1time   0.000
+drugE-2times  0.000
+drugD-1time   0.000
+drugE-4times  0.000
+4times-1time  0.000
+drugD-2times  0.000
+drugE-drugD   0.001
+2times-1time  0.042
+4times-2times 0.042
+drugD-4times  0.044
 > 
 > cleanEx(); ..nameEx <- "contrMat"
 > 
@@ -673,31 +673,31 @@ simtest.formula(formula = response ~ trt, data = cholesterol,
     type = "Tukey", ttype = "logical")
 
 Contrast matrix:
-            trtA trtB trtC trtD trtE
-trtB-trtA 0   -1    1    0    0    0
-trtC-trtA 0   -1    0    1    0    0
-trtD-trtA 0   -1    0    0    1    0
-trtE-trtA 0   -1    0    0    0    1
-trtC-trtB 0    0   -1    1    0    0
-trtD-trtB 0    0   -1    0    1    0
-trtE-trtB 0    0   -1    0    0    1
-trtD-trtC 0    0    0   -1    1    0
-trtE-trtC 0    0    0   -1    0    1
-trtE-trtD 0    0    0    0   -1    1
+                      trt1time trt2times trt4times trtdrugD trtdrugE
+trt2times-trt1time  0       -1         1         0        0        0
+trt4times-trt1time  0       -1         0         1        0        0
+trtdrugD-trt1time   0       -1         0         0        1        0
+trtdrugE-trt1time   0       -1         0         0        0        1
+trt4times-trt2times 0        0        -1         1        0        0
+trtdrugD-trt2times  0        0        -1         0        1        0
+trtdrugE-trt2times  0        0        -1         0        0        1
+trtdrugD-trt4times  0        0         0        -1        1        0
+trtdrugE-trt4times  0        0         0        -1        0        1
+trtdrugE-trtdrugD   0        0         0         0       -1        1
 
 Adjusted P-Values
 
-          p adj
-trtE-trtA 0.000
-trtE-trtB 0.000
-trtD-trtA 0.000
-trtE-trtC 0.000
-trtC-trtA 0.000
-trtD-trtB 0.000
-trtE-trtD 0.001
-trtB-trtA 0.042
-trtC-trtB 0.042
-trtD-trtC 0.044
+                    p adj
+trtdrugE-trt1time   0.000
+trtdrugE-trt2times  0.000
+trtdrugD-trt1time   0.000
+trtdrugE-trt4times  0.000
+trt4times-trt1time  0.000
+trtdrugD-trt2times  0.000
+trtdrugE-trtdrugD   0.001
+trt2times-trt1time  0.042
+trt4times-trt2times 0.042
+trtdrugD-trt4times  0.044
 > 
 > 
 > ## Keywords: 'htest'.
@@ -900,7 +900,7 @@ Coefficients:
 > 
 > 
 > cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\n")
-Time elapsed:  39.77 0.04 39.9 0 0 
+Time elapsed:  39.66 0.03 39.89 0 0 
 > dev.off(); quit('no')
 null device 
           1 

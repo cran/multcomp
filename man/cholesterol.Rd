@@ -11,13 +11,16 @@
 \format{
   This data frame contains the following variables
   \describe{
-    \item{trt}{Treatment at 5 levels: \code{A}, \code{B}, \code{C},
-               \code{D}, \code{E}}
+    \item{trt}{Treatment at 5 levels, see below.}
     \item{response}{Response variable.}
   }
 }
 \details{
-  See Westfall et al. (1999, p. 153)
+  See Westfall et al. (1999, p. 153). The treatment formulations 
+are defined as: 20mg one a day (\code{1time}), 10mg twice a day
+(\code{2times})
+and 5mg four times a day (\code{4times}). In addition, two competing drugs
+were used as control (\code{drugD}) and (\code{drugE}).
 }
 \source{
   P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
@@ -68,6 +71,15 @@ contrast <- contrMat(table(cholesterol$trt), type="Tukey")
 csimint(estpar=parm, df=df, covm=covm, cmatrix=cbind(0, contrast))    
 csimtest(estpar=parm, df=df, covm=covm, cmatrix=cbind(0, contrast),
          ttype="logical")      
+
+# only a subset of all pairwise hypotheses:
+#
+# * drug D versus all other formulations and
+# * all pairwise comparisions for "1time", "2times" and "4times"
+#
+csubset = contrast[c(1,3,5,6,8,10),]
+csubset
+simint(response ~ trt, data=cholesterol, cmatrix = csubset)
 
 }
 \keyword{datasets}
