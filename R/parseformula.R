@@ -1,3 +1,5 @@
+# $Id: parseformula.R,v 1.7 2003/02/17 17:12:38 hothorn Exp $
+
 parseformula <- function(formula, data=list(), subset, na.action, 
                          whichf=NULL, ...) {
     if(missing(na.action))
@@ -65,7 +67,7 @@ parseformula <- function(formula, data=list(), subset, na.action,
       }
     }
 
-    # sorry, at least one factor requires
+    # sorry, at least one factor required
     if (sum(fact) == 0) stop("at least one factor required")
 
     nlevel <- unlist(lapply(mf[xvars[fact]], nlevels))
@@ -84,9 +86,14 @@ parseformula <- function(formula, data=list(), subset, na.action,
         mainF <- xvars[fact]
         coVar <- rhs[rhs != mainF]
       } else {
-        # cannot determine, which one to choose
+        # cannot determine which one to choose
         if (!INTERACTIONS) {
-          stop("more than one factor but whichf not given!")
+          # ok, the user gets want he wants: build a design matrix using the
+          # whole right hand side of formula (we check the dimensions later)
+          if (CMATRIX)
+            mainF <- rhs
+          else 
+            stop("more than one factor specified but whichf not given!")
         } else {
           # factors NOT involved in an interaction term
           fnames <- xvars[fact]
@@ -102,7 +109,11 @@ parseformula <- function(formula, data=list(), subset, na.action,
               mainF <- xvars[xvars == whichf]
               coVar <- rhs[rhs != mainF]
             } else {
-              stop("more than one factor specified but whichf not given!")
+              # ok, the user gets want he wants!
+              if (CMATRIX)
+                mainF <- rhs
+              else 
+                stop("more than one factor specified but whichf not given!")
             }
           }
           if (length(fnames) == 0) {
@@ -129,9 +140,19 @@ parseformula <- function(formula, data=list(), subset, na.action,
     } 
 
     if (!is.null(mainF)) {
-      formulaEff <- as.formula(paste(deparse(formula[[2]], width=500), "~",
+      # in cases of using the whole rhs, iterate
+      if (length(mainF) == 1) {
+        formulaEff <- as.formula(paste(deparse(formula[[2]], width=500), "~",
                                      mainF, "-1"))
-      x <- model.matrix(terms(formulaEff, data=data), mf)
+        x <- model.matrix(terms(formulaEff, data=data), mf)
+      } else {
+        x <- c()
+        for (i in 1:length(mainF)) {
+          formulaEff <- as.formula(paste(deparse(formula[[2]], width=500), "~",
+                                   mainF[i], "-1"))
+          x <- cbind(x, model.matrix(terms(formulaEff, data=data), mf))
+        }
+      }
       if (TETRADE) {
         tx <- x
         col <- 0
@@ -177,6 +198,8 @@ parseformula <- function(formula, data=list(), subset, na.action,
     }
 
     if (CMATRIX) {
+      # sanity checks here: we need to reject contrast matrices of 
+      # not matching dimensions
       if (is.matrix(cargs$cmatrix)) {
         if (ncol(cargs$cmatrix) != ncol(xall) && ncol(cargs$cmatrix) != ncol(x)) {
           stop("dimensions of x and cmatrix do not match")
