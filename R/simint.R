@@ -1,4 +1,4 @@
-# $Id: simint.R,v 1.35 2002/07/23 07:51:57 hothorn Exp $
+# $Id: simint.R,v 1.36 2002/09/18 09:07:29 hothorn Exp $
 
 simint <- function(y, ...) UseMethod("simint")
 
@@ -49,7 +49,7 @@ csimint <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
 {
     if (!is.vector(estpar) & !is.matrix(estpar)) stop("estpar not a vector")
     p <- length(estpar)
-    if (!is.integer(df)) stop("df not an integer")
+    if (!all.equal(df - floor(df), 0)) stop("df not an integer")
     if (!is.matrix(covm)) stop("covm is not a matrix")
     cm <- cmatrix
     if (ctype !="user-defined") cmatrix <- NULL

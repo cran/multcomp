@@ -1,4 +1,4 @@
-# $Id: print.hmtestp.R,v 1.4 2002/07/05 16:35:57 hothorn Exp $
+# $Id: print.hmtestp.R,v 1.5 2002/09/18 09:30:12 hothorn Exp $
 
 print.hmtestp <- function(x, digits=4, ...)
 {
@@ -11,9 +11,11 @@ print.hmtestp <- function(x, digits=4, ...)
     writeLines(strwrap(paste("Simultaneous tests:", type),
                        prefix="\t"))
     cat("\n")
-    cat("Call: \n")
-    print(x$DNAME)
-    cat("\n")
+    if (!is.null(x$DNAME)) {
+      cat("Call: \n")
+      print(x$DNAME)
+      cat("\n")
+    }
     cat("Contrast matrix:")
     cat("\n")
     print(x$cmatrix)

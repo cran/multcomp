@@ -30,8 +30,9 @@ data(angina)
 
 # perform a dose-response analysis using simultaneous confidence 
 # intervals for Williams' contrasts
-summary(simint(response~dose, data=angina, alternative="greater",
+summary(ci <- simint(response~dose, data=angina, alternative="greater",
                type="Williams"))
+plot(ci, cex.axis=1.75, lwd=1.5)
 
 # consider the same data set as a changepoint problem
 summary(simint(response~dose, data=angina, alternative="greater",

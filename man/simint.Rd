@@ -87,8 +87,8 @@ data(recovery)
 
 # one-sided simultaneous confidence intervals for Dunnett 
 # in the one-way layout
-summary(simint(minutes~blanket, data=recovery, type="Dunnett", conf.level=0.9, 
-       alternative="less",eps=0.0001))
+summary(simint(minutes~blanket, data=recovery, type="Dunnett", 
+               conf.level=0.9, alternative="less",eps=0.0001))
 
 # Tukey confidence intervals, compare with TukeyHSD
 
@@ -97,9 +97,10 @@ fm1 <- aov(breaks ~ wool + tension, data = warpbreaks)
 tHSD <- TukeyHSD(fm1, "tension", ordered = FALSE)
 print(tHSD)
 
-mcHSD <- simint(breaks ~ wool + tension, data = warpbreaks, whichf="tension",
-type="Tukey")
+mcHSD <- simint(breaks ~ wool + tension, data = warpbreaks, 
+                whichf="tension", type="Tukey")
 print(mcHSD)
+plot(mcHSD)
 
 \testonly{
   tlow <- tHSD$tension[,2]

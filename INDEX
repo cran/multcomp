@@ -7,13 +7,15 @@ csimint                 Simultaneous Confidence Intervals Based on
 csimtest                Simultaneous Comparisons Based on Parameter
                         Estimates. 
 detergent               Detergent Durability Data Set 
-ginv                    Generalized Inverse of a Matrix 
 halothane               Repeated Measures Data Set 
 litter                  Litter Weights Data Set 
+mginv                   Generalized Inverse of a Matrix 
 multcomp-internal       Internal multcomp functions
+multcomp                General Information on the multcomp Package
+plot.hmtest             Plot Simultaneous Confidence Intervals 
 print.hmtest            Print Method for hmtest Object
 print.hmtestp           Print Method for hmtestp Object
-recover                 Recovery Time Data Set 
+recovery                Recovery Time Data Set 
 respiratory             Respiratory Health Data Set 
 simint                  Simultaneous Confidence Intervals 
 simtest                 Simultaneous Comparisons 
