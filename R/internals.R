@@ -1,6 +1,10 @@
-# $Id: internals.R,v 1.7 2002/07/23 09:15:11 hothorn Exp $
+# $Id: internals.R,v 1.8 2003/05/12 15:23:20 hothorn Exp $
 
-ct <- function(x, contrasts=FALSE) diag(length(x))
+ct <- function(x, contrasts=FALSE) {
+  a <- diag(length(x))
+  colnames(a) <- x
+  a
+}
 
 getdigits <- function(x) {
   if (x > 0.1 || x <= 0) return(NA)

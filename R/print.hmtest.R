@@ -1,4 +1,4 @@
-# $Id: print.hmtest.R,v 1.6 2002/09/18 09:30:12 hothorn Exp $
+# $Id: print.hmtest.R,v 1.7 2003/05/13 10:29:13 hothorn Exp $
 
 print.hmtest <- function(x, digits=4, ...)
 {
@@ -8,8 +8,12 @@ print.hmtest <- function(x, digits=4, ...)
       type <- paste(x$ctype,"contrasts")
     else
       type <- "user-defined contrasts"
-    writeLines(strwrap(paste("Simultaneous confidence intervals:", type),
-                       prefix="\t"))
+    if (x$asympt)
+      writeLines(strwrap(paste("Asymptotic simultaneous confidence intervals:", type),
+                         prefix="\t"))
+    else 
+      writeLines(strwrap(paste("Simultaneous confidence intervals:", type),
+                         prefix="\t"))
     cat("\n")
     if (!is.null(x$DNAME)) {
       cat("Call: \n")

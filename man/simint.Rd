@@ -2,6 +2,8 @@
 \alias{simint}
 \alias{simint.default}
 \alias{simint.formula}
+\alias{simint.lm}
+\alias{simint.glm}
 \title{ Simultaneous Confidence Intervals }
 \description{Computes simultaneous intervals for several multiple procedures.}
 
@@ -13,10 +15,14 @@
        asympt=FALSE, eps=0.001, maxpts=1e+06, nlevel=NULL, 
        nzerocol=c(0,0),...)
 \method{simint}{formula}(formula, data=list(), subset, na.action, whichf, ...)
+\method{simint}{lm}(y, psubset=NULL, conf.level=0.95, cmatrix = NULL, 
+       alternative=c("two.sided","less", "greater"), 
+       asympt=FALSE, eps=0.001, maxpts=1e+06, ...)
 }
 
 \arguments{
-  \item{y}{a numeric vector of responses.}
+  \item{y}{a numeric vector of responses or an object of class
+           \code{\link{lm}} or \code{\link{glm}}.}
   \item{x}{a numeric matrix, the design matrix.}
   \item{type}{the type of contrast to be used.}
   \item{cmatrix}{the contrast matrix itself can be specified. If
@@ -36,6 +42,10 @@ zero-columns to add to the contrast matrix from left (the first element,
 usually 1 for the intercept) and right (usually 0 if no covariables are
 specified). \code{nzerocol} is automatically determined by
 \code{simint.formula}.}
+  \item{psubset}{a vector of integers or characters indicating for which
+                 subset of coefficients of a (generalized) linear model
+                 \code{y}  simultaneous confidences intervals should be
+                 computed.}
   \item{formula}{a symbolic description of the model to be fit.}
   \item{data}{an optional data frame containing the variables in the model.
               By default the variables are taken from
@@ -89,6 +99,12 @@ data(recovery)
 # in the one-way layout
 summary(simint(minutes~blanket, data=recovery, type="Dunnett", 
                conf.level=0.9, alternative="less",eps=0.0001))
+
+# alternatively via a prespecified linear model
+lmmod <- lm(minutes ~ blanket, data=recovery, contrasts=list(blanket =
+            "contr.Dunnett"))
+summary(simint(lmmod, psubset=2:4, conf.level=0.9,
+               alternative="less",eps=0.0001))
 
 # Tukey confidence intervals, compare with TukeyHSD
 

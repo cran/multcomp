@@ -1,6 +1,6 @@
-# $Id: zzz.R,v 1.3 2002/04/08 14:18:52 hothorn Exp $
+# $Id: zzz.R,v 1.4 2003/06/23 13:35:22 hothorn Exp $
 
-.First.lib <- function(lib, pkg) {
+.onLoad <- function(lib, pkg) {
     if(!require(mvtnorm))
         warning("Could not load package mvtnorm")
 }

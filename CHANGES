@@ -1,4 +1,24 @@
-$Id: CHANGES,v 1.45 2003/04/23 15:23:52 hothorn Exp $
+$Id: CHANGES,v 1.52 2003/08/13 16:24:34 hothorn Exp $
+
+	0.4-0 (13.08.2003)
+
+	`simint' and `simtest' now have methods for `lm' and `glm'
+        
+    the baseline level for Dunnett contrasts can be determined by the
+    `base' argument
+
+	`contr.Dunnett' computes the MP-inverse for use with `contrasts'
+
+	code cleanup in internal `parseformula'
+
+	`subset' and `na.action' work now (unused factor levels are removed)
+
+	we now check if the contrasts passed to `simint' and `simtest' 
+    are estimable (and give a warning if this is not the case)
+
+	0.3-12 (07.05.2003)
+
+	handle offsets
 
 	0.3-11 (23.04.2003)
 

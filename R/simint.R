@@ -1,4 +1,4 @@
-# $Id: simint.R,v 1.39 2003/03/24 14:12:54 hothorn Exp $
+# $Id: simint.R,v 1.45 2003/07/03 09:13:21 hothorn Exp $
 
 simint <- function(y, ...) UseMethod("simint")
 
@@ -10,6 +10,11 @@ simint.default <- function(y, x=NULL, type=c("Dunnett", "Tukey",
                      ...)
 {
     ctype <- match.arg(type)
+
+    addargs <- list(...)
+    base <- 1
+    if (!is.null(addargs$base))
+      base <- addargs$base
 
     # Compute the parameter estimates and their covariance
 
@@ -28,7 +33,7 @@ simint.default <- function(y, x=NULL, type=c("Dunnett", "Tukey",
 
     if (is.null(cmatrix)) {
         nobs <- apply(x[,(nzerocol[1] + 1):(ncol(x) - nzerocol[2])], 2, sum)
-        cm <- contrMat(nobs, ctype, nlevel)
+        cm <- contrMat(n = nobs, type = ctype, nlevel = nlevel, base = base)
     } else {
         cm <- cmatrix
     }
@@ -37,6 +42,17 @@ simint.default <- function(y, x=NULL, type=c("Dunnett", "Tukey",
       cm <- cbind(matrix(0, ncol=nzerocol[1], nrow=nrow(cm)), cm)
     if (nzerocol[2] != 0)
       cm <- cbind(cm, matrix(0, ncol=nzerocol[2], nrow=nrow(cm)))
+
+    ### test if cm %*% estpar is estimable
+
+    a <- cm %*%  xpxi %*% (t(x) %*% x)
+    b <- cm
+    attributes(a) <- NULL
+    attributes(b) <- NULL
+    areequal <- all.equal(a, b)
+
+    if (!is.logical(areequal))
+        warning("at least one contrast is not estimable")
 
     csimint(estpar, df, covm, cm, ctype, conf.level, alternative,
             asympt, eps, maxpts)
@@ -49,8 +65,18 @@ csimint <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
 {
     if (!is.vector(estpar) & !is.matrix(estpar)) stop("estpar not a vector")
     p <- length(estpar)
-    if (!all.equal(df - floor(df), 0)) stop("df not an integer")
-    if (!is.matrix(covm)) stop("covm is not a matrix")
+    if (missing(df) & !asympt) {
+      stop("df is missing")
+    } else {
+      if (missing(df)) df <- 0
+      if (!all.equal(df - floor(df), 0)) stop("df not an integer")
+    }
+    if (!is.matrix(covm)) {
+      if (length(covm) == 1) 
+        covm <- as.matrix(covm)
+      else 
+        stop("covm is not a matrix")
+    }
     cm <- cmatrix
     if (ctype !="user-defined") cmatrix <- NULL
 
@@ -126,7 +152,8 @@ csimint <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
     RET <- list(cmatrix = cm, ctype = ifelse(is.null(cmatrix), ctype, NA), 
                 estimate = ests, sd = ses, statistics = tvals,
                 p.value.raw = rawp, p.value.bon = bonp,
-                p.value.adj = adjp, conf.int = cint, eps=eps, calpha=calpha)
+                p.value.adj = adjp, conf.int = cint, eps=eps, calpha=calpha,
+                asympt = asympt)
     class(RET) <- "hmtest"
     RET
 }
@@ -135,6 +162,9 @@ simint.formula <-
 function(formula, data=list(), subset, na.action, whichf, ...)
 {
     cl <- match.call()
+    if (!missing(subset)) subset <- cl$subset
+    if (!missing(na.action)) na.action <- cl$na.action
+
     pf <- parseformula(formula, data, subset, na.action, whichf, ...)
     x <- pf$x
     y <- pf$y
@@ -147,3 +177,125 @@ function(formula, data=list(), subset, na.action, whichf, ...)
     y$FNAMES <- pf$fnames
     y
 }
+
+simint.lm <- function(y, psubset=NULL, conf.level=0.95, cmatrix = NULL, 
+                      alternative=c("two.sided","less","greater"), 
+                      asympt=FALSE, eps=0.001, maxpts=1000000, ...) {
+
+  p <- length(coef(y))
+  pnames <- names(coef(y))
+  ctype <- "model"
+  if (p < 2) return(y)
+
+  if (!is.null(psubset)) {
+    switch(class(psubset), "integer" = {
+      if (!all(psubset %in% 1:p))
+        stop("incorrect psubset")
+    }, "numeric" = { 
+      if (!all(psubset %in% 1:p))
+        stop("incorrect psubset")
+    }, "character" = {
+      if (all(psubset %in% names(coef(y)))) {
+        psubset <- which(names(coef(y)) %in% psubset)
+      } else {
+        stop("incorrect psubset")
+      }
+    }, {
+      stop("psubset is neither of class integer, numeric nor character")
+    })
+  } else {
+    psubset <- 1:p
+  }
+
+  estpar <- coef(y)[psubset]
+  df <- summary(y)$df[2]    
+  covm = vcov(y)[psubset, psubset]
+  pnames <- pnames[psubset]
+  p <- length(psubset)
+  
+  if (!is.null(cmatrix)) {
+    if (!is.matrix(cmatrix))
+      stop("argument cmatrix is no a matrix")
+    if (ncol(cmatrix) != p)
+        stop("argument cmatrix does not have", p, " columns")
+    if (is.null(rownames(cmatrix)))
+      rownames(cmatrix) <- paste("C", 1:nrow(cmatrix), sep="")
+  } else {
+    cmatrix <- diag(p)
+  }
+
+  RET <- csimint(estpar = estpar, df = df, covm = covm, 
+           cmatrix = cmatrix, conf.level = conf.level, 
+           alternative = alternative,
+           eps = eps, maxpts = maxpts)
+  if (!is.null(pnames) & is.null(rownames(RET$estimate))) 
+    rownames(RET$estimate) <- pnames
+  RET$ctype <- ctype
+  return(RET)
+}
+
+simint.glm <- function(y, psubset=NULL, conf.level=0.95, cmatrix = NULL, 
+                      alternative=c("two.sided","less","greater"), 
+                      asympt=FALSE, eps=0.001, maxpts=1000000, ...) {
+
+  p <- length(coef(y))
+  pnames <- names(coef(y))
+  ctype <- "model"
+  if (p < 2) return(y)
+
+  if (asympt) {
+    df <- summary(y)$df[2]
+    if (y$family$family != "gaussian" || y$family$link != "identity") {
+      warning("cannot compute confidence intervals based on t distribtion")
+      asympt <- FALSE
+    }
+  }  
+  if (asympt) df <- 0 else df <- summary(y)$df[2]
+
+
+  if (!is.null(psubset)) {
+    switch(class(psubset), "integer" = {
+      if (!all(psubset %in% 1:p))
+        stop("incorrect psubset")
+    }, "numeric" = { 
+      if (!all(psubset %in% 1:p))
+        stop("incorrect psubset")
+    }, "character" = {
+      if (all(psubset %in% names(coef(y)))) {
+        psubset <- which(names(coef(y)) %in% psubset)
+      } else {
+        stop("incorrect psubset")
+      }
+    }, {
+      stop("psubset is neither of class integer, numeric nor character")
+    })
+  } else {
+    psubset <- 1:p
+  }
+
+  estpar <- coef(y)[psubset]
+  covm = vcov(y)[psubset, psubset]
+  pnames <- pnames[psubset]
+  p <- length(psubset)
+  
+  if (!is.null(cmatrix)) {
+    if (!is.matrix(cmatrix))
+      stop("argument cmatrix is no a matrix")
+    if (ncol(cmatrix) != p)
+        stop("argument cmatrix does not have", p, " columns")
+    if (is.null(rownames(cmatrix)))
+      rownames(cmatrix) <- paste("C", 1:nrow(cmatrix), sep="")
+  } else {
+    cmatrix <- diag(p)
+  }
+
+  RET <- csimint(estpar = estpar, df = df, covm = covm, 
+           cmatrix = cmatrix, conf.level = conf.level, 
+           alternative = alternative,
+           eps = eps, maxpts = maxpts)
+  if (!is.null(pnames) & is.null(rownames(RET$estimate))) 
+    rownames(RET$estimate) <- pnames
+  RET$ctype <- ctype
+  return(RET)
+}
+

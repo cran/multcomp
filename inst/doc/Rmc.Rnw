@@ -24,7 +24,7 @@
 \SweaveOpts{engine=R,eps=TRUE}
 
 \title{On Multiple Comparisons in \textsf{R} \thanks{This document is based
-on an article to appear in \textsf{R} News} }
+on an article published in \textsf{R} News} }
 \author{by Frank Bretz, Torsten Hothorn and Peter Westfall}
 \date{}
 \maketitle
@@ -120,6 +120,20 @@ multivariate normal distribution holds. The numerical evaluation
 of the multivariate $t$ and normal distribution is available with
 the \textsf{R} package \texttt{mvtnorm}, see \cite{hothornetal:2001}.
 
+Note that the contrast matrix $C$ is defined in a slightly different way as
+usual in \textsf{S}. The \texttt{contrasts} function assumes a matrix $S$
+defining a set of independent linear combinations of the dummy variables
+coding the factor levels whereas $C$ defines linear combinations, maybe
+dependent, of the parameter vector $\beta$.
+The following connection can be established:
+\begin{eqnarray*}
+C \hat{\beta} & = & C X^+ y \\
+& = & (X C^+)^+ y = (XS)^+ y.
+\end{eqnarray*}
+Therefore, the Moore-Penrose-Inverse $C^+$ (or any other G-inverse) of the
+contrast matrices offered by the \texttt{contrMat} function can be passed to
+the \texttt{contrasts} function.
+
 The function \texttt{simint} provides simultaneous confidence
 intervals for the estimable functions $\bc_i^t \bbeta$ in the
 (two-sided) form
@@ -210,6 +224,10 @@ More detailed output is available by using the summary method:
 <<recovery-test, fig=FALSE, echo=TRUE>>=
 summary(Ccirec)
 @
+Note that column names have been added to the contrast matrix, i.e. the
+names of the raw parameters. It is wise to check if the names correspond to
+the correct column since the columns of the design matrix may have been
+interchanged. 
 \normalsize
 This output prints the user defined contrast matrix $\bC$ 
 and the quantile $c_{1-\alpha}$. In addition,
@@ -221,6 +239,16 @@ the Bonferroni correction). The simultaneous confidence intervals
 and the adjusted p-values based on the multivariate $t$ distribution are compatible in
 the sense that if $p_{adj}<0.05$, then the associated confidence
 interval does not contain the 0.
+
+By default, the lexicographically smallest factor level is used as baseline,
+this can be altered by using the \texttt{base} argument passed to
+\texttt{contrMat}:
+\small
+<<recovery-base, fig=FALSE, echo=TRUE>>=
+simint(minutes ~ blanket, data=recovery, 
+       conf.level=0.9, alternative="less", base=2)
+@
+\normalsize
 
 A more powerful approach is available using the \texttt{simtest}
 function. The call remains essentially the same, also no simultaneous confidence intervals are available:
@@ -262,6 +290,44 @@ required for a convenient computation of the covariance matrix.
 Note that the contrast matrix can either be entered by hand or by
 using the availability of standard contrast matrices in the
 \texttt{contrMat} function.
+
+The generic \texttt{simint} implements methods for linear models and
+generalized linear models. Simultaneous confidence intervals for a subset
+of parameters of a linear model, given by an integer or character vector
+argument \texttt{psubset} or via a contrast matrix \texttt{cmatrix}, 
+are computed as follows.
+\small
+<<lm, echo=TRUE>>=
+require(MASS)
+data(anorexia)
+lmod <- lm(Postwt ~ Prewt + Treat, data = anorexia)
+confint(lmod)
+simint(lmod, psubset=2:4)
+simint(lmod, cmatrix = cbind(0, diag(3)))
+@
+\normalsize
+And for a generalized linear model (using the same example as above):
+\small
+<<glm, echo=TRUE>>=
+glmod <- glm(Postwt ~ Prewt + Treat, data = anorexia, family=gaussian)
+confint(glmod)
+simint(glmod, psubset=2:4)
+@
+\normalsize
+
+Just for illustrative purposes we compute many--to--one confidence intervals
+by passing the contrast matrix to \texttt{lm} directly:
+\small
+<<lm, echo=TRUE>>=
+require(MASS)
+data(anorexia)
+lmod <- lm(Postwt ~ Prewt + Treat, data = anorexia,
+contrasts=list(Treat=mginv(contrMat(table(anorexia$Treat)))))
+simint(lmod, psubset=3:4) ### the same as 
+simint(Postwt ~ Prewt + Treat, data = anorexia)
+@
+\normalsize
+
 
 \section{Graphical Representation}
 

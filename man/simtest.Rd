@@ -1,6 +1,8 @@
 \name{simtest}
 \alias{simtest.default}
 \alias{simtest.formula}
+\alias{simtest.lm}
+\alias{simtest.glm}
 \alias{simtest}
 \title{ Simultaneous Comparisons }
 \description{
@@ -15,10 +17,14 @@ Computes multiplicity adjusted p-value for several multiple comparisons.
         asympt=FALSE, ttype=c("free","logical"), eps=0.001,
         maxpts=1e+06, nlevel=NULL, nzerocol=c(0,0),...)
 \method{simtest}{formula}(formula, data=list(), subset, na.action, whichf, ...)
+\method{simtest}{lm}(y, psubset=NULL, cmatrix = NULL, ttype=c("free","logical"),
+         alternative=c("two.sided","less","greater"), asympt=FALSE,
+         eps=0.001, maxpts=1000000, ...)
 }
 
 \arguments{
-  \item{y}{a numeric vector of responses.}
+  \item{y}{a numeric vector of responses or an object of class
+           \code{\link{lm}} or \code{\link{glm}}.}
   \item{x}{a numeric matrix, the design matrix.}
   \item{type}{the type of contrast to be used. If type is not specified, cmatrix has to be specified.}
   \item{cmatrix}{the contrast matrix itself can be specified. If
@@ -38,6 +44,10 @@ the normal approximation should be used.}
      usually 1 for the intercept) and right (usually 0 if no covariables are
      specified). \code{nzerocol} is automatically determined by
      \code{simint.formula}.}
+  \item{psubset}{a vector of integers or characters indicating for which
+                 subset of coefficients of a (generalized) linear model   
+                 \code{y}  simultaneous p-values should be
+                 computed.}
   \item{formula}{a symbolic description of the model to be fit.}
   \item{data}{an optional data frame containing the variables in the model.
               By default the variables are taken from
@@ -118,7 +128,7 @@ estimates, df and covariance matrices on his own.
 \examples{
 data(cholesterol)
 
-# adjusted p-values for all-pairwise comparisons in a onw-way 
+# adjusted p-values for all-pairwise comparisons in a one-way 
 # layout (tests for restricted combinations)
 simtest(response ~ trt, data=cholesterol, type="Tukey", ttype="logical")
 

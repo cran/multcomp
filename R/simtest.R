@@ -1,4 +1,4 @@
-# $Id: simtest.R,v 1.48 2003/03/24 14:12:54 hothorn Exp $
+# $Id: simtest.R,v 1.56 2003/08/13 10:14:07 bretz Exp $
 
 simtest <- function(y, ...) UseMethod("simtest")
 
@@ -12,6 +12,12 @@ simtest.default <- function(y, x=NULL, type=c("Dunnett", "Tukey",
 {
     ctype <- match.arg(type)
     alternative <- match.arg(alternative)
+
+    addargs <- list(...)
+    base <- 1
+    if (!is.null(addargs$base))
+      base <- addargs$base
+
 
     xpxi   <- mginv(t(x) %*% x)
     rankx  <- sum(diag((xpxi %*% (t(x) %*% x))))
@@ -28,7 +34,7 @@ simtest.default <- function(y, x=NULL, type=c("Dunnett", "Tukey",
    
     if (is.null(cmatrix)) { 
       nobs <- apply(x[,(nzerocol[1] + 1):(ncol(x) - nzerocol[2])], 2, sum) 
-      cm <- contrMat(nobs, ctype, nlevel)
+      cm <- contrMat(n = nobs, type = ctype, nlevel = nlevel, base = base)
       if (alternative == "greater")
         cm <- -cm
     } else {
@@ -39,6 +45,19 @@ simtest.default <- function(y, x=NULL, type=c("Dunnett", "Tukey",
       cm <- cbind(matrix(0, ncol=nzerocol[1], nrow=nrow(cm)), cm)
     if (nzerocol[2] != 0)
       cm <- cbind(cm, matrix(0, ncol=nzerocol[2], nrow=nrow(cm)))
+
+    ### test if cm %*% estpar is estimable
+
+    a <- cm %*%  xpxi %*% (t(x) %*% x)
+    b <- cm
+    attributes(a) <- NULL
+    attributes(b) <- NULL
+    areequal <- all.equal(a, b)
+
+    if (!is.logical(areequal)) 
+        warning("at least one contrast is not estimable")
+
+
 
     csimtest(estpar, df, covm, cm, ctype, ttype,
          alternative,  asympt, eps, maxpts)
@@ -52,8 +71,18 @@ csimtest <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
 {
     if (!is.vector(estpar) & !is.matrix(estpar)) stop("estpar not a vector")
     p <- length(estpar)
-    if (!all.equal(df - floor(df), 0)) stop("df not an integer")
-    if (!is.matrix(covm)) stop("covm is not a matrix")
+    if (missing(df) & !asympt) {
+      stop("df is missing")
+    } else {
+      if (missing(df)) df <- 0
+      if (!all.equal(df - floor(df), 0)) stop("df not an integer")
+    }
+    if (!is.matrix(covm)) {
+      if (length(covm) == 1) 
+        covm <- as.matrix(covm)
+      else 
+        stop("covm is not a matrix")
+    }
     cm <- cmatrix
     if (ctype !="user-defined") cmatrix <- NULL
 
@@ -92,7 +121,17 @@ csimtest <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
     covcont  <- covm
 
     k        <- nrow(cm)
-    r        <- t(rank(pvals))
+    ### <FIXME>
+    ### we need to check if the p-values are unique
+#    if (any(duplicated(pvals))) {
+#        warning("duplicated pvalues")
+#    }
+    ### </FIXME>
+#    r        <- t(rank(pvals))
+    ordpval1 <- order(pvals)
+    ordpval2 <- (1:length(ordpval1))[order(ordpval1)]
+    r        <- t(ordpval2)
+# end fix
     ir       <- r
     ir[,r]   <- 1:nrow(pvals)
     origord  <- t(ir)         
@@ -316,9 +355,9 @@ csimtest <- function(estpar, df, covm, cmatrix=NULL, ctype="user-defined",
     rownames(adjp) <- rownames(cord)
 
     RET <- list(cmatrix = cm, ctype = ifelse(is.null(cmatrix), ctype, NA),
-                estimate = ests, sd = ses, statistics = tvals,
-                p.value.raw = rawp, p.value.bon = bonp,
-                p.value.adj = adjp, eps=eps)
+                estimate = as.matrix(ests), sd = ses, statistics = tvals,
+                p.value.raw = rawp, p.value.bon = adjpbon,
+                p.value.adj = adjp, eps=eps, asympt = asympt)
 
     class(RET) <- "hmtestp"
     RET
@@ -328,6 +367,9 @@ simtest.formula <-
 function(formula, data=list(), subset, na.action, whichf, ...)
 {
     cl <- match.call()
+    if (!missing(subset)) subset <- cl$subset
+    if (!missing(na.action)) na.action <- cl$na.action
+
     pf <- parseformula(formula, data, subset, na.action, whichf, ...)
     x <- pf$x
     y <- pf$y
@@ -339,6 +381,133 @@ function(formula, data=list(), subset, na.action, whichf, ...)
     y$DNAME <- cl
     y$FNAMES <- pf$fnames
     y
+}
+
+simtest.lm <- function(y, psubset = NULL, cmatrix = NULL, 
+                      ttype=c("free","logical"), 
+                      alternative=c("two.sided","less","greater"), 
+                      asympt=FALSE,
+                      eps=0.001, maxpts=1000000, ...) {
+
+
+  p <- length(coef(y))
+  pnames <- names(coef(y))
+  ctype <- "model"
+  if (p < 2) return(y)
+
+  if (!is.null(psubset)) {
+    switch(class(psubset), "integer" = {
+      if (!all(psubset %in% 1:p))
+        stop("incorrect psubset")
+    }, "numeric" = { 
+      if (!all(psubset %in% 1:p))
+        stop("incorrect psubset")
+    }, "character" = {
+      if (all(psubset %in% names(coef(y)))) {
+        psubset <- which(names(coef(y)) %in% psubset)
+      } else {
+        stop("incorrect psubset")
+      } 
+    }, {
+      stop("psubset is neither of class integer, numeric nor character")
+    })
+  } else {
+    psubset <- 1:p
+  }
+
+  estpar <- coef(y)[psubset]
+  df <- summary(y)$df[2]    
+  covm = vcov(y)[psubset, psubset]
+  pnames <- pnames[psubset]
+  p <- length(psubset)
+  
+  if (!is.null(cmatrix)) {  
+    if (!is.matrix(cmatrix))
+      stop("argument cmatrix is no a matrix")
+    if (ncol(cmatrix) != p)
+        stop("argument cmatrix does not have", p, " columns")
+    if (is.null(rownames(cmatrix)))
+      rownames(cmatrix) <- paste("C", 1:nrow(cmatrix), sep="")
+  } else {
+    cmatrix <- diag(p)
+  }
+
+  RET <- csimtest(estpar = estpar, df = df, covm = covm,
+           cmatrix = cmatrix,
+           alternative = alternative, ttype = ttype,
+           eps = eps, maxpts = maxpts)
+  if (!is.null(pnames) & is.null(rownames(RET$estimate)))
+    rownames(RET$estimate) <- pnames
+  RET$ctype <- ctype
+  return(RET)
+}
+
+simtest.glm <- function(y, psubset = NULL, cmatrix = NULL, 
+                      ttype=c("free","logical"), 
+                      alternative=c("two.sided","less","greater"), 
+                      asympt=FALSE,
+                      eps=0.001, maxpts=1000000, ...) {
+
+
+  p <- length(coef(y))
+  pnames <- names(coef(y))
+  ctype <- "model"
+  if (p < 2) return(y)
+
+  if (asympt) {
+    if (y$family$family != "gaussian" || y$family$link != "identity") {
+      warning("cannot compute confidence intervals based on t distribtion")
+      asympt <- FALSE
+    }
+  }  
+     
+  if (asympt) df <- 0 else df <- summary(y)$df[2]
+
+
+  if (!is.null(psubset)) {
+    switch(class(psubset), "integer" = {
+      if (!all(psubset %in% 1:p))
+        stop("incorrect psubset")
+    }, "numeric" = { 
+      if (!all(psubset %in% 1:p))
+        stop("incorrect psubset")
+    }, "character" = {
+      if (all(psubset %in% names(coef(y)))) {
+        psubset <- which(names(coef(y)) %in% psubset)
+      } else {
+        stop("incorrect psubset")
+      } 
+    }, {
+      stop("psubset is neither of class integer, numeric nor character")
+    })
+  } else {
+    psubset <- 1:p
+  }
+
+  estpar <- coef(y)[psubset]
+  covm = vcov(y)[psubset, psubset]
+  pnames <- pnames[psubset]
+  p <- length(psubset)
+  
+  if (!is.null(cmatrix)) {  
+    if (!is.matrix(cmatrix))
+      stop("argument cmatrix is no a matrix")
+    if (ncol(cmatrix) != p)
+        stop("argument cmatrix does not have", p, " columns")
+    if (is.null(rownames(cmatrix)))
+      rownames(cmatrix) <- paste("C", 1:nrow(cmatrix), sep="")
+  } else {
+    cmatrix <- diag(p)
+  }
+
+  RET <- csimtest(estpar = estpar, df = df, covm = covm,
+           cmatrix = cmatrix,
+           alternative = alternative, ttype = ttype,
+           eps = eps, maxpts = maxpts)
+  if (!is.null(pnames) & is.null(rownames(RET$estimate)))
+    rownames(RET$estimate) <- pnames
+  RET$ctype <- ctype
+  return(RET)
 }
 
 

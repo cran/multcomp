@@ -34,3 +34,43 @@ attributes(Tukey) <- NULL
 attributes(HSD) <- NULL
 stopifnot(all.equal(Dunn, Tukey))
 stopifnot(all.equal(Dunn, HSD))
+
+# tied pvalues in simtest
+# spotted by Shin-ichi Hirata <001m9041@med.stud.kumamoto-u.ac.jp>
+Response<-
+c(0.0333333,0.0000000,0.1000000,0.0000000,0.0000000,0.1000000,0.4000000,
+-0.3333333,0.1000000,0.0000000,0.2000000,0.0000000,-0.1666667,0.1000000,
+-0.1333333,-0.0333333,0.0333333,0.0000000,0.0000000,0.0000000,0.0333333,
+0.0000000,0.0000000,0.1000000,-0.1666667,0.0000000,-0.2333333,0.2000000,
+0.0000000,0.2000000,0.0000000,-0.0666667,-0.1666667,0.1000000,0.2000000,
+0.0000000,0.0000000,0.0000000,0.0000000,0.1000000,0.1000000,-0.1666667,
+0.1000000,0.0000000,-0.2333333,0.0333333,0.4333333,0.1000000,0.2000000,
+0.0000000,0.1000000)
+Event<-factor(
+c("b","b","b","b","b","b","c","c","c","c","c","c","c","d","d","d","d","d",
+"d","e","e","e","e","e","e",
+"f","f","f","f","f","f","f","g","g","g","g","g","g","h","h","h","h","h", 
+"h","a","a","a","a","a","a","a"))
+testdata<-cbind(as.data.frame(Response),Event)
+simtest(Response~Event,data=testdata,type="Dunnett")
+
+### test `subset' and `na.action' arguments
+data(recovery)
+simint(minutes ~ blanket, data=recovery, conf.level=0.9, 
+       alternative="less", eps=0.01, subset = minutes > 7, na.action =
+       na.fail)
+simint(minutes ~ blanket, data=recovery, conf.level=0.9, 
+       alternative="less", eps=0.01, subset = blanket != "b0", na.action =
+       na.fail)
+
+### spotted by Jamie Jarabek <jjarabek@stat.ufl.edu>
+### fixed in mvtnorm_0.6-1 (univariate pmvt with df = 0)
+
+x <- gl(3,10,30)
+levels(x) <-c(" G1","G2","G3")
+y <- rbinom(30,1,prob=c(rep(.8,10),rep(.2,10),rep(.5,10)))
+toy.glm <- glm(y ~x, family=binomial)
+csimint(estpar=coef(toy.glm)[2:3],df=toy.glm$df.residual,
+        covm=vcov(toy.glm)[2:3,2:3],
+        cmatrix=contrMat(c(10,10),type="Tukey"),asympt=TRUE)
+
