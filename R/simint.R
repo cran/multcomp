@@ -1,4 +1,4 @@
-# $Id: simint.R,v 1.37 2003/02/18 08:27:56 hothorn Exp $
+# $Id: simint.R,v 1.38 2003/02/19 15:12:11 hothorn Exp $
 
 simint <- function(y, ...) UseMethod("simint")
 
@@ -17,7 +17,7 @@ simint.default <- function(y, x=NULL, type=c("Dunnett", "Tukey",
     rankx  <- sum(diag((xpxi %*% (t(x) %*% x))))
     n      <- nrow(x)
     p      <- ncol(x)
-    df     <- ceiling(n-rankx)
+    df     <- round(n-rankx)
     estpar <- xpxi %*% t(x) %*% y
     mse    <- t(y-x %*% estpar) %*% (y-x %*% estpar)/df
     covm   <- mse[1,1]*xpxi
