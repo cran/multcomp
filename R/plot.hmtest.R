@@ -1,4 +1,4 @@
-# $Id: plot.hmtest.R,v 1.4 2002/08/15 07:28:05 hothorn Exp $
+# $Id: plot.hmtest.R,v 1.5 2004/03/01 17:10:22 hothorn Exp $
 
 plot.hmtest <- function(x, ltycint=2, ltyzero=3, ...) {
   est <- x$estimate
@@ -52,8 +52,15 @@ plot.hmtest <- function(x, ltycint=2, ltyzero=3, ...) {
   if (mymai[2] < ywidth)
    mymai[2] <- ywidth
   par(mai=mymai, new=TRUE)
-  plot(rbind(c(crange[1], 1), c(crange[2], n)), type="n", axes=FALSE,
-       xlab=xlab, ylab="", main=type, ...)
+  if (!is.null(args$main)) { type = args$main; args$main = NULL; }
+  if (!is.null(args$xlab)) { xlab = args$xlab; args$xlab = NULL; }
+  ylab = ""
+  if (!is.null(args$ylab)) { ylab = args$ylab; args$ylab = NULL; }
+
+  pr = rbind(c(crange[1], 1), c(crange[2], n))
+  pargs = c(list(x = pr[,1]), list(y=pr[,2]), 
+            type="n", axes=FALSE, xlab=xlab, ylab=ylab, main=type, args)
+  do.call("plot", pargs)
   axis(1, ...)
   axis(2, 1:n, rownames(est)[n:1], las=1, ...)
   box(...)

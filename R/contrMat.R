@@ -1,4 +1,4 @@
-# $Id: contrMat.R,v 1.18 2003/05/13 11:21:20 hothorn Exp $
+# $Id: contrMat.R,v 1.19 2003/12/19 09:34:41 hothorn Exp $
 
 contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
                                "Changepoint", "Williams", "Marcus",
