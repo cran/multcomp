@@ -1,4 +1,4 @@
-# $Id: parseformula.R,v 1.15 2003/08/13 16:24:25 hothorn Exp $
+# $Id: parseformula.R,v 1.17 2003/09/11 14:41:56 hothorn Exp $
 
 parseformula <- function(formula, data=list(), subset, na.action, 
                          whichf=NULL, ...) {
@@ -169,23 +169,22 @@ parseformula <- function(formula, data=list(), subset, na.action,
     ### via C() or contrasts()
     ### </FIXME>
 
+
     if (!is.null(mainF)) {
       eval(parse(text=paste("thisctrs <- list(", 
                          paste(mainF, "=\"ct\"", collapse=", "), ")")))
       x <- model.matrix(attr(mf, "terms"), mf, contrasts=thisctrs)
 
-      ### search for interactions when the length of mainF is > 1
-      if (length(mainF) == 1) {
-          ### determine which columns of the design matrix 
-          ### correspond to the factor of interest: not really
-          ### the way I would like to do this ...
-          mainFlevels <- unlist(flevels[mainF])
-          mainFnames <- paste(mainF, mainFlevels, sep = "")
-          mainFindx <- which(colnames(x) %in% mainFnames)
-      } else {
-          mainFindx <- grep(paste(mainF, ".*", collapse = ":", 
-                                  sep = ""), colnames(x))
-      }
+      ### interaction contrasts
+      if (length(mainF) > 1) mainF <- paste(mainF, collapse = ":")
+
+      fm <- attr(mt, "factors")
+      ### determine which columns of the design matrix 
+      ### correspond to the factor of interest.
+      indx <- which(colnames(fm) == mainF)
+      mainFindx <- which(attr(x, "assign") == indx)
+
+      ### ???
       intera <- grep(":", colnames(x)[mainFindx])
       if (length(intera) > 0 & (length(intera) < length(mainFindx))) {
         mainFindx <- mainFindx[-intera]
@@ -200,8 +199,6 @@ parseformula <- function(formula, data=list(), subset, na.action,
       # get the number of observations at each factor level
       # NOT needed for Tetrade in contrMatr
       nobs <- apply(x[,mainFindx], 2, sum)
-
-      if (length(mainF) > 1) mainF <- paste(mainF, collapse = ":")
 
       if (TETRADE) {
         if (INTERCEPT) {

@@ -1,4 +1,10 @@
-$Id: CHANGES,v 1.52 2003/08/13 16:24:34 hothorn Exp $
+$Id: CHANGES,v 1.54 2003/09/11 14:42:04 hothorn Exp $
+
+	0.4-2 (11.09.2003)
+
+	use attr(<model.matrix>, "assign") to determine the columns
+    associated with the factor of interest instead of brain damaged
+    variable name pasting in `parseformula'.
 
 	0.4-1 (26.08.2003)
 
