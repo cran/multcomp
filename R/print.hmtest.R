@@ -1,4 +1,4 @@
-# $Id: print.hmtest.R,v 1.5 2002/07/05 16:35:57 hothorn Exp $
+# $Id: print.hmtest.R,v 1.6 2002/09/18 09:30:12 hothorn Exp $
 
 print.hmtest <- function(x, digits=4, ...)
 {
@@ -11,9 +11,11 @@ print.hmtest <- function(x, digits=4, ...)
     writeLines(strwrap(paste("Simultaneous confidence intervals:", type),
                        prefix="\t"))
     cat("\n")
-    cat("Call: \n")
-    print(x$DNAME)
-    cat("\n")
+    if (!is.null(x$DNAME)) {
+      cat("Call: \n")
+      print(x$DNAME)
+      cat("\n")
+    }
     if (!is.null(x$estimate) && !is.null(x$conf.int)) {
         cint <- round(x$conf.int, digits=digits)
         conf.level <- attr(cint, "conf.level")

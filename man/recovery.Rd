@@ -30,8 +30,11 @@ data(recovery)
 
 # one-sided simultaneous confidence intervals for Dunnett 
 # in the one-way layout
-simint(minutes ~ blanket, data=recovery, conf.level=0.9, 
-       alternative="less",eps=0.0001)
+ci <- simint(minutes ~ blanket, data=recovery, conf.level=0.9, 
+      alternative="less",eps=0.0001)
+summary(ci)
+plot(ci,cex.axis=1.5, lwd=1.5)
+
 
 # same results, but specifying the contrast matrix by hand
 C <- c(0, 0, 0, -1, -1, -1, 1, 0, 0, 0, 1, 0, 0, 0, 1)

@@ -1,4 +1,4 @@
-# $Id: summary.hmtest.R,v 1.8 2002/07/11 12:56:53 hothorn Exp $
+# $Id: summary.hmtest.R,v 1.9 2002/09/18 09:30:12 hothorn Exp $
 
 summary.hmtest <- function(object, ...)
 {
@@ -22,9 +22,11 @@ print.summary.hmtest <- function(x, digits = max(3, getOption("digits")-3),
                        "\% confidence intervals: ", type, sep=""),
                        prefix="\t"))
     cat("\n")
-    cat("Call: \n")
-    print(x$DNAME)
-    cat("\n")
+    if (!is.null(x$DNAME)) {
+      cat("Call: \n")
+      print(x$DNAME)
+      cat("\n")
+    }
     cat("\t", type, "for factor",  x$FNAME$mainF)                 
     if (length(x$FNAME$coVar) > 0) {
       if (length(grep("[+]", x$FNAME$coVar)) > 0)
