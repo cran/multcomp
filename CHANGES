@@ -1,4 +1,8 @@
-$Id: CHANGES,v 1.35 2002/11/22 14:57:27 hothorn Exp $
+$Id: CHANGES,v 1.36 2002/12/18 07:49:26 hothorn Exp $
+
+	0.3-5 (18.12.2002)
+
+	R CMD build problems
 
 	0.3-4 (22.11.2002)
 
