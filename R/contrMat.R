@@ -1,12 +1,12 @@
 # $Id: contrMat.R,v 1.19 2003/12/19 09:34:41 hothorn Exp $
 
-contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
-                               "Changepoint", "Williams", "Marcus",
-                               "McDermott","Tetrade"), nlevel=NULL, base = 1) {
+contrMat <- function(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
+                                 "Changepoint", "Williams", "Marcus",
+                                 "McDermott"), base = 1) {
 
     if (length(n) < 2) stop("less than 2 groups")
+    m <- NULL
     type <- match.arg(type)
-    if (any(n < 2)) stop("less than 2 observations in at least one group")
     k <- length(n)
     if (base < 1 || base > k) stop("base is not between 1 and ", k)
     CM <- c()
@@ -17,31 +17,22 @@ contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
         varnames <- 1:length(n)
 
     kindx <- 1:k
-#    if (base != 1 && type == "Dunnett") {
-#      n <- c(n[base], n[-base])
-#      varnames <- c(varnames[base], varnames[-base])
-#      kindx <- c(base, (1:k)[-base])
-#    }
-
-    type <- match.arg(type)
 
     switch(type, "Dunnett" = {
         for(i in kindx[-base])
             CM <- rbind(CM, as.numeric(kindx == i) - as.numeric( kindx == base))
-        rnames <- paste(varnames[kindx[-base]], "-", varnames[base], sep="")
+        rnames <- paste(varnames[kindx[-base]], "-", varnames[base])
     }, "Tukey" = {
         for (i in 1:(k-1)) {
             for(j in (i+1):k) {
                 CM  <- rbind(CM, as.numeric(kindx==j)-as.numeric(kindx==i))
-                rnames <- c(rnames, paste(varnames[j], "-", varnames[i],
-                                          sep=""))
+                rnames <- c(rnames, paste(varnames[j], "-", varnames[i]))
             }
         }
     }, "Sequen" =  {
         for (i in 2:k) {
             CM  <- rbind(CM, as.numeric(kindx==i)-as.numeric(kindx==i-1))
-            rnames <- c(rnames, paste(varnames[i], "-", varnames[i-1],
-                                      sep=""))
+            rnames <- c(rnames, paste(varnames[i], "-", varnames[i-1]))
         }
     }, "AVE" = {
         help <- c(1,  -n[2:k]/sum(n[2:k]))
@@ -59,7 +50,7 @@ contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
             help <- c(-n[1:i]/sum(n[1:i]), n[(i+1):k]/sum(n[(i+1):k]))
             CM <- rbind(CM, help)
         }
-        rnames <- c(rnames, paste("C", 1:nrow(CM), sep=""))
+        rnames <- c(rnames, paste("C", 1:nrow(CM)))
     }, "Williams" = {
         for (i in 1:(k-2)) {
             help <-  c(-1, rep(0, k-i-1), n[(k-i+1):k]/sum(n[(k-i+1):k]))
@@ -67,7 +58,7 @@ contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
         }
         help <- c(-1, n[2:k]/sum(n[2:k]))
         CM <- rbind(CM, help)
-        rnames <- c(rnames, paste("C", 1:nrow(CM), sep=""))
+        rnames <- c(rnames, paste("C", 1:nrow(CM)))
     }, "Marcus" = {
         cm1 <- matrix(0, nrow=k-1, ncol=k)
         cm2 <- cm1
@@ -75,7 +66,7 @@ contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
             cm1[i,(i+1):k] <- n[(i+1):k]/sum(n[(i+1):k])
             cm2[i,1:i] <- n[1:i]/sum(n[1:i])
         }
-        row <- k*(k-1)/2
+        ### row <- k*(k-1)/2
         index <- 1
         for (i in 1:(k-1)) {
             for (j in 1:i) {
@@ -84,7 +75,7 @@ contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
                 index <- index+1
             }
         }
-        rnames <- c(rnames, paste("C", 1:nrow(CM), sep=""))
+        rnames <- c(rnames, paste("C", 1:nrow(CM)))
      }, "McDermott" = {
          for(i in 1:(k-2)) {
              help  <- c(-n[1:i]/sum(n[1:i]), 1, rep(0, k-i-1))
@@ -92,12 +83,15 @@ contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
          }
          help <- c(-n[1:(k-1)]/sum(n[1:(k-1)]), 1)
          CM  <- rbind(CM, help)
-         rnames <- c(rnames, paste("C", 1:nrow(CM), sep=""))
+         rnames <- c(rnames, paste("C", 1:nrow(CM)))
     }, "Tetrade" = {
-        if (is.null(nlevel)) stop("nlevel missing")
-        if (length(nlevel) != 2) stop("only two factors allowed")
-        a <- nlevel[1]
-        b <- nlevel[2]
+        if (is.null(m)) stop(sQuote("m"), " is missing")
+        a <- length(n)
+        b <- length(m)
+        if (!is.null(names(m)))
+            varnamesm <- names(m)
+        else 
+            varnamesm <- 1:length(m)
 	idi <- 1:a
 	idj <- 1:b
         for (i1 in 1:(a-1)) {
@@ -106,47 +100,21 @@ contrMat <- function(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
         	    for (j2 in (j1+1):b) {
                 	CM <- rbind(CM, kronecker( ( as.numeric(idi==i1)-as.numeric(idi==i2) ),
                                                    ( as.numeric(idj==j1)-as.numeric(idj==j2) ) ) ) 
-		        rnames <- c(rnames, paste( "(", i1, j1, "-", i1, j2, ")", "-", 
-                                                   "(", i2, j1, "-", i2, j2, ")",  sep=""))
+		        rnames <- c(rnames, paste( "(", paste(varnames[i1], varnamesm[j1], sep = ":"), "-", 
+                                                        paste(varnames[i1], varnamesm[j2], sep = ":"), ")", "-", 
+                                                   "(", paste(varnames[i2], varnamesm[j1], sep = ":"), "-", 
+                                                        paste(varnames[i2], varnamesm[j2], sep = ":"), ")",  sep=""))
             	    }
         	}
 	    }
         }
     },)
     rownames(CM) <- rnames
-    if (type=="Tetrade")
-      colnames(CM) <- NULL
+    if (type == "Tetrade")
+      colnames(CM) <- NULL ###levels(interaction(varnames, varnamesm))
     else 
       colnames(CM) <- varnames
+    attr(CM, "type") <- type
+    class(CM) <- "contrMat"
     CM
-}
-
-contr.Dunnett <- function(n, base = 1, contrasts=TRUE) {
-  if (length(n) == 1)  {
-    if (contrasts) {
-      mginv(contrMat(rep(10, n), base = base, type="Dunnett"))
-    } else {
-      diag(n)
-    }
-  }
-  if (length(n) > 1) { 
-    if (contrasts) {
-      x <- rep(10, length(n))
-      names(x) <- n
-      mginv(contrMat(x, base = base, type="Dunnett")) 
-    } else {
-      diag(length(n))
-    }
-  } 
-}
-
-contr.Tukey <- function(n, contrasts=TRUE) {
-  if (!contrasts) stop("contrasts is false")
-  if (length(n) == 1) 
-    mginv(contrMat(rep(10, n), type="Tukey"))
-  if (length(n) > 1) {
-    x <- rep(10, length(n))
-    names(x) <- n
-    mginv(contrMat(x, type="Tukey"))
-  }
 }

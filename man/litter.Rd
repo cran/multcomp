@@ -2,51 +2,60 @@
 \alias{litter}
 \non_function{}
 \title{ Litter Weights Data Set }
-\usage{data(litter)}
+\usage{data("litter")}
 \description{
-  Dose response of litter weights in rats; data set taken from Westfall et al. (1999, p. 109). Specific dose comparisons in a dose response experiment with two covariates. 
+  Dose response of litter weights in rats.
 }
 \format{
   This data frame contains the following variables
   \describe{
-    \item{dose}{Dosages at 4 levels: \code{0}, \code{5}, \code{50}, 
+    \item{dose}{dosages at four levels: \code{0}, \code{5}, \code{50}, 
                 \code{500}.}
-    \item{gesttime}{Gestation time as covariate.}
-    \item{number}{Number of animals in litter as covariate.}
-    \item{weight}{Response variable: average post-birth weights 
+    \item{gesttime}{gestation time as covariate.}
+    \item{number}{number of animals in litter as covariate.}
+    \item{weight}{response variable: average post-birth weights 
                   in the entire litter.}
   }
 }
 \details{
-  See Westfall et al. (1999, p. 109)
+
+  Pregnant mice were divided into four groups and the compound in four
+  different doses was administered during pregnancy. Their litters
+  were evaluated for birth weights.
+
 }
 \source{
+
   P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
   \emph{Multiple Comparisons and Multiple Tests Using the SAS System}.
-  Cary, NC: SAS Institute Inc.  
+  Cary, NC: SAS Institute Inc., page 109.
+
+  P. H. Westfall (1997). Multiple Testing of General Contrasts Using
+  Logical Constraints and Correlations. \emph{Journal of the American
+  Statistical Association}, \bold{92}(437), 299--306.
+
 }
 \examples{
-data(litter)
 
-# define the contrast matrix, either completly
-C <- matrix(c(0,0,0,0,0,0,1,1,1,.75,.384,.887,-1,0,0,.25,.37,.113,
-       0,-1,0,-.25,.246,-.339,0,0,-1,-.75,-1,-.661,0,0,0,
-       0,0,0,0,0,0,0,0,0), ncol=7)
-# numerate the contrasts
-rownames(C) <- paste("C", 1:nrow(C), sep="")
+  ### fit ANCOVA model to data
+  amod <- aov(weight ~ dose + gesttime + number, data = litter)
 
-# simultaneous confidence intervals for above comparisons 
-# in an ANCOVA
-summary(simint(weight ~ dose + gesttime + number, data=litter,
-               alternative="greater", cmatrix=C))
+  ### define matrix of linear hypotheses for `dose'
+  doselev <- as.integer(levels(litter$dose))
+  K <- rbind(contrMat(table(litter$dose), "Tukey"),
+             otrend = c(-1.5, -0.5, 0.5, 1.5),
+             atrend = doselev - mean(doselev),
+             ltrend = log(1:4) - mean(log(1:4)))
 
-# or for dose only
-D <- matrix(c(1,1,1,.75,.384,.887,-1,0,0,.25,.37,.113,0,-1,0,-.25,
-              .246,-.339,0,0,-1,-.75,-1,-.661),ncol = 4)
-rownames(D) <- paste("D", 1:nrow(D), sep="")
+  ### set up multiple comparison object
+  Kht <- glht(amod, linfct = mcp(dose = K), alternative = "less")
 
-summary(simint(weight ~ dose + gesttime + number, data=litter,
-               whichf="dose", alternative="greater", cmatrix=D))
+  ### cf. Westfall (1997, Table 2)
+  summary(Kht, test = univariate())
+  summary(Kht, test = adjusted("bonferroni"))
+  summary(Kht, test = adjusted("Shaffer"))
+  summary(Kht, test = adjusted("Westfall"))
+  summary(Kht, test = adjusted("free"))
 
 }
 \keyword{datasets}

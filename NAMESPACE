@@ -1,14 +1,27 @@
 
-export(contrMat, mginv, csimint, csimtest, simint, simint.default,
-       simint.formula, simtest.default, simtest.formula, simtest, 
-       ct, simint.lm, simint.glm, simtest.lm, simtest.glm, contr.Dunnett)
+export(glht, contrMat, univariate, adjusted, Ftest, Chisqtest, mcp, modelparm,
+       ### deprecated
+       csimint, simint, csimtest, simtest)
 
-S3method(print, hmtest)
-S3method(print, hmtestp)
-S3method(print, summary.hmtest)
-S3method(print, summary.hmtestp)
-S3method(plot, hmtest)
-S3method(summary, hmtest)
-S3method(summary, hmtestp)
+S3method(summary, glht)
+S3method(confint, glht)
+S3method(print, glht)
+S3method(coef, glht)
+S3method(vcov, glht)
+S3method(print, confint.glht)
+S3method(plot, confint.glht)
+S3method(print, contrMat)
+S3method(print, summary.glht)
+S3method(print, summary.glht.global)
+S3method(glht, matrix)
+S3method(glht, character)
+S3method(glht, expression)
+S3method(glht, mcp)
 
-import(mvtnorm)
+### deprecated from multcomp version 0.4-8
+S3method(simint, formula)
+S3method(simint, lm)
+S3method(simtest, formula)
+S3method(simtest, lm)
+S3method(summary, summary.glht)
+S3method(summary, confint.glht)

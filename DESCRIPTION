@@ -1,12 +1,13 @@
 Package: multcomp
-Title: Multiple Tests and Simultaneous Confidence Intervals 
-Version: 0.4-8
-Date: $Date: 2004/08/04 08:38:22 $
-Author: Frank Bretz <bretz@ifgb.uni-hannover.de>,
- Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de> and 
- Peter Westfall <WESTFALL@ba.ttu.edu>
-Description: Multiple comparison procedures for the one-way layout.
-Maintainer: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
-Depends: R (>= 1.7.0), mvtnorm (>= 0.6-3)
+Title: Simultaneous Inference for General Linear Hypotheses
+Version: 0.991-1
+Date: 2006-10-16
+Author: Torsten Hothorn, Frank Bretz and Peter Westfall
+Description: Simultaneous tests and confidence intervals
+  for general linear hypotheses in parametric models, including 
+  linear, generalized linear, linear mixed effects, and survival models.
+Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
+Depends: mvtnorm (>= 0.7-5)
+LazyData: yes
 License: GPL
-Packaged: Thu Nov 18 13:43:49 2004; hothorn
+Packaged: Mon Oct 23 10:39:01 2006; hothorn
