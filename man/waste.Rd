@@ -2,39 +2,42 @@
 \alias{waste}
 \non_function{}
 \title{ Industrial Waste Data Set }
-\usage{data(waste)}
+\usage{data("waste")}
 \description{
-  Industrial waste data set taken from Westfall et al. (1999, p. 177). 
-Simultaneous confidence intervals for interaction contrasts in 
-a two-way layout with interactions.
+  Industrial waste output in a manufactoring plant.
 }
 \format{
   This data frame contains the following variables
   \describe{
-    \item{temp}{Temperature at 3 levels: \code{low}, \code{medium},
-\code{high}.}
-    \item{envir}{Environment at 5 levels: \code{env1} \dots \code{env5}.}
-    \item{waste}{Response variable: waste output in a manufacturing plant.}
+    \item{temp}{temperature, a factor at three levels: \code{low}, \code{medium}, \code{high}.}
+    \item{envir}{environment, a factor at five levels: \code{env1} \dots \code{env5}.}
+    \item{waste}{response variable: waste output in a manufacturing plant.}
   }
 }
 \details{
-  See Westfall et al. (1999, p. 177)
+
+  The data are from an experiment designed to study the effect of temperature
+  (\code{temp}) and environment (\code{envir}) on waste output in a manufactoring plant.
+  Two replicate measurements were taken at each temperature / environment combination.
+
 }
 \source{
+
   P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
   \emph{Multiple Comparisons and Multiple Tests Using the SAS System}.
-  Cary, NC: SAS Institute Inc.  
+  Cary, NC: SAS Institute Inc., page 177.
+
 }
 \examples{
-data(waste)
-summary(aov(waste ~ envir + temp + envir*temp, data=waste))
 
-summary(simint(waste ~ envir:temp, data=waste,
-               type="Tetrade", eps=0.1))
-summary(simtest(waste ~ envir:temp, data=waste,
-                type="Tetrade", eps=0.1))
+  ### set up two-way ANOVA with interactions
+  amod <- aov(waste ~ envir + temp + envir*temp, data=waste)
 
-}
+  ### set up linear hypotheses for all-pairs of both factors
+  wht <- glht(amod, linfct = mcp(temp = "Tukey", envir = "Tukey"))
+
+  ### cf. Westfall et al. (1999, page 181)
+  summary(wht, test = adjusted("Shaffer"))
 
 }
 \keyword{datasets}

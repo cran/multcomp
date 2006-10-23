@@ -1,0 +1,361 @@
+
+\documentclass{article}
+
+%%\VignetteIndexEntry{Simultaneous Inference Procedures for General Linear Hypotheses}
+%%\VignetteDepends{multcomp}
+
+\usepackage[utf-8]{inputenc}
+
+\usepackage{amsfonts}
+\usepackage{amstext}
+\usepackage{amsmath}
+\newcommand{\R}{\mathbb{R} }
+\newcommand{\RR}{\textsf{R} }
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\W}{\mathbf{W}}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\K}{\mathbf{K}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\m}{\mathbf{m}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\Cor}{\text{Cor}}
+\newcommand{\abs}{\text{abs}}
+\usepackage{natbib}
+
+\newcommand{\Rpackage}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\newcommand{\Robject}[1]{\texttt{#1}}
+\newcommand{\Rclass}[1]{\textit{#1}}
+\newcommand{\Rcmd}[1]{\texttt{#1}}
+\newcommand{\Roperator}[1]{\texttt{#1}}
+\newcommand{\Rarg}[1]{\texttt{#1}}
+\newcommand{\Rlevel}[1]{\texttt{#1}}
+\newcommand{\file}[1]{\hbox{\rm\texttt{#1}}}
+
+
+\begin{document}
+
+<<setup, echo = FALSE, results = hide>>=
+dig <- 4
+options(width = 65, digits = dig)
+library("multcomp")
+set.seed(290875)
+@
+
+\SweaveOpts{engine=R,eps=FALSE}
+
+\title{Simultaneous Inference Procedures \\ 
+       for General Linear Hypotheses}
+
+\author{Torsten Hothorn}
+
+\maketitle
+
+\section{Introduction}
+
+
+Consider a parametric model $\mathcal{M}(Y, \beta)$
+with observations $Y$ and a
+$p$-dimensional vector of parameters $\beta$. This model 
+could be some
+kind of regression model where $Y = (y, x)$ can be split 
+up into a dependent variable
+$y$ and regressors $x$. An example is a linear regression
+model $y = x^\top \beta$ or a generalized linear model (GLM) or a survival
+regression.
+
+Our primary target is simultaneous inference about 
+\emph{general linear hypotheses} on $\beta$.
+More specifically, the global null hypothesis is
+formulated in terms of linear functions of the parameter vector $\beta \in \R^p$
+\citep{Searle1971}:
+\begin{eqnarray*}
+H_0: \K \beta = \m
+\end{eqnarray*}
+where $\K$ is a $k \times p$ matrix with each row corresponding to
+one partial hypothesis. However, we are not only interested in the 
+\emph{global} hypothesis $H_0$ but in all partial
+hypotheses defined by the rows $K_j, j = 1, \dots, k$, of $\K$ and
+the elements of $\m = (m_1, \dots, m_k)$:
+\begin{eqnarray*}
+H_0^j: K_j \beta = m_j \text{ with global hypothesis } H_0 = \bigcap_{j = 1}^k H_0^j
+\end{eqnarray*}
+We only consider simultaneous inference procedures, both tests and confidence intervals,
+which control the \emph{family-wise error rate} (FWE), that is the probability of 
+incorrectly rejecting at least one hypothesis $H_0^j, j = 1, \dots, k$.
+
+\subsection{Parameter Estimates}
+
+We assume we are provided with an estimate $\hat{\beta}$ of $\beta$ based on
+observations $Y_1, \dots, Y_n$. The estimate $\hat{\beta}$
+follows a joint multivariate normal distribution
+with mean $\beta$ and covariance matrix $\Sigma$, either exactly or
+asymptotically.
+Moreover, we assume that an estimate $\V(\hat{\beta})$ of 
+the covariance matrix $\Sigma$ is available. It then holds that
+the linear combination $\K \hat{\beta}$ follows 
+a joint normal distribution  $\N(\K \beta, \K \Sigma \K^\top)$, either exactly
+or asymptoticall.y
+
+\subsection{Simultaneous Tests and Confidence Intervals}
+
+Under the conditions of the global hypothesis $H_0$ it holds that
+\begin{eqnarray*}
+\K \hat{\beta} - \m \sim \N(0, \K \Sigma \K^\top),
+\end{eqnarray*}
+either exactly  or asymptotically. 
+Let $\sigma = \text{diag}\left(\K \V(\hat{\beta}) \K^\top\right)$
+denote the estimated standard deviations for all elements of $\K \hat{\beta}$.
+Then, all inference procedures are based on 
+the vector of all $k$ standardized test statistics
+\begin{eqnarray*}
+\z = (z_1, \dots, z_k) =  \sigma^{-\frac{1}{2}} (\K \hat{\beta} - \m).
+\end{eqnarray*}
+The correlation matrix of the elements of $\z$ is
+\begin{eqnarray*}
+\V(\z) = \sigma^{-\frac{1}{2}} 
+         \K \V(\hat{\beta}) \K^\top 
+         \left(\sigma^{-\frac{1}{2}} \right)^\top.
+\end{eqnarray*}
+Under $H_0$ is holds that $\z \rightarrow \N(0, \V(\z))$. When $\hat{\beta}$
+follows a normal distribtion exactly, the $\z$ statistics follow a multivariate
+$t$ distribution with $n - \text{Rank}(\K)$ degrees of freedom and
+correlation matrix $\V(\z))$.
+
+A simultaneous inference procedure is based on the maximum of the absolute values
+of the test statistics: $\max|\z|$. 
+Adjusted $p$ values, controlling the family-wise error rate,
+for each linear hypothesis $H_0^j$ are $p_j = P_{H_0}(\max(|\z|) \ge |z_j|)$.
+Efficient algorithms for the evalutation of both multivariate distributions
+are nowadays available \citep{Genz1992, GenzBretz1999, GenzBretz2002}.
+
+\paragraph{Example: Simple Linear Model.}
+
+Consider a simple univariate linear model regressing the distance to stop 
+on speed for $\Sexpr{nrow(cars)}$ cars:
+<<lm-cars, echo = TRUE>>=
+lm.cars <- lm(dist ~ speed, data = cars)
+summary(lm.cars)
+@
+The estimates of the regression coefficients $\beta$ and their covariance matrix
+can be extracted from the fitted model via:
+<<lm-coef-vcov, echo = TRUE>>=
+betahat <- coef(lm.cars)
+Vbetahat <- vcov(lm.cars)
+@
+At first, we are interested in the hypothesis $\beta_1 = 0 \text{ and } \beta_2 = 0$. 
+This is equivalent
+to the linear hypothesis $\K \beta = 0$ where $\K = \text{diag}(2)$, i.e.,
+<<lm-K, echo = TRUE>>=
+K <- diag(2)
+Sigma <- diag(1 / sqrt(diag(K %*% Vbetahat %*% t(K)))) 
+z <- Sigma %*% K %*% betahat
+Cor <- Sigma %*% (K %*% Vbetahat %*% t(K)) %*% t(Sigma)                  
+@
+Note that $\z = \Sexpr{paste("(", paste(round(z, dig), collapse = ", "), ")")}$ 
+is equal to the $t$ statistics. The multiplicity-adjusted
+$p$ values can now be computed by means of the multivariate $t$ distribution
+utilizing the \Rcmd{pmvt} function available in package \Rpackage{mvtnorm}:
+<<lm-partial, echo = TRUE>>=
+library("mvtnorm")
+df.cars <- nrow(cars) - length(betahat)
+sapply(abs(z), function(x) 1 - pmvt(-rep(x, 2), rep(x, 2), corr = Cor, df = df.cars))
+@
+Note that the $p$ value of the global test is the minimum $p$ value of the partial tests.
+
+The computations above can be performed much more conveniently using the functionality
+implemented in package \Rpackage{multcomp}. The function \Rcmd{glht} just takes a fitted 
+model and a matrix defining the linear functions, and thus hypotheses,
+to be tested:
+<<lm-K, echo = FALSE>>=
+rownames(K) <- names(betahat)
+@
+<<lm-mcp, echo = TRUE>>=
+library("multcomp")
+cars.ht <- glht(lm.cars, linfct = K)
+summary(cars.ht)
+@
+Simultaneous confidence intervals corresponding to this multiple testing
+procedure are available via
+<<lm-confint, echo = TRUE>>=
+confint(cars.ht)
+@
+
+The application of the framework isn't limited to linear models, nonlinear least-squares
+estimates can be tested as well. Consider constructing simultaneous
+confidence intervals for the model parameters (example from the manual page of \Rcmd{nls}):
+<<nls, echo = TRUE>>=
+DNase1 <- subset(DNase, Run == 1)
+fm1DNase1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
+K <- diag(3)
+rownames(K) <- names(coef(fm1DNase1))
+confint(glht(fm1DNase1, linfct = K))
+@
+which is not totally different from univariate confidence intervals
+<<nls-confint, echo = TRUE>>=
+confint(fm1DNase1)
+@
+because the parameter estimates are highly correlated
+<<nls-cor, echo = TRUE>>=
+cov2cor(vcov(fm1DNase1))
+@
+
+
+\paragraph{Example: Confidence Bands for Regression Line.}
+
+Suppose we want to plot the linear model fit to the \Robject{cars} data
+including an assessment of the variability of the model fit. This can 
+be based on simultaneous confidence intervals for the regression line $x_i^\top \hat{\beta}$:
+<<lm-band, echo = TRUE>>=
+K <- model.matrix(lm.cars)[!duplicated(cars$speed),]
+ci.cars <- confint(glht(lm.cars, linfct = K), abseps = 0.1)
+@
+Figure \ref{lm-plot} depicts the regression fit together with the
+confidence band for the regression line and the pointwise 
+confidence intervals as computed by \Rcmd{predict(lm.cars)}.
+\begin{figure}
+\begin{center}
+<<lm-plot, echo = FALSE, fig = TRUE, width = 8, height = 5>>=
+plot(cars, xlab = "Speed (mph)", ylab = "Stopping distance (ft)",
+            las = 1, ylim = c(-30, 130))
+abline(lm.cars)
+lines(K[,2], ci.cars$confint[,"lwr"], lty = 2)
+lines(K[,2], ci.cars$confint[,"upr"], lty = 2)
+ci.lm <- predict(lm.cars, interval = "confidence")
+lines(cars$speed, ci.lm[,"lwr"], lty = 3)
+lines(cars$speed, ci.lm[,"upr"], lty = 3)
+legend("topleft", lty = c(1, 2, 3), legend = c("Regression line", 
+                                               "Simultaneous confidence band", 
+                                               "Pointwise confidence intervals"),
+       bty = "n")
+@
+\caption{\Robject{cars} data: Regression line with confidence 
+    bands (dashed) and intervals (dotted). \label{lm-plot}}
+\end{center}
+\end{figure}
+
+\section{Multiple Comparison Procedures} 
+
+Multiple comparisons of means, i.e., regression coefficients for groups in
+AN(C)OVA models, are a special case of the general framework sketched in the previous
+section. The main difficulty is that the comparisons one is usually interested in,
+for example all-pairwise differences, can't be directly specified based on
+model parameters of an AN(C)OVA regression model. We start with a simple
+one-way ANOVA example and generalize to ANCOVA models in the following.
+
+Consider a one-way ANOVA model, i.e., 
+the only covariate $x$ is a factor at $j$ levels.
+In the absence of 
+an intercept term only, the elements of the parameter vector 
+$\beta \in \R^j$ correspond 
+to the mean of the response in each of the $j$ groups:
+<<aov-ex, echo = TRUE>>=
+ex <- data.frame(y = rnorm(12), x = gl(3, 4, labels = LETTERS[1:3]))
+aov.ex <- aov(y ~ x - 1, data = ex)
+coef(aov.ex)
+@
+Thus, the hypotheses $\beta_2 - \beta_1 = 0 \text{ and } \beta_3 - \beta_1 = 0$ 
+can be written in form of a linear function $\K \beta$ with
+<<aov-Dunnett, echo = TRUE>>=
+K <- rbind(c(-1, 1, 0),
+           c(-1, 0, 1))
+rownames(K) <- c("B - A", "C - A")
+colnames(K) <- names(coef(aov.ex))
+K
+@
+Using the general linear hypothesis function \Rcmd{glht}, this so-called 
+`many-to-one comparison procedure' \citep{Dunnett1955} can be performed via
+<<aov-mcp, echo = TRUE>>=
+summary(glht(aov.ex, linfct = K))
+@
+Alternatively, a symbolic description of the general linear hypothesis
+of interest can be supplied to \Rcmd{glht}:
+<<aov-mcp2, echo = TRUE>>=
+summary(glht(aov.ex, linfct = c("xB - xA = 0", "xC - xA = 0")))
+@
+
+However, in the presence of an intercept term, the full parameter vector
+$\beta = c(\mu, \beta_1, \dots, \beta_j)$ can't be estimated due to singularities
+in the corresponding design matrix. Therefore, a vector of 
+\emph{contrasts} $\beta^\star$ of the original parameter vector $\beta$ is fitted.
+More technically, a contrast matrix $\C$ is included into this model such that
+$\beta = \C \beta^\star$
+any we only obtain estimates for $\beta^\star$, but not for $\beta$:
+<<aov-constrasts, echo = TRUE>>=
+aov.ex2 <- aov(y ~ x, data = ex)
+coef(aov.ex2)
+@
+The default contrasts in \RR{} are so-called treatment contrasts, 
+nothing but differences in means for one baseline group 
+(compare the Dunnett contrasts and the estimated regression coefficients):
+<<aov-mm, echo = TRUE>>=
+contr.treatment(table(ex$x))
+K %*% contr.treatment(table(ex$x)) %*% coef(aov.ex2)[-1]
+@
+so that $\K \C \hat{\beta}^\star = \K \hat{\beta}$.
+
+When the \Rcmd{mcp} function is used to specify linear hypotheses, the
+\Rcmd{glht} function takes care of contrasts. Within \Rcmd{mcp}, the matrix of
+linear hypotheses $\K$ can be written in terms of $\beta$, not $\beta^\star$. Note
+that the matrix of linear hypotheses only applies to those elements of 
+$\hat{\beta}^\star$
+attached to factor \Robject{x} but not to the intercept term:
+<<aov-contrasts-glht, echo = TRUE>>=
+summary(glht(aov.ex2, linfct = mcp(x = K)))
+@
+or, a little bit more convenient in this simple case:
+<<aov-contrasts-glht2, echo = TRUE>>=
+summary(glht(aov.ex2, linfct = mcp(x = c("B - A = 0", "C - A = 0"))))
+@
+
+More generally, inference on linear functions of parameters which can be
+interpreted as `means' are known as \emph{multiple comparison procedures} 
+(MCP). For some of the more prominent special cases, the corresponding
+linear functions can be computed by convenience functions part
+of \Rpackage{multcomp}. For example, Tukey all-pair comparisons
+for the factor \Robject{x} can be set up using
+<<aov-Tukey>>=
+glht(aov.ex2, linfct = mcp(x = "Tukey"))
+@
+The initial parameterization of the model is automatically taken 
+into account:
+<<aov-Tukey2>>=
+glht(aov.ex, linfct = mcp(x = "Tukey"))
+@
+
+\section{Test Procedures}
+
+Several global and multiple test procedures are available from the
+\Rcmd{summary} method of \Robject{glht} objects and can be specified 
+via its \Rcmd{test} argument:
+\begin{itemize}
+\item{\Rcmd{test = univariate()}} univariate $p$ values based on either
+  the $t$ or normal distribution are reported. Controls the type I error
+  for each partial hypothesis only.
+\item{\Rcmd{test = Ftest()}} global $F$ test for $H_0$.
+\item{\Rcmd{test = Chisqtest()}} global $\chi^2$ test for $H_0$.
+\item{\Rcmd{test = adjusted()}} multiple test procedures as specified
+  by the \Rcmd{type} argument to \Rcmd{adjusted}: \Rcmd{"free"} denotes
+  adjusted $p$ values as computed from the joint normal or $t$ distribution
+  of the $\z$ statistics (default), 
+  \Rcmd{"Shaffer"} implements Bonferroni-adjustments
+  taking logical constraints into account \cite{Shaffer1986}
+  and \Rcmd{"Westfall"} takes both logical constraints and correlations
+  among the $\z$ statistics into account \cite{Westfall1997}. In addition,
+  all adjustment methods implemented in \Rcmd{p.adjust} can be specified as well.
+\end{itemize}
+
+\section{Quality Assurance}
+
+The analyses shown in \cite{Westfall1999} can be reproduced using \Rpackage{multcomp}
+by running the \RR{} transcript file in \file{inst/MCMT}.
+
+\bibliographystyle{plainnat}
+\bibliography{multcomp}
+
+\end{document}
+
