@@ -1,0 +1,6 @@
+
+		CHANGES in `multcomp' VERSION 0.991-2
+
+    o    mcp(fact = K) with K = contrMat(...) didn't work
+         spotted by Yves Brostaux <brostaux.y@fsagx.ac.be>
+

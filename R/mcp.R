@@ -16,9 +16,9 @@ mcp <- function(...) {
         stop(sQuote("linfct"), " doesn't have a ", sQuote("names"), 
              " attribute")
 
-    classes <- sapply(linfct, function(x) class(x))
+    classes <- sapply(linfct, function(x) inherits(x, "matrix") || inherits(x, "character"))
 
-    if (all(classes %in% c("matrix", "character"))) {
+    if (all(classes)) {
         class(linfct) <- "mcp"
         return(linfct)
     }

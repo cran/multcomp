@@ -115,6 +115,6 @@ contrMat <- function(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
     else 
       colnames(CM) <- varnames
     attr(CM, "type") <- type
-    class(CM) <- "contrMat"
+    class(CM) <- c("contrMat", "matrix")
     CM
 }
