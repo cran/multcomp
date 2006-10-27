@@ -96,7 +96,8 @@ modelparm.lmer <- function(model, coef. = coeflmer, vcov. = vcov, df = NULL, ...
 ### survreg models (package survival)
 vcovsurvreg <- function(object, ...) {
     sigma <- vcov(object)
-    return(sigma[-ncol(sigma), -ncol(sigma)])
+    p <- length(coef(object))
+    return(sigma[1:p, 1:p])
 }
 
 modelparm.survreg <- function(model, coef. = coef, vcov. = vcovsurvreg, df = NULL, ...)
