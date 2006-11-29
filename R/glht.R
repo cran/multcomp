@@ -73,5 +73,6 @@ glht.mcp <- function(model, linfct, ...) {
 
     ret <- do.call("glht", args)
     ret$type <- tmp$type
+    ret$focus <- names(linfct)
     return(ret)
 }

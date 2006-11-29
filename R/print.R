@@ -14,7 +14,7 @@ print.glht <- function(x, digits = max(3, getOption("digits") - 3), ...)
     cat("Linear Hypotheses:\n")
     print(lh, digits = digits)
     cat("\n")
-    invisible(lh)
+    invisible(x)
 }
 
 print.summary.glht <- function(x, digits = max(3, getOption("digits") - 3), 
@@ -65,6 +65,7 @@ print.summary.glht <- function(x, digits = max(3, getOption("digits") - 3),
 print.confint.glht <- function(x, digits = max(3, getOption("digits") - 3), 
                               ...) 
 {
+    xtmp <- x
     cat("\n\t", "Simultaneous Confidence Intervals for General Linear Hypotheses\n\n")
     if (!is.null(x$type))
         cat("Multiple Comparisons of Means:", x$type, "Contrasts\n\n\n")
@@ -90,19 +91,20 @@ print.confint.glht <- function(x, digits = max(3, getOption("digits") - 3),
     cat("\n")
     cat(paste(level * 100, 
               "% family-wise confidence level\n", sep = ""), "\n\n")
-    invisible(x)
+    invisible(xtmp)
 }
 
 print.contrMat <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 
+    xtmp <- x
     cat("\n\t", "Multiple Comparisons of Means:", attr(x, "type"), "Contrasts\n\n")
     attr(x, "type") <- NULL
     class(x) <- "matrix"  
     print(x, digits = digits)
-    invisible(x)
+    invisible(xtmp)
 }
 
-print.summary.glht.global <- function(x, 
+print.summary.gtest <- function(x, 
     digits = max(3, getOption("digits") - 3), ...) {
 
     print.glht(x, digits = digits)

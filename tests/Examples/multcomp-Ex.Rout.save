@@ -1,5 +1,5 @@
 
-R version 2.4.0 (2006-10-03)
+R version 2.5.0 Under development (unstable) (2006-11-27 r40032)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -800,6 +800,21 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 (Adjusted p values reported)
 
 > 
+>   ### all means for levels of `tension'
+>   amod <- aov(breaks ~ tension, data = warpbreaks)
+>   glht(amod, linfct = matrix(c(1, 0, 0, 
++                                1, 1, 0, 
++                                1, 0, 1), byrow = TRUE, ncol = 3))
+
+	 General Linear Hypotheses
+
+Linear Hypotheses:
+       Estimate
+1 == 0    36.39
+2 == 0    26.39
+3 == 0    21.67
+
+> 
 >   ### confidence bands for a simple linear model, `cars' data
 >   plot(cars, xlab = "Speed (mph)", ylab = "Stopping distance (ft)",
 +        las = 1)
@@ -979,7 +994,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  51.711 0.084 52.115 0 0 
+Time elapsed:  54.183 0.096 54.518 0 0 
 > grDevices::dev.off()
 null device 
           1 
