@@ -10,3 +10,12 @@ K <- contrMat(table(cholesterol$trt), type = "Tukey")
 cht2 <- glht(amod, linfct = mcp(trt = K))
 stopifnot(all.equal(coef(cht1), coef(cht2)))
 
+### several inconsistencies spotted by 
+### Rich Heiberger <<rmh@temple.edu> 2006-11-28
+
+### need to be identical
+stopifnot(identical(cht1, print(cht1)))
+
+### was: error
+summary(cht1)$test
+

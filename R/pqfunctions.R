@@ -111,7 +111,7 @@ univariate <- function()
         RET <- pqglht(object)
         RET$pvalues <- RET$pfunction("univariate")
         RET$type <- "univariate"
-        class(RET) <- "summary.glht"
+        class(RET) <- "mtest"
         RET
     }
 }
@@ -150,7 +150,7 @@ global <- function(type = c("Chisq", "F"))
         RET$SSH <- SSH
         RET$fstat <- SSH/q
         RET$df <- c(q, df)
-        class(RET) <- "summary.glht.global"
+        class(RET) <- "gtest"
         return(RET)
     }
     return(fct)
@@ -171,7 +171,7 @@ adjusted <- function(type = c("free", "Shaffer", "Westfall", p.adjust.methods),
             RET <- pqglht(object)
             RET$pvalues <- RET$pfunction("adjusted", ...)
             RET$type <- type
-            class(RET) <- "summary.glht"
+            class(RET) <- "mtest"
             RET
         })
     }
@@ -211,7 +211,7 @@ adjusted <- function(type = c("free", "Shaffer", "Westfall", p.adjust.methods),
             RET$pvalues <- p[rank(tstat)]
             attr(RET$pvalues, "error") <- error
             RET$type <- type
-            class(RET) <- "summary.glht"
+            class(RET) <- "mtest"
             RET
         })
     }
@@ -221,7 +221,7 @@ adjusted <- function(type = c("free", "Shaffer", "Westfall", p.adjust.methods),
         RET <- pqglht(object)
         RET$pvalues <- RET$pfunction(type)
         RET$type <- type
-        class(RET) <- "summary.glht"
+        class(RET) <- "mtest"
         RET
     })
 }

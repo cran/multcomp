@@ -114,6 +114,11 @@ Chisqtest()
   ### corresponding adjusted p values
   summary(wht)
 
+  ### all means for levels of `tension'
+  amod <- aov(breaks ~ tension, data = warpbreaks)
+  glht(amod, linfct = matrix(c(1, 0, 0, 
+                               1, 1, 0, 
+                               1, 0, 1), byrow = TRUE, ncol = 3))
 
   ### confidence bands for a simple linear model, `cars' data
   plot(cars, xlab = "Speed (mph)", ylab = "Stopping distance (ft)",

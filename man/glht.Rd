@@ -120,9 +120,22 @@ mcp(...)
 }
 \value{
 
-  An object of class \code{glht} with \code{print}, \code{\link{summary}}, 
+  An object of class \code{glht}, more specifically a list with elements
+  \item{model}{a fitted model, used in the call to \code{glht}}
+  \item{linfct}{ the matrix of linear functions}
+  \item{rhs}{ the vector of right hand side values \eqn{m}}
+  \item{coef}{ the values of the linear functions}
+  \item{vcov}{ the covariance matrix of the values of the linear functions}
+  \item{df}{ optionally, the degrees of freedom when the exact $t$ 
+             distriubtion is used for inference}
+  \item{alternative}{ a character string specifying the alternative
+      hypothesis}
+  \item{type}{ optionally, a character string giving the name of the specific procedure}
+  with \code{print}, \code{\link{summary}}, 
   \code{\link{confint}}, \code{\link{coef}} and \code{\link{vcov}} 
-  methods being available.
+  methods being available. When called with \code{linfct} being an
+  \code{mcp} object, an additional element \code{focus} is available
+  storing the names of the factors under test.
 
 }
 \references{

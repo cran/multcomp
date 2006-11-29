@@ -12,7 +12,9 @@ vcov.glht <- function(object, ...)
 summary.glht <- function(object, test = adjusted(), ...) {
     ts <- test(object)
     object$test <- ts
-    class(object) <- c(class(ts), class(object))
+    class(object) <- switch(class(ts), "mtest" = "summary.glht",
+                                       "gtest" = "summary.gtest")
+    class(object) <- c(class(object), "glht")
     return(object)
 }
 

@@ -1,7 +1,7 @@
 Package: multcomp
 Title: Simultaneous Inference for General Linear Hypotheses
-Version: 0.991-2
-Date: 2006-10-27
+Version: 0.991-3
+Date: $Date: 2006-11-29 14:43:28 +0100 (Wed, 29 Nov 2006) $
 Author: Torsten Hothorn, Frank Bretz and Peter Westfall
 Description: Simultaneous tests and confidence intervals
   for general linear hypotheses in parametric models, including 
@@ -10,4 +10,4 @@ Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
 Depends: mvtnorm (>= 0.7-5)
 LazyData: yes
 License: GPL
-Packaged: Fri Oct 27 10:59:16 2006; hothorn
+Packaged: Wed Nov 29 14:45:00 2006; hothorn
