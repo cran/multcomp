@@ -1,6 +1,7 @@
 
 ### uhhh -- mainly copy and paste from plot.TukeyHSD
-plot.confint.glht <- function(x, ...) {
+### with modifications by Richard M. Heiberger <rmh@temple.edu>
+plot.confint.glht <- function(x, xlim, xlab, ...) {
 
     xi <- x$confint
     ### make sure one-sided intervals are drawn correctly
@@ -8,8 +9,10 @@ plot.confint.glht <- function(x, ...) {
     if (!is.finite(xrange[1])) xrange[1] <- min(xi[,"Estimate"])
     if (!is.finite(xrange[2])) xrange[2] <- max(xi[,"Estimate"])
     yvals <- nrow(xi):1
+    if (missing(xlim))
+        xlim <- xrange
     plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2), 
-         type = "n", axes = FALSE, xlab = "", ylab = "", xlim = xrange, ...)
+         type = "n", axes = FALSE, xlab = "", ylab = "", xlim = xlim, ...)
     axis(1, ...)
     axis(2, at = nrow(xi):1, labels = dimnames(xi)[[1]], 
          las = 1, ...)
@@ -23,9 +26,13 @@ plot.confint.glht <- function(x, ...) {
     points(xi[, "lwr"], yvals, pch = "(", ...)
     points(xi[, "upr"], yvals, pch = ")", ...)
     points(xi[, "Estimate"], yvals, pch = 20, ...)
-    title(main = paste(format(100 * attr(x$confint, "conf.level"), 
-          2), "% family-wise confidence level\n", sep = ""), 
-          xlab = "Linear Hypotheses")
+    main <- list(...)$main
+    if (is.null(main))
+        main <- paste(format(100 * attr(x$confint, "conf.level"), 2), 
+                      "% family-wise confidence level\n", sep = "")
+    if (missing(xlab))
+          xlab <- "Linear Function"
+    title(main = main, xlab = xlab)
     box()
 }
 
