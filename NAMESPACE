@@ -1,5 +1,6 @@
 
 export(glht, contrMat, univariate, adjusted, Ftest, Chisqtest, mcp, modelparm,
+       adjusted_calpha, univariate_calpha,
        ### deprecated
        csimint, simint, csimtest, simtest)
 

@@ -1,4 +1,12 @@
 
+		CHANGES in `multcomp' VERSION 0.991-4
+
+    o    Depends: stats
+
+    o    confint(..., calpha = x) can be used to specify critical
+         values directly (with x being either a function or a scalar)
+
+
 		CHANGES in `multcomp' VERSION 0.991-3
 
     Implement feature requests by Rich Heiberger <rmh@temple.edu>:
