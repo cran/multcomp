@@ -7,6 +7,8 @@
 \alias{adjusted}
 \alias{Ftest}
 \alias{Chisqtest}
+\alias{adjusted_calpha}
+\alias{univariate_calpha}
 \title{ Methods for General Linear Hypotheses }
 \description{
   Simultaneous tests and confidence intervals for general linear 
@@ -14,7 +16,7 @@
 }
 \usage{
 \method{summary}{glht}(object, test = adjusted(), ...)
-\method{confint}{glht}(object, parm, level = 0.95, ...)
+\method{confint}{glht}(object, parm, level = 0.95, calpha = adjusted_calpha(), ...)
 \method{coef}{glht}(object, rhs = FALSE, ...)
 \method{vcov}{glht}(object, ...)
 univariate()
@@ -22,12 +24,15 @@ adjusted(type = c("free", "Shaffer", "Westfall", p.adjust.methods),
          ...)
 Ftest()
 Chisqtest()
+adjusted_calpha()
+univariate_calpha()
 }
 \arguments{
   \item{object}{ an object of class \code{\link{glht}}.}
   \item{test}{ a function for computing p values.}
   \item{parm}{ additional parameters, currently ignored.}
   \item{level}{ the confidence level required.}
+  \item{calpha}{ either a function computing the critical value or the critical value itself.}
   \item{rhs}{logical, indicating whether the linear function
               \eqn{K \hat{\beta}} or the right hand side 
               \eqn{m} (\code{rhs = TRUE}) of the linear hypothesis
@@ -37,8 +42,7 @@ Chisqtest()
   \item{...}{ additional arguments, such as \code{maxpts}, 
               \code{abseps} or \code{releps} to
               \code{\link[mvtnorm]{pmvnorm}} in \code{adjusted} or 
-              \code{\link[mvtnorm]{qmvnorm}} and \code{adjusted = FALSE} 
-              in \code{confint}.}
+              \code{\link[mvtnorm]{qmvnorm}} in \code{confint}.}
 }
 \details{
 
@@ -66,8 +70,9 @@ Chisqtest()
 
   Simultaneous confidence intervals for linear functions can be computed
   using method \code{\link{confint}}. Univariate confidence intervals
-  can be computed by specifying the additional argument \code{adjusted = FALSE}
-  to \code{confint}.
+  can be computed by specifying \code{calpha = univariate_calpha()}
+  to \code{confint}. The critical value can directly be specified as a scalar 
+  to \code{calpha} as well.
 
   All simultaneous inference procedures implemented here control
   the family-wise error rate (FWER). Multivariate

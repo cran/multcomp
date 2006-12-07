@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-27 r40032)
+R version 2.5.0 Under development (unstable) (2006-12-04 r40121)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -732,7 +732,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### Name: glht-methods
 > ### Title: Methods for General Linear Hypotheses
 > ### Aliases: summary.glht confint.glht coef.glht vcov.glht univariate
-> ###   adjusted Ftest Chisqtest
+> ###   adjusted Ftest Chisqtest adjusted_calpha univariate_calpha
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -994,7 +994,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  54.183 0.096 54.518 0 0 
+Time elapsed:  53.647 0.08 54.226 0 0 
 > grDevices::dev.off()
 null device 
           1 

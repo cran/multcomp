@@ -18,15 +18,35 @@ summary.glht <- function(object, test = adjusted(), ...) {
     return(object)
 }
 
-confint.glht <- function(object, parm, level = 0.95, ...) 
+confint.glht <- function(object, parm, level = 0.95, calpha = adjusted_calpha(), ...) 
 {
-    pq <- pqglht(object)
-    ci <- pq$qfunction(conf.level = level, ...)
-    object$confint <- cbind(pq$coefficients, ci)
+    if (is.function(calpha))
+        calpha <- calpha(object, level, ...)
+    if (!is.numeric(calpha) || length(calpha) != 1)
+        stop(sQuote("calpha"), " is not a scalar")
+    error <- attr(calpha, "error")
+    attributes(calpha) <- NULL
+
+    betahat <- coef(object)
+    ses <- sqrt(diag(vcov(object)))
+    switch(object$alternative, "two.sided" = {
+            LowerCL <- betahat - calpha * ses
+            UpperCL <- betahat + calpha * ses
+        }, "less" = {
+            LowerCL <- rep(-Inf, length(ses))
+            UpperCL <- betahat - calpha * ses
+        }, "greater" = {
+            LowerCL <- betahat - calpha * ses
+            UpperCL <- rep( Inf, length(ses))
+    })
+
+    ci <- cbind(LowerCL, UpperCL)
+    colnames(ci) <- c("lower", "upper")
+    object$confint <- cbind(betahat, ci)
     colnames(object$confint) <- c("Estimate", "lwr", "upr")
     attr(object$confint, "conf.level") <- level
-    attr(object$confint, "calpha") <- attr(ci, "calpha")
-    attr(object$confint, "error") <- attr(ci, "error")
+    attr(object$confint, "calpha") <- calpha
+    attr(object$confint, "error") <- error
     class(object) <- c("confint.glht", "glht")
     return(object)
 }

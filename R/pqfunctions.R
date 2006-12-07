@@ -76,26 +76,9 @@ pqglht <- function(object)
         } else {
             calpha <- qmvt(conf.level, df = df, corr = matrix(1), tail = tail, ...)
         }
-        error <- calpha$estim.prec
-        calpha <- calpha$quantile
-
-        switch(object$alternative, "two.sided" = {  
-            LowerCL <- betahat - calpha * ses
-            UpperCL <- betahat + calpha * ses
-        }, "less" = {
-            LowerCL <- rep(-Inf, dim)
-            UpperCL <- betahat - calpha * ses
-        }, "greater" = {
-            LowerCL <- betahat - calpha * ses
-            UpperCL <- rep( Inf, dim)
-        })
-
-        cint <- cbind(LowerCL, UpperCL)
-        colnames(cint) <- c("lower", "upper")
-        attr(cint, "conf.level") <- conf.level
-        attr(cint, "calpha") <- calpha
-        attr(cint, "error") <- error
-        return(cint)
+        ret <- calpha$quantile
+        attr(ret, "error") <- calpha$estim.prec
+        return(ret)
     }
     RET <- list(pfunction = pfunction, qfunction = qfunction,
                 coefficients = betahat, sigma = ses, tstat = tstat)
@@ -225,3 +208,16 @@ adjusted <- function(type = c("free", "Shaffer", "Westfall", p.adjust.methods),
         RET
     })
 }
+
+adjusted_calpha <- function() {
+    function(object, level, ...) {
+        pqglht(object)$qfunction(level, adjusted = TRUE, ...)
+    }
+}
+
+univariate_calpha <- function() {
+    function(object, level, ...) {
+        pqglht(object)$qfunction(level, adjusted = FALSE, ...)
+    }
+}
+
