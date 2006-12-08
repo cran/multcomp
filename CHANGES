@@ -1,4 +1,10 @@
 
+		CHANGES in `multcomp' VERSION 0.991-5
+
+    o    plot.confint allows for specification of xlim, xlab and main
+         (patch by Rich Heiberger)
+
+
 		CHANGES in `multcomp' VERSION 0.991-4
 
     o    Depends: stats
