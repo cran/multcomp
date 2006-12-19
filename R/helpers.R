@@ -2,8 +2,7 @@
 
 ### oh dear!
 ### Cox models don't have any intercept ...
-model.matrix.coxph <- function(object, ...) 
-{
+model.matrix.coxph <- function(object, ...) {
     mm <- model.matrix.default(object)
     at <- attributes(mm)
     mm <- mm[,-1]
@@ -78,7 +77,22 @@ modelparm.default <- function(model, coef. = coef, vcov. = vcov,
         if (df < 0) stop(sQuote("df"), " is not positive")
     }
 
-    RET <- list(coef = beta, vcov = sigma, df = df)
+    ### try to identify non-estimable coefficients
+    ### coef.aov removes NAs
+    ocoef <- model$coefficients
+    if (is.null(ocoef)) ocoef <- beta
+    estimable <- rep(TRUE, length(ocoef))
+    if (any(is.na(ocoef))) {
+        estimable[is.na(ocoef)] <- FALSE
+        beta <- ocoef[estimable]
+    }
+
+    ### just in case...
+    if (length(beta) != ncol(sigma) || nrow(sigma) != sum(estimable))
+        stop("could not extract coefficients and covariance matrix from ", 
+             sQuote("model"))
+
+    RET <- list(coef = beta, vcov = sigma, df = df, estimable = estimable)
     class(RET) <- "modelparm"
     RET
 }

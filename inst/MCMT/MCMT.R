@@ -125,11 +125,11 @@ load(system.file("MCMT/MCMT.rda", package = "multcomp"))
   amod <- aov(score ~ therapy * since + age, data = alz)
 
   gh <- glht(amod, linfct = mcp(therapy = "Tukey"))
-  gh$linfct[,8:11] <- gh$linfct[,8:11] * 20
-  gh$linfct[,"age"] <- mean(alz$age)
-  gh$linfct[,"since"] <- 10
 
-  confint(gh) ### -- FIXME
+  ### choose comparisons at since = 10
+  gh$linfct[,8:11] <- gh$linfct[,8:11] * 10
+  confint(gh)
+
 
 
 ### litter data, page 109
@@ -262,7 +262,7 @@ load(system.file("MCMT/MCMT.rda", package = "multcomp"))
 
   amod <- aov(response ~ drug * disease, data = drug)
 
-  # page 188 -- FIXME: cant' reproduce ANOVA (type III SS???)
+  # page 188
   confint(glht(amod, linfct = mcp(drug = "Tukey")))
 
 
@@ -425,3 +425,14 @@ load(system.file("MCMT/MCMT.rda", package = "multcomp"))
 ### obesity, page 220
 
 ### heart, 222
+
+### _____________________________________________________________________
+
+### add additional examples below (because of the seed)
+
+
+### choose comparisons at since = 20, page 104
+amod <- aov(score ~ therapy * since + age, data = alz)
+gh <- glht(amod, linfct = mcp(therapy = "Tukey"))
+gh$linfct[,8:11] <- gh$linfct[,8:11] * 2
+confint(gh)

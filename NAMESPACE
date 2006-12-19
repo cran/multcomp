@@ -19,6 +19,8 @@ S3method(glht, matrix)
 S3method(glht, character)
 S3method(glht, expression)
 S3method(glht, mcp)
+S3method(glht, means)
+
 
 ### deprecated from multcomp version 0.4-8
 S3method(simint, formula)

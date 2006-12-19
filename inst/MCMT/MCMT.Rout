@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-12-04 r40121)
+R version 2.5.0 Under development (unstable) (2006-12-12 r40165)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -498,11 +498,12 @@ R>
 R>   amod <- aov(score ~ therapy * since + age, data = alz)
 R> 
 R>   gh <- glht(amod, linfct = mcp(therapy = "Tukey"))
-R>   gh$linfct[,8:11] <- gh$linfct[,8:11] * 20
-R>   gh$linfct[,"age"] <- mean(alz$age)
-R>   gh$linfct[,"since"] <- 10
+Warning message:
+covariate interactions found -- please choose appropriate contrast in: mcp2matrix(model, linfct = linfct) 
 R> 
-R>   confint(gh) ### -- FIXME
+R>   ### choose comparisons at since = 10
+R>   gh$linfct[,8:11] <- gh$linfct[,8:11] * 10
+R>   confint(gh)
 
 	 Simultaneous Confidence Intervals for General Linear Hypotheses
 
@@ -511,24 +512,25 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = score ~ therapy * since + age, data = alz)
 
-Estimated Quantile = 2.3751
+Estimated Quantile = 2.8284
 
 Linear Hypotheses:
              Estimate lwr      upr     
-t2 - t1 == 0  -5.5567 -50.8339  39.7204
-t3 - t1 == 0 -15.9155 -59.7718  27.9408
-t4 - t1 == 0  18.1359 -28.1691  64.4408
-t5 - t1 == 0  20.8079 -22.0142  63.6299
-t3 - t2 == 0 -19.9805 -64.2239  24.2629
-t4 - t2 == 0  14.0709 -32.6340  60.7757
-t5 - t2 == 0  16.7428 -26.4638  59.9495
-t4 - t3 == 0  24.4296 -25.1094  73.9687
-t5 - t3 == 0  27.1016 -18.9486  73.1517
-t5 - t4 == 0  -6.9498 -49.3919  35.4923
+t2 - t1 == 0   4.0650  -8.4012  16.5313
+t3 - t1 == 0  -6.2937 -22.3428   9.7554
+t4 - t1 == 0  27.7577  14.6932  40.8221
+t5 - t1 == 0  30.4296  14.2501  46.6091
+t3 - t2 == 0 -10.3588 -26.7876   6.0701
+t4 - t2 == 0  23.6926  10.0033  37.3820
+t5 - t2 == 0  26.3646   9.8518  42.8774
+t4 - t3 == 0  34.0514  16.9498  51.1529
+t5 - t3 == 0  36.7233  17.9929  55.4538
+t5 - t4 == 0   2.6720 -14.5912  19.9351
 
 95% family-wise confidence level
  
 
+R> 
 R> 
 R> 
 R> ### litter data, page 109
@@ -602,12 +604,12 @@ Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
 Linear Hypotheses:
                Estimate Std. Error t value p value  
-cont-low <= 0    3.3524     1.2908   2.597  0.0205 *
+cont-low <= 0    3.3524     1.2908   2.597  0.0207 *
 cont-mid <= 0    2.2909     1.3384   1.712  0.1377  
-cont-high <= 0   2.6752     1.3343   2.005  0.0787 .
-otrend <= 0      1.7411     1.0433   1.669  0.1486  
-atrend <= 0      0.8712     1.1322   0.770  0.5013  
-ltrend <= 0      1.9400     0.9616   2.018  0.0768 .
+cont-high <= 0   2.6752     1.3343   2.005  0.0790 .
+otrend <= 0      1.7411     1.0433   1.669  0.1484  
+atrend <= 0      0.8712     1.1322   0.770  0.5012  
+ltrend <= 0      1.9400     0.9616   2.018  0.0769 .
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 (Adjusted p values reported)
@@ -621,16 +623,16 @@ Multiple Comparisons of Means: User-defined Contrasts
 
 Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
-Estimated Quantile = 2.2208
+Estimated Quantile = 2.2207
 
 Linear Hypotheses:
                Estimate lwr     upr    
-cont-low <= 0   3.3524   0.4859     Inf
-cont-mid <= 0   2.2909  -0.6814     Inf
-cont-high <= 0  2.6752  -0.2880     Inf
-otrend <= 0     1.7411  -0.5760     Inf
-atrend <= 0     0.8712  -1.6431     Inf
-ltrend <= 0     1.9400  -0.1955     Inf
+cont-low <= 0   3.3524   0.4861     Inf
+cont-mid <= 0   2.2909  -0.6812     Inf
+cont-high <= 0  2.6752  -0.2878     Inf
+otrend <= 0     1.7411  -0.5759     Inf
+atrend <= 0     0.8712  -1.6429     Inf
+ltrend <= 0     1.9400  -0.1953     Inf
 
 95% family-wise confidence level
  
@@ -649,7 +651,7 @@ Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
 Linear Hypotheses:
                Estimate Std. Error t value p value  
-cont-low <= 0    3.3524     1.2908   2.597  0.0207 *
+cont-low <= 0    3.3524     1.2908   2.597  0.0205 *
 cont-mid <= 0    2.2909     1.3384   1.712  0.0891 .
 cont-high <= 0   2.6752     1.3343   2.005  0.0454 *
 otrend <= 0      1.7411     1.0433   1.669  0.0891 .
@@ -682,17 +684,17 @@ Estimated Quantile = 2.586
 
 Linear Hypotheses:
                    Estimate lwr      upr     
-sqfeet * 1000 == 0  73.4435  63.8824  83.0046
-sqfeet * 1200 == 0  81.4959  73.7595  89.2323
-sqfeet * 1400 == 0  89.5483  83.5310  95.5655
-sqfeet * 1600 == 0  97.6006  93.0752 102.1261
-sqfeet * 1800 == 0 105.6530 102.0935 109.2125
-sqfeet * 2000 == 0 113.7054 110.1307 117.2800
-sqfeet * 2200 == 0 121.7577 117.1966 126.3189
-sqfeet * 2400 == 0 129.8101 123.7481 135.8721
-sqfeet * 2600 == 0 137.8625 130.0773 145.6476
-sqfeet * 2800 == 0 145.9148 136.3030 155.5267
-sqfeet * 3000 == 0 153.9672 142.4744 165.4600
+sqfeet * 1000 == 0  73.4435  63.8823  83.0048
+sqfeet * 1200 == 0  81.4959  73.7594  89.2324
+sqfeet * 1400 == 0  89.5483  83.5309  95.5656
+sqfeet * 1600 == 0  97.6006  93.0751 102.1262
+sqfeet * 1800 == 0 105.6530 102.0934 109.2126
+sqfeet * 2000 == 0 113.7054 110.1306 117.2801
+sqfeet * 2200 == 0 121.7577 117.1965 126.3190
+sqfeet * 2400 == 0 129.8101 123.7480 135.8722
+sqfeet * 2600 == 0 137.8625 130.0772 145.6477
+sqfeet * 2800 == 0 145.9148 136.3028 155.5268
+sqfeet * 3000 == 0 153.9672 142.4742 165.4602
 
 95% family-wise confidence level
  
@@ -734,23 +736,23 @@ R>   confint(gh)
 
 Fit: aov(formula = cost ~ make + make:mph - 1, data = tire)
 
-Estimated Quantile = 2.6475
+Estimated Quantile = 2.6473
 
 Linear Hypotheses:
         Estimate lwr      upr     
-10 == 0 -4.10667 -6.52736 -1.68598
-15 == 0 -3.45389 -5.59418 -1.31360
-20 == 0 -2.80111 -4.68112 -0.92110
-25 == 0 -2.14833 -3.79776 -0.49891
-30 == 0 -1.49556 -2.95818 -0.03293
-35 == 0 -0.84278 -2.18087  0.49531
-40 == 0 -0.19000 -1.48391  1.10391
-45 == 0  0.46278 -0.87531  1.80087
-50 == 0  1.11556 -0.34707  2.57818
-55 == 0  1.76833  0.11891  3.41776
-60 == 0  2.42111  0.54110  4.30112
-65 == 0  3.07389  0.93360  5.21418
-70 == 0  3.72667  1.30598  6.14736
+10 == 0 -4.10667 -6.52717 -1.68616
+15 == 0 -3.45389 -5.59401 -1.31376
+20 == 0 -2.80111 -4.68098 -0.92124
+25 == 0 -2.14833 -3.79763 -0.49904
+30 == 0 -1.49556 -2.95807 -0.03304
+35 == 0 -0.84278 -2.18076  0.49521
+40 == 0 -0.19000 -1.48381  1.10381
+45 == 0  0.46278 -0.87521  1.80076
+50 == 0  1.11556 -0.34696  2.57807
+55 == 0  1.76833  0.11904  3.41763
+60 == 0  2.42111  0.54124  4.30098
+65 == 0  3.07389  0.93376  5.21401
+70 == 0  3.72667  1.30616  6.14717
 
 95% family-wise confidence level
  
@@ -788,19 +790,19 @@ Fit: aov(formula = cost ~ make + make:mph - 1, data = tire)
 
 Linear Hypotheses:
         Estimate Std. Error t value p value   
-10 == 0  -4.1067     0.9143  -4.492 0.00126 **
-15 == 0  -3.4539     0.8084  -4.272 0.00199 **
-20 == 0  -2.8011     0.7101  -3.945 0.00383 **
-25 == 0  -2.1483     0.6230  -3.448 0.01045 * 
-30 == 0  -1.4956     0.5524  -2.707 0.04473 * 
-35 == 0  -0.8428     0.5054  -1.668 0.26442   
+10 == 0  -4.1067     0.9143  -4.492 0.00129 **
+15 == 0  -3.4539     0.8084  -4.272 0.00190 **
+20 == 0  -2.8011     0.7101  -3.945 0.00382 **
+25 == 0  -2.1483     0.6230  -3.448 0.01052 * 
+30 == 0  -1.4956     0.5524  -2.707 0.04468 * 
+35 == 0  -0.8428     0.5054  -1.668 0.26447   
 40 == 0  -0.1900     0.4887  -0.389 0.92440   
-45 == 0   0.4628     0.5054   0.916 0.65301   
-50 == 0   1.1156     0.5524   2.019 0.15263   
-55 == 0   1.7683     0.6230   2.838 0.03461 * 
-60 == 0   2.4211     0.7101   3.410 0.01135 * 
-65 == 0   3.0739     0.8084   3.802 0.00511 **
-70 == 0   3.7267     0.9143   4.076 0.00288 **
+45 == 0   0.4628     0.5054   0.916 0.65303   
+50 == 0   1.1156     0.5524   2.019 0.15261   
+55 == 0   1.7683     0.6230   2.838 0.03474 * 
+60 == 0   2.4211     0.7101   3.410 0.01132 * 
+65 == 0   3.0739     0.8084   3.802 0.00510 **
+70 == 0   3.7267     0.9143   4.076 0.00299 **
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 (Adjusted p values reported)
@@ -974,13 +976,13 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = waste ~ temp * envir, data = waste)
 
-Estimated Quantile = 2.5969
+Estimated Quantile = 2.5961
 
 Linear Hypotheses:
              Estimate lwr     upr    
-t2 - t1 == 0 -0.2410  -1.4998  1.0178
-t3 - t1 == 0  2.0150   0.7562  3.2738
-t3 - t2 == 0  2.2560   0.9972  3.5148
+t2 - t1 == 0 -0.2410  -1.4994  1.0174
+t3 - t1 == 0  2.0150   0.7566  3.2734
+t3 - t2 == 0  2.2560   0.9976  3.5144
 
 95% family-wise confidence level
  
@@ -994,20 +996,20 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = waste ~ temp * envir, data = waste)
 
-Estimated Quantile = 3.0845
+Estimated Quantile = 3.0783
 
 Linear Hypotheses:
              Estimate lwr      upr     
-e2 - e1 == 0  1.38333 -0.54685  3.31352
-e3 - e1 == 0  1.68500 -0.24519  3.61519
-e4 - e1 == 0  2.01833  0.08815  3.94852
-e5 - e1 == 0  2.75333  0.82315  4.68352
-e3 - e2 == 0  0.30167 -1.62852  2.23185
-e4 - e2 == 0  0.63500 -1.29519  2.56519
-e5 - e2 == 0  1.37000 -0.56019  3.30019
-e4 - e3 == 0  0.33333 -1.59685  2.26352
-e5 - e3 == 0  1.06833 -0.86185  2.99852
-e5 - e4 == 0  0.73500 -1.19519  2.66519
+e2 - e1 == 0  1.38333 -0.54296  3.30963
+e3 - e1 == 0  1.68500 -0.24129  3.61129
+e4 - e1 == 0  2.01833  0.09204  3.94463
+e5 - e1 == 0  2.75333  0.82704  4.67963
+e3 - e2 == 0  0.30167 -1.62463  2.22796
+e4 - e2 == 0  0.63500 -1.29129  2.56129
+e5 - e2 == 0  1.37000 -0.55629  3.29629
+e4 - e3 == 0  0.33333 -1.59296  2.25963
+e5 - e3 == 0  1.06833 -0.85796  2.99463
+e5 - e4 == 0  0.73500 -1.19129  2.66129
 
 95% family-wise confidence level
  
@@ -1084,11 +1086,11 @@ Fit: aov(formula = waste ~ temp * envir, data = waste)
 Linear Hypotheses:
                     Estimate Std. Error t value p value   
 envir: e2 - e1 == 0   1.3833     0.6258   2.211  0.1695   
-envir: e3 - e1 == 0   1.6850     0.6258   2.693  0.0708 . 
-envir: e4 - e1 == 0   2.0183     0.6258   3.225  0.0310 * 
+envir: e3 - e1 == 0   1.6850     0.6258   2.693  0.0707 . 
+envir: e4 - e1 == 0   2.0183     0.6258   3.225  0.0309 * 
 envir: e5 - e1 == 0   2.7533     0.6258   4.400   <0.01 **
 envir: e3 - e2 == 0   0.3017     0.6258   0.482  0.8563   
-envir: e4 - e2 == 0   0.6350     0.6258   1.015  0.7066   
+envir: e4 - e2 == 0   0.6350     0.6258   1.015  0.7067   
 envir: e5 - e2 == 0   1.3700     0.6258   2.189  0.2031   
 envir: e4 - e3 == 0   0.3333     0.6258   0.533  0.8372   
 envir: e5 - e3 == 0   1.0683     0.6258   1.707  0.3099   
@@ -1178,7 +1180,7 @@ Linear Hypotheses:
 envir: e2 - e1 == 0   0.8767     1.2013   0.730   0.846
 envir: e3 - e1 == 0   1.4933     1.2013   1.243   0.694
 envir: e4 - e1 == 0   1.4033     1.2013   1.168   0.694
-envir: e5 - e1 == 0   3.4133     1.2013   2.841   0.134
+envir: e5 - e1 == 0   3.4133     1.2013   2.841   0.135
 envir: e3 - e2 == 0   0.6167     1.2013   0.513   0.944
 envir: e4 - e2 == 0   0.5267     1.2013   0.438   0.944
 envir: e5 - e2 == 0   2.5367     1.2013   2.112   0.267
@@ -1186,8 +1188,8 @@ envir: e4 - e3 == 0  -0.0900     1.2013  -0.075   0.996
 envir: e5 - e3 == 0   1.9200     1.2013   1.598   0.458
 envir: e5 - e4 == 0   2.0100     1.2013   1.673   0.420
 temp: t2 - t1 == 0    0.0080     0.9305   0.009   0.996
-temp: t3 - t1 == 0    2.7120     0.9305   2.914   0.134
-temp: t3 - t2 == 0    2.7040     0.9305   2.906   0.134
+temp: t3 - t1 == 0    2.7120     0.9305   2.914   0.135
+temp: t3 - t2 == 0    2.7040     0.9305   2.906   0.135
 (Adjusted p values reported -- Westfall method)
 
 R> 
@@ -1196,7 +1198,7 @@ R> ### drug data, page 187
 R> 
 R>   amod <- aov(response ~ drug * disease, data = drug)
 R> 
-R>   # page 188 -- FIXME: cant' reproduce ANOVA (type III SS???)
+R>   # page 188
 R>   confint(glht(amod, linfct = mcp(drug = "Tukey")))
 
 	 Simultaneous Confidence Intervals for General Linear Hypotheses
@@ -1206,16 +1208,16 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = response ~ drug * disease, data = drug)
 
-Estimated Quantile = 2.6556
+Estimated Quantile = 2.6641
 
 Linear Hypotheses:
              Estimate lwr      upr     
-d2 - d1 == 0   1.2835 -19.5189  22.0859
-d3 - d1 == 0 -18.1639 -41.7297   5.4020
-d4 - d1 == 0 -19.3006 -40.0332   1.4319
-d3 - d2 == 0 -19.4474 -43.6210   4.7262
-d4 - d2 == 0 -20.5841 -42.0049   0.8366
-d4 - d3 == 0  -1.1367 -25.2502  22.9767
+d2 - d1 == 0   0.5611  -9.8035  10.9257
+d3 - d1 == 0 -16.2500 -27.2927  -5.2073
+d4 - d1 == 0 -12.4500 -22.6023  -2.2977
+d3 - d2 == 0 -16.8111 -27.8538  -5.7684
+d4 - d2 == 0 -13.0111 -23.1634  -2.8588
+d4 - d3 == 0   3.8000  -7.0437  14.6437
 
 95% family-wise confidence level
  
@@ -1238,20 +1240,20 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
-Estimated Quantile = 3.0594
+Estimated Quantile = 3.0653
 
 Linear Hypotheses:
              Estimate lwr      upr     
-d2 - d1 == 0  -2.1333  -4.7887   0.5221
-d3 - d1 == 0   3.6000   0.9446   6.2554
-d4 - d1 == 0   2.2000  -0.4554   4.8554
-d5 - d1 == 0  -4.3333  -6.9887  -1.6779
-d3 - d2 == 0   5.7333   3.0779   8.3887
-d4 - d2 == 0   4.3333   1.6779   6.9887
-d5 - d2 == 0  -2.2000  -4.8554   0.4554
-d4 - d3 == 0  -1.4000  -4.0554   1.2554
-d5 - d3 == 0  -7.9333 -10.5887  -5.2779
-d5 - d4 == 0  -6.5333  -9.1887  -3.8779
+d2 - d1 == 0  -2.1333  -4.7939   0.5272
+d3 - d1 == 0   3.6000   0.9395   6.2605
+d4 - d1 == 0   2.2000  -0.4605   4.8605
+d5 - d1 == 0  -4.3333  -6.9939  -1.6728
+d3 - d2 == 0   5.7333   3.0728   8.3939
+d4 - d2 == 0   4.3333   1.6728   6.9939
+d5 - d2 == 0  -2.2000  -4.8605   0.4605
+d4 - d3 == 0  -1.4000  -4.0605   1.2605
+d5 - d3 == 0  -7.9333 -10.5939  -5.2728
+d5 - d4 == 0  -6.5333  -9.1939  -3.8728
 
 95% family-wise confidence level
  
@@ -1354,15 +1356,15 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = gain ~ pen + feed * sex + initial, data = pigs)
 
-Estimated Quantile = 2.7971
+Estimated Quantile = 2.7968
 
 Linear Hypotheses:
                    Estimate lwr      upr     
-feed: f2 - f1 == 0 -0.44099 -1.07362  0.19164
-feed: f3 - f1 == 0 -0.67300 -1.30276 -0.04324
-feed: f3 - f2 == 0 -0.23201 -0.86464  0.40062
-F-M == 0            0.42435 -0.10812  0.95681
-initial == 0        0.08888  0.02197  0.15579
+feed: f2 - f1 == 0 -0.44099 -1.07355  0.19157
+feed: f3 - f1 == 0 -0.67300 -1.30269 -0.04331
+feed: f3 - f2 == 0 -0.23201 -0.86457  0.40055
+F-M == 0            0.42435 -0.10806  0.95675
+initial == 0        0.08888  0.02198  0.15578
 
 95% family-wise confidence level
  
@@ -1421,10 +1423,10 @@ Fit: aov(formula = gain ~ pen + feed * sex + initial, data = pigs)
 Linear Hypotheses:
                    Estimate Std. Error t value p value   
 feed: f2 - f1 == 0 -0.44099    0.22617  -1.950 0.07358 . 
-feed: f3 - f1 == 0 -0.67300    0.22514  -2.989 0.02660 * 
+feed: f3 - f1 == 0 -0.67300    0.22514  -2.989 0.02673 * 
 feed: f3 - f2 == 0 -0.23201    0.22617  -1.026 0.31786   
 F-M == 0            0.42435    0.19036   2.229 0.07358 . 
-initial == 0        0.08888    0.02392   3.715 0.00676 **
+initial == 0        0.08888    0.02392   3.715 0.00672 **
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 (Adjusted p values reported -- Westfall method)
@@ -1530,12 +1532,12 @@ Linear Hypotheses:
 Overall <= 0        0.7360     0.1908   3.857   <0.01 ***
 Older <= 0          1.0733     0.2635   4.074   <0.01 ***
 Younger <= 0        0.3190     0.2795   1.142  0.1955    
-Good Init <= 0      0.6093     0.2844   2.142  0.0482 *  
+Good Init <= 0      0.6093     0.2844   2.142  0.0477 *  
 Poor Init <= 0      0.8611     0.2573   3.346   <0.01 ** 
 Old x Good <= 0     1.2187     0.3870   3.149   <0.01 ** 
-Old x Poor <= 0     0.8154     0.3616   2.255  0.0482 *  
+Old x Poor <= 0     0.8154     0.3616   2.255  0.0477 *  
 Young x Good <= 0  -0.1045     0.4194  -0.249  0.5982    
-Young x Poor <= 0   0.8696     0.3788   2.296  0.0482 *  
+Young x Poor <= 0   0.8696     0.3788   2.296  0.0477 *  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 (Adjusted p values reported -- Westfall method)
@@ -1568,20 +1570,20 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: lmer(formula = wloss ~ diet + (1 | i), data = wloss, model = TRUE)
 
-Estimated Quantile = 2.7285
+Estimated Quantile = 2.7281
 
 Linear Hypotheses:
-           Estimate  lwr       upr      
-B - A == 0 -1.030000 -2.188656  0.128656
-C - A == 0 -1.780000 -2.938656 -0.621344
-D - A == 0 -2.780000 -3.938656 -1.621344
-E - A == 0  0.120000 -1.038656  1.278656
-C - B == 0 -0.750000 -1.908656  0.408656
-D - B == 0 -1.750000 -2.908656 -0.591344
-E - B == 0  1.150000 -0.008656  2.308656
-D - C == 0 -1.000000 -2.158656  0.158656
-E - C == 0  1.900000  0.741344  3.058656
-E - D == 0  2.900000  1.741344  4.058656
+           Estimate lwr      upr     
+B - A == 0 -1.03000 -2.18851  0.12851
+C - A == 0 -1.78000 -2.93851 -0.62149
+D - A == 0 -2.78000 -3.93851 -1.62149
+E - A == 0  0.12000 -1.03851  1.27851
+C - B == 0 -0.75000 -1.90851  0.40851
+D - B == 0 -1.75000 -2.90851 -0.59149
+E - B == 0  1.15000 -0.00851  2.30851
+D - C == 0 -1.00000 -2.15851  0.15851
+E - C == 0  1.90000  0.74149  3.05851
+E - D == 0  2.90000  1.74149  4.05851
 
 95% family-wise confidence level
  
@@ -1599,16 +1601,16 @@ Fit: lmer(formula = wloss ~ diet + (1 | i), data = wloss, model = TRUE)
 
 Linear Hypotheses:
            Estimate Std. Error z value p value    
-B - A == 0  -1.0300     0.4247  -2.425  0.1085    
-C - A == 0  -1.7800     0.4247  -4.192   <0.01 ***
-D - A == 0  -2.7800     0.4247  -6.546   <0.01 ***
+B - A == 0  -1.0300     0.4247  -2.425  0.1084    
+C - A == 0  -1.7800     0.4247  -4.192  <0.001 ***
+D - A == 0  -2.7800     0.4247  -6.546  <0.001 ***
 E - A == 0   0.1200     0.4247   0.283  0.9986    
-C - B == 0  -0.7500     0.4247  -1.766  0.3938    
-D - B == 0  -1.7500     0.4247  -4.121   <0.01 ***
-E - B == 0   1.1500     0.4247   2.708  0.0528 .  
-D - C == 0  -1.0000     0.4247  -2.355  0.1274    
-E - C == 0   1.9000     0.4247   4.474   <0.01 ***
-E - D == 0   2.9000     0.4247   6.829   <0.01 ***
+C - B == 0  -0.7500     0.4247  -1.766  0.3934    
+D - B == 0  -1.7500     0.4247  -4.121  <0.001 ***
+E - B == 0   1.1500     0.4247   2.708  0.0529 .  
+D - C == 0  -1.0000     0.4247  -2.355  0.1280    
+E - C == 0   1.9000     0.4247   4.474  <0.001 ***
+E - D == 0   2.9000     0.4247   6.829  <0.001 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 (Adjusted p values reported)
@@ -1633,20 +1635,20 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: lmer(formula = plates ~ detergent + (1 | block), data = detergent, 
     model = TRUE)
 
-Estimated Quantile = 3.049
+Estimated Quantile = 3.0431
 
 Linear Hypotheses:
              Estimate lwr      upr     
-d2 - d1 == 0  -2.3241  -4.9077   0.2596
-d3 - d1 == 0   3.4819   0.8983   6.0656
-d4 - d1 == 0   2.3272  -0.2565   4.9108
-d5 - d1 == 0  -4.3787  -6.9624  -1.7951
-d3 - d2 == 0   5.8060   3.2223   8.3896
-d4 - d2 == 0   4.6512   2.0676   7.2349
-d5 - d2 == 0  -2.0547  -4.6383   0.5290
-d4 - d3 == 0  -1.1548  -3.7384   1.4289
-d5 - d3 == 0  -7.8607 -10.4443  -5.2770
-d5 - d4 == 0  -6.7059  -9.2896  -4.1223
+d2 - d1 == 0  -2.3241  -4.9027   0.2545
+d3 - d1 == 0   3.4819   0.9033   6.0605
+d4 - d1 == 0   2.3272  -0.2514   4.9058
+d5 - d1 == 0  -4.3787  -6.9574  -1.8001
+d3 - d2 == 0   5.8060   3.2274   8.3846
+d4 - d2 == 0   4.6512   2.0726   7.2298
+d5 - d2 == 0  -2.0547  -4.6333   0.5239
+d4 - d3 == 0  -1.1548  -3.7334   1.4238
+d5 - d3 == 0  -7.8607 -10.4393  -5.2821
+d5 - d4 == 0  -6.7059  -9.2845  -4.1273
 
 95% family-wise confidence level
  
@@ -1671,13 +1673,13 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: lmer(formula = waste ~ temp + (1 | envir) + (1 | envir:temp), 
     data = waste)
 
-Estimated Quantile = 2.8576
+Estimated Quantile = 2.8573
 
 Linear Hypotheses:
-             Estimate lwr     upr    
-t2 - t1 == 0 -0.2410  -2.4033  1.9213
-t3 - t1 == 0  2.0150  -0.1473  4.1773
-t3 - t2 == 0  2.2560   0.0937  4.4183
+             Estimate lwr      upr     
+t2 - t1 == 0 -0.24100 -2.40312  1.92112
+t3 - t1 == 0  2.01500 -0.14712  4.17712
+t3 - t2 == 0  2.25600  0.09388  4.41812
 
 95% family-wise confidence level
  
@@ -1702,16 +1704,16 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: lmer(formula = rate ~ treatment + (1 | dog), data = halothane, 
     model = TRUE)
 
-Estimated Quantile = 2.8266
+Estimated Quantile = 2.8241
 
 Linear Hypotheses:
              Estimate  lwr       upr      
-HP - HA == 0  111.0526   71.6205  150.4848
-LA - HA == 0   36.4211   -3.0111   75.8532
-LP - HA == 0  134.6842   95.2520  174.1164
-LA - HP == 0  -74.6316 -114.0638  -35.1994
-LP - HP == 0   23.6316  -15.8006   63.0638
-LP - LA == 0   98.2632   58.8310  137.6953
+HP - HA == 0  111.0526   71.6561  150.4492
+LA - HA == 0   36.4211   -2.9755   75.8176
+LP - HA == 0  134.6842   95.2877  174.0808
+LA - HP == 0  -74.6316 -114.0281  -35.2350
+LP - HP == 0   23.6316  -15.7650   63.0281
+LP - LA == 0   98.2632   58.8666  137.6597
 
 95% family-wise confidence level
  
@@ -1822,7 +1824,7 @@ LP - HA == 0                                    < 0.001 ***
 LA - HP == 0                                    < 0.001 ***
 LP - HP == 0                                    0.09027 .  
 LP - LA == 0                                    < 0.001 ***
--0.5 * HA - 0.5 * HP + 0.5 * LA + 0.5 * LP == 0 0.00751 ** 
+-0.5 * HA - 0.5 * HP + 0.5 * LA + 0.5 * LP == 0 0.00754 ** 
 0.5 * HA - 0.5 * HP + 0.5 * LA - 0.5 * LP == 0  < 0.001 ***
 HA - HP - LA + LP == 0                          0.51681    
 ---
@@ -1842,7 +1844,46 @@ R> ### obesity, page 220
 R> 
 R> ### heart, 222
 R> 
+R> ### _____________________________________________________________________
+R> 
+R> ### add additional examples below (because of the seed)
+R> 
+R> 
+R> ### choose comparisons at since = 20, page 104
+R> amod <- aov(score ~ therapy * since + age, data = alz)
+R> gh <- glht(amod, linfct = mcp(therapy = "Tukey"))
+Warning message:
+covariate interactions found -- please choose appropriate contrast in: mcp2matrix(model, linfct = linfct) 
+R> gh$linfct[,8:11] <- gh$linfct[,8:11] * 2
+R> confint(gh)
+
+	 Simultaneous Confidence Intervals for General Linear Hypotheses
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Fit: aov(formula = score ~ therapy * since + age, data = alz)
+
+Estimated Quantile = 2.8056
+
+Linear Hypotheses:
+             Estimate lwr      upr     
+t2 - t1 == 0   5.7052  -8.5776  19.9879
+t3 - t1 == 0  -0.7259 -22.4543  21.0025
+t4 - t1 == 0  30.6868  14.0958  47.2777
+t5 - t1 == 0  41.7908  13.9833  69.5982
+t3 - t2 == 0  -6.4311 -28.5129  15.6508
+t4 - t2 == 0  24.9816   7.7654  42.1978
+t5 - t2 == 0  36.0856   8.0433  64.1278
+t4 - t3 == 0  31.4127   7.4880  55.3374
+t5 - t3 == 0  42.5166  10.9260  74.1073
+t5 - t4 == 0  11.1040 -18.5273  40.7352
+
+95% family-wise confidence level
+ 
+
+R> 
 R> proc.time()
    user  system elapsed 
-466.141   0.168 467.611 
+470.769   0.300 472.444 
 R> 
