@@ -1,4 +1,22 @@
 
+		CHANGES in `multcomp' VERSION 0.991-7
+
+    o    try to deal with non-estimable coefficients in `model': if the
+         correspondings columns of `linfct' are zero anyway, we silently
+         proceed. If not, we stop and ask for a correctly specified model.
+
+    o    try to detect interactions with numeric covariates. We need to
+         choose a specific value here but it seems hard to add 
+         something appropriate to the user interface (I don't want to touch
+         `mcp'). For the time being, we fire a warning and the user can 
+         modify `linfct' manually.
+
+    o    add mcp(<name> = "Means"), contribution by Richard M. Heiberger
+         <rmh@temple.edu>
+
+    o    add Rich to DESCRIPTION file
+
+
 		CHANGES in `multcomp' VERSION 0.991-5
 
     o    plot.confint allows for specification of xlim, xlab and main

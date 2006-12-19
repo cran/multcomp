@@ -13,6 +13,16 @@ glht.matrix <- function(model, linfct,
     if (!is.numeric(rhs))
         stop(sQuote("rhs"), " is not a numeric vector")
 
+    if (!all(mpar$estimable)) {
+        ignoreOK <- all(colSums(abs(linfct[, !mpar$estimable, 
+                                           drop = FALSE])) == 0)
+        if (!ignoreOK)
+            stop("some linear functions are not estimable")
+        linfct <- linfct[, mpar$estimable, drop = FALSE]
+        warning(sum(!mpar$estimable), " out of ", length(mpar$estimable), 
+                " coefficients not estimable in ", sQuote("model"))
+    }
+
     if (ncol(linfct) != length(mpar$coef))
         stop(sQuote("ncol(linfct)"), " is not equal to ", 
              sQuote("length(coef(model))"))
@@ -73,6 +83,18 @@ glht.mcp <- function(model, linfct, ...) {
 
     ret <- do.call("glht", args)
     ret$type <- tmp$type
+    ret$focus <- names(linfct)
+    return(ret)
+}
+
+### call Rich' function for raw means ...
+glht.means <- function(model, linfct, ...) {
+
+    args <- list(model = model, 
+                 linfct = meanslinfct(model, focus = names(linfct), ...))
+    args <- c(args, list(...))
+    ret <- do.call("glht", args)
+    ret$type <- "Mean"
     ret$focus <- names(linfct)
     return(ret)
 }

@@ -42,3 +42,7 @@ if (require("survival")) {
     rownames(K) <- names(coef(smod))
     glht(smod, linfct = K)
 }
+
+### new `means' comparisons
+amod <- aov(weight ~ dose + gesttime + number, data = litter)
+confint(glht(amod, linfct = mcp(dose = "Means")))
