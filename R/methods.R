@@ -20,6 +20,7 @@ summary.glht <- function(object, test = adjusted(), ...) {
 
 confint.glht <- function(object, parm, level = 0.95, calpha = adjusted_calpha(), ...) 
 {
+    type <- attr(calpha, "type")
     if (is.function(calpha))
         calpha <- calpha(object, level, ...)
     if (!is.numeric(calpha) || length(calpha) != 1)
@@ -47,6 +48,7 @@ confint.glht <- function(object, parm, level = 0.95, calpha = adjusted_calpha(),
     attr(object$confint, "conf.level") <- level
     attr(object$confint, "calpha") <- calpha
     attr(object$confint, "error") <- error
+    attr(object, "type") <- type
     class(object) <- c("confint.glht", "glht")
     return(object)
 }

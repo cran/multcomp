@@ -13,6 +13,10 @@ model.matrix.coxph <- function(object, ...) {
     mm
 }
 
+model.matrix.aovlist <- function(object, ...)
+    stop(sQuote("glht"), " does not support objects of class ", 
+         sQuote("aovlist"))
+
 ### some methods of lmer objects
 model.matrix.lmer <- function(object, ...) {
     x <- object@X
@@ -116,6 +120,9 @@ vcovsurvreg <- function(object, ...) {
 
 modelparm.survreg <- function(model, coef. = coef, vcov. = vcovsurvreg, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
+
+modelparm.aovlist <- function(model, coef. = coef, vcov. = vcov, df = NULL, ...)
+    stop(sQuote("glht"), " does not support objects of class ", sQuote("aovlist"))
 
 
 ### modified from package MASS  

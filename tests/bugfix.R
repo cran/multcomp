@@ -40,3 +40,7 @@ glht(tmp.aov, linfct=mcp(GG="Tukey"))
 ### covariate interactions: fire a warning
 tmp.aov <- aov(z ~ w*GG , data=tmp.data)
 glht(tmp.aov, linfct = mcp(GG = "Tukey"))
+
+### stop with informative error message
+amod <- aov(breaks ~ tension + Error(wool), data = warpbreaks)
+try(glht(amod, linfct = mcp(tension = "Tukey")))

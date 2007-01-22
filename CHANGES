@@ -1,4 +1,14 @@
 
+		CHANGES in `multcomp' VERSION 0.991-8
+
+    o    make sure `type' is available
+
+    o    catch errors with `aovlist' objects
+
+    o    print for confint method indicates if confidence 
+         intervals are adjusted or univariate
+
+
 		CHANGES in `multcomp' VERSION 0.991-7
 
     o    try to deal with non-estimable coefficients in `model': if the
