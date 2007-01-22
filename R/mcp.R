@@ -180,15 +180,16 @@ mcp2matrix <- function(model, linfct) {
     if (is.null(ctype))
         ctype <- "User-defined"
     ctype <- paste(unique(ctype), collapse = ", ")
+    attr(Ktotal, "type") <- ctype
 
     if (length(m) == 0) m <- 0
     list(K = Ktotal, m = m, alternative = alternative, type = ctype)
 }
 
 ### contributed by Richard M. Heiberger <rmh@temple.edu>
-meanslinfct <- function(model, focus, mmm.data=model$model,
-                        formula.in=formula(model)) {
-
+meanslinfct <- function (model, focus, mmm.data = model$model, 
+                         formula.in = terms(model))
+{
     mmm.factor <- sapply(mmm.data, inherits, "factor")
     mmm.levels <- lapply(mmm.data[mmm.factor], levels)
     mmm.rows <- sapply(mmm.levels, length)
@@ -197,20 +198,15 @@ meanslinfct <- function(model, focus, mmm.data=model$model,
     mmm.factor.names <- names(mmm.data)[mmm.factor]
     mmm.rows.forward <- cumprod(mmm.rows)
     mmm.rows.forward.prev <- c(1, mmm.rows.forward)
-    names(mmm.rows.forward.prev) <- c(names(mmm.rows.forward), "all")
-    ### mmm.rows.backward <- cumprod(rev(mmm.rows))
-  
-    for (i in mmm.factor.names)
-        mmm.new[[i]] <- gl(mmm.rows[i], mmm.rows.forward.prev[i],
-                           n.mmm.rows, labels=mmm.levels[[i]])
-  
+    names(mmm.rows.forward.prev) <- c(names(mmm.rows.forward),
+        "all")
+    for (i in mmm.factor.names) mmm.new[[i]] <- gl(mmm.rows[i],
+        mmm.rows.forward.prev[i], n.mmm.rows, labels = mmm.levels[[i]])
     mmm.numeric.names <- names(mmm.data)[!mmm.factor]
-    for (i in mmm.numeric.names)
-        mmm.new[[i]][] <- mean(mmm.data[[i]])
-  
-    none.data <- model.matrix(formula.in, data=mmm.new)
-  
-    none.linfct <- aggregate(none.data, by=mmm.new[focus], FUN=mean)[,-1]
+    for (i in mmm.numeric.names) mmm.new[[i]][] <- mean(mmm.data[[i]])
+    none.data <- model.matrix(formula.in, data = mmm.new)
+    none.linfct <- aggregate(none.data, by = mmm.new[focus],
+        FUN = mean)[, -1]
     rownames(none.linfct) <- levels(mmm.new[[focus]])
     data.matrix(none.linfct)
 }

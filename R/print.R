@@ -89,8 +89,13 @@ print.confint.glht <- function(x, digits = max(3, getOption("digits") - 3),
     rownames(x$confint) <- paste(rownames(x$confint), alt, x$rhs)
     print(format(x$confint, nsmall = digits, digits = digits), quote = FALSE)
     cat("\n")
-    cat(paste(level * 100, 
-              "% family-wise confidence level\n", sep = ""), "\n\n")
+    if (attr(x, "type") == "adjusted") {
+        cat(paste(level * 100, 
+                  "% family-wise confidence level\n", sep = ""), "\n\n")
+    } else {
+        cat(paste(level * 100, 
+                  "% confidence level\n", sep = ""), "\n\n")
+    }
     invisible(xtmp)
 }
 

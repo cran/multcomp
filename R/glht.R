@@ -46,7 +46,7 @@ glht.matrix <- function(model, linfct,
     RET <- list(model = model, linfct = linfct, rhs = rhs,
                 coef = mpar$coef, vcov = mpar$vcov, 
                 df = mpar$df, alternative = alternative,
-                type = NULL)
+                type = attr(linfct, "type"))
     class(RET) <- "glht"
     RET
 }
