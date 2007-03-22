@@ -1,6 +1,6 @@
 
-R version 2.4.0 (2006-10-03)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.5.0 Under development (unstable) (2007-03-06 r40817)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -22,6 +22,14 @@ Type 'q()' to quit R.
 +     print(checkUsagePackage("multcomp"))
 + }
 Loading required package: codetools
+
+Attaching package: 'codetools'
+
+
+	The following object(s) are masked from package:base :
+
+	 callCC 
+
 Loading required package: mvtnorm
 NULL
 > 

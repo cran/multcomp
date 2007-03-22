@@ -3,6 +3,8 @@
 \alias{confint.glht}
 \alias{coef.glht}
 \alias{vcov.glht}
+\alias{plot.glht}
+\alias{plot.confint.glht}
 \alias{univariate}
 \alias{adjusted}
 \alias{Ftest}
@@ -19,6 +21,8 @@
 \method{confint}{glht}(object, parm, level = 0.95, calpha = adjusted_calpha(), ...)
 \method{coef}{glht}(object, rhs = FALSE, ...)
 \method{vcov}{glht}(object, ...)
+\method{plot}{confint.glht}(x, xlim, xlab, ...)
+\method{plot}{glht}(x, ...)
 univariate()
 adjusted(type = c("free", "Shaffer", "Westfall", p.adjust.methods), 
          ...)
@@ -39,6 +43,9 @@ univariate_calpha()
               should be returned.}
   \item{type}{ the multiplicity adjustment (\code{adjusted}) 
                to be applied. See below and \code{\link{p.adjust}}.}
+  \item{x}{an object of class \code{\link{glht}} or \code{confint.glht}.}
+  \item{xlim}{the \code{x} limits \code{(x1, x2)} of the plot.}
+  \item{xlab}{a label for the \code{x} axis.}
   \item{...}{ additional arguments, such as \code{maxpts}, 
               \code{abseps} or \code{releps} to
               \code{\link[mvtnorm]{pmvnorm}} in \code{adjusted} or 
@@ -72,7 +79,8 @@ univariate_calpha()
   using method \code{\link{confint}}. Univariate confidence intervals
   can be computed by specifying \code{calpha = univariate_calpha()}
   to \code{confint}. The critical value can directly be specified as a scalar 
-  to \code{calpha} as well.
+  to \code{calpha} as well. Note that \code{plot(a)} for some object \code{a} of class
+  \code{glht} is equivalent to \code{plot(confint(a))}.
 
   All simultaneous inference procedures implemented here control
   the family-wise error rate (FWER). Multivariate

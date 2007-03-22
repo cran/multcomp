@@ -1,4 +1,11 @@
 
+		CHANGES in `multcomp' VERSION 0.991-9
+
+    o    fix some minor problems spotted for plotting or
+         printing of confidence intervals (thanks for Rich Heiberger and
+         Ludwig Hothorn)
+
+
 		CHANGES in `multcomp' VERSION 0.991-8
 
     o    make sure `type' is available

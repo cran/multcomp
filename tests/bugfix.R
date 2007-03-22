@@ -11,7 +11,7 @@ cht2 <- glht(amod, linfct = mcp(trt = K))
 stopifnot(all.equal(coef(cht1), coef(cht2)))
 
 ### several inconsistencies spotted by 
-### Rich Heiberger <<rmh@temple.edu> 2006-11-28
+### Rich Heiberger <rmh@temple.edu> 2006-11-28
 
 ### need to be identical
 stopifnot(identical(cht1, print(cht1)))
@@ -44,3 +44,9 @@ glht(tmp.aov, linfct = mcp(GG = "Tukey"))
 ### stop with informative error message
 amod <- aov(breaks ~ tension + Error(wool), data = warpbreaks)
 try(glht(amod, linfct = mcp(tension = "Tukey")))
+
+### print error, spotted by Rich
+amod <- aov(breaks ~ wool * tension, data = warpbreaks)
+wht <- glht(amod, linfct = mcp(tension = "Tukey"))
+tmp <- confint(wht, calpha=2)
+print(tmp)
