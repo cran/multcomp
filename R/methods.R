@@ -48,6 +48,7 @@ confint.glht <- function(object, parm, level = 0.95, calpha = adjusted_calpha(),
     attr(object$confint, "conf.level") <- level
     attr(object$confint, "calpha") <- calpha
     attr(object$confint, "error") <- error
+    if (is.null(type)) type <- "univariate"
     attr(object, "type") <- type
     class(object) <- c("confint.glht", "glht")
     return(object)

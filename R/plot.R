@@ -19,17 +19,23 @@ plot.confint.glht <- function(x, xlim, xlab, ...) {
     abline(h = yvals, lty = 1, lwd = 0, col = "lightgray")
     abline(v = 0, lty = 2, lwd = 0, ...)
     left <- xi[, "lwr"]
-    left[!is.finite(left)] <- xrange[1] * 2
+    left[!is.finite(left)] <- min(c(0, xrange[1] * 2))
     right <- xi[, "upr"]
-    right[!is.finite(right)] <- xrange[2] * 2
+    right[!is.finite(right)] <- max(c(0, xrange[2] * 2))
     segments(left, yvals, right, yvals, ...)
     points(xi[, "lwr"], yvals, pch = "(", ...)
     points(xi[, "upr"], yvals, pch = ")", ...)
     points(xi[, "Estimate"], yvals, pch = 20, ...)
     main <- list(...)$main
-    if (is.null(main))
-        main <- paste(format(100 * attr(x$confint, "conf.level"), 2), 
-                      "% family-wise confidence level\n", sep = "")
+    if (is.null(main)) {
+        if (attr(x, "type") == "adjusted") {
+            main <- paste(format(100 * attr(x$confint, "conf.level"), 2), 
+                          "% family-wise confidence level\n", sep = "")
+        } else {
+            main <- paste(format(100 * attr(x$confint, "conf.level"), 2),
+                          "% confidence level\n", sep = "")
+        }
+    }
     if (missing(xlab))
           xlab <- "Linear Function"
     title(main = main, xlab = xlab)
