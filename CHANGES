@@ -1,4 +1,11 @@
 
+		CHANGES in `multcomp' VERSION 0.992-2
+
+    o    add support for `lme' objects (feature request by
+         John Wilkinson <jnwilks@btinternet.com> and Dieter Menne
+         <dieter.menne@menne-biomed.de>)
+
+
 		CHANGES in `multcomp' VERSION 0.992-1
 
     o    fix LaTeX problem in vignette (spotted by Brian D. Ripley)
