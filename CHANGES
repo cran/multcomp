@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 0.992-1
+
+    o    fix LaTeX problem in vignette (spotted by Brian D. Ripley)
+
+
 		CHANGES in `multcomp' VERSION 0.991-9
 
     o    fix some minor problems spotted for plotting or

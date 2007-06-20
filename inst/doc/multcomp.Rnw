@@ -4,7 +4,7 @@
 %%\VignetteIndexEntry{Simultaneous Inference Procedures for General Linear Hypotheses}
 %%\VignetteDepends{multcomp}
 
-\usepackage[utf-8]{inputenc}
+\usepackage[utf8]{inputenc}
 
 \usepackage{amsfonts}
 \usepackage{amstext}
