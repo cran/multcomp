@@ -82,9 +82,10 @@ modelparm.default <- function(model, coef. = coef, vcov. = vcov,
     }
 
     ### try to identify non-estimable coefficients
-    ### coef.aov removes NAs
-    ocoef <- model$coefficients
-    if (is.null(ocoef)) ocoef <- beta
+    ### coef.aov removes NAs, thus touch coefficients 
+    ### directly
+    ocoef <- coef.(model)
+    if (inherits(model, "aov")) ocoef <- model$coefficients
     estimable <- rep(TRUE, length(ocoef))
     if (any(is.na(ocoef))) {
         estimable[is.na(ocoef)] <- FALSE
@@ -108,10 +109,15 @@ coeflmer <- function(object, ...) {
     x
 }
 
+### package `lme4'
 modelparm.lmer <- function(model, coef. = coeflmer, vcov. = vcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
 
-### survreg models (package survival)
+### package `nlme'
+modelparm.lme <- function(model, coef. = nlme:::fixef, vcov. = vcov, df = NULL, ...)
+    modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
+
+### survreg models (package `survival')
 vcovsurvreg <- function(object, ...) {
     sigma <- vcov(object)
     p <- length(coef(object))
