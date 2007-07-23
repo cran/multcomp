@@ -1,6 +1,6 @@
 
-R version 2.4.0 (2006-10-03)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.5.1 (2007-06-27)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -142,16 +142,16 @@ Fit: lm(formula = response ~ trt, data = cholesterol)
 
 Linear Hypotheses:
                      Estimate Std. Error t value p value    
-2times - 1time == 0     3.443      1.443   2.385   0.138    
-4times - 1time == 0     6.593      1.443   4.568   <0.01 ***
-drugD - 1time == 0      9.579      1.443   6.637   <0.01 ***
-drugE - 1time == 0     15.166      1.443  10.507   <0.01 ***
-4times - 2times == 0    3.150      1.443   2.182   0.206    
-drugD - 2times == 0     6.136      1.443   4.251   <0.01 ***
-drugE - 2times == 0    11.723      1.443   8.122   <0.01 ***
-drugD - 4times == 0     2.986      1.443   2.069   0.252    
-drugE - 4times == 0     8.573      1.443   5.939   <0.01 ***
-drugE - drugD == 0      5.586      1.443   3.870   <0.01 ** 
+2times - 1time == 0     3.443      1.443   2.385 0.13816    
+4times - 1time == 0     6.593      1.443   4.568 < 0.001 ***
+drugD - 1time == 0      9.579      1.443   6.637 < 0.001 ***
+drugE - 1time == 0     15.166      1.443  10.507 < 0.001 ***
+4times - 2times == 0    3.150      1.443   2.182 0.20503    
+drugD - 2times == 0     6.136      1.443   4.251 < 0.001 ***
+drugE - 2times == 0    11.723      1.443   8.122 < 0.001 ***
+drugD - 4times == 0     2.986      1.443   2.069 0.25124    
+drugE - 4times == 0     8.573      1.443   5.939 < 0.001 ***
+drugE - drugD == 0      5.586      1.443   3.870 0.00307 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported)
@@ -175,16 +175,16 @@ Fit: lm(formula = response ~ trt, data = cholesterol)
 
 Linear Hypotheses:
                      Estimate Std. Error t value p value    
-2times - 1time == 0     3.443      1.443   2.385   0.138    
-4times - 1time == 0     6.593      1.443   4.568   <0.01 ***
-drugD - 1time == 0      9.579      1.443   6.637   <0.01 ***
-drugE - 1time == 0     15.166      1.443  10.507   <0.01 ***
-4times - 2times == 0    3.150      1.443   2.182   0.205    
-drugD - 2times == 0     6.136      1.443   4.251   <0.01 ***
-drugE - 2times == 0    11.723      1.443   8.122   <0.01 ***
-drugD - 4times == 0     2.986      1.443   2.069   0.249    
-drugE - 4times == 0     8.573      1.443   5.939   <0.01 ***
-drugE - drugD == 0      5.586      1.443   3.870   <0.01 ** 
+2times - 1time == 0     3.443      1.443   2.385 0.13805    
+4times - 1time == 0     6.593      1.443   4.568 < 0.001 ***
+drugD - 1time == 0      9.579      1.443   6.637 < 0.001 ***
+drugE - 1time == 0     15.166      1.443  10.507 < 0.001 ***
+4times - 2times == 0    3.150      1.443   2.182 0.20504    
+drugD - 2times == 0     6.136      1.443   4.251 < 0.001 ***
+drugE - 2times == 0    11.723      1.443   8.122 < 0.001 ***
+drugD - 4times == 0     2.986      1.443   2.069 0.25129    
+drugE - 4times == 0     8.573      1.443   5.939 < 0.001 ***
+drugE - drugD == 0      5.586      1.443   3.870 0.00313 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported)
@@ -230,20 +230,20 @@ Multiple Comparisons of Means: user-defined Contrasts
 
 Fit: NULL
 
-Estimated Quantile = 2.8409
+Estimated Quantile = 2.8417
 
 Linear Hypotheses:
                      Estimate lwr     upr    
-2times - 1time == 0   3.4430  -0.6575  7.5435
-4times - 1time == 0   6.5928   2.4923 10.6933
-drugD - 1time == 0    9.5792   5.4787 13.6797
-drugE - 1time == 0   15.1655  11.0651 19.2660
-4times - 2times == 0  3.1498  -0.9507  7.2503
-drugD - 2times == 0   6.1362   2.0357 10.2367
-drugE - 2times == 0  11.7226   7.6221 15.8230
-drugD - 4times == 0   2.9864  -1.1141  7.0869
-drugE - 4times == 0   8.5727   4.4722 12.6732
-drugE - drugD == 0    5.5864   1.4859  9.6868
+2times - 1time == 0   3.4430  -0.6587  7.5447
+4times - 1time == 0   6.5928   2.4911 10.6945
+drugD - 1time == 0    9.5792   5.4775 13.6809
+drugE - 1time == 0   15.1655  11.0638 19.2673
+4times - 2times == 0  3.1498  -0.9519  7.2515
+drugD - 2times == 0   6.1362   2.0345 10.2379
+drugE - 2times == 0  11.7226   7.6208 15.8243
+drugD - 4times == 0   2.9864  -1.1153  7.0881
+drugE - 4times == 0   8.5727   4.4710 12.6744
+drugE - drugD == 0    5.5864   1.4846  9.6881
 
 95% family-wise confidence level
  
@@ -263,17 +263,17 @@ Multiple Comparisons of Means: user-defined Contrasts
 Fit: NULL
 
 Linear Hypotheses:
-                     Estimate Std. Error t value p value    
-2times - 1time == 0     3.443      1.443   2.385   0.138    
-4times - 1time == 0     6.593      1.443   4.568   <0.01 ***
-drugD - 1time == 0      9.579      1.443   6.637   <0.01 ***
-drugE - 1time == 0     15.166      1.443  10.507   <0.01 ***
-4times - 2times == 0    3.150      1.443   2.182   0.203    
-drugD - 2times == 0     6.136      1.443   4.251   <0.01 ***
-drugE - 2times == 0    11.723      1.443   8.122   <0.01 ***
-drugD - 4times == 0     2.986      1.443   2.069   0.255    
-drugE - 4times == 0     8.573      1.443   5.939   <0.01 ***
-drugE - drugD == 0      5.586      1.443   3.870   <0.01 ** 
+                     Estimate Std. Error t value  p value    
+2times - 1time == 0     3.443      1.443   2.385 0.138213    
+4times - 1time == 0     6.593      1.443   4.568 0.000359 ***
+drugD - 1time == 0      9.579      1.443   6.637  < 1e-04 ***
+drugE - 1time == 0     15.166      1.443  10.507  < 1e-04 ***
+4times - 2times == 0    3.150      1.443   2.182 0.205121    
+drugD - 2times == 0     6.136      1.443   4.251 0.000962 ***
+drugE - 2times == 0    11.723      1.443   8.122  < 1e-04 ***
+drugD - 4times == 0     2.986      1.443   2.069 0.251269    
+drugE - 4times == 0     8.573      1.443   5.939  < 1e-04 ***
+drugE - drugD == 0      5.586      1.443   3.870 0.003078 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported)
@@ -314,16 +314,16 @@ Fit: lm(formula = plates ~ block + detergent, data = detergent)
 
 Linear Hypotheses:
            Estimate Std. Error t value p value    
-B - A == 0  -2.1333     0.8679  -2.458   0.150    
-C - A == 0   3.6000     0.8679   4.148   <0.01 ** 
-D - A == 0   2.2000     0.8679   2.535   0.132    
-E - A == 0  -4.3333     0.8679  -4.993   <0.01 ** 
-C - B == 0   5.7333     0.8679   6.606   <0.01 ***
-D - B == 0   4.3333     0.8679   4.993   <0.01 ***
-E - B == 0  -2.2000     0.8679  -2.535   0.131    
-D - C == 0  -1.4000     0.8679  -1.613   0.510    
-E - C == 0  -7.9333     0.8679  -9.140   <0.01 ***
-E - D == 0  -6.5333     0.8679  -7.527   <0.01 ***
+B - A == 0  -2.1333     0.8679  -2.458 0.15020    
+C - A == 0   3.6000     0.8679   4.148 0.00586 ** 
+D - A == 0   2.2000     0.8679   2.535 0.13155    
+E - A == 0  -4.3333     0.8679  -4.993 0.00111 ** 
+C - B == 0   5.7333     0.8679   6.606 < 0.001 ***
+D - B == 0   4.3333     0.8679   4.993 0.00103 ** 
+E - B == 0  -2.2000     0.8679  -2.535 0.13165    
+D - C == 0  -1.4000     0.8679  -1.613 0.51052    
+E - C == 0  -7.9333     0.8679  -9.140 < 0.001 ***
+E - D == 0  -6.5333     0.8679  -7.527 < 0.001 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported)
@@ -363,9 +363,9 @@ Estimated Quantile = -1.843
 
 Linear Hypotheses:
              Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82239
-b2 - b0 >= 0 -7.46667     -Inf -4.51095
-b3 - b0 >= 0 -1.66667     -Inf -0.03606
+b1 - b0 >= 0 -2.13333     -Inf  0.82246
+b2 - b0 >= 0 -7.46667     -Inf -4.51087
+b3 - b0 >= 0 -1.66667     -Inf -0.03602
 
 90% family-wise confidence level
  
@@ -399,9 +399,9 @@ Estimated Quantile = -1.8431
 
 Linear Hypotheses:
         Estimate lwr      upr     
-C1 >= 0 -2.13333     -Inf  0.82262
-C2 >= 0 -7.46667     -Inf -4.51072
-C3 >= 0 -1.66667     -Inf -0.03594
+C1 >= 0 -2.13333     -Inf  0.82264
+C2 >= 0 -7.46667     -Inf -4.51069
+C3 >= 0 -1.66667     -Inf -0.03592
 
 90% family-wise confidence level
  
@@ -421,9 +421,9 @@ Estimated Quantile = -1.8431
 
 Linear Hypotheses:
         Estimate lwr      upr     
-C1 >= 0 -2.13333     -Inf  0.82262
-C2 >= 0 -7.46667     -Inf -4.51072
-C3 >= 0 -1.66667     -Inf -0.03594
+C1 >= 0 -2.13333     -Inf  0.82264
+C2 >= 0 -7.46667     -Inf -4.51069
+C3 >= 0 -1.66667     -Inf -0.03592
 
 90% family-wise confidence level
  
@@ -459,9 +459,9 @@ Estimated Quantile = -1.843
 
 Linear Hypotheses:
              Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82239
-b2 - b0 >= 0 -7.46667     -Inf -4.51095
-b3 - b0 >= 0 -1.66667     -Inf -0.03606
+b1 - b0 >= 0 -2.13333     -Inf  0.82246
+b2 - b0 >= 0 -7.46667     -Inf -4.51087
+b3 - b0 >= 0 -1.66667     -Inf -0.03602
 
 90% family-wise confidence level
  
@@ -499,16 +499,16 @@ Fit: lm(formula = response ~ trt, data = cholesterol)
 
 Linear Hypotheses:
                      Estimate Std. Error t value p value    
-2times - 1time == 0     3.443      1.443   2.385   0.138    
-4times - 1time == 0     6.593      1.443   4.568   <0.01 ***
-drugD - 1time == 0      9.579      1.443   6.637   <0.01 ***
-drugE - 1time == 0     15.166      1.443  10.507   <0.01 ***
-4times - 2times == 0    3.150      1.443   2.182   0.206    
-drugD - 2times == 0     6.136      1.443   4.251   <0.01 ***
-drugE - 2times == 0    11.723      1.443   8.122   <0.01 ***
-drugD - 4times == 0     2.986      1.443   2.069   0.252    
-drugE - 4times == 0     8.573      1.443   5.939   <0.01 ***
-drugE - drugD == 0      5.586      1.443   3.870   <0.01 ** 
+2times - 1time == 0     3.443      1.443   2.385 0.13816    
+4times - 1time == 0     6.593      1.443   4.568 < 0.001 ***
+drugD - 1time == 0      9.579      1.443   6.637 < 0.001 ***
+drugE - 1time == 0     15.166      1.443  10.507 < 0.001 ***
+4times - 2times == 0    3.150      1.443   2.182 0.20503    
+drugD - 2times == 0     6.136      1.443   4.251 < 0.001 ***
+drugE - 2times == 0    11.723      1.443   8.122 < 0.001 ***
+drugD - 4times == 0     2.986      1.443   2.069 0.25124    
+drugE - 4times == 0     8.573      1.443   5.939 < 0.001 ***
+drugE - drugD == 0      5.586      1.443   3.870 0.00307 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported)
@@ -566,7 +566,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\n")
-Time elapsed:  9.528 0.024 9.619 0 0 
+Time elapsed:  11.86 0.02 12.146 0 0 
 > dev.off(); quit('no')
 null device 
           1 

@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2007-03-06 r40817)
+R version 2.5.1 (2007-06-27)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -167,15 +167,15 @@ Fit: aov(formula = response ~ trt, data = cholesterol)
 Linear Hypotheses:
                      Estimate Std. Error t value p value    
 2times - 1time == 0     3.443      1.443   2.385  0.0420 *  
-4times - 1time == 0     6.593      1.443   4.568   <0.01 ***
-drugD - 1time == 0      9.579      1.443   6.637   <0.01 ***
-drugE - 1time == 0     15.166      1.443  10.507   <0.01 ***
+4times - 1time == 0     6.593      1.443   4.568  <0.001 ***
+drugD - 1time == 0      9.579      1.443   6.637  <0.001 ***
+drugE - 1time == 0     15.166      1.443  10.507  <0.001 ***
 4times - 2times == 0    3.150      1.443   2.182  0.0420 *  
-drugD - 2times == 0     6.136      1.443   4.251   <0.01 ***
-drugE - 2times == 0    11.723      1.443   8.122   <0.01 ***
+drugD - 2times == 0     6.136      1.443   4.251  <0.001 ***
+drugE - 2times == 0    11.723      1.443   8.122  <0.001 ***
 drugD - 4times == 0     2.986      1.443   2.069  0.0443 *  
-drugE - 4times == 0     8.573      1.443   5.939   <0.01 ***
-drugE - drugD == 0      5.586      1.443   3.870   <0.01 ***
+drugE - 4times == 0     8.573      1.443   5.939  <0.001 ***
+drugE - drugD == 0      5.586      1.443   3.870  <0.001 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -338,20 +338,20 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
-Estimated Quantile = 3.0646
+Estimated Quantile = 3.0635
 
 Linear Hypotheses:
            Estimate lwr      upr     
-B - A == 0  -2.1333  -4.7932   0.5266
-C - A == 0   3.6000   0.9401   6.2599
-D - A == 0   2.2000  -0.4599   4.8599
-E - A == 0  -4.3333  -6.9932  -1.6734
-C - B == 0   5.7333   3.0734   8.3932
-D - B == 0   4.3333   1.6734   6.9932
-E - B == 0  -2.2000  -4.8599   0.4599
-D - C == 0  -1.4000  -4.0599   1.2599
-E - C == 0  -7.9333 -10.5932  -5.2734
-E - D == 0  -6.5333  -9.1932  -3.8734
+B - A == 0  -2.1333  -4.7923   0.5256
+C - A == 0   3.6000   0.9411   6.2589
+D - A == 0   2.2000  -0.4589   4.8589
+E - A == 0  -4.3333  -6.9923  -1.6744
+C - B == 0   5.7333   3.0744   8.3923
+D - B == 0   4.3333   1.6744   6.9923
+E - B == 0  -2.2000  -4.8589   0.4589
+D - C == 0  -1.4000  -4.0589   1.2589
+E - C == 0  -7.9333 -10.5923  -5.2744
+E - D == 0  -6.5333  -9.1923  -3.8744
 
 95% family-wise confidence level
  
@@ -419,16 +419,16 @@ Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
 Linear Hypotheses:
            Estimate Std. Error t value p value    
-B - A == 0  -2.1333     0.8679  -2.458   0.050 .  
-C - A == 0   3.6000     0.8679   4.148   <0.01 ** 
-D - A == 0   2.2000     0.8679   2.535   0.043 *  
-E - A == 0  -4.3333     0.8679  -4.993   <0.01 ***
-C - B == 0   5.7333     0.8679   6.606   <0.01 ***
-D - B == 0   4.3333     0.8679   4.993   <0.01 ***
-E - B == 0  -2.2000     0.8679  -2.535   0.043 *  
-D - C == 0  -1.4000     0.8679  -1.613   0.126    
-E - C == 0  -7.9333     0.8679  -9.140   <0.01 ***
-E - D == 0  -6.5333     0.8679  -7.527   <0.01 ***
+B - A == 0  -2.1333     0.8679  -2.458 0.05002 .  
+C - A == 0   3.6000     0.8679   4.148 0.00280 ** 
+D - A == 0   2.2000     0.8679   2.535 0.04297 *  
+E - A == 0  -4.3333     0.8679  -4.993 < 0.001 ***
+C - B == 0   5.7333     0.8679   6.606 < 0.001 ***
+D - B == 0   4.3333     0.8679   4.993 < 0.001 ***
+E - B == 0  -2.2000     0.8679  -2.535 0.04297 *  
+D - C == 0  -1.4000     0.8679  -1.613 0.12629    
+E - C == 0  -7.9333     0.8679  -9.140 < 0.001 ***
+E - D == 0  -6.5333     0.8679  -7.527 < 0.001 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -707,15 +707,15 @@ Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
 Linear Hypotheses:
                Estimate Std. Error t value p value  
-5 - 0 >= 0      -3.3524     1.2908  -2.597   0.032 *
-50 - 0 >= 0     -2.2909     1.3384  -1.712   0.203  
-500 - 0 >= 0    -2.6752     1.3343  -2.005   0.119  
-50 - 5 >= 0      1.0615     1.3973   0.760   1.000  
-500 - 5 >= 0     0.6772     1.3394   0.506   0.999  
-500 - 50 >= 0   -0.3844     1.4510  -0.265   0.891  
-otrend >= 0     -3.4821     2.0867  -1.669   0.219  
-atrend >= 0   -314.7324   408.9901  -0.770   0.662  
-ltrend >= 0     -1.9400     0.9616  -2.018   0.115  
+5 - 0 >= 0      -3.3524     1.2908  -2.597  0.0316 *
+50 - 0 >= 0     -2.2909     1.3384  -1.712  0.2031  
+500 - 0 >= 0    -2.6752     1.3343  -2.005  0.1186  
+50 - 5 >= 0      1.0615     1.3973   0.760  0.9999  
+500 - 5 >= 0     0.6772     1.3394   0.506  0.9987  
+500 - 50 >= 0   -0.3844     1.4510  -0.265  0.8908  
+otrend >= 0     -3.4821     2.0867  -1.669  0.2182  
+atrend >= 0   -314.7324   408.9901  -0.770  0.6621  
+ltrend >= 0     -1.9400     0.9616  -2.018  0.1157  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported)
@@ -925,13 +925,13 @@ Multiple Comparisons of Means: User-defined Contrasts
 
 Fit: aov(formula = minutes ~ blanket, data = recovery)
 
-Estimated Quantile = -1.8431
+Estimated Quantile = -1.843
 
 Linear Hypotheses:
              Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82254
-b2 - b0 >= 0 -7.46667     -Inf -4.51079
-b3 - b0 >= 0 -1.66667     -Inf -0.03598
+b1 - b0 >= 0 -2.13333     -Inf  0.82241
+b2 - b0 >= 0 -7.46667     -Inf -4.51092
+b3 - b0 >= 0 -1.66667     -Inf -0.03605
 
 90% family-wise confidence level
  
@@ -995,7 +995,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  55.567 0.068 56.092 0 0 
+Time elapsed:  63.28 0.052 64.227 0 0 
 > grDevices::dev.off()
 null device 
           1 

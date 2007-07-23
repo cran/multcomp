@@ -15,12 +15,11 @@ if (lme4OK) {
     stool.lmer <- lmer(effort ~ Type + (1 | Subject),
                        data = ergoStool)
     glme4 <- glht(stool.lmer,K)
-}
 
-
-if (nlmeOK) {
-    stool.lme <- lme(effort ~ Type, data = ergoStool,
-                    random = ~ 1 | Subject)
-    gnlme <- glht(stool.lme,K)
-    stopifnot(all.equal(coef(glme4), coef(gnlme)))
+    if (nlmeOK) {
+        stool.lme <- lme(effort ~ Type, data = ergoStool,
+                        random = ~ 1 | Subject)
+        gnlme <- glht(stool.lme,K)
+        stopifnot(all.equal(coef(glme4), coef(gnlme)))
+    }
 }

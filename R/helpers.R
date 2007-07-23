@@ -17,33 +17,28 @@ model.matrix.aovlist <- function(object, ...)
     stop(sQuote("glht"), " does not support objects of class ", 
          sQuote("aovlist"))
 
-### some methods of lmer objects
-model.matrix.lmer <- function(object, ...) {
+### some methods of (g)lmer objects
+model.matrix.mer <- function(object, ...) {
     x <- object@X
     if (is.null(x))
-        stop("models of class ", sQuote("lmer"), 
+        stop("models of class ", class(object), 
              " need to be fitted with argument ", 
              sQuote("model = TRUE"))
     x
 }
+model.matrix.lmer <- model.matrix.mer
+model.matrix.glmer <- model.matrix.mer
 
-model.frame.lmer <- function(object, ...) {
+model.frame.mer <- function(object, ...) {
     x <- object@frame
     if (is.null(x))
-        stop("models of class ", sQuote("lmer"), 
+        stop("models of class ", class(object), 
              " need to be fitted with argument ", 
              sQuote("model = TRUE"))
     x
 }
-
-terms.lmer <- function(object, ...) {
-    x <- object@terms
-    if (is.null(x))
-        stop("models of class ", sQuote("lmer"), 
-             " need to be fitted with argument ", 
-             sQuote("model = TRUE"))
-    x
-}
+model.frame.lmer <- model.frame.mer
+model.frame.glmer <- model.frame.mer
 
 ### extract coefficients, covariance matrix and 
 ### degrees of freedom (if available) from `model'
@@ -102,16 +97,11 @@ modelparm.default <- function(model, coef. = coef, vcov. = vcov,
     RET
 }
 
-### linear mixed effects models (package lme4)
-coeflmer <- function(object, ...) {
-    x <- object@fixef
-    names(x) <- rownames(vcov(object))
-    x
-}
-
-### package `lme4'
-modelparm.lmer <- function(model, coef. = coeflmer, vcov. = vcov, df = NULL, ...)
+### mixed effects models (package `lme4')
+modelparm.mer <- function(model, coef. = fixef, vcov. = vcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
+modelparm.lmer <- modelparm.mer
+modelparm.glmer <- modelparm.mer
 
 ### package `nlme'
 modelparm.lme <- function(model, coef. = nlme:::fixef, vcov. = vcov, df = NULL, ...)
