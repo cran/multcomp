@@ -1,4 +1,15 @@
 
+		CHANGES in `multcomp' VERSION 0.992-4
+
+    o    update to mvtnorm 0.8-0
+
+
+		CHANGES in `multcomp' VERSION 0.992-3
+
+    o    better support for `mer', `lmer' and `glmer' objects
+         (package `lme4')
+
+
 		CHANGES in `multcomp' VERSION 0.992-2
 
     o    add support for `lme' objects (feature request by

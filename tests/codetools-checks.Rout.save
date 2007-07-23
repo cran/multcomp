@@ -1,5 +1,5 @@
 
-R version 2.5.0 (2007-04-23)
+R version 2.5.1 (2007-06-27)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -23,5 +23,8 @@ Type 'q()' to quit R.
 + }
 Loading required package: codetools
 Loading required package: mvtnorm
+modelparm.glmer: no visible binding for global variable ‘fixef’
+modelparm.lmer: no visible binding for global variable ‘fixef’
+modelparm.mer: no visible binding for global variable ‘fixef’
 NULL
 > 
