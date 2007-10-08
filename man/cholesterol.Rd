@@ -1,6 +1,6 @@
 \name{cholesterol}
 \alias{cholesterol}
-\non_function{}
+\docType{data}
 \title{ Cholesterol Reduction Data Set }
 \usage{data("cholesterol")}
 \description{

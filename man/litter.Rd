@@ -1,6 +1,6 @@
 \name{litter}
 \alias{litter}
-\non_function{}
+\docType{data}
 \title{ Litter Weights Data Set }
 \usage{data("litter")}
 \description{

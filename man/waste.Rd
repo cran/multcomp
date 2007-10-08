@@ -1,6 +1,6 @@
 \name{waste}
 \alias{waste}
-\non_function{}
+\docType{data}
 \title{ Industrial Waste Data Set }
 \usage{data("waste")}
 \description{

@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 0.992-5
+
+    o    remove non_function entries in Rd files
+
+
 		CHANGES in `multcomp' VERSION 0.992-4
 
     o    update to mvtnorm 0.8-0

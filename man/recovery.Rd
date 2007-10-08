@@ -1,6 +1,6 @@
 \name{recovery}
 \alias{recovery}
-\non_function{}
+\docType{data}
 \title{ Recovery Time Data Set }
 \usage{data("recovery")}
 \description{

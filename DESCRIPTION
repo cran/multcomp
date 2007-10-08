@@ -1,7 +1,7 @@
 Package: multcomp
 Title: Simultaneous Inference for General Linear Hypotheses
-Version: 0.992-4
-Date: $Date: 2007-07-23 13:28:37 +0200 (Mon, 23 Jul 2007) $
+Version: 0.992-5
+Date: $Date: 2007-10-08 18:03:24 +0200 (Mon, 08 Oct 2007) $
 Author: Torsten Hothorn, Frank Bretz and Peter Westfall with
   contributions by Richard M. Heiberger
 Description: Simultaneous tests and confidence intervals
@@ -12,4 +12,4 @@ Depends: stats, graphics, mvtnorm (>= 0.8-0)
 Suggests: lme4, nlme
 LazyData: yes
 License: GPL-2
-Packaged: Mon Jul 23 13:36:08 2007; hothorn
+Packaged: Mon Oct  8 18:25:30 2007; hothorn
