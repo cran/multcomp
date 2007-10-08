@@ -1,6 +1,6 @@
 \name{detergent}
 \alias{detergent}
-\non_function{}
+\docType{data}
 \title{ Detergent Durability Data Set }
 \usage{data("detergent")}
 \description{
