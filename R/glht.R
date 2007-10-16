@@ -53,15 +53,12 @@ glht.matrix <- function(model, linfct,
 
 ### symbolic description of H_0
 glht.character <- function(model, linfct, ...) {
-    ### extract coefficients and their covariance matrix
-    beta <- try(coef(model))
-    if (inherits(beta, "try-error"))
-        stop("no ", sQuote("coef"), " method for ",
-             sQuote("model"), " found!")
 
+    ### extract coefficients and their covariance matrix
+    beta <- modelparm(model, ...)$coef
     tmp <- chrlinfct2matrix(linfct, names(beta))
     return(glht(model, linfct = tmp$K, rhs = tmp$m, 
-                alternative = tmp$alternative))
+                alternative = tmp$alternative, ...))
 }
 
 ### symbolic description of H_0

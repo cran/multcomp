@@ -1,0 +1,269 @@
+
+R version 2.6.0 (2007-10-03)
+Copyright (C) 2007 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+> library("multcomp")
+Loading required package: mvtnorm
+> set.seed(290875)
+> 
+> ### mcp didn't accept objects of class `contrMat'
+> ### spotted by Yves Brostaux <brostaux.y@fsagx.ac.be>
+> amod <- aov(response ~ trt, data = cholesterol)
+> cht1 <- glht(amod, linfct = mcp(trt = "Tukey"))
+> K <- contrMat(table(cholesterol$trt), type = "Tukey")
+> cht2 <- glht(amod, linfct = mcp(trt = K))
+> stopifnot(all.equal(coef(cht1), coef(cht2)))
+> 
+> ### several inconsistencies spotted by 
+> ### Rich Heiberger <rmh@temple.edu> 2006-11-28
+> 
+> ### need to be identical
+> stopifnot(identical(cht1, print(cht1)))
+
+	 General Linear Hypotheses
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Linear Hypotheses:
+                     Estimate
+2times - 1time == 0     3.443
+4times - 1time == 0     6.593
+drugD - 1time == 0      9.579
+drugE - 1time == 0     15.166
+4times - 2times == 0    3.150
+drugD - 2times == 0     6.136
+drugE - 2times == 0    11.723
+drugD - 4times == 0     2.986
+drugE - 4times == 0     8.573
+drugE - drugD == 0      5.586
+
+> 
+> ### was: error
+> summary(cht1)$test
+$pfunction
+function (type = c("univariate", "adjusted", p.adjust.methods), 
+    ...) 
+{
+    type <- match.arg(type)
+    pfct <- function(q) {
+        switch(object$alternative, two.sided = {
+            low <- rep(-abs(q), dim)
+            upp <- rep(abs(q), dim)
+        }, less = {
+            low <- rep(q, dim)
+            upp <- rep(Inf, dim)
+        }, greater = {
+            low <- rep(-Inf, dim)
+            upp <- rep(q, dim)
+        })
+        pmvt(lower = low, upper = upp, df = df, corr = cr, ...)
+    }
+    switch(object$alternative, two.sided = {
+        if (df > 0) 
+            pvals <- 2 * (1 - pt(abs(tstat), df))
+        else pvals <- 2 * (1 - pnorm(abs(tstat)))
+    }, less = {
+        if (df > 0) 
+            pvals <- pt(tstat, df)
+        else pvals <- pnorm(tstat)
+    }, greater = {
+        if (df > 0) 
+            pvals <- 1 - pt(tstat, df)
+        else pvals <- 1 - pnorm(tstat)
+    })
+    if (type == "univariate") 
+        return(pvals)
+    if (type == "adjusted") {
+        ret <- numeric(length(tstat))
+        error <- 0
+        for (i in 1:length(tstat)) {
+            tmp <- pfct(tstat[i])
+            if (error < attr(tmp, "error")) 
+                error <- attr(tmp, "error")
+            ret[i] <- tmp
+        }
+        ret <- 1 - ret
+        attr(ret, "error") <- error
+        return(ret)
+    }
+    return(p.adjust(pvals, method = type))
+}
+<environment: 0x8c4a054>
+
+$qfunction
+function (conf.level, adjusted = TRUE, ...) 
+{
+    tail <- switch(object$alternative, two.sided = "both.tails", 
+        less = "upper.tail", greater = "lower.tail")
+    if (adjusted) {
+        calpha <- qmvt(conf.level, df = df, corr = cr, tail = tail, 
+            ...)
+    }
+    else {
+        calpha <- qmvt(conf.level, df = df, corr = matrix(1), 
+            tail = tail, ...)
+    }
+    ret <- calpha$quantile
+    attr(ret, "error") <- calpha$estim.prec
+    return(ret)
+}
+<environment: 0x8c4a054>
+
+$coefficients
+ 2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
+        3.44300         6.59281         9.57920        15.16555         3.14981 
+ drugD - 2times  drugE - 2times  drugD - 4times  drugE - 4times   drugE - drugD 
+        6.13620        11.72255         2.98639         8.57274         5.58635 
+
+$sigma
+ 2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
+       1.443376        1.443376        1.443376        1.443376        1.443376 
+ drugD - 2times  drugE - 2times  drugD - 4times  drugE - 4times   drugE - drugD 
+       1.443376        1.443376        1.443376        1.443376        1.443376 
+
+$tstat
+ 2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
+       2.385379        4.567631        6.636661       10.506996        2.182251 
+ drugD - 2times  drugE - 2times  drugD - 4times  drugE - 4times   drugE - drugD 
+       4.251282        8.121617        2.069031        5.939366        3.870335 
+
+$pvalues
+ [1] 1.380883e-01 3.524764e-04 9.394029e-07 2.897682e-14 2.050268e-01
+ [6] 9.917862e-04 6.540450e-10 2.512705e-01 3.447725e-06 3.042641e-03
+attr(,"error")
+[1] 0.0001910665
+
+$type
+[1] "free"
+
+attr(,"class")
+[1] "mtest"
+> 
+> 
+> ### NAs in coefficients
+> tmp.data <- data.frame(EE=gl(2, 1, 24, letters[1:2]),
++                 FF=gl(3, 2, 24, LETTERS[3:5]),
++                 GG=gl(4, 6, 24, letters[6:9]))
+> tmp.data$x <- rep(12, 24)
+> tmp.data$y <- rep(7, 24)
+> tmp.data$z <- c(9, 14, 3, 4, 15, 1, 11, 13, 24, 10, 22, 18,
++                 20, 21, 6, 7, 16, 2, 19, 12, 17, 8, 23, 5)
+> tmp.data$w <- c(15, 9, 18, 21, 17, 11, 23, 12, 1, 10, 2, 14, 24, 7,
++                 13, 4, 5, 19, 16, 20, 3, 8, 22, 6)
+> 
+> tmp.aov <- aov(z ~ EE+FF*GG + x*y +x*EE + y*FF, data=tmp.data)
+> 
+> try(glht(tmp.aov, linfct=mcp(EE="Tukey")))
+Error in glht.matrix(model = structure(list(coefficients = structure(c(14.4166666666667,  : 
+  some linear functions are not estimable
+In addition: Warning message:
+In mcp2matrix(model, linfct = linfct) :
+  covariate interactions found -- please choose appropriate contrast
+> try(glht(tmp.aov, linfct=mcp(FF="Tukey")))
+Error in glht.matrix(model = structure(list(coefficients = structure(c(14.4166666666667,  : 
+  some linear functions are not estimable
+In addition: Warning message:
+In mcp2matrix(model, linfct = linfct) :
+  covariate interactions found -- please choose appropriate contrast
+> glht(tmp.aov, linfct=mcp(GG="Tukey"))
+
+	 General Linear Hypotheses
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Linear Hypotheses:
+           Estimate
+g - f == 0    8.667
+h - f == 0    4.333
+i - f == 0    6.333
+h - g == 0   -4.333
+i - g == 0   -2.333
+i - h == 0    2.000
+
+Warning message:
+In glht.matrix(model = list(coefficients = c(14.4166666666667, -5.83333333333334,  :
+  6 out of 19 coefficients not estimable in ‘model’
+> 
+> ### covariate interactions: fire a warning
+> tmp.aov <- aov(z ~ w*GG , data=tmp.data)
+> glht(tmp.aov, linfct = mcp(GG = "Tukey"))
+
+	 General Linear Hypotheses
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Linear Hypotheses:
+           Estimate
+g - f == 0   9.2198
+h - f == 0   0.1745
+i - f == 0  -3.6093
+h - g == 0  -9.0453
+i - g == 0 -12.8291
+i - h == 0  -3.7839
+
+Warning message:
+In mcp2matrix(model, linfct = linfct) :
+  covariate interactions found -- please choose appropriate contrast
+> 
+> ### stop with informative error message
+> amod <- aov(breaks ~ tension + Error(wool), data = warpbreaks)
+> try(glht(amod, linfct = mcp(tension = "Tukey")))
+Error in model.matrix.aovlist(model) : 
+  ‘glht’ does not support objects of class ‘aovlist’
+Error in factor_contrasts(model) : 
+  no ‘model.matrix’ method for ‘model’ found!
+> 
+> ### print error, spotted by Rich
+> amod <- aov(breaks ~ wool * tension, data = warpbreaks)
+> wht <- glht(amod, linfct = mcp(tension = "Tukey"))
+> tmp <- confint(wht, calpha=2)
+> print(tmp)
+
+	 Simultaneous Confidence Intervals for General Linear Hypotheses
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Fit: aov(formula = breaks ~ wool * tension, data = warpbreaks)
+
+Estimated Quantile = 2
+
+Linear Hypotheses:
+           Estimate lwr      upr     
+M - L == 0 -10.0000 -17.2935  -2.7065
+H - L == 0 -14.7222 -22.0157  -7.4287
+H - M == 0  -4.7222 -12.0157   2.5713
+
+95% confidence level
+ 
+
+> 
+> ### coef. and vcov. didn't pass through
+> ### bug report by John Deke <jdeke73@gmail.com>
+> lmod <- lm(Fertility ~ ., data = swiss) 
+> my.model <- list(coef(lmod),vcov(lmod)) 
+> coef2 <- function(model) return(model[[1]]) 
+> vcov2 <- function(model) return(model[[2]]) 
+> a <- glht(model = my.model, linfct = c("Agriculture=0","Catholic=0"),
++           coef. = coef2, vcov. = vcov2, df = 100) 
+> b <- glht(model = lmod, linfct = c("Agriculture=0","Catholic=0"), 
++           df = 100)
+> stopifnot(all.equal(coef(a), coef(b)))
+> 

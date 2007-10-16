@@ -1,5 +1,5 @@
 
-R version 2.5.1 (2007-06-27)
+R version 2.6.0 (2007-10-03)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -153,8 +153,8 @@ Estimated Quantile = 2.5559
 Linear Hypotheses:
          Estimate lwr     upr    
 0 == 0   32.3651  30.0804 34.6499
-5 == 0   29.0127  26.6371 31.3883
-50 == 0  30.0743  27.5239 32.6247
+5 == 0   29.0127  26.6372 31.3883
+50 == 0  30.0743  27.5239 32.6246
 500 == 0 29.6899  27.1590 32.2208
 
 95% family-wise confidence level

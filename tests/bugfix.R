@@ -50,3 +50,15 @@ amod <- aov(breaks ~ wool * tension, data = warpbreaks)
 wht <- glht(amod, linfct = mcp(tension = "Tukey"))
 tmp <- confint(wht, calpha=2)
 print(tmp)
+
+### coef. and vcov. didn't pass through
+### bug report by John Deke <jdeke73@gmail.com>
+lmod <- lm(Fertility ~ ., data = swiss) 
+my.model <- list(coef(lmod),vcov(lmod)) 
+coef2 <- function(model) return(model[[1]]) 
+vcov2 <- function(model) return(model[[2]]) 
+a <- glht(model = my.model, linfct = c("Agriculture=0","Catholic=0"),
+          coef. = coef2, vcov. = vcov2, df = 100) 
+b <- glht(model = lmod, linfct = c("Agriculture=0","Catholic=0"), 
+          df = 100)
+stopifnot(all.equal(coef(a), coef(b)))

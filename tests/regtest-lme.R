@@ -23,3 +23,18 @@ if (lme4OK) {
         stopifnot(all.equal(coef(glme4), coef(gnlme)))
     }
 }
+
+### and now for lmer2 as well
+if (lme4OK) {
+
+    data("ergoStool", package = "nlme")
+
+    stool.lmer <- lmer2(effort ~ Type + (1 | Subject),
+                        data = ergoStool)
+    glme4 <- glht(stool.lmer, K)
+
+    if (nlmeOK) {
+        stopifnot(all.equal(coef(glme4), coef(gnlme)))
+    }
+}
+
