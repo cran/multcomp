@@ -1,5 +1,5 @@
 
-R version 2.5.1 (2007-06-27)
+R version 2.6.0 (2007-10-03)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -69,14 +69,14 @@ Multiple Comparisons of Means: Williams Contrasts
 
 Fit: lm(formula = response ~ dose, data = angina)
 
-Estimated Quantile = 1.9784
+Estimated Quantile = 1.978
 
 Linear Hypotheses:
          Estimate lwr     upr    
-C 1 <= 0 10.4990   7.4346     Inf
-C 2 <= 0  7.7470   5.0931     Inf
-C 3 <= 0  6.2970   3.7949     Inf
-C 4 <= 0  5.2465   2.8239     Inf
+C 1 <= 0 10.4990   7.4351     Inf
+C 2 <= 0  7.7470   5.0936     Inf
+C 3 <= 0  6.2970   3.7953     Inf
+C 4 <= 0  5.2465   2.8243     Inf
 
 95% family-wise confidence level
  
@@ -230,20 +230,20 @@ Multiple Comparisons of Means: user-defined Contrasts
 
 Fit: NULL
 
-Estimated Quantile = 2.8417
+Estimated Quantile = 2.8416
 
 Linear Hypotheses:
                      Estimate lwr     upr    
-2times - 1time == 0   3.4430  -0.6587  7.5447
-4times - 1time == 0   6.5928   2.4911 10.6945
-drugD - 1time == 0    9.5792   5.4775 13.6809
-drugE - 1time == 0   15.1655  11.0638 19.2673
-4times - 2times == 0  3.1498  -0.9519  7.2515
-drugD - 2times == 0   6.1362   2.0345 10.2379
-drugE - 2times == 0  11.7226   7.6208 15.8243
-drugD - 4times == 0   2.9864  -1.1153  7.0881
-drugE - 4times == 0   8.5727   4.4710 12.6744
-drugE - drugD == 0    5.5864   1.4846  9.6881
+2times - 1time == 0   3.4430  -0.6584  7.5444
+4times - 1time == 0   6.5928   2.4914 10.6943
+drugD - 1time == 0    9.5792   5.4778 13.6806
+drugE - 1time == 0   15.1655  11.0641 19.2670
+4times - 2times == 0  3.1498  -0.9516  7.2513
+drugD - 2times == 0   6.1362   2.0348 10.2376
+drugE - 2times == 0  11.7226   7.6211 15.8240
+drugD - 4times == 0   2.9864  -1.1151  7.0878
+drugE - 4times == 0   8.5727   4.4713 12.6742
+drugE - drugD == 0    5.5864   1.4849  9.6878
 
 95% family-wise confidence level
  
@@ -264,16 +264,16 @@ Fit: NULL
 
 Linear Hypotheses:
                      Estimate Std. Error t value  p value    
-2times - 1time == 0     3.443      1.443   2.385 0.138213    
-4times - 1time == 0     6.593      1.443   4.568 0.000359 ***
+2times - 1time == 0     3.443      1.443   2.385 0.138175    
+4times - 1time == 0     6.593      1.443   4.568 0.000342 ***
 drugD - 1time == 0      9.579      1.443   6.637  < 1e-04 ***
 drugE - 1time == 0     15.166      1.443  10.507  < 1e-04 ***
-4times - 2times == 0    3.150      1.443   2.182 0.205121    
-drugD - 2times == 0     6.136      1.443   4.251 0.000962 ***
+4times - 2times == 0    3.150      1.443   2.182 0.205041    
+drugD - 2times == 0     6.136      1.443   4.251 0.000977 ***
 drugE - 2times == 0    11.723      1.443   8.122  < 1e-04 ***
-drugD - 4times == 0     2.986      1.443   2.069 0.251269    
+drugD - 4times == 0     2.986      1.443   2.069 0.251301    
 drugE - 4times == 0     8.573      1.443   5.939  < 1e-04 ***
-drugE - drugD == 0      5.586      1.443   3.870 0.003078 ** 
+drugE - drugD == 0      5.586      1.443   3.870 0.003060 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported)
@@ -363,9 +363,9 @@ Estimated Quantile = -1.843
 
 Linear Hypotheses:
              Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82246
-b2 - b0 >= 0 -7.46667     -Inf -4.51087
-b3 - b0 >= 0 -1.66667     -Inf -0.03602
+b1 - b0 >= 0 -2.13333     -Inf  0.82239
+b2 - b0 >= 0 -7.46667     -Inf -4.51094
+b3 - b0 >= 0 -1.66667     -Inf -0.03606
 
 90% family-wise confidence level
  
@@ -398,10 +398,10 @@ Fit: lm(formula = minutes ~ blanket, data = recovery)
 Estimated Quantile = -1.8431
 
 Linear Hypotheses:
-        Estimate lwr      upr     
-C1 >= 0 -2.13333     -Inf  0.82264
-C2 >= 0 -7.46667     -Inf -4.51069
-C3 >= 0 -1.66667     -Inf -0.03592
+        Estimate lwr     upr    
+C1 >= 0 -2.1333     -Inf  0.8227
+C2 >= 0 -7.4667     -Inf -4.5107
+C3 >= 0 -1.6667     -Inf -0.0359
 
 90% family-wise confidence level
  
@@ -420,10 +420,10 @@ Fit: lm(formula = minutes ~ blanket, data = recovery)
 Estimated Quantile = -1.8431
 
 Linear Hypotheses:
-        Estimate lwr      upr     
-C1 >= 0 -2.13333     -Inf  0.82264
-C2 >= 0 -7.46667     -Inf -4.51069
-C3 >= 0 -1.66667     -Inf -0.03592
+        Estimate lwr     upr    
+C1 >= 0 -2.1333     -Inf  0.8227
+C2 >= 0 -7.4667     -Inf -4.5107
+C3 >= 0 -1.6667     -Inf -0.0359
 
 90% family-wise confidence level
  
@@ -459,9 +459,9 @@ Estimated Quantile = -1.843
 
 Linear Hypotheses:
              Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82246
-b2 - b0 >= 0 -7.46667     -Inf -4.51087
-b3 - b0 >= 0 -1.66667     -Inf -0.03602
+b1 - b0 >= 0 -2.13333     -Inf  0.82239
+b2 - b0 >= 0 -7.46667     -Inf -4.51094
+b3 - b0 >= 0 -1.66667     -Inf -0.03606
 
 90% family-wise confidence level
  
@@ -566,7 +566,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\n")
-Time elapsed:  11.86 0.02 12.146 0 0 
+Time elapsed:  11.652 0.388 12.217 0 0 
 > dev.off(); quit('no')
 null device 
           1 

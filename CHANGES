@@ -1,4 +1,12 @@
 
+		CHANGES in `multcomp' VERSION 0.992-6
+
+    o    add support for lme4::(g)lmer2 objects (thanks to Manuel Eugster)
+
+    o    coef. and vcov. didn't always pass through, spotted by
+         John Deke <jdeke73@gmail.com>
+
+
 		CHANGES in `multcomp' VERSION 0.992-5
 
     o    remove non_function entries in Rd files
