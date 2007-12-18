@@ -17,6 +17,12 @@ model.matrix.aovlist <- function(object, ...)
     stop(sQuote("glht"), " does not support objects of class ", 
          sQuote("aovlist"))
 
+model.matrix.lme <- function(object, ...)
+    model.matrix(terms(object), data = model.frame(object), ...)
+
+model.frame.lme <- function(object, ...)
+    object$data
+
 ### some methods of (g)lmer objects
 model.frame.mer <- function(object, ...) {
     x <- object@frame

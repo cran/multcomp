@@ -4,23 +4,28 @@
 ### and Dieter Menne <dieter.menne@menne-biomed.de>
 
 library("multcomp")
-K <- rbind(c(0,1,-1,0),c(0,1,0,-1),c(0,0,1,-1))
 
 nlmeOK <- require("nlme")
 lme4OK <- require("lme4")
 if (lme4OK) {
 
     data("ergoStool", package = "nlme")
+    K <- glht(aov(effort ~ Type, data = ergoStool), mcp(Type = "Tukey"))$linfct
 
     stool.lmer <- lmer(effort ~ Type + (1 | Subject),
                        data = ergoStool)
-    glme4 <- glht(stool.lmer,K)
+    glme4 <- glht(stool.lmer, K)
+    glme41 <- glht(stool.lmer, mcp(Type = "Tukey"))
+    stopifnot(all.equal(coef(glme4), coef(glme41)))
 
     if (nlmeOK) {
         stool.lme <- lme(effort ~ Type, data = ergoStool,
                         random = ~ 1 | Subject)
         gnlme <- glht(stool.lme,K)
         stopifnot(all.equal(coef(glme4), coef(gnlme)))
+
+        gnlme2 <- glht(stool.lme, linfct = mcp(Type = "Tukey"))
+        stopifnot(all.equal(coef(glme4), coef(gnlme2)))
     }
 }
 
@@ -32,6 +37,8 @@ if (lme4OK) {
     stool.lmer <- lmer2(effort ~ Type + (1 | Subject),
                         data = ergoStool)
     glme4 <- glht(stool.lmer, K)
+    glme41 <- glht(stool.lmer, mcp(Type = "Tukey"))
+    stopifnot(all.equal(coef(glme4), coef(glme41)))
 
     if (nlmeOK) {
         stopifnot(all.equal(coef(glme4), coef(gnlme)))
