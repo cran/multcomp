@@ -2,7 +2,8 @@
 
 contrMat <- function(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
                                  "Changepoint", "Williams", "Marcus",
-                                 "McDermott"), base = 1) {
+                                 "McDermott", "UmbrellaWilliams", "GrandMean"), 
+                     base = 1) {
 
     if (length(n) < 2) stop("less than 2 groups")
     m <- NULL
@@ -108,7 +109,22 @@ contrMat <- function(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
         	}
 	    }
         }
-    },)
+    }, "UmbrellaWilliams" = {
+        for (j in 1:(k-1)) {
+            for (i in 1:(k - j)) {
+                helper <- c(-1, rep(0, k - i - j),
+                    n[((k - i + 1):k)-(j-1)]/sum(n[((k - i + 1):k)-(j-1)]),
+                    rep(0, j-1))
+                CM <- rbind(CM, helper)
+            }
+        }
+        rnames <- c(rnames, paste("C", 1:nrow(CM)))
+    }, "GrandMean" = {
+        CM <- matrix(rep(-n/sum(n), k), nrow = k, byrow = TRUE)
+        diag(CM) <- diag(CM) + 1
+        rnames <- c(rnames, paste("C", 1:nrow(CM)))
+    })
+
     rownames(CM) <- rnames
     if (type == "Tetrade")
       colnames(CM) <- NULL ###levels(interaction(varnames, varnamesm))

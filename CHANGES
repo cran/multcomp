@@ -1,4 +1,18 @@
 
+		CHANGES in `multcomp' VERSION 0.992-8
+
+    o    add model.frame and model.matrix methods for class `lme'
+         (feature request by Antonio Rausell <arausell@cnio.es>)
+
+    o    new data set `trees513'
+
+
+		CHANGES in `multcomp' VERSION 0.992-7
+
+    o    new contrasts `UmbrellaWilliams' and `GrandMean'
+         (thanks to Daniel Gerhard <gerhard@biostat.uni-hannover.de>)
+
+
 		CHANGES in `multcomp' VERSION 0.992-6
 
     o    add support for lme4::(g)lmer2 objects (thanks to Manuel Eugster)
