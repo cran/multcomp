@@ -53,7 +53,7 @@ print.summary.glht <- function(x, digits = max(3, getOption("digits") - 3),
                  has.Pvalue = TRUE, P.values = TRUE, eps.Pvalue = sig)
     switch(type, 
         "univariate" = cat("(Univariate p values reported)"),
-        "free" = cat("(Adjusted p values reported)"),
+        "single-step" = cat("(Adjusted p values reported)"),
         "Shaffer" = cat("(Adjusted p values reported -- Shaffer method)"),
         "Westfall" = cat("(Adjusted p values reported -- Westfall method)"),
         cat("(Adjusted p values reported --", type, "method)")

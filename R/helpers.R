@@ -224,3 +224,13 @@ MPinv <- function (X, tol = sqrt(.Machine$double.eps))
         t(Xsvd$u[, Positive, drop = FALSE]))
     return(list(MPinv = RET, rank = sum(Positive)))
 }
+
+### meaningless ...
+chkdots <- function(...) {
+
+    lst <- list(...)
+    if (length(lst) > 0) {
+        warning("Argument(s) ", sQuote(names(lst)), " passed to ", sQuote("..."), 
+                " are ignored", call. = FALSE)
+    }
+}

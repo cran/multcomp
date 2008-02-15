@@ -17,7 +17,8 @@
          and \code{hardwood (other)}.}
     \item{\code{lattice}}{a factor with levels \code{1}, ..., \code{53}, 
           essentially a number indicating the position of the sampled area.}
-    \item{\code{plot}}{a factor with levels \code{1}, ..., \code{5}. \code{plot}
+    \item{\code{plot}}{a factor with levels \code{x_1}, ..., \code{x_5} where
+          \code{x} is the lattice. \code{plot}
           is nested within \code{lattice} and is a replication for each lattice point.}
   }
 }

@@ -62,3 +62,11 @@ a <- glht(model = my.model, linfct = c("Agriculture=0","Catholic=0"),
 b <- glht(model = lmod, linfct = c("Agriculture=0","Catholic=0"), 
           df = 100)
 stopifnot(all.equal(coef(a), coef(b)))
+
+### checks in mcp (spotted by Rich)
+amod <- aov(breaks ~ tension, data = warpbreaks)
+try(glht(amod, linfct = mcp(group = "Tukey")))
+tmp <- warpbreaks
+class(tmp$tension) <- "numeric"
+amod <- aov(breaks ~ tension, data = tmp)
+try(glht(amod, linfct = mcp(tension = "Tukey")))

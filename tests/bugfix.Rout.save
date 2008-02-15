@@ -1,5 +1,5 @@
 
-R version 2.6.0 (2007-10-03)
+R version 2.6.1 (2007-11-26)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -103,7 +103,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x8c4a054>
+<environment: 0x888a660>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -122,7 +122,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x8c4a054>
+<environment: 0x888a660>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -149,7 +149,7 @@ attr(,"error")
 [1] 0.0001910665
 
 $type
-[1] "free"
+[1] "single-step"
 
 attr(,"class")
 [1] "mtest"
@@ -266,4 +266,16 @@ H - M == 0  -4.7222 -12.0157   2.5713
 > b <- glht(model = lmod, linfct = c("Agriculture=0","Catholic=0"), 
 +           df = 100)
 > stopifnot(all.equal(coef(a), coef(b)))
+> 
+> ### checks in mcp (spotted by Rich)
+> amod <- aov(breaks ~ tension, data = warpbreaks)
+> try(glht(amod, linfct = mcp(group = "Tukey")))
+Error in mcp2matrix(model, linfct = linfct) : 
+  Variable(s) ‘group’ have been specified in ‘linfct’ but cannot be found in ‘model’! 
+> tmp <- warpbreaks
+> class(tmp$tension) <- "numeric"
+> amod <- aov(breaks ~ tension, data = tmp)
+> try(glht(amod, linfct = mcp(tension = "Tukey")))
+Error in mcp2matrix(model, linfct = linfct) : 
+  Variable(s) ‘tension’ of class ‘integer’ is/are not contained as a factor in ‘model’.
 > 
