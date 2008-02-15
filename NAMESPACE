@@ -1,8 +1,6 @@
 
 export(glht, contrMat, univariate, adjusted, Ftest, Chisqtest, mcp, modelparm,
-       adjusted_calpha, univariate_calpha,
-       ### deprecated
-       csimint, simint, csimtest, simtest)
+       adjusted_calpha, univariate_calpha)
 
 S3method(summary, glht)
 S3method(confint, glht)
@@ -20,12 +18,3 @@ S3method(glht, character)
 S3method(glht, expression)
 S3method(glht, mcp)
 S3method(glht, means)
-
-
-### deprecated from multcomp version 0.4-8
-S3method(simint, formula)
-S3method(simint, lm)
-S3method(simtest, formula)
-S3method(simtest, lm)
-S3method(summary, summary.glht)
-S3method(summary, confint.glht)

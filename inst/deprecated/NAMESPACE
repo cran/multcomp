@@ -1,0 +1,10 @@
+
+export(csimint, simint, csimtest, simtest)
+
+### deprecated from multcomp version 0.4-8
+S3method(simint, formula)
+S3method(simint, lm)
+S3method(simtest, formula)
+S3method(simtest, lm)
+S3method(summary, summary.glht)
+S3method(summary, confint.glht)

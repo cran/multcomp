@@ -2,14 +2,18 @@
 ### methods for `glht' objects
 coef.glht <- function(object, rhs = FALSE, ...) 
 {
+    chkdots(...)
     if (rhs) return(object$rhs)
     drop(object$linfct %*% object$coef)
 }
 
-vcov.glht <- function(object, ...) 
+vcov.glht <- function(object, ...)  {
+    chkdots(...)
     object$linfct %*% tcrossprod(object$vcov, object$linfct)
+}
 
 summary.glht <- function(object, test = adjusted(), ...) {
+    chkdots(...)
     ts <- test(object)
     object$test <- ts
     class(object) <- switch(class(ts), "mtest" = "summary.glht",
@@ -20,9 +24,10 @@ summary.glht <- function(object, test = adjusted(), ...) {
 
 confint.glht <- function(object, parm, level = 0.95, calpha = adjusted_calpha(), ...) 
 {
+    chkdots(...)
     type <- attr(calpha, "type")
     if (is.function(calpha))
-        calpha <- calpha(object, level, ...)
+        calpha <- calpha(object, level)
     if (!is.numeric(calpha) || length(calpha) != 1)
         stop(sQuote("calpha"), " is not a scalar")
     error <- attr(calpha, "error")

@@ -55,7 +55,7 @@
   summary(Kht, test = adjusted("bonferroni"))
   summary(Kht, test = adjusted("Shaffer"))
   summary(Kht, test = adjusted("Westfall"))
-  summary(Kht, test = adjusted("free"))
+  summary(Kht, test = adjusted("single-step"))
 
 }
 \keyword{datasets}

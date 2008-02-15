@@ -76,13 +76,17 @@ mcp2matrix <- function(model, linfct) {
     if (!is.list(linfct) || is.null(names(linfct)))
         stop(sQuote("linfct"), "is not a named list")
     nhypo <- names(linfct)
-    checknm <- nhypo %in% rownames(factors) & sapply(mf[nhypo], is.factor)
+    checknm <- nhypo %in% rownames(factors)
     if (!all(checknm)) 
-        stop("Variable(s) ", nhypo[!checknm], " have been specified as factor in ",
-             sQuote("linfct"), " but cannot be found as factor in ", sQuote("model"), "! ", 
-             "Variable(s) ", sQuote(paste(nhypo[!checknm], collapse = ", ")), " of class ", 
-              sQuote(paste(sapply(mf[nhypo[!checknm]], class), collapse = ", ")), 
-             " is/are contained in ", sQuote("model"), ".")
+        stop("Variable(s) ", sQuote(nhypo[!checknm]), " have been specified in ",
+             sQuote("linfct"), " but cannot be found in ", sQuote("model"), "! ")
+    if (any(checknm)) {
+        checknm <- sapply(mf[nhypo[checknm]], is.factor)
+        if (!all(checknm))
+            stop("Variable(s) ", sQuote(paste(nhypo[!checknm], collapse = ", ")), " of class ", 
+                  sQuote(paste(sapply(mf[nhypo[!checknm]], class), collapse = ", ")), 
+                  " is/are not contained as a factor in ", sQuote("model"), ".")
+    }
     m <- c()
     ctype <- c()
     for (nm in nhypo) {
