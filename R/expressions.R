@@ -6,22 +6,36 @@ is_num <- function(x) {
     return(FALSE)
 }
 
+### expressions
+as.char <- function(ex) {
+    if (length(ex) == 1) return(as.character(ex))
+    if (length(ex) == 3 && ex[[1]] == ":")
+        return(paste(as.char(ex[[2]]), ":", 
+               as.char(ex[[3]]), sep = ""))
+    stop("Failed to convert expression ", ex, " to character")
+}
+
 ### extract coefficients and variable names
 coefs <- function(ex) {
 
     ### `a'
     if (length(ex) == 1 && !is_num(ex))
-        return(list(coef = 1, var = as.character(ex)))
+        return(list(coef = 1, var = as.char(ex)))
 
     ### `-a'
     if (length(ex) == 2 && (ex[[1]] == "-" && !is_num(ex[[2]])))
-        return(list(coef = -1, var = as.character(ex[[2]])))
+        return(list(coef = -1, var = as.char(ex[[2]])))
 
     if (length(ex) == 3) {
 
+        ### x:y
+        if (ex[[1]] == ":")
+            return(list(coef = 1, 
+                        var = as.char(ex)))
+
         ### `2 * a'
         if (ex[[1]] == "*" && (is_num(ex[[2]]) && !is_num(ex[[3]])))
-            return(list(coef = eval(ex[[2]]), var = as.character(ex[[3]])))
+            return(list(coef = eval(ex[[2]]), var = as.char(ex[[3]])))
 
         cf <- coefs(ex[[3]])
         if (ex[[1]] == "-") 
@@ -64,7 +78,7 @@ rhs <- function(ex) {
 ### extract direction of the _alternative_
 side <- function(ex) {
 
-    side <- as.character(ex[[1]][[1]])
+    side <- as.char(ex[[1]][[1]])
     if (!(side %in% c("<=", ">=", "==", "=")))
         stop("does not contain ", sQuote("<=, >=, =="))
     alternative <- switch(side, 

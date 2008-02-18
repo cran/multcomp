@@ -4,7 +4,9 @@ coef.glht <- function(object, rhs = FALSE, ...)
 {
     chkdots(...)
     if (rhs) return(object$rhs)
-    drop(object$linfct %*% object$coef)
+    ret <- drop(object$linfct %*% object$coef)
+    names(ret) <- rownames(object$linfct)
+    ret
 }
 
 vcov.glht <- function(object, ...)  {

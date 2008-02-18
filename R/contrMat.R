@@ -6,6 +6,7 @@ contrMat <- function(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
                      base = 1) {
 
     if (length(n) < 2) stop("less than 2 groups")
+    if (!is.numeric(n)) stop(sQuote("n"), " is not numeric")
     m <- NULL
     type <- match.arg(type)
     k <- length(n)
