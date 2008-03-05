@@ -70,3 +70,11 @@ tmp <- warpbreaks
 class(tmp$tension) <- "numeric"
 amod <- aov(breaks ~ tension, data = tmp)
 try(glht(amod, linfct = mcp(tension = "Tukey")))
+
+### symbolic description and interactions
+### spotted by Antonio Fabio Di Narzo <antonio.dinarzo@unibo.it>
+dat <- data.frame(y = rnorm(6), x = seq_len(6), f = gl(2, 3))
+lf <- glht(lm(y ~ x * f, data = dat), 'x + x:f2 = 0')$linfct
+stopifnot(all.equal(max(abs(lf - c(0, 1, 0, 1))), 0))
+lf <- glht(lm(y ~ x * f, data = dat), 'x + 2.5 * x:f2 = 0')$linfct
+stopifnot(all.equal(max(abs(lf - c(0, 1, 0, 2.5))), 0))

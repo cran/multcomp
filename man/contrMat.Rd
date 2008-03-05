@@ -10,8 +10,7 @@ contrMat(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
                    "McDermott", "UmbrellaWilliams", "GrandMean"), base = 1)
 }
 \arguments{
-  \item{n}{ a (possibly named) vector of sample sizes for each group or a
-            vector of factor levels. }
+  \item{n}{ a (possibly named) vector of sample sizes for each group.}
   \item{type}{ type of contrast. }
   \item{base}{ an integer specifying which group is considered the baseline
           group for Dunnett contrasts.}

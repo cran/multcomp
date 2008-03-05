@@ -1,6 +1,6 @@
 
-R version 2.6.1 (2007-11-26)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.6.2 (2008-02-08)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -103,7 +103,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x888a660>
+<environment: 0x8480cac>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -122,7 +122,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x888a660>
+<environment: 0x8480cac>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -278,4 +278,12 @@ Error in mcp2matrix(model, linfct = linfct) :
 > try(glht(amod, linfct = mcp(tension = "Tukey")))
 Error in mcp2matrix(model, linfct = linfct) : 
   Variable(s) ‘tension’ of class ‘integer’ is/are not contained as a factor in ‘model’.
+> 
+> ### symbolic description and interactions
+> ### spotted by Antonio Fabio Di Narzo <antonio.dinarzo@unibo.it>
+> dat <- data.frame(y = rnorm(6), x = seq_len(6), f = gl(2, 3))
+> lf <- glht(lm(y ~ x * f, data = dat), 'x + x:f2 = 0')$linfct
+> stopifnot(all.equal(max(abs(lf - c(0, 1, 0, 1))), 0))
+> lf <- glht(lm(y ~ x * f, data = dat), 'x + 2.5 * x:f2 = 0')$linfct
+> stopifnot(all.equal(max(abs(lf - c(0, 1, 0, 2.5))), 0))
 > 
