@@ -51,16 +51,16 @@ mcp(...)
 \details{
 
   A general linear hypothesis refers to null hypotheses of the form
-  \eqn{H_0: K \beta = m} for some parametric model
+  \eqn{H_0: K \theta = m} for some parametric model
   \code{model} with parameter estimates \code{coef(model)}. 
 
-  The null hypothesis is specified by a linear function $K \beta$, 
+  The null hypothesis is specified by a linear function $K \theta$, 
   the direction of the alternative and the right hand side $m$.
   Here, \code{alternative} equal to \code{"two.sided"} refers to 
-  a null hypothesis \eqn{H_0: K \beta = m}, whereas
-  \code{"less"} corresponds to \eqn{H_0: K \beta \ge m} and  
+  a null hypothesis \eqn{H_0: K \theta = m}, whereas
+  \code{"less"} corresponds to \eqn{H_0: K \theta \ge m} and  
   \code{"greater"} refers to 
-  \eqn{H_0: K \beta \le m}. The right hand side vector $m$ can be defined
+  \eqn{H_0: K \theta \le m}. The right hand side vector $m$ can be defined
   via the \code{rhs} argument.
 
   The generic method \code{glht} dispatches on its second argument
@@ -80,7 +80,7 @@ mcp(...)
   the null hypothesis. A symbolic description must be interpretable as a valid
   R expression consisting of both the left and right hand side 
   of a linear hypothesis.
-  Only the names of \code{coef(beta)} must be used as variable
+  Only the names of \code{coef(model)} must be used as variable
   names. The alternative is given by
   the direction under the null hypothesis (\code{=} or \code{==}
   refer to \code{"two.sided"}, \code{<=} means
@@ -101,6 +101,19 @@ mcp(...)
   \code{\link{contrMat}} may serve as a symbolic description of 
   contrasts as well.
 
+  The \code{mcp} function must be used with care when defining parameters
+  of interest in two-way ANOVA or ANCOVA models. Here, the definition
+  of treatment differences (such as Tukey's all-pair comparisons or Dunnett's
+  comparison with a control) might be problem specific. 
+  Because it is impossible to determine the parameters of interest
+  automatically in this case, \code{mcp} in multcomp
+  version 1.0-0 and higher generates comparisons for the main effects
+  only, ignoring covariates and interactions (older versions
+  automatically averaged over interaction terms). A warning is given. We refer to
+  Hsu (1996), Chapter 7, and Searle (1971), Chapter 7.3, 
+  for further discussions and examples on this
+  issue.
+
   \code{glht} extracts the number of degrees of freedom
   for models of class \code{lm} (via \code{\link{modelparm}}) and the
   exact multivariate $t$ distribution is evaluated. For all other
@@ -110,12 +123,15 @@ mcp(...)
   \code{\link{modelparm}} specified via \code{\dots}.
 
   \code{glht} methods return a specification of the null hypothesis
-  \eqn{H_0: K \beta = m}. The value of the linear function
-  $K \beta$ can be extracted using the \code{\link{coef}} method and
+  \eqn{H_0: K \theta = m}. The value of the linear function
+  $K \theta$ can be extracted using the \code{\link{coef}} method and
   the corresponding covariance matrix is available from the 
   \code{\link{vcov}} method. Various simultaneous and univariate tests and 
   confidence intervals are available from \code{\link{summary.glht}}
   and \code{\link{confint.glht}} methods, respectively.
+
+  A more detailed description of the underlying methodology is
+  available from Hothorn et al. (2008).
 
 }
 \value{
@@ -142,6 +158,14 @@ mcp(...)
 
     Shayle R. Searle (1971), \emph{Linear Models}.
     John Wiley \& Sons, New York.
+
+    Jason C. Hsu (1996), \emph{Multiple Comparisons}.
+    Chapman & Hall, London.
+
+    Torsten Hothorn, Frank Bretz and Peter Westfall (2008),
+    Simultaneous Inference in General Parametric Models.
+    \emph{Biometrical Journal}, \bold{50}(3) (forthcoming);
+    See \code{vignette("generalsiminf", package = "multcomp")}.
 
 }
 \examples{

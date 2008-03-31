@@ -43,9 +43,15 @@ by deer browsing.
 }
 \source{
   
-  Bayerisches Staatsministerium fuer Landwirtschaft und Forsten (2006),
-  Forstliche Gutachten zur Situtation der Waldverjuengung 2006.
-  \url{www.forst.bayern.de}
+   Bayerisches Staatsministerium fuer Landwirtschaft und Forsten (2006),
+   Forstliche Gutachten zur Situtation der Waldverjuengung 2006.
+   \url{www.forst.bayern.de}
+
+   Torsten Hothorn, Frank Bretz and Peter Westfall (2008),
+   Simultaneous Inference in General Parametric Models.   
+   \emph{Biometrical Journal}, \bold{50}(3) (forthcoming);
+   See \code{vignette("generalsiminf", package = "multcomp")}.
+
 
 }
 \examples{

@@ -5,9 +5,10 @@
   Computes contrast matrices for several multiple comparison procedures.
 }
 \usage{
-contrMat(n, type=c("Dunnett", "Tukey", "Sequen", "AVE", 
-                   "Changepoint", "Williams", "Marcus", 
-                   "McDermott", "UmbrellaWilliams", "GrandMean"), base = 1)
+contrMat(n, type = c("Dunnett", "Tukey", "Sequen", "AVE", 
+                     "Changepoint", "Williams", "Marcus", 
+                     "McDermott", "UmbrellaWilliams", "GrandMean"), 
+         base = 1)
 }
 \arguments{
   \item{n}{ a (possibly named) vector of sample sizes for each group.}
@@ -38,8 +39,9 @@ contrMat(n, type=c("Dunnett", "Tukey", "Sequen", "AVE",
  contrMat(n, type = "Williams")
  contrMat(n, type = "Marcus")
  contrMat(n, type = "McDermott")
- ### Umbrella-protected Williams contrasts, i.e. a sequence of Williams-type
- ### contrasts with groups of higher order stepwise omitted
+ ### Umbrella-protected Williams contrasts, i.e. a sequence of 
+ ### Williams-type contrasts with groups of higher order 
+ ### stepwise omitted
  contrMat(n, type = "UmbrellaWilliams")
  ### comparison of each group with grand mean of all groups
  contrMat(n, type = "GrandMean")

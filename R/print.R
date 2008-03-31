@@ -53,7 +53,7 @@ print.summary.glht <- function(x, digits = max(3, getOption("digits") - 3),
                  has.Pvalue = TRUE, P.values = TRUE, eps.Pvalue = sig)
     switch(type, 
         "univariate" = cat("(Univariate p values reported)"),
-        "single-step" = cat("(Adjusted p values reported)"),
+        "single-step" = cat("(Adjusted p values reported -- single-step method)"),
         "Shaffer" = cat("(Adjusted p values reported -- Shaffer method)"),
         "Westfall" = cat("(Adjusted p values reported -- Westfall method)"),
         cat("(Adjusted p values reported --", type, "method)")
@@ -66,7 +66,7 @@ print.confint.glht <- function(x, digits = max(3, getOption("digits") - 3),
                               ...) 
 {
     xtmp <- x
-    cat("\n\t", "Simultaneous Confidence Intervals for General Linear Hypotheses\n\n")
+    cat("\n\t", "Simultaneous Confidence Intervals\n\n")
     if (!is.null(x$type))
         cat("Multiple Comparisons of Means:", x$type, "Contrasts\n\n\n")
     level <- attr(x$confint, "conf.level")
@@ -82,12 +82,6 @@ print.confint.glht <- function(x, digits = max(3, getOption("digits") - 3),
     if (!is.null(error) && error > .Machine$double.eps)
         digits <- min(digits, which.min(abs(1 / error - (10^(1:10)))))
     cat("Estimated Quantile =", round(attr(x$confint, "calpha"), digits))
-    cat("\n\n")
-    cat("Linear Hypotheses:\n")
-    alt <- switch(x$alternative,
-                  "two.sided" = "==", "less" = ">=", "greater" = "<=")
-    rownames(x$confint) <- paste(rownames(x$confint), alt, x$rhs)
-    print(format(x$confint, nsmall = digits, digits = digits), quote = FALSE)
     cat("\n")
     if (attr(x, "type") == "adjusted") {
         cat(paste(level * 100, 
@@ -96,6 +90,12 @@ print.confint.glht <- function(x, digits = max(3, getOption("digits") - 3),
         cat(paste(level * 100, 
                   "% confidence level\n", sep = ""), "\n\n")
     }
+    cat("Linear Hypotheses:\n")
+    alt <- switch(x$alternative,
+                  "two.sided" = "==", "less" = ">=", "greater" = "<=")
+    rownames(x$confint) <- paste(rownames(x$confint), alt, x$rhs)
+    print(format(x$confint, nsmall = digits, digits = digits), quote = FALSE)
+    cat("\n")
     invisible(xtmp)
 }
 

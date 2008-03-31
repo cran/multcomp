@@ -143,7 +143,7 @@ Ftest <- function() global("F")
 Chisqtest <- function() global("Chisq")
 
 ### p values adjusted for simultaneous inference
-adjusted <- function(type = c("single-step", "Shaffer", "Westfall", p.adjust.methods), 
+adjusted <- function(type = c("single-step", "Shaffer", "Westfall", "free", p.adjust.methods), 
                      ...) 
 {
     type <- match.arg(type)
@@ -153,6 +153,29 @@ adjusted <- function(type = c("single-step", "Shaffer", "Westfall", p.adjust.met
         return(function(object) {
             RET <- pqglht(object)
             RET$pvalues <- RET$pfunction("adjusted", ...)
+            RET$type <- type
+            class(RET) <- "mtest"
+            RET
+        })
+    }
+
+    if (type == "free") {
+        return(function(object) {
+            K <- object$linfct
+            rhs <- object$rhs
+            pv <- matrix(0, nrow = nrow(K), ncol = nrow(K))
+            colnames(pv) <- rownames(K)
+            RET <- pqglht(object)
+            for (i in 1:nrow(K)) {
+                object$linfct <- K
+                object$rhs <- rhs
+                tmp <- pqglht(object)
+                p <- tmp$pfunction("adjusted", ...)
+                pv[i,rownames(K)] <- min(p)
+                K <- K[-which.min(p),, drop = FALSE]
+                rhs <- rhs[-which.min(p)]
+            }
+            RET$pvalues <- apply(pv, 2, max)
             RET$type <- type
             class(RET) <- "mtest"
             RET

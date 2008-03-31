@@ -88,6 +88,8 @@ modelparm.default <- function(model, coef. = coef, vcov. = vcov,
             class(model) <- "lm"
             df <- summary(model)$df[2]
         }
+        if (inherits(model, "parm"))
+            df <- model$df
     } else {
         if (df < 0) stop(sQuote("df"), " is not positive")
     }
@@ -231,6 +233,6 @@ chkdots <- function(...) {
     lst <- list(...)
     if (length(lst) > 0) {
         warning("Argument(s) ", sQuote(names(lst)), " passed to ", sQuote("..."), 
-                " are ignored", call. = FALSE)
+                " are ignored", call. = TRUE)
     }
 }
