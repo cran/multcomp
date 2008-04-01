@@ -1,7 +1,7 @@
 
 \documentclass{article}
 
-%%\VignetteIndexEntry{Simultaneous Inference Procedures for General Linear Hypotheses}
+%%\VignetteIndexEntry{Additional Examples}
 %%\VignetteDepends{multcomp}
 
 \usepackage[utf8]{inputenc}
@@ -48,90 +48,17 @@ set.seed(290875)
 
 \SweaveOpts{engine=R,eps=FALSE}
 
-\title{Simultaneous Inference Procedures \\ 
-       for General Linear Hypotheses}
+\title{Additional \Rpackage{multcomp} Examples}
 
 \author{Torsten Hothorn}
 
 \maketitle
 
-\section{Introduction}
+It is assumed that the reader is familiar with
+the theory and applications described in
+the \Robject{generalsiminf} vignette.
 
-
-Consider a parametric model $\mathcal{M}(Y, \beta)$
-with observations $Y$ and a
-$p$-dimensional vector of parameters $\beta$. This model 
-could be some
-kind of regression model where $Y = (y, x)$ can be split 
-up into a dependent variable
-$y$ and regressors $x$. An example is a linear regression
-model $y = x^\top \beta$ or a generalized linear model (GLM) or a survival
-regression.
-
-Our primary target is simultaneous inference about 
-\emph{general linear hypotheses} on $\beta$.
-More specifically, the global null hypothesis is
-formulated in terms of linear functions of the parameter vector $\beta \in \R^p$
-\citep{Searle1971}:
-\begin{eqnarray*}
-H_0: \K \beta = \m
-\end{eqnarray*}
-where $\K$ is a $k \times p$ matrix with each row corresponding to
-one partial hypothesis. However, we are not only interested in the 
-\emph{global} hypothesis $H_0$ but in all partial
-hypotheses defined by the rows $K_j, j = 1, \dots, k$, of $\K$ and
-the elements of $\m = (m_1, \dots, m_k)$:
-\begin{eqnarray*}
-H_0^j: K_j \beta = m_j \text{ with global hypothesis } H_0 = \bigcap_{j = 1}^k H_0^j
-\end{eqnarray*}
-We only consider simultaneous inference procedures, both tests and confidence intervals,
-which control the \emph{family-wise error rate} (FWE), that is the probability of 
-incorrectly rejecting at least one hypothesis $H_0^j, j = 1, \dots, k$.
-
-\subsection{Parameter Estimates}
-
-We assume we are provided with an estimate $\hat{\beta}$ of $\beta$ based on
-observations $Y_1, \dots, Y_n$. The estimate $\hat{\beta}$
-follows a joint multivariate normal distribution
-with mean $\beta$ and covariance matrix $\Sigma$, either exactly or
-asymptotically.
-Moreover, we assume that an estimate $\V(\hat{\beta})$ of 
-the covariance matrix $\Sigma$ is available. It then holds that
-the linear combination $\K \hat{\beta}$ follows 
-a joint normal distribution  $\N(\K \beta, \K \Sigma \K^\top)$, either exactly
-or asymptoticall.y
-
-\subsection{Simultaneous Tests and Confidence Intervals}
-
-Under the conditions of the global hypothesis $H_0$ it holds that
-\begin{eqnarray*}
-\K \hat{\beta} - \m \sim \N(0, \K \Sigma \K^\top),
-\end{eqnarray*}
-either exactly  or asymptotically. 
-Let $\sigma = \text{diag}\left(\K \V(\hat{\beta}) \K^\top\right)$
-denote the estimated standard deviations for all elements of $\K \hat{\beta}$.
-Then, all inference procedures are based on 
-the vector of all $k$ standardized test statistics
-\begin{eqnarray*}
-\z = (z_1, \dots, z_k) =  \sigma^{-\frac{1}{2}} (\K \hat{\beta} - \m).
-\end{eqnarray*}
-The correlation matrix of the elements of $\z$ is
-\begin{eqnarray*}
-\V(\z) = \sigma^{-\frac{1}{2}} 
-         \K \V(\hat{\beta}) \K^\top 
-         \left(\sigma^{-\frac{1}{2}} \right)^\top.
-\end{eqnarray*}
-Under $H_0$ is holds that $\z \rightarrow \N(0, \V(\z))$. When $\hat{\beta}$
-follows a normal distribtion exactly, the $\z$ statistics follow a multivariate
-$t$ distribution with $n - \text{Rank}(\K)$ degrees of freedom and
-correlation matrix $\V(\z))$.
-
-A simultaneous inference procedure is based on the maximum of the absolute values
-of the test statistics: $\max|\z|$. 
-Adjusted $p$ values, controlling the family-wise error rate,
-for each linear hypothesis $H_0^j$ are $p_j = P_{H_0}(\max(|\z|) \ge |z_j|)$.
-Efficient algorithms for the evalutation of both multivariate distributions
-are nowadays available \citep{Genz1992, GenzBretz1999, GenzBretz2002}.
+\section{Simple Examples}
 
 \paragraph{Example: Simple Linear Model.}
 
@@ -279,12 +206,12 @@ summary(glht(aov.ex, linfct = c("xB - xA = 0", "xC - xA = 0")))
 @
 
 However, in the presence of an intercept term, the full parameter vector
-$\beta = c(\mu, \beta_1, \dots, \beta_j)$ can't be estimated due to singularities
+$\theta = c(\mu, \beta_1, \dots, \beta_j)$ can't be estimated due to singularities
 in the corresponding design matrix. Therefore, a vector of 
-\emph{contrasts} $\beta^\star$ of the original parameter vector $\beta$ is fitted.
+\emph{contrasts} $\gamma^\star$ of the original parameter vector $\gamma$ is fitted.
 More technically, a contrast matrix $\C$ is included into this model such that
-$\beta = \C \beta^\star$
-any we only obtain estimates for $\beta^\star$, but not for $\beta$:
+$\beta = \C \gamma^\star$
+any we only obtain estimates for $\gamma^\star$, but not for $\gamma$:
 <<aov-constrasts, echo = TRUE>>=
 aov.ex2 <- aov(y ~ x, data = ex)
 coef(aov.ex2)
@@ -300,9 +227,9 @@ so that $\K \C \hat{\beta}^\star = \K \hat{\beta}$.
 
 When the \Rcmd{mcp} function is used to specify linear hypotheses, the
 \Rcmd{glht} function takes care of contrasts. Within \Rcmd{mcp}, the matrix of
-linear hypotheses $\K$ can be written in terms of $\beta$, not $\beta^\star$. Note
+linear hypotheses $\K$ can be written in terms of $\gamma$, not $\gamma^\star$. Note
 that the matrix of linear hypotheses only applies to those elements of 
-$\hat{\beta}^\star$
+$\hat{\gamma}^\star$
 attached to factor \Robject{x} but not to the intercept term:
 <<aov-contrasts-glht, echo = TRUE>>=
 summary(glht(aov.ex2, linfct = mcp(x = K)))
@@ -339,9 +266,10 @@ via its \Rcmd{test} argument:
 \item{\Rcmd{test = Ftest()}} global $F$ test for $H_0$.
 \item{\Rcmd{test = Chisqtest()}} global $\chi^2$ test for $H_0$.
 \item{\Rcmd{test = adjusted()}} multiple test procedures as specified
-  by the \Rcmd{type} argument to \Rcmd{adjusted}: \Rcmd{"free"} denotes
+  by the \Rcmd{type} argument to \Rcmd{adjusted}: \Rcmd{"single-step"} denotes
   adjusted $p$ values as computed from the joint normal or $t$ distribution
-  of the $\z$ statistics (default), 
+  of the $\z$ statistics (default), \Rcmd{"free"} implements multiple testing procedures under free
+  combinations,
   \Rcmd{"Shaffer"} implements Bonferroni-adjustments
   taking logical constraints into account \cite{Shaffer1986}
   and \Rcmd{"Westfall"} takes both logical constraints and correlations

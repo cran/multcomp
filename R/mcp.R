@@ -141,33 +141,12 @@ mcp2matrix <- function(model, linfct) {
             Kstar <- linfct[[nm]]
         }
         pos <- factors[nm,] == 1
-        ### average over interaction terms (if any)
-        if (sum(pos) > 1) {
-            Kinter <- c()
-            for (i in which(pos)[-1]) {
-                k <- sum(attr(mm, "assign") == i) / ncol(Kstar)
-                ivar <- rownames(factors)[factors[ ,i] == 1]
-                ivar <- ivar[ivar != nm]
-                classes <- sapply(mf[, ivar, drop = FALSE], is.factor)
-                if (all(classes)) {
-                    fact <- 1 / (k + 1)
-                } else {
-                    fact <- 1
-                    warning("covariate interactions found -- please choose appropriate contrast")
-                }
-                if (sum(factors[1:which(rownames(factors) == nm), i]) == 1) {
-                    Kinter <- cbind(Kinter, 
-                        Kstar[,rep(1:ncol(Kstar), k), drop = FALSE] * fact)
-                } else {
-                    Kinter <- cbind(Kinter, 
-                        Kstar[,rep(1:ncol(Kstar), rep(k, ncol(Kstar))), 
-                              drop = FALSE] * fact)
-                }
-            }
-            Kstar <- cbind(Kstar, Kinter)
-        }
+        ### interaction terms (if any)
+        if (sum(pos) > 1)
+            warning("covariate interactions found -- ", 
+                    "default contrast might be inappropriate")
         hypo[[nm]] <- list(K = Kstar,
-            where = attr(mm, "assign") %in% which(factors[nm,] == 1))
+            where = attr(mm, "assign") %in% which(nm == colnames(factors)))
     }
 
     ### combine all single matrices computed so far into
@@ -194,8 +173,9 @@ mcp2matrix <- function(model, linfct) {
 }
 
 ### contributed by Richard M. Heiberger <rmh@temple.edu>
-meanslinfct <- function (model, focus, mmm.data = model$model, 
-                         formula.in = terms(model))
+meanslinfct <-
+function (model, focus, mmm.data = model$model, formula.in = terms(model),
+          contrasts.arg = NULL) 
 {
     mmm.factor <- sapply(mmm.data, inherits, "factor")
     mmm.levels <- lapply(mmm.data[mmm.factor], levels)
@@ -205,14 +185,15 @@ meanslinfct <- function (model, focus, mmm.data = model$model,
     mmm.factor.names <- names(mmm.data)[mmm.factor]
     mmm.rows.forward <- cumprod(mmm.rows)
     mmm.rows.forward.prev <- c(1, mmm.rows.forward)
-    names(mmm.rows.forward.prev) <- c(names(mmm.rows.forward),
+    names(mmm.rows.forward.prev) <- c(names(mmm.rows.forward), 
         "all")
-    for (i in mmm.factor.names) mmm.new[[i]] <- gl(mmm.rows[i],
+    for (i in mmm.factor.names) mmm.new[[i]] <- gl(mmm.rows[i], 
         mmm.rows.forward.prev[i], n.mmm.rows, labels = mmm.levels[[i]])
     mmm.numeric.names <- names(mmm.data)[!mmm.factor]
     for (i in mmm.numeric.names) mmm.new[[i]][] <- mean(mmm.data[[i]])
-    none.data <- model.matrix(formula.in, data = mmm.new)
-    none.linfct <- aggregate(none.data, by = mmm.new[focus],
+    none.data <- model.matrix(formula.in, data = mmm.new,
+                              contrasts.arg=contrasts.arg)
+    none.linfct <- aggregate(none.data, by = mmm.new[focus], 
         FUN = mean)[, -1]
     rownames(none.linfct) <- levels(mmm.new[[focus]])
     data.matrix(none.linfct)

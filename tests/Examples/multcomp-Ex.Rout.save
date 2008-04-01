@@ -1,6 +1,6 @@
 
-R version 2.5.1 (2007-06-27)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.6.2 (2008-02-08)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -84,7 +84,7 @@ Loading required package: mvtnorm
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
 > assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
-> cleanEx(); nameEx("cholesterol");
+> cleanEx(); nameEx("cholesterol")
 > ### * cholesterol
 > 
 > flush(stderr()); flush(stdout())
@@ -213,7 +213,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > 
-> cleanEx(); nameEx("contrMat");
+> cleanEx(); nameEx("contrMat")
 > ### * contrMat
 > 
 > flush(stderr()); flush(stdout())
@@ -306,10 +306,35 @@ C 6 -0.1667 -0.3333 -0.5000 1.0000
 C 1 -1.0000  1.0000    0.0      0
 C 2 -0.3333 -0.6667    1.0      0
 C 3 -0.1667 -0.3333   -0.5      1
+>  ### Umbrella-protected Williams contrasts, i.e. a sequence of 
+>  ### Williams-type contrasts with groups of higher order 
+>  ### stepwise omitted
+>  contrMat(n, type = "UmbrellaWilliams")
+
+	 Multiple Comparisons of Means: UmbrellaWilliams Contrasts
+
+    group1 group2 group3 group4
+C 1     -1 0.0000 0.0000 1.0000
+C 2     -1 0.0000 0.4286 0.5714
+C 3     -1 0.2222 0.3333 0.4444
+C 4     -1 0.0000 1.0000 0.0000
+C 5     -1 0.4000 0.6000 0.0000
+C 6     -1 1.0000 0.0000 0.0000
+>  ### comparison of each group with grand mean of all groups
+>  contrMat(n, type = "GrandMean")
+
+	 Multiple Comparisons of Means: GrandMean Contrasts
+
+    group1 group2 group3 group4
+C 1    0.9   -0.2   -0.3   -0.4
+C 2   -0.1    0.8   -0.3   -0.4
+C 3   -0.1   -0.2    0.7   -0.4
+C 4   -0.1   -0.2   -0.3    0.6
 > 
 > 
 > 
-> cleanEx(); nameEx("detergent");
+> 
+> cleanEx(); nameEx("detergent")
 > ### * detergent
 > 
 > flush(stderr()); flush(stdout())
@@ -331,30 +356,29 @@ C 3 -0.1667 -0.3333   -0.5      1
 >   ### see Westfall et al. (1999, p. 190)
 >   confint(dht)
 
-	 Simultaneous Confidence Intervals for General Linear Hypotheses
+	 Simultaneous Confidence Intervals
 
 Multiple Comparisons of Means: Tukey Contrasts
 
 
 Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
-Estimated Quantile = 3.0635
+Estimated Quantile = 3.0638
+95% family-wise confidence level
+ 
 
 Linear Hypotheses:
            Estimate lwr      upr     
-B - A == 0  -2.1333  -4.7923   0.5256
-C - A == 0   3.6000   0.9411   6.2589
-D - A == 0   2.2000  -0.4589   4.8589
-E - A == 0  -4.3333  -6.9923  -1.6744
-C - B == 0   5.7333   3.0744   8.3923
-D - B == 0   4.3333   1.6744   6.9923
-E - B == 0  -2.2000  -4.8589   0.4589
-D - C == 0  -1.4000  -4.0589   1.2589
-E - C == 0  -7.9333 -10.5923  -5.2744
-E - D == 0  -6.5333  -9.1923  -3.8744
-
-95% family-wise confidence level
- 
+B - A == 0  -2.1333  -4.7925   0.5259
+C - A == 0   3.6000   0.9408   6.2592
+D - A == 0   2.2000  -0.4592   4.8592
+E - A == 0  -4.3333  -6.9925  -1.6741
+C - B == 0   5.7333   3.0741   8.3925
+D - B == 0   4.3333   1.6741   6.9925
+E - B == 0  -2.2000  -4.8592   0.4592
+D - C == 0  -1.4000  -4.0592   1.2592
+E - C == 0  -7.9333 -10.5925  -5.2741
+E - D == 0  -6.5333  -9.1925  -3.8741
 
 > 
 >   ### see Westfall et al. (1999, p. 192)
@@ -420,7 +444,7 @@ Fit: aov(formula = plates ~ block + detergent, data = detergent)
 Linear Hypotheses:
            Estimate Std. Error t value p value    
 B - A == 0  -2.1333     0.8679  -2.458 0.05002 .  
-C - A == 0   3.6000     0.8679   4.148 0.00280 ** 
+C - A == 0   3.6000     0.8679   4.148 0.00275 ** 
 D - A == 0   2.2000     0.8679   2.535 0.04297 *  
 E - A == 0  -4.3333     0.8679  -4.993 < 0.001 ***
 C - B == 0   5.7333     0.8679   6.606 < 0.001 ***
@@ -437,7 +461,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > 
-> cleanEx(); nameEx("glht");
+> cleanEx(); nameEx("glht")
 > ### * glht
 > 
 > flush(stderr()); flush(stdout())
@@ -573,7 +597,7 @@ H - M == 0   -4.722
 > 
 > 
 > 
-> cleanEx(); nameEx("litter");
+> cleanEx(); nameEx("litter")
 > ### * litter
 > 
 > flush(stderr()); flush(stdout())
@@ -696,7 +720,7 @@ ltrend >= 0     -1.9400     0.9616  -2.018  0.0459 *
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
 
->   summary(Kht, test = adjusted("free"))
+>   summary(Kht, test = adjusted("single-step"))
 
 	 Simultaneous Tests for General Linear Hypotheses
 
@@ -718,13 +742,13 @@ atrend >= 0   -314.7324   408.9901  -0.770  0.6621
 ltrend >= 0     -1.9400     0.9616  -2.018  0.1157  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-(Adjusted p values reported)
+(Adjusted p values reported -- single-step method)
 
 > 
 > 
 > 
 > 
-> cleanEx(); nameEx("methods");
+> cleanEx(); nameEx("methods")
 > ### * methods
 > 
 > flush(stderr()); flush(stdout())
@@ -739,8 +763,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### ** Examples
 > 
 > 
->   ### set up a two-way ANOVA with interactions
->   amod <- aov(breaks ~ wool * tension, data = warpbreaks)
+>   ### set up a two-way ANOVA 
+>   amod <- aov(breaks ~ wool + tension, data = warpbreaks)
 > 
 >   ### set up all-pair comparisons for factor `tension'
 >   wht <- glht(amod, linfct = mcp(tension = "Tukey"))
@@ -748,23 +772,22 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 >   ### 95% simultaneous confidence intervals
 >   plot(print(confint(wht)))
 
-	 Simultaneous Confidence Intervals for General Linear Hypotheses
+	 Simultaneous Confidence Intervals
 
 Multiple Comparisons of Means: Tukey Contrasts
 
 
-Fit: aov(formula = breaks ~ wool * tension, data = warpbreaks)
+Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
-Estimated Quantile = 2.4188
+Estimated Quantile = 2.4159
+95% family-wise confidence level
+ 
 
 Linear Hypotheses:
            Estimate lwr      upr     
-M - L == 0 -10.0000 -18.8208  -1.1792
-H - L == 0 -14.7222 -23.5430  -5.9014
-H - M == 0  -4.7222 -13.5430   4.0986
-
-95% family-wise confidence level
- 
+M - L == 0 -10.0000 -19.3552  -0.6448
+H - L == 0 -14.7222 -24.0774  -5.3670
+H - M == 0  -4.7222 -14.0774   4.6330
 
 > 
 >   ### the same (for balanced designs only)
@@ -772,13 +795,13 @@ H - M == 0  -4.7222 -13.5430   4.0986
   Tukey multiple comparisons of means
     95% family-wise confidence level
 
-Fit: aov(formula = breaks ~ wool * tension, data = warpbreaks)
+Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
 $tension
-          diff       lwr       upr     p adj
-M-L -10.000000 -18.81965 -1.180353 0.0228554
-H-L -14.722222 -23.54187 -5.902575 0.0005595
-H-M  -4.722222 -13.54187  4.097425 0.4049442
+          diff       lwr        upr     p adj
+M-L -10.000000 -19.35342 -0.6465793 0.0336262
+H-L -14.722222 -24.07564 -5.3688015 0.0011218
+H-M  -4.722222 -14.07564  4.6311985 0.4474210
 
 > 
 >   ### corresponding adjusted p values
@@ -789,16 +812,16 @@ H-M  -4.722222 -13.54187  4.097425 0.4049442
 Multiple Comparisons of Means: Tukey Contrasts
 
 
-Fit: aov(formula = breaks ~ wool * tension, data = warpbreaks)
+Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
 Linear Hypotheses:
-           Estimate Std. Error t value p value    
-M - L == 0  -10.000      3.647  -2.742  0.0229 *  
-H - L == 0  -14.722      3.647  -4.037  <0.001 ***
-H - M == 0   -4.722      3.647  -1.295  0.4049    
+           Estimate Std. Error t value p value   
+M - L == 0  -10.000      3.872  -2.582 0.03370 * 
+H - L == 0  -14.722      3.872  -3.802 0.00115 **
+H - M == 0   -4.722      3.872  -1.219 0.44743   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-(Adjusted p values reported)
+(Adjusted p values reported -- single-step method)
 
 > 
 >   ### all means for levels of `tension'
@@ -864,13 +887,56 @@ Linear Hypotheses:
 2 == 0   0.3677     0.1360   2.703  0.0137 *
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-(Adjusted p values reported)
+(Adjusted p values reported -- single-step method)
 
 > 
 > 
 > 
 > 
-> cleanEx(); nameEx("recovery");
+> cleanEx(); nameEx("parm")
+> ### * parm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: parm
+> ### Title: Model Parameters
+> ### Aliases: parm
+> ### Keywords: misc
+> 
+> ### ** Examples
+> 
+> 
+> ## example from
+> ## Bretz, Hothorn, and Westfall (2002). 
+> ## On multiple comparisons in R. R News, 2(3):14-17.
+> 
+> beta <- c(V1 = 14.8, V2 = 12.6667, V3 = 7.3333, V4 = 13.1333)
+> Sigma <- 6.7099 * (diag(1 / c(20, 3, 3, 15)))
+> confint(glht(model = parm(beta, Sigma, 37),
++              linfct = c("V2 - V1 >= 0", 
++                         "V3 - V1 >= 0", 
++                         "V4 - V1 >= 0")), 
++         level = 0.9)
+
+	 Simultaneous Confidence Intervals
+
+Fit: NULL
+
+Estimated Quantile = -1.7957
+90% family-wise confidence level
+ 
+
+Linear Hypotheses:
+             Estimate lwr     upr    
+V2 - V1 >= 0 -2.1333     -Inf  0.7466
+V3 - V1 >= 0 -7.4667     -Inf -4.5868
+V4 - V1 >= 0 -1.6667     -Inf -0.0779
+
+> 
+> 
+> 
+> 
+> cleanEx(); nameEx("recovery")
 > ### * recovery
 > 
 > flush(stderr()); flush(stdout())
@@ -893,23 +959,22 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 >   ### cf. Westfall et al. (1999, p. 80)
 >   confint(rht, level = 0.9)
 
-	 Simultaneous Confidence Intervals for General Linear Hypotheses
+	 Simultaneous Confidence Intervals
 
 Multiple Comparisons of Means: Dunnett Contrasts
 
 
 Fit: aov(formula = minutes ~ blanket, data = recovery)
 
-Estimated Quantile = -1.8433
+Estimated Quantile = -1.8432
+90% family-wise confidence level
+ 
 
 Linear Hypotheses:
              Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82298
-b2 - b0 >= 0 -7.46667     -Inf -4.51036
-b3 - b0 >= 0 -1.66667     -Inf -0.03574
-
-90% family-wise confidence level
- 
+b1 - b0 >= 0 -2.13333     -Inf  0.82278
+b2 - b0 >= 0 -7.46667     -Inf -4.51056
+b3 - b0 >= 0 -1.66667     -Inf -0.03585
 
 > 
 >   ### the same
@@ -918,7 +983,7 @@ b3 - b0 >= 0 -1.66667     -Inf -0.03574
 +                                              "b3 - b0 >= 0")))
 >   confint(rht, level = 0.9)
 
-	 Simultaneous Confidence Intervals for General Linear Hypotheses
+	 Simultaneous Confidence Intervals
 
 Multiple Comparisons of Means: User-defined Contrasts
 
@@ -926,21 +991,46 @@ Multiple Comparisons of Means: User-defined Contrasts
 Fit: aov(formula = minutes ~ blanket, data = recovery)
 
 Estimated Quantile = -1.843
-
-Linear Hypotheses:
-             Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82241
-b2 - b0 >= 0 -7.46667     -Inf -4.51092
-b3 - b0 >= 0 -1.66667     -Inf -0.03605
-
 90% family-wise confidence level
  
 
+Linear Hypotheses:
+             Estimate lwr      upr     
+b1 - b0 >= 0 -2.13333     -Inf  0.82245
+b2 - b0 >= 0 -7.46667     -Inf -4.51088
+b3 - b0 >= 0 -1.66667     -Inf -0.03603
+
 > 
 > 
 > 
 > 
-> cleanEx(); nameEx("waste");
+> cleanEx(); nameEx("trees513")
+> ### * trees513
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: trees513
+> ### Title: Frankonian Tree Damage Data
+> ### Aliases: trees513
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> 
+>   summary(trees513)
+ damage                   species        lattice          plot     
+ yes: 448   oak               :1258   1      :  75   10_1   :  15  
+ no :2252   pine              : 823   2      :  75   10_2   :  15  
+            beech             : 266   3      :  75   10_3   :  15  
+            hardwood (other)  : 191   7      :  75   10_4   :  15  
+            spruce            : 119   9      :  75   10_5   :  15  
+            ash/maple/elm/lime:  30   10     :  75   1_1    :  15  
+            (Other)           :  13   (Other):2250   (Other):2610  
+> 
+> 
+> 
+> 
+> cleanEx(); nameEx("waste")
 > ### * waste
 > 
 > flush(stderr()); flush(stdout())
@@ -954,10 +1044,111 @@ b3 - b0 >= 0 -1.66667     -Inf -0.03605
 > 
 > 
 >   ### set up two-way ANOVA with interactions
->   amod <- aov(waste ~ envir + temp + envir*temp, data=waste)
+>   amod <- aov(waste ~ temp * envir, data=waste)
+> 
+>   ### comparisons of main effects only
+>   K <- glht(amod, linfct = mcp(temp = "Tukey"))$linfct
+Warning in mcp2matrix(model, linfct = linfct) :
+  covariate interactions found -- default contrast might be inappropriate
+>   K
+              (Intercept) templow tempmedium envirenv2 envirenv3 envirenv4
+low - high              0       1          0         0         0         0
+medium - high           0       0          1         0         0         0
+medium - low            0      -1          1         0         0         0
+              envirenv5 templow:envirenv2 tempmedium:envirenv2
+low - high            0                 0                    0
+medium - high         0                 0                    0
+medium - low          0                 0                    0
+              templow:envirenv3 tempmedium:envirenv3 templow:envirenv4
+low - high                    0                    0                 0
+medium - high                 0                    0                 0
+medium - low                  0                    0                 0
+              tempmedium:envirenv4 templow:envirenv5 tempmedium:envirenv5
+low - high                       0                 0                    0
+medium - high                    0                 0                    0
+medium - low                     0                 0                    0
+attr(,"type")
+[1] "Tukey"
+>   glht(amod, K)
+
+	 General Linear Hypotheses
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Linear Hypotheses:
+                   Estimate
+low - high == 0       -1.26
+medium - high == 0    -1.34
+medium - low == 0     -0.08
+
+> 
+>   ### comparisons of means (by averaging interaction effects)
+>   low <- grep("low:envi", colnames(K))
+>   med <- grep("medium:envi", colnames(K))
+>   K[1, low] <- 1 / (length(low) + 1)
+>   K[2, med] <- 1 / (length(low) + 1)
+>   K[3, med] <- 1 / (length(low) + 1)
+>   K[3, low] <- - 1 / (length(low) + 1)
+>   K
+              (Intercept) templow tempmedium envirenv2 envirenv3 envirenv4
+low - high              0       1          0         0         0         0
+medium - high           0       0          1         0         0         0
+medium - low            0      -1          1         0         0         0
+              envirenv5 templow:envirenv2 tempmedium:envirenv2
+low - high            0               0.2                  0.0
+medium - high         0               0.0                  0.2
+medium - low          0              -0.2                  0.2
+              templow:envirenv3 tempmedium:envirenv3 templow:envirenv4
+low - high                  0.2                  0.0               0.2
+medium - high               0.0                  0.2               0.0
+medium - low               -0.2                  0.2              -0.2
+              tempmedium:envirenv4 templow:envirenv5 tempmedium:envirenv5
+low - high                     0.0               0.2                  0.0
+medium - high                  0.2               0.0                  0.2
+medium - low                   0.2              -0.2                  0.2
+attr(,"type")
+[1] "Tukey"
+>   confint(glht(amod, K))
+
+	 Simultaneous Confidence Intervals
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Fit: aov(formula = waste ~ temp * envir, data = waste)
+
+Estimated Quantile = 2.5984
+95% family-wise confidence level
+ 
+
+Linear Hypotheses:
+                   Estimate lwr     upr    
+low - high == 0    -2.0150  -3.2745 -0.7555
+medium - high == 0 -2.2560  -3.5155 -0.9965
+medium - low == 0  -0.2410  -1.5005  1.0185
+
+> 
+>   ### same as TukeyHSD
+>   TukeyHSD(amod, "temp")
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = waste ~ temp * envir, data = waste)
+
+$temp
+              diff       lwr        upr     p adj
+low-high    -2.015 -3.274054 -0.7559457 0.0022853
+medium-high -2.256 -3.515054 -0.9969457 0.0008562
+medium-low  -0.241 -1.500054  1.0180543 0.8737275
+
 > 
 >   ### set up linear hypotheses for all-pairs of both factors
 >   wht <- glht(amod, linfct = mcp(temp = "Tukey", envir = "Tukey"))
+Warning in mcp2matrix(model, linfct = linfct) :
+  covariate interactions found -- default contrast might be inappropriate
+Warning in mcp2matrix(model, linfct = linfct) :
+  covariate interactions found -- default contrast might be inappropriate
 > 
 >   ### cf. Westfall et al. (1999, page 181)
 >   summary(wht, test = adjusted("Shaffer"))
@@ -967,23 +1158,23 @@ b3 - b0 >= 0 -1.66667     -Inf -0.03605
 Multiple Comparisons of Means: Tukey Contrasts
 
 
-Fit: aov(formula = waste ~ envir + temp + envir * temp, data = waste)
+Fit: aov(formula = waste ~ temp * envir, data = waste)
 
 Linear Hypotheses:
-                         Estimate Std. Error t value p value   
-temp: low - high == 0     -2.0150     0.4847  -4.157 0.00590 **
-temp: medium - high == 0  -2.2560     0.4847  -4.654 0.00405 **
-temp: medium - low == 0   -0.2410     0.4847  -0.497 1.00000   
-envir: env2 - env1 == 0    1.3833     0.6258   2.211 0.21508   
-envir: env3 - env1 == 0    1.6850     0.6258   2.693 0.08351 . 
-envir: env4 - env1 == 0    2.0183     0.6258   3.225 0.03964 * 
-envir: env5 - env1 == 0    2.7533     0.6258   4.400 0.00569 **
-envir: env3 - env2 == 0    0.3017     0.6258   0.482 1.00000   
-envir: env4 - env2 == 0    0.6350     0.6258   1.015 1.00000   
-envir: env5 - env2 == 0    1.3700     0.6258   2.189 0.31361   
-envir: env4 - env3 == 0    0.3333     0.6258   0.533 1.00000   
-envir: env5 - env3 == 0    1.0683     0.6258   1.707 0.43356   
-envir: env5 - env4 == 0    0.7350     0.6258   1.175 0.77546   
+                         Estimate Std. Error t value p value  
+temp: low - high == 0      -1.260      1.084  -1.162   1.000  
+temp: medium - high == 0   -1.340      1.084  -1.236   1.000  
+temp: medium - low == 0    -0.080      1.084  -0.074   1.000  
+envir: env2 - env1 == 0     1.830      1.084   1.688   0.784  
+envir: env3 - env1 == 0     1.330      1.084   1.227   1.000  
+envir: env4 - env1 == 0     3.805      1.084   3.511   0.041 *
+envir: env5 - env1 == 0     3.660      1.084   3.377   0.041 *
+envir: env3 - env2 == 0    -0.500      1.084  -0.461   1.000  
+envir: env4 - env2 == 0     1.975      1.084   1.822   0.619  
+envir: env5 - env2 == 0     1.830      1.084   1.688   0.619  
+envir: env4 - env3 == 0     2.475      1.084   2.283   0.337  
+envir: env5 - env3 == 0     2.330      1.084   2.150   0.337  
+envir: env5 - env4 == 0    -0.145      1.084  -0.134   1.000  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Shaffer method)
@@ -995,7 +1186,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  63.28 0.052 64.227 0 0 
+Time elapsed:  16.737 0.028 16.833 0 0 
 > grDevices::dev.off()
 null device 
           1 

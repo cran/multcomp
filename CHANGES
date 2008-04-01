@@ -1,4 +1,21 @@
 
+		CHANGES in `multcomp' VERSION 1.0-0
+
+    o    unify both vignettes
+
+    o    mcp() doesn't try to take care of interaction terms anymore
+
+
+		CHANGES in `multcomp' VERSION 0.993-3
+
+    o    new `parm' function for specifying model parameters estimated
+         elsewhere
+
+    o    improve print method for confidence intervals
+
+    o    new adjustment method `free' (for free combinations)
+
+
 		CHANGES in `multcomp' VERSION 0.993-2
 
     o    make sure names are printed correctly when nrow(K) = 1
