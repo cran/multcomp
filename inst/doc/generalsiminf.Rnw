@@ -54,7 +54,7 @@ data("trees513", package = "multcomp")
 \title{Simultaneous Inference \\
 in General Parametric Models
 \footnote{This is a preprint of an article published in
-Biometrical Journal, Volume 50, Number 3.                                      
+Biometrical Journal, Volume 50, Number 3, 346--363.                                      
 Copyright \copyright{} 2008 WILEY-VCH Verlag GmbH \& Co. KGaA, Weinheim;
 available online
 \url{http://www.biometrical-journal.com}.}}

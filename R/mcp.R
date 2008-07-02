@@ -1,4 +1,6 @@
 
+# $Id: mcp.R 229 2008-04-04 11:47:30Z thothorn $
+
 ### multiple comparison procedures for levels of 
 ### factors in AN(C)OVA models
 mcp <- function(...) {

@@ -1,4 +1,6 @@
 
+# $Id: print.R 236 2008-04-24 08:25:41Z thothorn $
+
 ### print methods
 print.glht <- function(x, digits = max(3, getOption("digits") - 3), ...) 
 {
@@ -24,7 +26,7 @@ print.summary.glht <- function(x, digits = max(3, getOption("digits") - 3),
     if (!is.null(x$type))
         cat("Multiple Comparisons of Means:", x$type, "Contrasts\n\n\n")
     cat("Fit: ")
-    if (inherits(x$model, "lmer")) {
+    if (isS4(x$model)) {
         print(x$model@call)
     } else {
         print(x$model$call)
@@ -72,7 +74,7 @@ print.confint.glht <- function(x, digits = max(3, getOption("digits") - 3),
     level <- attr(x$confint, "conf.level")
     attr(x$confint, "conf.level") <- NULL
     cat("Fit: ")
-    if (inherits(x$model, "lmer")) {
+    if (isS4(x$model)) {
         print(x$model@call)
     } else {
         print(x$model$call)

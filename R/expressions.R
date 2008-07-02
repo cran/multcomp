@@ -1,4 +1,6 @@
 
+# $Id: expressions.R 229 2008-04-04 11:47:30Z thothorn $
+
 ### determine if an expression `x' can be interpreted as numeric
 is_num <- function(x) {
     if (length(x) == 1) return(is.numeric(x))

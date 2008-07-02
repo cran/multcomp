@@ -23,10 +23,6 @@ Type 'q()' to quit R.
 + }
 Loading required package: codetools
 Loading required package: mvtnorm
-modelparm.glmer: no visible binding for global variable ‘fixef’
-modelparm.glmer2: no visible binding for global variable ‘fixef’
-modelparm.lmer: no visible binding for global variable ‘fixef’
-modelparm.lmer2: no visible binding for global variable ‘fixef’
 modelparm.mer: no visible binding for global variable ‘fixef’
 NULL
 > 

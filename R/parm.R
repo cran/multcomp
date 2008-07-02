@@ -1,4 +1,6 @@
 
+# $Id: parm.R 229 2008-04-04 11:47:30Z thothorn $
+
 parm <- function(coef, vcov, df = 0) {
 
     if (length(coef) != nrow(vcov) ||

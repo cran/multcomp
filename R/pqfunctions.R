@@ -1,5 +1,5 @@
 
-# $Id: simint.R,v 1.52 2005/07/25 15:25:05 hothorn Exp $
+# $Id: pqfunctions.R 240 2008-05-05 17:18:42Z thothorn $
 
 pqglht <- function(object) 
 {
@@ -116,13 +116,15 @@ global <- function(type = c("Chisq", "F"))
         SSH <- t(tmp) %*% MP$MPinv %*% tmp
 
         q <- MP$rank
-        df <- df.residual(object$model)
-        if (is.null(df)) {
-            type <- "Chisq"
-            warning(sQuote("df.residual"), " is not available for ",
-                    sQuote("model"), " performing F test")
+        if (type == "F") {
+            df <- df.residual(object$model)
+            if (is.null(df)) {
+                type <- "Chisq"
+                warning(sQuote("df.residual"), " is not available for ",
+                        sQuote("model"), " a Chisq test is performed ",
+                        "instead of the requested F test.")
+            }
         }
-
         if (type == "Chisq") {
             pval <- pchisq(SSH, q, lower.tail = FALSE)
         } else {

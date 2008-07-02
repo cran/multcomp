@@ -1,3 +1,6 @@
+
+# $Id: maxsets.R 229 2008-04-04 11:47:30Z thothorn $
+
 ### compute all possible (ordered) subsets of the index set K
 ### cf. Westfall (1997, Section 3.2)
 allsubsets <- function(K) 
