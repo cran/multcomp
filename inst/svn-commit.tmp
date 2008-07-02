@@ -1,0 +1,7 @@
+update
+--This line, and those below, will be ignored--
+
+M    slides/generalsiminf.tex
+M    slides/generalsiminf.Rnw
+A    slides/figs/aischgrund.pdf
+A    slides/figs/rotbuche2007.pdf

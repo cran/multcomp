@@ -1,14 +1,16 @@
-# $Id: contrMat.R,v 1.19 2003/12/19 09:34:41 hothorn Exp $
+# $Id: contrMat.R 230 2008-04-04 11:51:10Z thothorn $
 
 contrMat <- function(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
                                  "Changepoint", "Williams", "Marcus",
                                  "McDermott", "UmbrellaWilliams", "GrandMean"), 
                      base = 1) {
 
-    if (length(n) < 2) stop("less than 2 groups")
+    if (length(n) < 2) stop("less than two groups")
     if (!is.numeric(n)) stop(sQuote("n"), " is not numeric")
     m <- NULL
     type <- match.arg(type)
+    if (type %in% c("AVE", "Williams", "McDermott") && length(n) < 3)
+        stop("less than three groups")
     k <- length(n)
     if (base < 1 || base > k) stop("base is not between 1 and ", k)
     CM <- c()

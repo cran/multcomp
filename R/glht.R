@@ -1,4 +1,6 @@
 
+# $Id: glht.R 229 2008-04-04 11:47:30Z thothorn $
+
 ### general linear hypotheses
 glht <- function(model, linfct, ...) UseMethod("glht", linfct)
 

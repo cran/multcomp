@@ -1,4 +1,6 @@
 
+# $Id: plot.R 229 2008-04-04 11:47:30Z thothorn $
+
 ### uhhh -- mainly copy and paste from plot.TukeyHSD
 ### with modifications by Richard M. Heiberger <rmh@temple.edu>
 plot.confint.glht <- function(x, xlim, xlab, ...) {
