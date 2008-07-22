@@ -1,5 +1,5 @@
 
-R version 2.6.2 (2008-02-08)
+R version 2.7.1 (2008-06-23)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -103,7 +103,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x888dad0>
+<environment: 0x8acf748>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -122,7 +122,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x888dad0>
+<environment: 0x8acf748>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -354,4 +354,10 @@ Linear Hypotheses:
 3 - 2 == 0  0.07020
 
 > 
+> ### better error message
+> ### suggested by Rich
+> amod <- aov(breaks ~ tension, data = warpbreaks)
+> try(glht(amod, linfct = mcp(tension = "Warp")))
+Error in chrlinfct2matrix(kch, levels(mf[[nm]])) : 
+  argument ‘Warp’ cannot be interpreted as expression
 > 

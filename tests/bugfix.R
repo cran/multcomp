@@ -108,3 +108,7 @@ structure(list(gr = structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
 amod <- aov(y ~ gr + age, data = tmp)
 glht(amod, linfct = mcp(gr = "Tukey"))
 
+### better error message
+### suggested by Rich
+amod <- aov(breaks ~ tension, data = warpbreaks)
+try(glht(amod, linfct = mcp(tension = "Warp")))
