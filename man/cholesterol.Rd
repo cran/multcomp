@@ -53,6 +53,7 @@
                 "E - test" = c(-1, -1, -1, 0, 3))
 
   ### reproduce results in Westfall et al. (1999, page 172)
+  ### note: the ordering of our estimates here is different
   amod <- aov(response ~ trt - 1, data = cholesterol)
   summary(glht(amod, linfct = mcp(trt = Ksub[,5:1])), 
           test = adjusted("Westfall"))

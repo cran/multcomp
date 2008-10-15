@@ -1,5 +1,5 @@
 
-# $Id: expressions.R 229 2008-04-04 11:47:30Z thothorn $
+# $Id: expressions.R 246 2008-10-15 09:08:37Z thothorn $
 
 ### determine if an expression `x' can be interpreted as numeric
 is_num <- function(x) {
@@ -137,7 +137,12 @@ chrlinfct2matrix <- function(ex, var) {
 
     for (i in 1:length(ex)) {
 
-        tmp <- expression2coef(parse(text = ex[i]))
+        expr <- parse(text = ex[i])
+        if (length(expr[[1]]) != 3)
+            stop("argument ", sQuote(ex[i]), 
+                 " cannot be interpreted as expression")
+
+        tmp <- expression2coef(expr)
 
         if (!all(tmp$names %in% var))
             stop("variable(s) ", sQuote(tmp$names[!tmp$names %in% var]), 
