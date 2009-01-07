@@ -54,20 +54,20 @@ mcp(...)
   \eqn{H_0: K \theta = m} for some parametric model
   \code{model} with parameter estimates \code{coef(model)}. 
 
-  The null hypothesis is specified by a linear function $K \theta$, 
-  the direction of the alternative and the right hand side $m$.
+  The null hypothesis is specified by a linear function \eqn{K \theta}, 
+  the direction of the alternative and the right hand side \eqn{m}.
   Here, \code{alternative} equal to \code{"two.sided"} refers to 
   a null hypothesis \eqn{H_0: K \theta = m}, whereas
   \code{"less"} corresponds to \eqn{H_0: K \theta \ge m} and  
   \code{"greater"} refers to 
-  \eqn{H_0: K \theta \le m}. The right hand side vector $m$ can be defined
+  \eqn{H_0: K \theta \le m}. The right hand side vector \eqn{m} can be defined
   via the \code{rhs} argument.
 
   The generic method \code{glht} dispatches on its second argument
   (\code{linfct}). There are three ways, and thus methods, 
   to specify linear functions to be tested:
 
-  1) The \code{matrix} of coefficients $K$ can be specified directly
+  1) The \code{matrix} of coefficients \eqn{K} can be specified directly
   via the \code{linfct} argument. In this case,
   the number of columns of this matrix needs to correspond to the number of
   parameters estimated by \code{model}. It is assumed that
@@ -116,15 +116,15 @@ mcp(...)
 
   \code{glht} extracts the number of degrees of freedom
   for models of class \code{lm} (via \code{\link{modelparm}}) and the
-  exact multivariate $t$ distribution is evaluated. For all other
+  exact multivariate t distribution is evaluated. For all other
   models, results rely on the normal approximation. Alternatively, the 
   degrees of freedom to be used for the evaluation of multivariate
-  $t$ distributions can be given by the additional \code{df} argument to
+  t distributions can be given by the additional \code{df} argument to
   \code{\link{modelparm}} specified via \code{\dots}.
 
   \code{glht} methods return a specification of the null hypothesis
   \eqn{H_0: K \theta = m}. The value of the linear function
-  $K \theta$ can be extracted using the \code{\link{coef}} method and
+  \eqn{K \theta} can be extracted using the \code{\link{coef}} method and
   the corresponding covariance matrix is available from the 
   \code{\link{vcov}} method. Various simultaneous and univariate tests and 
   confidence intervals are available from \code{\link{summary.glht}}
@@ -142,7 +142,7 @@ mcp(...)
   \item{rhs}{ the vector of right hand side values \eqn{m}}
   \item{coef}{ the values of the linear functions}
   \item{vcov}{ the covariance matrix of the values of the linear functions}
-  \item{df}{ optionally, the degrees of freedom when the exact $t$ 
+  \item{df}{ optionally, the degrees of freedom when the exact t 
              distriubtion is used for inference}
   \item{alternative}{ a character string specifying the alternative
       hypothesis}

@@ -24,8 +24,8 @@ modelparm(model, coef., vcov., df, ...)
   
   One can't expect \code{\link{coef}} and \code{\link{vcov}} methods 
   for arbitrary models to
-  return a vector of $p$ fixed effects model parameters (\code{coef})
-  and corresponding $p \times p$ covariance matrix (\code{vcov}).
+  return a vector of \eqn{p} fixed effects model parameters (\code{coef})
+  and corresponding \eqn{p \times p} covariance matrix (\code{vcov}).
 
   The \code{coef.} and \code{vcov.} arguments can be used to define
   modified \code{coef} or \code{vcov} methods for a specific model.
@@ -34,7 +34,7 @@ modelparm(model, coef., vcov., df, ...)
 
   For objects inheriting from class \code{\link{lm}} the degrees of 
   freedom are determined from \code{model} and the corresponding
-  multivariate $t$ distribution is used by all methods to \code{\link{glht}}
+  multivariate t distribution is used by all methods to \code{\link{glht}}
   objects. By default, the asymptotic multivariate normal distribution
   is used in all other cases unless \code{df} is specified by the user.
 
