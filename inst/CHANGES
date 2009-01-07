@@ -1,4 +1,8 @@
 
+		CHANGES in `multcomp' VERSION 1.0-4
+
+    o    fix Rd problems
+
 		CHANGES in `multcomp' VERSION 1.0-3
 
     o    use isSymmetric(vcov, tol = sqrt(.Machine$double.eps)

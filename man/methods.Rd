@@ -60,20 +60,20 @@ univariate_calpha(...)
   The methods for general linear hypotheses as described by objects returned
   by \code{\link{glht}} can be used to actually test the global
   null hypothesis, each of the partial hypotheses and for
-  simultaneous confidence intervals for the linear function $K \theta$.
+  simultaneous confidence intervals for the linear function \eqn{K \theta}.
   
   The \code{\link{coef}} and \code{\link{vcov}} methods compute the linear
-  function $K \hat{\theta}$ and its covariance, respectively.
+  function \eqn{K \hat{\theta}} and its covariance, respectively.
 
   The \code{test} argument to \code{summary} takes a function specifying
   the type of test to be applied. Classical Chisq (Wald test) or F statistics
-  for testing the global hypothesis $H_0$ are implemented in functions
+  for testing the global hypothesis \eqn{H_0} are implemented in functions
   \code{Chisqtest} and \code{Ftest}. Several approaches to multiplicity adjusted p 
   values for each of the linear hypotheses are implemented 
   in function \code{adjusted}. The \code{type}
   argument to \code{adjusted} specifies the method to be applied:
   \code{"single-step"} implements adjusted p values based on the joint
-  normal or $t$ distribution of the linear function, and
+  normal or t distribution of the linear function, and
   \code{"Shaffer"} and \code{"Westfall"} implement logically constraint 
   multiplicity adjustments (Shaffer, 1986; Westfall, 1997). 
   \code{"free"} implements multiple testing procedures under free 
@@ -90,7 +90,7 @@ univariate_calpha(...)
 
   All simultaneous inference procedures implemented here control
   the family-wise error rate (FWER). Multivariate
-  normal and $t$ distributions, the latter one only for models of 
+  normal and t distributions, the latter one only for models of 
   class \code{\link{lm}}, are evaluated using the procedures
   implemented in package \code{mvtnorm}.
 
@@ -103,7 +103,7 @@ univariate_calpha(...)
 
   \code{summary} computes (adjusted) p values for general linear hypotheses,
   \code{\link{confint}} computes (adjusted) confidence intervals. 
-  \code{\link{coef}} returns estimates of the linear function $K \theta$
+  \code{\link{coef}} returns estimates of the linear function \eqn{K \theta}
   and \code{\link{vcov}} its covariance. 
 
 }

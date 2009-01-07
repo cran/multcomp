@@ -32,7 +32,7 @@ serveral tree species, the Bavarian State Ministry of Agriculture
 and Foresty conducts a survey every three years. Based on
 the estimated percentage of damaged trees, suggestions for
 the implementation or modification of deer management plans are made.
-The survey takes place in all $756$ game management districts
+The survey takes place in all 756 game management districts
 (`Hegegemeinschaften') in Bavaria. The data given here are from 
 the game management district number 513 `Unterer Aischgrund'
 (located in Frankonia between Erlangen and H\"ochstadt) in 2006. The data
