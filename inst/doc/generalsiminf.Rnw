@@ -852,9 +852,9 @@ atab <- xtabs(~ smoking + + disease + gender, data = alzheimer)
 
 \cite{SalibHillier1997}
 report results of a case-control study on Alzheimer's disease
-and smoking behavior of $\Sexpr{disease["Alzheimer's"]}$ female
+and smoking behavior of $\Sexpr{disease["Alzheimer"]}$ female
 and male Alzheimer patients and 
-$\Sexpr{disease[names(disease) != "Alzheimer's"]}$ controls.
+$\Sexpr{disease[names(disease) != "Alzheimer"]}$ controls.
 The \Robject{alzheimer} data 
 %% shown in Table~\ref{alzheimertab}
 have been 
@@ -873,7 +873,7 @@ is a binary variable giving the diagnosis of the patient (either suffering
 from Alzheimer's disease or other dementias):
 <<alzheimer-glm, echo = TRUE>>=
 data("alzheimer", package = "coin")
-y <- factor(alzheimer$disease == "Alzheimer's", 
+y <- factor(alzheimer$disease == "Alzheimer", 
              labels = c("other", "Alzheimer"))
 gmod <- glm(y ~ smoking * gender, data = alzheimer, 
              family = binomial())
