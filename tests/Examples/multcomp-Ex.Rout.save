@@ -1,5 +1,5 @@
 
-R version 2.7.1 (2008-06-23)
+R version 2.8.0 (2008-10-20)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -121,7 +121,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: aov(formula = response ~ trt, data = cholesterol)
 
 Linear Hypotheses:
-                     Estimate Std. Error t value  p value    
+                     Estimate Std. Error t value Pr(>|t|)    
 2times - 1time == 0     3.443      1.443   2.385 0.021333 *  
 4times - 1time == 0     6.593      1.443   4.568 3.82e-05 ***
 drugD - 1time == 0      9.579      1.443   6.637 3.53e-08 ***
@@ -146,7 +146,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: aov(formula = response ~ trt, data = cholesterol)
 
 Linear Hypotheses:
-                     Estimate Std. Error t value  p value    
+                     Estimate Std. Error t value Pr(>|t|)    
 2times - 1time == 0     3.443      1.443   2.385 0.042666 *  
 4times - 1time == 0     6.593      1.443   4.568 0.000153 ***
 drugD - 1time == 0      9.579      1.443   6.637 2.12e-07 ***
@@ -171,17 +171,17 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: aov(formula = response ~ trt, data = cholesterol)
 
 Linear Hypotheses:
-                     Estimate Std. Error t value p value    
-2times - 1time == 0     3.443      1.443   2.385  0.0420 *  
-4times - 1time == 0     6.593      1.443   4.568  <0.001 ***
-drugD - 1time == 0      9.579      1.443   6.637  <0.001 ***
-drugE - 1time == 0     15.166      1.443  10.507  <0.001 ***
-4times - 2times == 0    3.150      1.443   2.182  0.0420 *  
-drugD - 2times == 0     6.136      1.443   4.251  <0.001 ***
-drugE - 2times == 0    11.723      1.443   8.122  <0.001 ***
-drugD - 4times == 0     2.986      1.443   2.069  0.0443 *  
-drugE - 4times == 0     8.573      1.443   5.939  <0.001 ***
-drugE - drugD == 0      5.586      1.443   3.870  <0.001 ***
+                     Estimate Std. Error t value Pr(>|t|)    
+2times - 1time == 0     3.443      1.443   2.385   0.0420 *  
+4times - 1time == 0     6.593      1.443   4.568   <0.001 ***
+drugD - 1time == 0      9.579      1.443   6.637   <0.001 ***
+drugE - 1time == 0     15.166      1.443  10.507   <0.001 ***
+4times - 2times == 0    3.150      1.443   2.182   0.0420 *  
+drugD - 2times == 0     6.136      1.443   4.251   <0.001 ***
+drugE - 2times == 0    11.723      1.443   8.122   <0.001 ***
+drugD - 4times == 0     2.986      1.443   2.069   0.0443 *  
+drugE - 4times == 0     8.573      1.443   5.939   <0.001 ***
+drugE - drugD == 0      5.586      1.443   3.870   <0.001 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -194,6 +194,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 +                 "E - test" = c(-1, -1, -1, 0, 3))
 > 
 >   ### reproduce results in Westfall et al. (1999, page 172)
+>   ### note: the ordering of our estimates here is different
 >   amod <- aov(response ~ trt - 1, data = cholesterol)
 >   summary(glht(amod, linfct = mcp(trt = Ksub[,5:1])), 
 +           test = adjusted("Westfall"))
@@ -206,12 +207,12 @@ Multiple Comparisons of Means: User-defined Contrasts
 Fit: aov(formula = response ~ trt - 1, data = cholesterol)
 
 Linear Hypotheses:
-                     Estimate Std. Error t value p value    
-2times - 1time == 0    -5.586      1.443  -3.870  <0.001 ***
-4times - 1time == 0    -8.573      1.443  -5.939  <0.001 ***
-4times - 2times == 0   -2.986      1.443  -2.069  0.0443 *  
-D - test == 0         -21.009      3.536  -5.942  <0.001 ***
-E - test == 0         -31.338      3.536  -8.864  <0.001 ***
+                     Estimate Std. Error t value Pr(>|t|)    
+2times - 1time == 0    -5.586      1.443  -3.870   <0.001 ***
+4times - 1time == 0    -8.573      1.443  -5.939   <0.001 ***
+4times - 2times == 0   -2.986      1.443  -2.069   0.0443 *  
+D - test == 0         -21.009      3.536  -5.942   <0.001 ***
+E - test == 0         -31.338      3.536  -8.864   <0.001 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -398,7 +399,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
 Linear Hypotheses:
-           Estimate Std. Error t value  p value    
+           Estimate Std. Error t value Pr(>|t|)    
 B - A == 0  -2.1333     0.8679  -2.458 0.025762 *  
 C - A == 0   3.6000     0.8679   4.148 0.000757 ***
 D - A == 0   2.2000     0.8679   2.535 0.022075 *  
@@ -423,7 +424,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
 Linear Hypotheses:
-           Estimate Std. Error t value  p value    
+           Estimate Std. Error t value Pr(>|t|)    
 B - A == 0  -2.1333     0.8679  -2.458 0.051524 .  
 C - A == 0   3.6000     0.8679   4.148 0.003028 ** 
 D - A == 0   2.2000     0.8679   2.535 0.044149 *  
@@ -448,17 +449,17 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
 Linear Hypotheses:
-           Estimate Std. Error t value p value    
-B - A == 0  -2.1333     0.8679  -2.458 0.05002 .  
-C - A == 0   3.6000     0.8679   4.148 0.00275 ** 
-D - A == 0   2.2000     0.8679   2.535 0.04297 *  
-E - A == 0  -4.3333     0.8679  -4.993 < 0.001 ***
-C - B == 0   5.7333     0.8679   6.606 < 0.001 ***
-D - B == 0   4.3333     0.8679   4.993 < 0.001 ***
-E - B == 0  -2.2000     0.8679  -2.535 0.04297 *  
-D - C == 0  -1.4000     0.8679  -1.613 0.12629    
-E - C == 0  -7.9333     0.8679  -9.140 < 0.001 ***
-E - D == 0  -6.5333     0.8679  -7.527 < 0.001 ***
+           Estimate Std. Error t value Pr(>|t|)    
+B - A == 0  -2.1333     0.8679  -2.458  0.05002 .  
+C - A == 0   3.6000     0.8679   4.148  0.00275 ** 
+D - A == 0   2.2000     0.8679   2.535  0.04297 *  
+E - A == 0  -4.3333     0.8679  -4.993  < 0.001 ***
+C - B == 0   5.7333     0.8679   6.606  < 0.001 ***
+D - B == 0   4.3333     0.8679   4.993  < 0.001 ***
+E - B == 0  -2.2000     0.8679  -2.535  0.04297 *  
+D - C == 0  -1.4000     0.8679  -1.613  0.12629    
+E - C == 0  -7.9333     0.8679  -9.140  < 0.001 ***
+E - D == 0  -6.5333     0.8679  -7.527  < 0.001 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -640,7 +641,7 @@ Multiple Comparisons of Means: User-defined Contrasts
 Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
 Linear Hypotheses:
-               Estimate Std. Error t value p value   
+               Estimate Std. Error t value  Pr(<t)   
 5 - 0 >= 0      -3.3524     1.2908  -2.597 0.00575 **
 50 - 0 >= 0     -2.2909     1.3384  -1.712 0.04576 * 
 500 - 0 >= 0    -2.6752     1.3343  -2.005 0.02448 * 
@@ -664,16 +665,16 @@ Multiple Comparisons of Means: User-defined Contrasts
 Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
 Linear Hypotheses:
-               Estimate Std. Error t value p value  
-5 - 0 >= 0      -3.3524     1.2908  -2.597  0.0518 .
-50 - 0 >= 0     -2.2909     1.3384  -1.712  0.4118  
-500 - 0 >= 0    -2.6752     1.3343  -2.005  0.2203  
-50 - 5 >= 0      1.0615     1.3973   0.760  1.0000  
-500 - 5 >= 0     0.6772     1.3394   0.506  1.0000  
-500 - 50 >= 0   -0.3844     1.4510  -0.265  1.0000  
-otrend >= 0     -3.4821     2.0867  -1.669  0.4490  
-atrend >= 0   -314.7324   408.9901  -0.770  1.0000  
-ltrend >= 0     -1.9400     0.9616  -2.018  0.2141  
+               Estimate Std. Error t value Pr(<t)  
+5 - 0 >= 0      -3.3524     1.2908  -2.597 0.0518 .
+50 - 0 >= 0     -2.2909     1.3384  -1.712 0.4118  
+500 - 0 >= 0    -2.6752     1.3343  -2.005 0.2203  
+50 - 5 >= 0      1.0615     1.3973   0.760 1.0000  
+500 - 5 >= 0     0.6772     1.3394   0.506 1.0000  
+500 - 50 >= 0   -0.3844     1.4510  -0.265 1.0000  
+otrend >= 0     -3.4821     2.0867  -1.669 0.4490  
+atrend >= 0   -314.7324   408.9901  -0.770 1.0000  
+ltrend >= 0     -1.9400     0.9616  -2.018 0.2141  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- bonferroni method)
@@ -688,16 +689,16 @@ Multiple Comparisons of Means: User-defined Contrasts
 Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
 Linear Hypotheses:
-               Estimate Std. Error t value p value  
-5 - 0 >= 0      -3.3524     1.2908  -2.597  0.0518 .
-50 - 0 >= 0     -2.2909     1.3384  -1.712  0.0915 .
-500 - 0 >= 0    -2.6752     1.3343  -2.005  0.0734 .
-50 - 5 >= 0      1.0615     1.3973   0.760  1.0000  
-500 - 5 >= 0     0.6772     1.3394   0.506  1.0000  
-500 - 50 >= 0   -0.3844     1.4510  -0.265  1.0000  
-otrend >= 0     -3.4821     2.0867  -1.669  0.0998 .
-atrend >= 0   -314.7324   408.9901  -0.770  0.4442  
-ltrend >= 0     -1.9400     0.9616  -2.018  0.0518 .
+               Estimate Std. Error t value Pr(<t)  
+5 - 0 >= 0      -3.3524     1.2908  -2.597 0.0518 .
+50 - 0 >= 0     -2.2909     1.3384  -1.712 0.0915 .
+500 - 0 >= 0    -2.6752     1.3343  -2.005 0.0734 .
+50 - 5 >= 0      1.0615     1.3973   0.760 1.0000  
+500 - 5 >= 0     0.6772     1.3394   0.506 1.0000  
+500 - 50 >= 0   -0.3844     1.4510  -0.265 1.0000  
+otrend >= 0     -3.4821     2.0867  -1.669 0.0998 .
+atrend >= 0   -314.7324   408.9901  -0.770 0.4442  
+ltrend >= 0     -1.9400     0.9616  -2.018 0.0518 .
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Shaffer method)
@@ -712,16 +713,16 @@ Multiple Comparisons of Means: User-defined Contrasts
 Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
 Linear Hypotheses:
-               Estimate Std. Error t value p value  
-5 - 0 >= 0      -3.3524     1.2908  -2.597  0.0320 *
-50 - 0 >= 0     -2.2909     1.3384  -1.712  0.0893 .
-500 - 0 >= 0    -2.6752     1.3343  -2.005  0.0647 .
-50 - 5 >= 0      1.0615     1.3973   0.760  0.7750  
-500 - 5 >= 0     0.6772     1.3394   0.506  0.7271  
-500 - 50 >= 0   -0.3844     1.4510  -0.265  0.7271  
-otrend >= 0     -3.4821     2.0867  -1.669  0.0917 .
-atrend >= 0   -314.7324   408.9901  -0.770  0.3951  
-ltrend >= 0     -1.9400     0.9616  -2.018  0.0459 *
+               Estimate Std. Error t value Pr(<t)  
+5 - 0 >= 0      -3.3524     1.2908  -2.597 0.0320 *
+50 - 0 >= 0     -2.2909     1.3384  -1.712 0.0893 .
+500 - 0 >= 0    -2.6752     1.3343  -2.005 0.0647 .
+50 - 5 >= 0      1.0615     1.3973   0.760 0.7750  
+500 - 5 >= 0     0.6772     1.3394   0.506 0.7271  
+500 - 50 >= 0   -0.3844     1.4510  -0.265 0.7271  
+otrend >= 0     -3.4821     2.0867  -1.669 0.0917 .
+atrend >= 0   -314.7324   408.9901  -0.770 0.3951  
+ltrend >= 0     -1.9400     0.9616  -2.018 0.0459 *
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -736,16 +737,16 @@ Multiple Comparisons of Means: User-defined Contrasts
 Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
 Linear Hypotheses:
-               Estimate Std. Error t value p value  
-5 - 0 >= 0      -3.3524     1.2908  -2.597  0.0316 *
-50 - 0 >= 0     -2.2909     1.3384  -1.712  0.2031  
-500 - 0 >= 0    -2.6752     1.3343  -2.005  0.1186  
-50 - 5 >= 0      1.0615     1.3973   0.760  0.9999  
-500 - 5 >= 0     0.6772     1.3394   0.506  0.9987  
-500 - 50 >= 0   -0.3844     1.4510  -0.265  0.8908  
-otrend >= 0     -3.4821     2.0867  -1.669  0.2182  
-atrend >= 0   -314.7324   408.9901  -0.770  0.6621  
-ltrend >= 0     -1.9400     0.9616  -2.018  0.1157  
+               Estimate Std. Error t value Pr(<t)  
+5 - 0 >= 0      -3.3524     1.2908  -2.597 0.0316 *
+50 - 0 >= 0     -2.2909     1.3384  -1.712 0.2031  
+500 - 0 >= 0    -2.6752     1.3343  -2.005 0.1186  
+50 - 5 >= 0      1.0615     1.3973   0.760 0.9999  
+500 - 5 >= 0     0.6772     1.3394   0.506 0.9987  
+500 - 50 >= 0   -0.3844     1.4510  -0.265 0.8908  
+otrend >= 0     -3.4821     2.0867  -1.669 0.2182  
+atrend >= 0   -314.7324   408.9901  -0.770 0.6621  
+ltrend >= 0     -1.9400     0.9616  -2.018 0.1157  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- single-step method)
@@ -821,10 +822,10 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
 Linear Hypotheses:
-           Estimate Std. Error t value p value   
-M - L == 0  -10.000      3.872  -2.582 0.03370 * 
-H - L == 0  -14.722      3.872  -3.802 0.00115 **
-H - M == 0   -4.722      3.872  -1.219 0.44743   
+           Estimate Std. Error t value Pr(>|t|)   
+M - L == 0  -10.000      3.872  -2.582  0.03370 * 
+H - L == 0  -14.722      3.872  -3.802  0.00115 **
+H - M == 0   -4.722      3.872  -1.219  0.44743   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- single-step method)
@@ -888,9 +889,9 @@ Loading required package: MASS
 Fit: coxph(formula = Surv(time) ~ ag + log(wbc), data = leuk)
 
 Linear Hypotheses:
-       Estimate Std. Error z value p value  
-1 == 0  -1.0691     0.4293  -2.490  0.0253 *
-2 == 0   0.3677     0.1360   2.703  0.0137 *
+       Estimate Std. Error z value Pr(>|z|)  
+1 == 0  -1.0691     0.4293  -2.490   0.0253 *
+2 == 0   0.3677     0.1360   2.703   0.0137 *
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- single-step method)
@@ -979,8 +980,8 @@ Estimated Quantile = -1.8432
 Linear Hypotheses:
              Estimate lwr      upr     
 b1 - b0 >= 0 -2.13333     -Inf  0.82278
-b2 - b0 >= 0 -7.46667     -Inf -4.51056
-b3 - b0 >= 0 -1.66667     -Inf -0.03585
+b2 - b0 >= 0 -7.46667     -Inf -4.51055
+b3 - b0 >= 0 -1.66667     -Inf -0.03584
 
 > 
 >   ### the same
@@ -996,15 +997,15 @@ Multiple Comparisons of Means: User-defined Contrasts
 
 Fit: aov(formula = minutes ~ blanket, data = recovery)
 
-Estimated Quantile = -1.843
+Estimated Quantile = -1.8431
 90% family-wise confidence level
  
 
 Linear Hypotheses:
              Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82245
-b2 - b0 >= 0 -7.46667     -Inf -4.51088
-b3 - b0 >= 0 -1.66667     -Inf -0.03603
+b1 - b0 >= 0 -2.13333     -Inf  0.82262
+b2 - b0 >= 0 -7.46667     -Inf -4.51072
+b3 - b0 >= 0 -1.66667     -Inf -0.03594
 
 > 
 > 
@@ -1167,20 +1168,20 @@ Multiple Comparisons of Means: Tukey Contrasts
 Fit: aov(formula = waste ~ temp * envir, data = waste)
 
 Linear Hypotheses:
-                         Estimate Std. Error t value p value  
-temp: low - high == 0      -1.260      1.084  -1.162   1.000  
-temp: medium - high == 0   -1.340      1.084  -1.236   1.000  
-temp: medium - low == 0    -0.080      1.084  -0.074   1.000  
-envir: env2 - env1 == 0     1.830      1.084   1.688   0.784  
-envir: env3 - env1 == 0     1.330      1.084   1.227   1.000  
-envir: env4 - env1 == 0     3.805      1.084   3.511   0.041 *
-envir: env5 - env1 == 0     3.660      1.084   3.377   0.041 *
-envir: env3 - env2 == 0    -0.500      1.084  -0.461   1.000  
-envir: env4 - env2 == 0     1.975      1.084   1.822   0.619  
-envir: env5 - env2 == 0     1.830      1.084   1.688   0.619  
-envir: env4 - env3 == 0     2.475      1.084   2.283   0.337  
-envir: env5 - env3 == 0     2.330      1.084   2.150   0.337  
-envir: env5 - env4 == 0    -0.145      1.084  -0.134   1.000  
+                         Estimate Std. Error t value Pr(>|t|)  
+temp: low - high == 0      -1.260      1.084  -1.162    1.000  
+temp: medium - high == 0   -1.340      1.084  -1.236    1.000  
+temp: medium - low == 0    -0.080      1.084  -0.074    1.000  
+envir: env2 - env1 == 0     1.830      1.084   1.688    0.784  
+envir: env3 - env1 == 0     1.330      1.084   1.227    1.000  
+envir: env4 - env1 == 0     3.805      1.084   3.511    0.041 *
+envir: env5 - env1 == 0     3.660      1.084   3.377    0.041 *
+envir: env3 - env2 == 0    -0.500      1.084  -0.461    1.000  
+envir: env4 - env2 == 0     1.975      1.084   1.822    0.619  
+envir: env5 - env2 == 0     1.830      1.084   1.688    0.619  
+envir: env4 - env3 == 0     2.475      1.084   2.283    0.337  
+envir: env5 - env3 == 0     2.330      1.084   2.150    0.337  
+envir: env5 - env4 == 0    -0.145      1.084  -0.134    1.000  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Shaffer method)
@@ -1192,7 +1193,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  16.369 0.012 16.392 0 0 
+Time elapsed:  17.033 0.036 17.105 0 0 
 > grDevices::dev.off()
 null device 
           1 

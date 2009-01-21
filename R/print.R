@@ -1,5 +1,5 @@
 
-# $Id: print.R 236 2008-04-24 08:25:41Z thothorn $
+# $Id: print.R 254 2009-01-21 15:02:18Z thothorn $
 
 ### print methods
 print.glht <- function(x, digits = max(3, getOption("digits") - 3), ...) 
@@ -36,8 +36,12 @@ print.summary.glht <- function(x, digits = max(3, getOption("digits") - 3),
     pq <- x$test
     mtests <- cbind(pq$coefficients, pq$sigma, pq$tstat, pq$pvalues)
     error <- attr(pq$pvalues, "error")
+    pname <- switch(x$alternativ,
+        "less" = paste("Pr(<", ifelse(x$df == 0, "z", "t"), ")", sep = ""),
+        "greater" = paste("Pr(>", ifelse(x$df == 0, "z", "t"), ")", sep = ""),
+        "two.sided" = paste("Pr(>|", ifelse(x$df == 0, "z", "t"), "|)", sep = ""))
     colnames(mtests) <- c("Estimate", "Std. Error",
-        ifelse(x$df == 0, "z value", "t value"), "p value")
+        ifelse(x$df == 0, "z value", "t value"), pname)
     type <- pq$type
 
     ### print p values according to simulation precision
