@@ -1,8 +1,17 @@
 
-# $Id: glht.R 229 2008-04-04 11:47:30Z thothorn $
+# $Id: glht.R 255 2009-02-10 15:45:59Z thothorn $
 
 ### general linear hypotheses
-glht <- function(model, linfct, ...) UseMethod("glht", linfct)
+glht <- function(model, linfct, ...) {
+    if (missing(linfct)) {
+        mpar <- modelparm(model, ...)
+        linfct <- diag(length(mpar$coef))
+        rownames(linfct) <- names(mpar$coef)
+        glht(model = model, linfct = linfct, ...)
+    } else {
+        UseMethod("glht", linfct)
+    }
+}
 
 ### K coef(model) _!alternative_ rhs
 glht.matrix <- function(model, linfct, 
