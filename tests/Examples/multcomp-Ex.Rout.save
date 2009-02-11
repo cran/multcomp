@@ -90,6 +90,64 @@ Loading required package: mvtnorm
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
 > assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
+> cleanEx(); nameEx("cftest")
+> ### * cftest
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cftest
+> ### Title: Testing Estimated Coefficients
+> ### Aliases: cftest
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> 
+>   ## The function is currently defined as
+>   function(model, ...)
++       summary(glht(model), test = univariate(), ...)
+function (model, ...) 
+summary(glht(model), test = univariate(), ...)
+> 
+>   lmod <- lm(dist ~ speed, data = cars)
+>   summary(lmod)
+
+Call:
+lm(formula = dist ~ speed, data = cars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-29.069  -9.525  -2.272   9.215  43.201 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -17.5791     6.7584  -2.601   0.0123 *  
+speed         3.9324     0.4155   9.464 1.49e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 15.38 on 48 degrees of freedom
+Multiple R-squared: 0.6511,	Adjusted R-squared: 0.6438 
+F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.490e-12 
+
+>   cftest(lmod)
+
+	 Simultaneous Tests for General Linear Hypotheses
+
+Fit: lm(formula = dist ~ speed, data = cars)
+
+Linear Hypotheses:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept) == 0 -17.5791     6.7584  -2.601   0.0123 *  
+speed == 0         3.9324     0.4155   9.464 1.49e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+(Univariate p values reported)
+
+>   
+> 
+> 
+> 
 > cleanEx(); nameEx("cholesterol")
 > ### * cholesterol
 > 
@@ -1193,7 +1251,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  17.033 0.036 17.105 0 0 
+Time elapsed:  17.149 0.032 17.18 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,5 +1,13 @@
 
 
+		CHANGES in `multcomp' VERSION 1.0-7
+
+    o    new default for missing linfct: inference over
+         all parameters as given by coef(model)
+
+    o    new function cftest, similar to lmtest:::coeftest
+
+
 		CHANGES in `multcomp' VERSION 1.0-6
 
     o    better names for p-values (feature request by Achim Zeileis)
