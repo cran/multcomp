@@ -164,7 +164,7 @@ mcp(...)
 
     Torsten Hothorn, Frank Bretz and Peter Westfall (2008),
     Simultaneous Inference in General Parametric Models.
-    \emph{Biometrical Journal}, \bold{50}(3) (forthcoming);
+    \emph{Biometrical Journal}, \bold{50}(3), 346--363;
     See \code{vignette("generalsiminf", package = "multcomp")}.
 
 }
