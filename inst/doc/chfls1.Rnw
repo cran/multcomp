@@ -35,7 +35,7 @@ library("foreign")
 
 dataurl <- "http://www.src.uchicago.edu/datalib/chfls/data/chfls1.sav"
 td <- tempdir()
-download.file(dataurl, destfile = file.path(td, "chfls1.sav"))
+download.file(dataurl, destfile = file.path(td, "chfls1.sav"), mode = "wb")
 
 ### data see http://www.spc.uchicago.edu/prc/chfls.php
 chfls1 <- read.spss(file.path(td, "chfls1.sav"), to.data.frame = TRUE)

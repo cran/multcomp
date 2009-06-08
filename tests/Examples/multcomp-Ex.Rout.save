@@ -1,6 +1,6 @@
 
-R version 2.8.0 (2008-10-20)
-Copyright (C) 2008 The R Foundation for Statistical Computing
+R version 2.9.0 (2009-04-17)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -20,7 +20,7 @@ Type 'q()' to quit R.
 > ### * <HEADER>
 > ###
 > attach(NULL, name = "CheckExEnv")
-> assign("nameEx", 
+> assign("nameEx",
 +        local({
 + 	   s <- "__{must remake R-ex/*.R}__"
 +            function(new) {
@@ -42,7 +42,7 @@ Type 'q()' to quit R.
 +        pos = "CheckExEnv")
 > assign("grid_plot_hook",
 +        function() {
-+            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") - 
++            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") -
 +                               grid::unit(1, "lines"), x=0, just="left"))
 +            grid::grid.text(sprintf("help(\"%s\")", nameEx()),
 +                            x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
@@ -81,12 +81,14 @@ Type 'q()' to quit R.
 > ## Choose a size that is close to on-screen devices, fix paper
 > ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
 > grDevices::postscript("multcomp-Ex.ps")
-> 		      
+> 
 > assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
 > options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
-> options(warn = 1)    
+> options(warn = 1)
 > library('multcomp')
 Loading required package: mvtnorm
+Loading required package: survival
+Loading required package: splines
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
 > assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
@@ -230,16 +232,16 @@ Fit: aov(formula = response ~ trt, data = cholesterol)
 
 Linear Hypotheses:
                      Estimate Std. Error t value Pr(>|t|)    
-2times - 1time == 0     3.443      1.443   2.385   0.0420 *  
-4times - 1time == 0     6.593      1.443   4.568   <0.001 ***
-drugD - 1time == 0      9.579      1.443   6.637   <0.001 ***
-drugE - 1time == 0     15.166      1.443  10.507   <0.001 ***
-4times - 2times == 0    3.150      1.443   2.182   0.0420 *  
-drugD - 2times == 0     6.136      1.443   4.251   <0.001 ***
-drugE - 2times == 0    11.723      1.443   8.122   <0.001 ***
-drugD - 4times == 0     2.986      1.443   2.069   0.0443 *  
-drugE - 4times == 0     8.573      1.443   5.939   <0.001 ***
-drugE - drugD == 0      5.586      1.443   3.870   <0.001 ***
+2times - 1time == 0     3.443      1.443   2.385 0.042005 *  
+4times - 1time == 0     6.593      1.443   4.568 0.000156 ***
+drugD - 1time == 0      9.579      1.443   6.637 1.11e-06 ***
+drugE - 1time == 0     15.166      1.443  10.507 3.81e-14 ***
+4times - 2times == 0    3.150      1.443   2.182 0.042005 *  
+drugD - 2times == 0     6.136      1.443   4.251 0.000289 ***
+drugE - 2times == 0    11.723      1.443   8.122 1.63e-09 ***
+drugD - 4times == 0     2.986      1.443   2.069 0.044316 *  
+drugE - 4times == 0     8.573      1.443   5.939 1.35e-06 ***
+drugE - drugD == 0      5.586      1.443   3.870 0.000696 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -266,11 +268,11 @@ Fit: aov(formula = response ~ trt - 1, data = cholesterol)
 
 Linear Hypotheses:
                      Estimate Std. Error t value Pr(>|t|)    
-2times - 1time == 0    -5.586      1.443  -3.870   <0.001 ***
-4times - 1time == 0    -8.573      1.443  -5.939   <0.001 ***
-4times - 2times == 0   -2.986      1.443  -2.069   0.0443 *  
-D - test == 0         -21.009      3.536  -5.942   <0.001 ***
-E - test == 0         -31.338      3.536  -8.864   <0.001 ***
+2times - 1time == 0    -5.586      1.443  -3.870 0.000348 ***
+4times - 1time == 0    -8.573      1.443  -5.939 1.03e-06 ***
+4times - 2times == 0   -2.986      1.443  -2.069 0.044316 *  
+D - test == 0         -21.009      3.536  -5.942 1.03e-06 ***
+E - test == 0         -31.338      3.536  -8.864 1.09e-11 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -278,6 +280,61 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > 
+> cleanEx(); nameEx("cld")
+> ### * cld
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cld
+> ### Title: Set up a compact letter display of all pair-wise comparisons
+> ### Aliases: cld cld.glht cld.summary.glht cld.confint.glht
+> 
+> 
+> ### ** Examples
+> 
+>   ### multiple comparison procedures
+>   ### set up a one-way ANOVA
+>   data(warpbreaks)
+>   amod <- aov(breaks ~ tension, data = warpbreaks)
+>   ### specify all pair-wise comparisons among levels of variable "tension"
+>   tuk <- glht(amod, linfct = mcp(tension = "Tukey"))
+>   ### extract information
+>   tuk.cld <- cld(tuk)
+>   ### use sufficiently large upper margin
+>   old.par <- par( mai=c(1,1,1.25,1))
+>   ### plot
+>   plot(tuk.cld)
+>   par(old.par)
+>   
+>   ### now using covariates
+>   data(warpbreaks)
+>   amod2 <- aov(breaks ~ tension + wool, data = warpbreaks)
+>   ### specify all pair-wise comparisons among levels of variable "tension"
+>   tuk2 <- glht(amod2, linfct = mcp(tension = "Tukey"))
+>   ### extract information
+>   tuk.cld2 <- cld(tuk2)
+>   ### use sufficiently large upper margin
+>   old.par <- par( mai=c(1,1,1.25,1))
+>   ### plot using different colors
+>   plot(tuk.cld2, col=c("black", "red", "blue"))
+>   par(old.par)
+> 
+>   ### set up all pair-wise comparisons for count data
+>   data(Titanic)
+>   mod <- glm(Survived ~ Class, data = as.data.frame(Titanic), weights = Freq, family = binomial())
+>   ### specify all pair-wise comparisons among levels of variable "Class"
+>   glht.mod <- glht(mod, mcp(Class = "Tukey"))
+>   ### extract information
+>   mod.cld <- cld(glht.mod)
+>   ### use sufficiently large upper margin
+>   old.par <- par(mai=c(1,1,1.5,1))
+>   ### plott
+>   plot(mod.cld)
+>   par(old.par)
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx(); nameEx("contrMat")
 > ### * contrMat
 > 
@@ -508,16 +565,16 @@ Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
 Linear Hypotheses:
            Estimate Std. Error t value Pr(>|t|)    
-B - A == 0  -2.1333     0.8679  -2.458  0.05002 .  
-C - A == 0   3.6000     0.8679   4.148  0.00275 ** 
-D - A == 0   2.2000     0.8679   2.535  0.04297 *  
-E - A == 0  -4.3333     0.8679  -4.993  < 0.001 ***
-C - B == 0   5.7333     0.8679   6.606  < 0.001 ***
-D - B == 0   4.3333     0.8679   4.993  < 0.001 ***
-E - B == 0  -2.2000     0.8679  -2.535  0.04297 *  
-D - C == 0  -1.4000     0.8679  -1.613  0.12629    
-E - C == 0  -7.9333     0.8679  -9.140  < 0.001 ***
-E - D == 0  -6.5333     0.8679  -7.527  < 0.001 ***
+B - A == 0  -2.1333     0.8679  -2.458 0.050022 .  
+C - A == 0   3.6000     0.8679   4.148 0.002751 ** 
+D - A == 0   2.2000     0.8679   2.535 0.042967 *  
+E - A == 0  -4.3333     0.8679  -4.993 0.000489 ***
+C - B == 0   5.7333     0.8679   6.606 6.98e-05 ***
+D - B == 0   4.3333     0.8679   4.993 0.000489 ***
+E - B == 0  -2.2000     0.8679  -2.535 0.042967 *  
+D - C == 0  -1.4000     0.8679  -1.613 0.126291    
+E - C == 0  -7.9333     0.8679  -9.140 5.19e-07 ***
+E - D == 0  -6.5333     0.8679  -7.527 6.98e-05 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -938,8 +995,6 @@ Linear Hypotheses:
 +       ### adjusted p values
 +       print(summary(lht))
 +   }
-Loading required package: survival
-Loading required package: splines
 Loading required package: MASS
 
 	 Simultaneous Tests for General Linear Hypotheses
@@ -1001,6 +1056,137 @@ V4 - V1 >= 0 -1.66670     -Inf -0.03588
 > 
 > 
 > 
+> cleanEx(); nameEx("plot.cld")
+> ### * plot.cld
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.cld
+> ### Title: Plot a cld object
+> ### Aliases: plot.cld
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> 
+>   ### multiple comparison procedures
+>   ### set up a one-way ANOVA
+>   data(warpbreaks)
+>   amod <- aov(breaks ~ tension, data = warpbreaks)
+>   ### specify all pair-wise comparisons among levels of variable "tension"
+>   tuk <- glht(amod, linfct = mcp(tension = "Tukey"))
+>   ### extract information
+>   tuk.cld <- cld(tuk)
+>   ### use sufficiently large upper margin
+>   old.par <- par( mai=c(1,1,1.25,1))
+>   ### plot
+>   plot(tuk.cld)
+>   par(old.par)
+> 
+>   ### now using covariates
+>   amod2 <- aov(breaks ~ tension + wool, data = warpbreaks)
+>   tuk2 <- glht(amod2, linfct = mcp(tension = "Tukey"))
+>   tuk.cld2 <- cld(tuk2)
+>   old.par <- par( mai=c(1,1,1.25,1))
+>   ### use different colors for boxes
+>   plot(tuk.cld2, col=c("green", "red", "blue"))
+>   par(old.par)
+>   
+>   ### get confidence intervals
+>   ci.glht <- confint(tuk)
+>   ### plot them
+>   plot(ci.glht)
+>   old.par <- par( mai=c(1,1,1.25,1))
+>   ### use 'confint.glht' object to plot all pair-wise comparisons
+>   plot(cld(ci.glht), col=c("white", "blue", "green"))
+>   par(old.par)
+>   
+>   ### set up all pair-wise comparisons for count data
+>   data(Titanic)
+>   mod <- glm(Survived ~ Class, data = as.data.frame(Titanic), 
++              weights = Freq, family = binomial())
+>   ### specify all pair-wise comparisons among levels of variable "Class"
+>   glht.mod <- glht(mod, mcp(Class = "Tukey"))
+>   ### extract information
+>   mod.cld <- cld(glht.mod)
+>   ### use sufficiently large upper margin
+>   old.par <- par(mai=c(1,1,1.5,1))
+>   ### plot
+>   plot(mod.cld)
+>   par(old.par)
+>   
+>   ### set up all pair-wise comparisons of a Cox-model
+>   if (require("survival") && require("MASS")) {
++     ### construct 4 classes of age
++     Melanoma$Cage <- factor(sapply(Melanoma$age, function(x){
++                             if( x <= 25 ) return(1)
++                             if( x > 25 & x <= 50 ) return(2)
++                             if( x > 50 & x <= 75 ) return(3)
++                             if( x > 75 & x <= 100) return(4) }
++                            ))
++     ### fit Cox-model
++     cm <- coxph(Surv(time, status == 1) ~ Cage, data = Melanoma)
++     ### specify all pair-wise comparisons among levels of "Cage"
++     cm.glht <- glht(cm, mcp(Cage = "Tukey"))
++     # extract information & plot
++     old.par <- par()
++     ### use mono font family
++     if (dev.interactive())
++         old.par <- par(family = "mono")
++     plot(cld(cm.glht), col=c("black", "red", "blue", "green"))
++     par(old.par)
++   }
+Loading required package: MASS
+Warning in par(old.par) : graphical parameter "cin" cannot be set
+Warning in par(old.par) : graphical parameter "cra" cannot be set
+Warning in par(old.par) : graphical parameter "csi" cannot be set
+Warning in par(old.par) : graphical parameter "cxy" cannot be set
+Warning in par(old.par) : graphical parameter "din" cannot be set
+> 
+>   if (require("nlme") && require("lme4")) {
++     data("ergoStool", package = "nlme")
++ 
++     stool.lmer <- lmer(effort ~ Type + (1 | Subject),
++                        data = ergoStool)
++     glme41 <- glht(stool.lmer, mcp(Type = "Tukey"))
++ 
++     old.par <- par(mai=c(1,1,1.5,1))
++     plot(cld(glme41))
++     par(old.par)
++   }
+Loading required package: nlme
+Loading required package: lme4
+Loading required package: Matrix
+Loading required package: lattice
+
+Attaching package: 'Matrix'
+
+
+	The following object(s) are masked from package:stats :
+
+	 xtabs 
+
+
+	The following object(s) are masked from package:base :
+
+	 rcond 
+
+
+Attaching package: 'lme4'
+
+
+	The following object(s) are masked from package:nlme :
+
+	 BIC,
+	 fixef,
+	 lmList,
+	 ranef,
+	 VarCorr 
+
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx(); nameEx("recovery")
 > ### * recovery
 > 
@@ -1251,7 +1437,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  17.149 0.032 17.18 0 0 
+Time elapsed:  25.885 0.148 26.132 0 0 
 > grDevices::dev.off()
 null device 
           1 
