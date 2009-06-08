@@ -112,3 +112,12 @@ glht(amod, linfct = mcp(gr = "Tukey"))
 ### suggested by Rich
 amod <- aov(breaks ~ tension, data = warpbreaks)
 try(glht(amod, linfct = mcp(tension = "Warp")))
+
+### cld did not find a terms component
+### spotted by Peter B. Mandeville <mandevip@hotmail.com>
+if (require("nlme")) {
+    data("Orthodont")
+    fm1 <- lme(distance ~ age + Sex, data = Orthodont, random = ~ 1)
+    hsd1 <- glht(fm1, linfct = mcp(Sex = "Tukey"))
+    cld(hsd1)
+}

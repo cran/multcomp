@@ -11,7 +11,14 @@ extr <- function(object) {
     stopifnot(object$type == "Tukey")
 
     mf <- model.frame(object$model)
-    y <- model.response(mf)
+    if (!is.null(attr(mf, "terms"))) {
+        tm <- attr(mf, "terms")
+    } else {
+        tm <- try(terms(object$model))
+        if (inherits(tm, "try-error")) stop("no terms component found")
+    }
+    covar <- (length(attr(tm, "term.labels")) > 1)
+    y <- mf[[1L]]
     yname <- colnames(mf)[[1L]]
 
     stopifnot(length(object$focus) == 1)
@@ -19,11 +26,10 @@ extr <- function(object) {
     xname <- object$focus
 
     lp <- fitted(object$model)
-    covar <- (length(attr(terms(object$model), "term.labels")) > 1)
 
     ret <- list(y = y, yname = yname,  
                 x = x, xname = xname, 
-                weights = model.weights(model.frame(object$model)), 
+                weights = model.weights(mf), 
                 lp = lp, covar = covar)
     return(ret)
 }
