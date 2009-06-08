@@ -1,6 +1,6 @@
 
-R version 2.7.1 (2008-06-23)
-Copyright (C) 2008 The R Foundation for Statistical Computing
+R version 2.9.0 (2009-04-17)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -18,6 +18,8 @@ Type 'q()' to quit R.
 > 
 > library("multcomp")
 Loading required package: mvtnorm
+Loading required package: survival
+Loading required package: splines
 > set.seed(290875)
 > 
 > ### mcp didn't accept objects of class `contrMat'
@@ -103,7 +105,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x8acf748>
+<environment: 0x9148754>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -122,7 +124,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x8acf748>
+<environment: 0x9148754>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -146,7 +148,7 @@ $pvalues
  [1] 1.380883e-01 3.524764e-04 9.394029e-07 2.897682e-14 2.050268e-01
  [6] 9.917862e-04 6.540450e-10 2.512705e-01 3.447725e-06 3.042641e-03
 attr(,"error")
-[1] 0.0001910665
+[1] 0
 
 $type
 [1] "single-step"
@@ -183,7 +185,7 @@ Warning messages:
 1: In mcp2matrix(model, linfct = linfct) :
   covariate interactions found -- default contrast might be inappropriate
 2: In glht.matrix(model = list(coefficients = c(14.4166666666667, -5.83333333333334,  :
-  6 out of 19 coefficients not estimable in ‘model’
+  6 out of 19 coefficients not estimable in 'model'
 > try(glht(tmp.aov, linfct=mcp(FF="Tukey")))
 
 	 General Linear Hypotheses
@@ -201,7 +203,7 @@ Warning messages:
 1: In mcp2matrix(model, linfct = linfct) :
   covariate interactions found -- default contrast might be inappropriate
 2: In glht.matrix(model = list(coefficients = c(14.4166666666667, -5.83333333333334,  :
-  6 out of 19 coefficients not estimable in ‘model’
+  6 out of 19 coefficients not estimable in 'model'
 > glht(tmp.aov, linfct=mcp(GG="Tukey"))
 
 	 General Linear Hypotheses
@@ -222,7 +224,7 @@ Warning messages:
 1: In mcp2matrix(model, linfct = linfct) :
   covariate interactions found -- default contrast might be inappropriate
 2: In glht.matrix(model = list(coefficients = c(14.4166666666667, -5.83333333333334,  :
-  6 out of 19 coefficients not estimable in ‘model’
+  6 out of 19 coefficients not estimable in 'model'
 > 
 > ### covariate interactions: fire a warning
 > tmp.aov <- aov(z ~ w*GG , data=tmp.data)
@@ -250,9 +252,9 @@ In mcp2matrix(model, linfct = linfct) :
 > amod <- aov(breaks ~ tension + Error(wool), data = warpbreaks)
 > try(glht(amod, linfct = mcp(tension = "Tukey")))
 Error in model.matrix.aovlist(model) : 
-  ‘glht’ does not support objects of class ‘aovlist’
+  'glht' does not support objects of class 'aovlist'
 Error in factor_contrasts(model) : 
-  no ‘model.matrix’ method for ‘model’ found!
+  no 'model.matrix' method for 'model' found!
 > 
 > ### print error, spotted by Rich
 > amod <- aov(breaks ~ wool * tension, data = warpbreaks)
@@ -297,13 +299,13 @@ H - M == 0   0.5556  -9.7590  10.8702
 > amod <- aov(breaks ~ tension, data = warpbreaks)
 > try(glht(amod, linfct = mcp(group = "Tukey")))
 Error in mcp2matrix(model, linfct = linfct) : 
-  Variable(s) ‘group’ have been specified in ‘linfct’ but cannot be found in ‘model’! 
+  Variable(s) 'group' have been specified in 'linfct' but cannot be found in 'model'! 
 > tmp <- warpbreaks
 > class(tmp$tension) <- "numeric"
 > amod <- aov(breaks ~ tension, data = tmp)
 > try(glht(amod, linfct = mcp(tension = "Tukey")))
 Error in mcp2matrix(model, linfct = linfct) : 
-  Variable(s) ‘tension’ of class ‘integer’ is/are not contained as a factor in ‘model’.
+  Variable(s) 'tension' of class 'integer' is/are not contained as a factor in 'model'.
 > 
 > ### symbolic description and interactions
 > ### spotted by Antonio Fabio Di Narzo <antonio.dinarzo@unibo.it>
@@ -359,5 +361,5 @@ Linear Hypotheses:
 > amod <- aov(breaks ~ tension, data = warpbreaks)
 > try(glht(amod, linfct = mcp(tension = "Warp")))
 Error in chrlinfct2matrix(kch, levels(mf[[nm]])) : 
-  argument ‘Warp’ cannot be interpreted as expression
+  argument 'Warp' cannot be interpreted as expression
 > 

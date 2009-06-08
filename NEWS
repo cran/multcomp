@@ -1,4 +1,12 @@
 
+
+		CHANGES in `multcomp' VERSION 1.1-0
+
+    o    new compact letter displays
+
+    o    force binary mode when downloading SPSS data files
+
+
 		CHANGES in `multcomp' VERSION 1.0-8
 
     o    new vignette containing supplementary material
