@@ -105,7 +105,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x9148754>
+<environment: 0xa5c378c>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -124,7 +124,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x9148754>
+<environment: 0xa5c378c>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -362,4 +362,16 @@ Linear Hypotheses:
 > try(glht(amod, linfct = mcp(tension = "Warp")))
 Error in chrlinfct2matrix(kch, levels(mf[[nm]])) : 
   argument 'Warp' cannot be interpreted as expression
+> 
+> ### cld did not find a terms component
+> ### spotted by Peter B. Mandeville <mandevip@hotmail.com>
+> if (require("nlme")) {
++     data("Orthodont")
++     fm1 <- lme(distance ~ age + Sex, data = Orthodont, random = ~ 1)
++     hsd1 <- glht(fm1, linfct = mcp(Sex = "Tukey"))
++     cld(hsd1)
++ }
+Loading required package: nlme
+Female   Male 
+   "a"    "b" 
 > 

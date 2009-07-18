@@ -1,0 +1,203 @@
+\begin{thebibliography}{30}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bates(2005)]{Rnews:Bates:2005}
+Douglas Bates.
+\newblock Fitting linear mixed models in {R}.
+\newblock \emph{R News}, 5\penalty0 (1):\penalty0 27--30, May 2005.
+\newblock URL \url{http://CRAN.R-project.org/doc/Rnews/}.
+
+\bibitem[Bates(2007)]{pkg:lme4}
+Douglas Bates.
+\newblock \emph{lme4: {L}inear mixed-effects models using {S4} classes}, 2007.
+\newblock URL \url{http://CRAN.R-project.org}.
+\newblock R package version 0.99875-9.
+
+\bibitem[B{\"o}nsch et~al.(2005)B{\"o}nsch, Lederer, Reulbach, Hothorn,
+  Kornhuber, and Bleich]{Boenscheta2005}
+Domenikus B{\"o}nsch, Thomas Lederer, Udo Reulbach, Torsten Hothorn, Johannes
+  Kornhuber, and Stefan Bleich.
+\newblock Joint analysis of the {NACP-REP1} marker within the alpha synuclein
+  gene concludes association with alcohol dependence.
+\newblock \emph{Human Molecular Genetics}, 14\penalty0 (7):\penalty0 967--971,
+  2005.
+
+\bibitem[Bretz et~al.(2001)Bretz, Genz, and Hothorn]{BretzGenzHothorn2001}
+Frank Bretz, Alan Genz, and Ludwig~A. Hothorn.
+\newblock On the numerical availability of multiple comparison procedures.
+\newblock \emph{Biometrical Journal}, 43\penalty0 (5):\penalty0 645--656, 2001.
+
+\bibitem[Bretz et~al.(2008)Bretz, Hothorn, and Westfall]{Bretzetal2008}
+Frank Bretz, Torsten Hothorn, and Peter Westfall.
+\newblock Multiple comparison procedures in linear models.
+\newblock In \emph{International Conference on Computational Statistics}, 2008.
+\newblock submitted.
+
+\bibitem[Bullinger et~al.(2004)Bullinger, D{\"o}hner, Bair, Fr{\"o}hlich,
+  Schlenk, Tibshirani, D{\"o}hner, and Pollack]{Bullingeretal2004}
+Lars Bullinger, Konstanze D{\"o}hner, Eric Bair, Stefan Fr{\"o}hlich,
+  Richard~F. Schlenk, Robert Tibshirani, Hartmut D{\"o}hner, and Jonathan~R.
+  Pollack.
+\newblock Use of gene-expression profiling to identify prognostic subclasses in
+  adult acute myloid leukemia.
+\newblock \emph{New England Journal of Medicine}, 350\penalty0 (16):\penalty0
+  1605--1616, 2004.
+
+\bibitem[Garcia et~al.(2005)Garcia, Wagner, Hothorn, Koebnick, Zunft, and
+  Trippo]{garcia2005}
+Ada~L. Garcia, Karen Wagner, Torsten Hothorn, Corinna Koebnick, Hans-Joachim~F.
+  Zunft, and Ulrike Trippo.
+\newblock Improved prediction of body fat by measuring skinfold thickness,
+  circumferences, and bone breadths.
+\newblock \emph{Obesity Research}, 13\penalty0 (3):\penalty0 626--634, 2005.
+
+\bibitem[Genz(1992)]{Genz1992}
+Alan Genz.
+\newblock Numerical computation of multivariate normal probabilities.
+\newblock \emph{Journal of Computational and Graphical Statistics}, 1:\penalty0
+  141--149, 1992.
+
+\bibitem[Genz and Bretz(1999)]{GenzBretz1999}
+Alan Genz and Frank Bretz.
+\newblock Numerical computation of multivariate $t$-probabilities with
+  application to power calculation of multiple contrasts.
+\newblock \emph{Journal of Statistical Computation and Simulation},
+  63:\penalty0 361--378, 1999.
+
+\bibitem[Genz and Bretz(2002)]{GenzBretz2002}
+Alan Genz and Frank Bretz.
+\newblock Methods for the computation of multivariate $t$-probabilities.
+\newblock \emph{Journal of Computational and Graphical Statistics},
+  11:\penalty0 950--971, 2002.
+
+\bibitem[Hochberg and Tamhane(1987)]{HochbergTamhane1987}
+Yosef Hochberg and Ajit C.~T{\'i}tulo Tamhane.
+\newblock \emph{Multiple Comparison Procedures}.
+\newblock John Wiley \& Sons, New York, 1987.
+
+\bibitem[Hothorn et~al.(2006)Hothorn, Hornik, van~de Wiel, and
+  Zeileis]{Hothorn:2006:AmStat}
+Torsten Hothorn, Kurt Hornik, Mark~A. van~de Wiel, and Achim Zeileis.
+\newblock A {L}ego system for conditional inference.
+\newblock \emph{The American Statistician}, 60\penalty0 (3):\penalty0 257--263,
+  2006.
+
+\bibitem[Hothorn et~al.(2008)Hothorn, Bretz, Westfall, and
+  Heiberger]{pkg:multcomp}
+Torsten Hothorn, Frank Bretz, Peter Westfall, and Richard~M. Heiberger.
+\newblock \emph{multcomp: {S}imultaneous Inference in General Parametric
+  Models}, 2008.
+\newblock URL \url{http://CRAN.R-project.org}.
+\newblock R package version 1.0-0.
+
+\bibitem[Hsu(1996)]{Hsu1996}
+Jason~C. Hsu.
+\newblock \emph{Multiple Comparisons: Theory and Methods}.
+\newblock CRC Press, Chapman \& Hall, London, 1996.
+
+\bibitem[Marcus et~al.(1976)Marcus, Eric, and Gabriel]{Marcusetal1976}
+Ruth Marcus, Peritz Eric, and K.~Ruben Gabriel.
+\newblock On closed testing procedures with special reference to ordered
+  analysis of variance.
+\newblock \emph{Biometrika}, 63:\penalty0 655--660, 1976.
+
+\bibitem[{R Development Core Team}(2008)]{rcore2007}
+{R Development Core Team}.
+\newblock \emph{\textsf{R}: A Language and Environment for Statistical
+  Computing}.
+\newblock R Foundation for Statistical Computing, Vienna, Austria, 2008.
+\newblock URL \url{http://www.R-project.org}.
+\newblock {ISBN} 3-900051-07-0.
+
+\bibitem[Rousseeuw and Leroy(2003)]{RousseeuwLeroy2003}
+Peter~J. Rousseeuw and Annick~M. Leroy.
+\newblock \emph{Robust Regression and Outlier Detection}.
+\newblock John Wiley \& Sons, New York, 2nd edition, 2003.
+
+\bibitem[Salib and Hillier(1997)]{SalibHillier1997}
+Emad Salib and Valerie Hillier.
+\newblock A case-control study of smoking and {A}lzheimer's disease.
+\newblock \emph{International Journal of Geriatric Psychiatry}, 12:\penalty0
+  295--300, 1997.
+
+\bibitem[Searle(1971)]{Searle1971}
+Shayle~R. Searle.
+\newblock \emph{Linear Models}.
+\newblock John Wiley \& Sons, New York, 1971.
+
+\bibitem[Serfling(1980)]{Serfling1980}
+Robert~J. Serfling.
+\newblock \emph{Approximation Theorems of Mathematical Statistics}.
+\newblock John Wiley \& Sons, New York, 1980.
+
+\bibitem[Shaffer(1986)]{Shaffer1986}
+Juliet~P. Shaffer.
+\newblock Modified sequentially rejective multiple test procedures.
+\newblock \emph{Journal of the American Statistical Association}, 81:\penalty0
+  826--831, 1986.
+
+\bibitem[Stefanski and Boos(2002)]{mfluc:Stefanski+Boos:2002}
+Leonard~A. Stefanski and Dennis~D. Boos.
+\newblock The calculus of {M}-estimation.
+\newblock \emph{The American Statistician}, 56:\penalty0 29--38, 2002.
+
+\bibitem[Todorov et~al.(2007)Todorov, Ruckstuhl, Salibian-Barrera, Maechler,
+  and {others}]{pkg:robustbase}
+Valentin Todorov, Andreas Ruckstuhl, Matias Salibian-Barrera, Martin Maechler,
+  and {others}.
+\newblock \emph{robustbase: {B}asic Robust Statistics}, 2007.
+\newblock URL \url{http://CRAN.R-project.org}.
+\newblock R package version 0.2-8.
+
+\bibitem[Tong(1990)]{Tong1990}
+Yung~Liang Tong.
+\newblock \emph{The Multivariate Normal Distribution}.
+\newblock Springer-Verlag, New York, Berlin, 1990.
+
+\bibitem[Westfall(1997)]{Westfall1997}
+Peter~H. Westfall.
+\newblock Multiple testing of general contrasts using logical constraints and
+  correlations.
+\newblock \emph{Journal of the American Statistical Association}, 92\penalty0
+  (437):\penalty0 299--306, 1997.
+
+\bibitem[Westfall and Tobias(2007)]{WestfallTobias2007}
+Peter~H. Westfall and Randall~D. Tobias.
+\newblock Multiple testing of general contrasts: {T}runcated closure and the
+  extended {S}haffer-{R}oyen method.
+\newblock \emph{Journal of the American Statistical Association}, 102:\penalty0
+  487--494, 2007.
+
+\bibitem[Westfall et~al.(1999)Westfall, Tobias, Rom, Wolfinger, and
+  Hochberg]{Westfall1999}
+Peter~H. Westfall, Randall~D. Tobias, Dror Rom, Russell~D. Wolfinger, and Yosef
+  Hochberg.
+\newblock \emph{Multiple Comparisons and Multiple Tests Using the {SAS}
+  System}.
+\newblock SAS Institute Inc., Cary, NC, 1999.
+
+\bibitem[Yohai(1987)]{Yohai1987}
+Victor~J. Yohai.
+\newblock High breakdown-point and high efficiency estimates for regression.
+\newblock \emph{The Annals of Statistics}, 15:\penalty0 642--65, 1987.
+
+\bibitem[Zeileis(2004)]{Zeileis2004}
+Achim Zeileis.
+\newblock Econometric computing with {HC} and {HAC} covariance matrix
+  estimators.
+\newblock \emph{Journal of Statistical Software}, 11\penalty0 (10):\penalty0
+  1--17, 2004.
+\newblock URL \url{http://www.jstatsoft.org/v11/i10/}.
+
+\bibitem[Zeileis(2006)]{Zeileis2006}
+Achim Zeileis.
+\newblock Object-oriented computation of sandwich estimators.
+\newblock \emph{Journal of Statistical Software}, 16\penalty0 (9):\penalty0
+  1--16, 2006.
+\newblock URL \url{http://www.jstatsoft.org/v16/i09/}.
+
+\end{thebibliography}
