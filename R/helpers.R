@@ -1,10 +1,10 @@
 
 # $Id: helpers.R 242 2008-07-02 12:49:06Z thothorn $
 
-### oh dear!
-### Cox models don't have any intercept ...
+### model.matrix.coxph doesn't return contrasts etc.
 model.matrix.coxph <- function(object, ...) {
-    mm <- model.matrix.default(object)
+    mm <- model.matrix(delete.response(terms(object)),
+                       data = model.frame(object))
     at <- attributes(mm)
     mm <- mm[,-1]
     at$dim[2] <- at$dim[2] - 1
@@ -12,6 +12,11 @@ model.matrix.coxph <- function(object, ...) {
     at$assign <- at$assign[-1]
     attributes(mm) <- at
     mm
+}
+
+model.matrix.survreg <- function(object, ...) {
+   model.matrix(delete.response(terms(object)),
+                       data = model.frame(object))
 }
 
 model.matrix.aovlist <- function(object, ...)
