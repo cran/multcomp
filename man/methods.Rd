@@ -22,7 +22,7 @@
         ...)
 \method{coef}{glht}(object, rhs = FALSE, ...)
 \method{vcov}{glht}(object, ...)
-\method{plot}{confint.glht}(x, xlim, xlab, ...)
+\method{plot}{confint.glht}(x, xlim, xlab, ylim, ...)
 \method{plot}{glht}(x, ...)
 univariate()
 adjusted(type = c("single-step", "Shaffer", "Westfall", "free", 
@@ -46,6 +46,7 @@ univariate_calpha(...)
                to be applied. See below and \code{\link{p.adjust}}.}
   \item{x}{an object of class \code{\link{glht}} or \code{confint.glht}.}
   \item{xlim}{the \code{x} limits \code{(x1, x2)} of the plot.}
+  \item{ylim}{the y limits of the plot.}
   \item{xlab}{a label for the \code{x} axis.}
   \item{...}{ additional arguments, such as \code{maxpts}, 
               \code{abseps} or \code{releps} to

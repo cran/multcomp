@@ -1,9 +1,9 @@
 
-# $Id: plot.R 229 2008-04-04 11:47:30Z thothorn $
+# $Id: plot.R 270 2009-09-08 15:17:51Z thothorn $
 
 ### uhhh -- mainly copy and paste from plot.TukeyHSD
 ### with modifications by Richard M. Heiberger <rmh@temple.edu>
-plot.confint.glht <- function(x, xlim, xlab, ...) {
+plot.confint.glht <- function(x, xlim, xlab, ylim, ...) {
 
     xi <- x$confint
     ### make sure one-sided intervals are drawn correctly
@@ -13,8 +13,11 @@ plot.confint.glht <- function(x, xlim, xlab, ...) {
     yvals <- nrow(xi):1
     if (missing(xlim))
         xlim <- xrange
+    if (missing(ylim))
+        ylim <- c(0.5, nrow(xi) + 0.5)
     plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2), 
-         type = "n", axes = FALSE, xlab = "", ylab = "", xlim = xlim, ...)
+         type = "n", axes = FALSE, xlab = "", ylab = "", 
+         xlim = xlim, ylim = ylim, ...)
     axis(1, ...)
     axis(2, at = nrow(xi):1, labels = dimnames(xi)[[1]], 
          las = 1, ...)

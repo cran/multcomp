@@ -18,7 +18,7 @@
 \method{glht}{character}(model, linfct, ...)
 \method{glht}{expression}(model, linfct, ...)
 \method{glht}{mcp}(model, linfct, ...)
-mcp(...)
+mcp(..., interaction_average = FALSE, covariate_average = FALSE)
 }
 \arguments{
   \item{model}{ a fitted model, 
@@ -41,6 +41,10 @@ mcp(...)
       '"less"'.  You can specify just the initial letter.}
   \item{rhs}{ an optional numeric vector specifying the 
               right hand side of the hypothesis.}
+  \item{interaction_average}{logical indicating if comparisons are
+      averaging over interaction terms. Experimental!}
+  \item{covariate_average}{logical indicating if comparisons are
+      averaging over additional covariates. Experimental!}
   \item{\dots}{ additional arguments to function \code{\link{modelparm}} in all
                 \code{glht} methods. For function \code{mcp},
                 multiple comparisons are defined by 

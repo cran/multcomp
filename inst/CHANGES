@@ -1,5 +1,14 @@
 
 
+		CHANGES in `multcomp' VERSION 1.1-2
+
+    o   mcp may average over interactions and covariates (Experimental!)
+
+    o   ylim argument to plot
+
+    o   update to survival 2.35-7
+
+
 		CHANGES in `multcomp' VERSION 1.1-1
 
     o    better handling of model.frames in `cld'
