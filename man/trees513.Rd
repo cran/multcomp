@@ -28,7 +28,7 @@ In most parts of Germany, the natural or artificial
 regeneration of forests is difficult due to a high browsing
 intensity. Young trees suffer from browsing damage, mostly by roe
 and red deer. In order to estimate the browsing intensity for
-serveral tree species, the Bavarian State Ministry of Agriculture
+several tree species, the Bavarian State Ministry of Agriculture
 and Foresty conducts a survey every three years. Based on
 the estimated percentage of damaged trees, suggestions for
 the implementation or modification of deer management plans are made.
@@ -37,14 +37,14 @@ The survey takes place in all 756 game management districts
 the game management district number 513 `Unterer Aischgrund'
 (located in Frankonia between Erlangen and H\"ochstadt) in 2006. The data
 of 2700 trees include the species and a binary
-variable inicating whether or not the tree suffers from damage caused
+variable indicating whether or not the tree suffers from damage caused
 by deer browsing.
 
 }
 \source{
   
    Bayerisches Staatsministerium fuer Landwirtschaft und Forsten (2006),
-   Forstliche Gutachten zur Situtation der Waldverjuengung 2006.
+   Forstliche Gutachten zur Situation der Waldverjuengung 2006.
    \url{www.forst.bayern.de}
 
    Torsten Hothorn, Frank Bretz and Peter Westfall (2008),

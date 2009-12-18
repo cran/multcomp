@@ -1,5 +1,5 @@
 
-# $Id: helpers.R 242 2008-07-02 12:49:06Z thothorn $
+# $Id: helpers.R 280 2009-11-18 16:38:20Z thothorn $
 
 ### model.matrix.coxph doesn't return contrasts etc.
 model.matrix.coxph <- function(object, ...) {
@@ -14,10 +14,90 @@ model.matrix.coxph <- function(object, ...) {
     mm
 }
 
+model.matrix.coxph.penal <- function(object, ...) {
+
+    class(object) <- "coxph"
+    mm <- model.matrix(object)
+    at <- attributes(mm)
+    indx <- grep("frailty", colnames(mm))
+    ret <- mm[ , -indx, drop = FALSE]
+    attr(ret, "assign") <- at$assign[-indx]
+    attr(ret, "contrasts") <- at$contrasts
+    ret
+}
+
+model.frame.coxph.penal <- function(object, ...) {
+
+    tm <- terms(object)
+    class(object) <- "coxph"
+    mf <- model.frame(object)
+    ret <- cbind(mf[[1]], model.frame(delete.response(tm), data = mf))
+    colnames(ret)[1] <- colnames(mf)[1]
+    ret
+}
+
+terms.coxph.penal <- function(object, ...) {
+
+    class(object) <- "coxph"           
+    tm <- terms(object)
+    ctm <- as.character(tm)
+    x <- strsplit(ctm[3], "+", fixed = TRUE)[[1]]
+    x <- x[-grep("frailty", x)]
+    fm <- paste(ctm[2], "~", paste(x, collapse = "+"))
+    terms(as.formula(fm))
+}
+
+coxph.penalcoef <- function(object, ...) {
+
+    mm <- model.matrix(object)
+    class(object) <- "coxph"
+    cf <- coef(object)
+    cf[1:ncol(mm)]
+}
+
+coxph.penalvcov <- function(object, ...) {
+    
+    mm <- model.matrix(object)
+    class(object) <- "coxph"
+    vc <- vcov(object)        
+    vc[1:ncol(mm), 1:ncol(mm), drop = FALSE]
+}
+
+
 model.matrix.survreg <- function(object, ...) {
    model.matrix(delete.response(terms(object)),
                        data = model.frame(object))
 }
+
+### coxme objects
+coxmecoef <- function(object)
+   object$coef$fixed
+
+coxmevcov <- function(object) {
+   cf <- object$coef$fixed 
+   vcov <- object$variance 
+   ### fix effects are last
+   indx <- sort(rev(1:nrow(vcov))[1:length(cf)])
+   vcov <- vcov[indx, indx, drop = FALSE]
+   rownames(vcov) <- names(cf)
+   colnames(vcov) <- names(cf)
+   vcov
+}
+
+model.frame.coxme <- function(formula, ...) {
+    fm <- formula$formulaList$fixed
+    mf <- formula$call
+    m <- match(c("formula", "data"), names(mf), 0L)
+    mf <- mf[c(1L, m)]
+    mf[[1L]] <- as.name("model.frame")
+    mf[[2L]] <- fm
+    mf <- eval(mf, environment(fm))
+    mf
+}
+
+model.matrix.coxme <- multcomp:::model.matrix.coxph
+
+
 
 model.matrix.aovlist <- function(object, ...)
     stop(sQuote("glht"), " does not support objects of class ", 
@@ -109,6 +189,12 @@ modelparm.survreg <- function(model, coef. = coef, vcov. = vcovsurvreg, df = NUL
 modelparm.aovlist <- function(model, coef. = coef, vcov. = vcov, df = NULL, ...)
     stop(sQuote("glht"), " does not support objects of class ", sQuote("aovlist"))
 
+modelparm.coxme <- function(model, coef. = coxmecoef, vcov. = coxmevcov, df = NULL, ...)
+    modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
+
+modelparm.coxph.penal <- function(model, coef. = coxph.penalcoef, 
+                                  vcov. = coxph.penalvcov, df = NULL, ...)
+    modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
 
 ### modified from package MASS  
 MPinv <- function (X, tol = sqrt(.Machine$double.eps))

@@ -1,5 +1,5 @@
 
-# $Id: print.R 254 2009-01-21 15:02:18Z thothorn $
+# $Id: print.R 273 2009-09-16 11:20:55Z thothorn $
 
 ### print methods
 print.glht <- function(x, digits = max(3, getOption("digits") - 3), ...) 
@@ -25,13 +25,12 @@ print.summary.glht <- function(x, digits = max(3, getOption("digits") - 3),
     cat("\n\t", "Simultaneous Tests for General Linear Hypotheses\n\n")
     if (!is.null(x$type))
         cat("Multiple Comparisons of Means:", x$type, "Contrasts\n\n\n")
-    cat("Fit: ")
-    if (isS4(x$model)) {
-        print(x$model@call)
-    } else {
-        print(x$model$call)
+    call <- if (isS4(x$model)) x$model@call else x$model$call
+    if (!is.null(call)) {
+        cat("Fit: ")
+        print(call)
+        cat("\n")
     }
-    cat("\n")
 
     pq <- x$test
     mtests <- cbind(pq$coefficients, pq$sigma, pq$tstat, pq$pvalues)

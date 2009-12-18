@@ -1,5 +1,5 @@
 
-R version 2.9.0 (2009-04-17)
+R version 2.10.0 (2009-10-26)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -105,7 +105,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0xa5c378c>
+<environment: 0x8d0b2e4>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -124,7 +124,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0xa5c378c>
+<environment: 0x8d0b2e4>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -148,7 +148,7 @@ $pvalues
  [1] 1.380883e-01 3.524764e-04 9.394029e-07 2.897682e-14 2.050268e-01
  [6] 9.917862e-04 6.540450e-10 2.512705e-01 3.447725e-06 3.042641e-03
 attr(,"error")
-[1] 0
+[1] 0.0001910665
 
 $type
 [1] "single-step"
@@ -374,4 +374,23 @@ Error in chrlinfct2matrix(kch, levels(mf[[nm]])) :
 Loading required package: nlme
 Female   Male 
    "a"    "b" 
+> 
+> ### spotted by <chris.chizinski@gmail.com>
+> ### example code by Achim Zeileis <Achim.Zeileis@wu.ac.at>
+> ## various models with and without intercept
+> m1a <- lm(breaks ~ tension, data = warpbreaks)
+> m1b <- lm(breaks ~ 0 + tension, data = warpbreaks)
+> m2a <- lm(breaks ~ wool + tension, data = warpbreaks)
+> m2b <- lm(breaks ~ 0 + wool + tension, data = warpbreaks)
+> 
+> ## these two are equivalent: one factor with/without intercept
+> stopifnot(all.equal(
++ coef(glht(m1a, linfct = mcp(tension = "Tukey"))),
++ coef(glht(m1b, linfct = mcp(tension = "Tukey")))))
+> 
+> ## these two should be equivalent: two factors with/without intercept
+> ## but the latter fails
+> stopifnot(all.equal(
++ coef(glht(m2a, linfct = mcp(tension = "Tukey"))),
++ coef(glht(m2b, linfct = mcp(tension = "Tukey")))))
 > 

@@ -80,6 +80,8 @@ plot.cld <- function(x, type = c("response", "lp"), ...) {
     class(dat) <- "data.frame"
     xn <- x$xname
     yn <- x$yname
+    if (!is.null(list(...)$xlab)) xn <- list(...)$xlab
+    if (!is.null(list(...)$ylab)) yn <- list(...)$ylab
 
     if (x$covar || type == "lp") {
         ### boxplot to make use of "..." argument

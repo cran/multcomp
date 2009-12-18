@@ -1,5 +1,5 @@
 
-# $Id: mcp.R 270 2009-09-08 15:17:51Z thothorn $
+# $Id: mcp.R 281 2009-12-18 16:05:48Z thothorn $
 
 ### multiple comparison procedures for levels of 
 ### factors in AN(C)OVA models
@@ -138,11 +138,12 @@ mcp2matrix <- function(model, linfct) {
         }
         ### and transform the original linear hypotheses 
         ### K beta to K C beta^* 
-        if (intercept) {
+        if (intercept || (!intercept && nm != colnames(factors)[1])) {
             Kstar <- linfct[[nm]] %*% C
         } else {
             ### model.matrix has `contrasts' argument even if no intercept
             ### was fitted and the contrast actually hasn't been applied
+            ### This is, however, only the case for the _first_ factor
             Kstar <- linfct[[nm]]
         }
         pos <- factors[nm,] == 1
