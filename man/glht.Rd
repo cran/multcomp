@@ -147,7 +147,7 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
   \item{coef}{ the values of the linear functions}
   \item{vcov}{ the covariance matrix of the values of the linear functions}
   \item{df}{ optionally, the degrees of freedom when the exact t 
-             distriubtion is used for inference}
+             distribution is used for inference}
   \item{alternative}{ a character string specifying the alternative
       hypothesis}
   \item{type}{ optionally, a character string giving the name of the specific procedure}

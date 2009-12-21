@@ -1,5 +1,5 @@
 
-R version 2.9.0 (2009-04-17)
+R version 2.10.0 (2009-10-26)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -79,7 +79,7 @@ Type 'q()' to quit R.
 > ## before loading the package.
 > ## Use postscript as incomplete files may be viewable, unlike PDF.
 > ## Choose a size that is close to on-screen devices, fix paper
-> ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
+> grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
 > grDevices::postscript("multcomp-Ex.ps")
 > 
 > assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
@@ -232,16 +232,16 @@ Fit: aov(formula = response ~ trt, data = cholesterol)
 
 Linear Hypotheses:
                      Estimate Std. Error t value Pr(>|t|)    
-2times - 1time == 0     3.443      1.443   2.385 0.042005 *  
-4times - 1time == 0     6.593      1.443   4.568 0.000156 ***
-drugD - 1time == 0      9.579      1.443   6.637 1.11e-06 ***
-drugE - 1time == 0     15.166      1.443  10.507 3.81e-14 ***
-4times - 2times == 0    3.150      1.443   2.182 0.042005 *  
-drugD - 2times == 0     6.136      1.443   4.251 0.000289 ***
-drugE - 2times == 0    11.723      1.443   8.122 1.63e-09 ***
-drugD - 4times == 0     2.986      1.443   2.069 0.044316 *  
-drugE - 4times == 0     8.573      1.443   5.939 1.35e-06 ***
-drugE - drugD == 0      5.586      1.443   3.870 0.000696 ***
+2times - 1time == 0     3.443      1.443   2.385   0.0420 *  
+4times - 1time == 0     6.593      1.443   4.568   <0.001 ***
+drugD - 1time == 0      9.579      1.443   6.637   <0.001 ***
+drugE - 1time == 0     15.166      1.443  10.507   <0.001 ***
+4times - 2times == 0    3.150      1.443   2.182   0.0420 *  
+drugD - 2times == 0     6.136      1.443   4.251   <0.001 ***
+drugE - 2times == 0    11.723      1.443   8.122   <0.001 ***
+drugD - 4times == 0     2.986      1.443   2.069   0.0443 *  
+drugE - 4times == 0     8.573      1.443   5.939   <0.001 ***
+drugE - drugD == 0      5.586      1.443   3.870   <0.001 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -268,11 +268,11 @@ Fit: aov(formula = response ~ trt - 1, data = cholesterol)
 
 Linear Hypotheses:
                      Estimate Std. Error t value Pr(>|t|)    
-2times - 1time == 0    -5.586      1.443  -3.870 0.000348 ***
-4times - 1time == 0    -8.573      1.443  -5.939 1.03e-06 ***
-4times - 2times == 0   -2.986      1.443  -2.069 0.044316 *  
-D - test == 0         -21.009      3.536  -5.942 1.03e-06 ***
-E - test == 0         -31.338      3.536  -8.864 1.09e-11 ***
+2times - 1time == 0    -5.586      1.443  -3.870   <0.001 ***
+4times - 1time == 0    -8.573      1.443  -5.939   <0.001 ***
+4times - 2times == 0   -2.986      1.443  -2.069   0.0443 *  
+D - test == 0         -21.009      3.536  -5.942   <0.001 ***
+E - test == 0         -31.338      3.536  -8.864   <0.001 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -288,7 +288,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### Name: cld
 > ### Title: Set up a compact letter display of all pair-wise comparisons
 > ### Aliases: cld cld.glht cld.summary.glht cld.confint.glht
-> 
 > 
 > ### ** Examples
 > 
@@ -349,7 +348,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 >  n <- c(10,20,30,40)
 >  names(n) <- paste("group", 1:4, sep="")
->  contrMat(n)    # Dunnett is default
+>  contrMat(n)	# Dunnett is default
 
 	 Multiple Comparisons of Means: Dunnett Contrasts
 
@@ -357,7 +356,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 group2 - group1     -1      1      0      0
 group3 - group1     -1      0      1      0
 group4 - group1     -1      0      0      1
->  contrMat(n, base = 2)  # use second level as baseline
+>  contrMat(n, base = 2)	# use second level as baseline
 
 	 Multiple Comparisons of Means: Dunnett Contrasts
 
@@ -565,16 +564,16 @@ Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
 Linear Hypotheses:
            Estimate Std. Error t value Pr(>|t|)    
-B - A == 0  -2.1333     0.8679  -2.458 0.050022 .  
-C - A == 0   3.6000     0.8679   4.148 0.002751 ** 
-D - A == 0   2.2000     0.8679   2.535 0.042967 *  
-E - A == 0  -4.3333     0.8679  -4.993 0.000489 ***
-C - B == 0   5.7333     0.8679   6.606 6.98e-05 ***
-D - B == 0   4.3333     0.8679   4.993 0.000489 ***
-E - B == 0  -2.2000     0.8679  -2.535 0.042967 *  
-D - C == 0  -1.4000     0.8679  -1.613 0.126291    
-E - C == 0  -7.9333     0.8679  -9.140 5.19e-07 ***
-E - D == 0  -6.5333     0.8679  -7.527 6.98e-05 ***
+B - A == 0  -2.1333     0.8679  -2.458  0.05002 .  
+C - A == 0   3.6000     0.8679   4.148  0.00275 ** 
+D - A == 0   2.2000     0.8679   2.535  0.04297 *  
+E - A == 0  -4.3333     0.8679  -4.993  < 0.001 ***
+C - B == 0   5.7333     0.8679   6.606  < 0.001 ***
+D - B == 0   4.3333     0.8679   4.993  < 0.001 ***
+E - B == 0  -2.2000     0.8679  -2.535  0.04297 *  
+D - C == 0  -1.4000     0.8679  -1.613  0.12629    
+E - C == 0  -7.9333     0.8679  -9.140  < 0.001 ***
+E - D == 0  -6.5333     0.8679  -7.527  < 0.001 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- Westfall method)
@@ -645,6 +644,7 @@ Education == 0         -0.8709
 Catholic == 0           0.1041
 Infant.Mortality == 0   1.0770
 
+> 
 > 
 >   ### multiple comparison procedures
 >   ### set up a one-way ANOVA
@@ -984,6 +984,7 @@ Linear Hypotheses:
 >   lines(speeds, cci$confint[,"lwr"], col = "blue")
 >   lines(speeds, cci$confint[,"upr"], col = "blue")
 > 
+> 
 >   ### simultaneous p values for parameters in a Cox model
 >   if (require("survival") && require("MASS")) {
 +       data("leuk", package = "MASS")
@@ -1158,24 +1159,6 @@ Loading required package: nlme
 Loading required package: lme4
 Loading required package: Matrix
 Loading required package: lattice
-
-Attaching package: 'Matrix'
-
-
-	The following object(s) are masked from package:stats :
-
-	 contr.helmert,
-	 contr.poly,
-	 contr.SAS,
-	 contr.sum,
-	 contr.treatment,
-	 xtabs 
-
-
-	The following object(s) are masked from package:base :
-
-	 rcond 
-
 
 Attaching package: 'lme4'
 
@@ -1442,7 +1425,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  26.017 0.14 26.216 0 0 
+Time elapsed:  26.217 0.228 26.566 0 0 
 > grDevices::dev.off()
 null device 
           1 

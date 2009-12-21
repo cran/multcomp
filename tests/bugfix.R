@@ -121,3 +121,22 @@ if (require("nlme")) {
     hsd1 <- glht(fm1, linfct = mcp(Sex = "Tukey"))
     cld(hsd1)
 }
+
+### spotted by <chris.chizinski@gmail.com>
+### example code by Achim Zeileis <Achim.Zeileis@wu.ac.at>
+## various models with and without intercept
+m1a <- lm(breaks ~ tension, data = warpbreaks)
+m1b <- lm(breaks ~ 0 + tension, data = warpbreaks)
+m2a <- lm(breaks ~ wool + tension, data = warpbreaks)
+m2b <- lm(breaks ~ 0 + wool + tension, data = warpbreaks)
+
+## these two are equivalent: one factor with/without intercept
+stopifnot(all.equal(
+coef(glht(m1a, linfct = mcp(tension = "Tukey"))),
+coef(glht(m1b, linfct = mcp(tension = "Tukey")))))
+
+## these two should be equivalent: two factors with/without intercept
+## but the latter fails
+stopifnot(all.equal(
+coef(glht(m2a, linfct = mcp(tension = "Tukey"))),
+coef(glht(m2b, linfct = mcp(tension = "Tukey")))))

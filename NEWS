@@ -1,4 +1,16 @@
 
+		CHANGES in `multcomp' VERSION 1.1-3
+
+    o   bugfix for models without intercept and more than one factor
+
+    o   print calls when available only
+
+    o   support for coxme objects
+
+    o   allow xlab and ylab arguments for plot.cld
+
+    o   systolic blood pressure data set added
+
 
 		CHANGES in `multcomp' VERSION 1.1-2
 
