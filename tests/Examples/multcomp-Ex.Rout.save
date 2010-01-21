@@ -1,5 +1,5 @@
 
-R version 2.10.0 (2009-10-26)
+R version 2.10.1 (2009-12-14)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -17,73 +17,8 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> ### * <HEADER>
-> ###
-> attach(NULL, name = "CheckExEnv")
-> assign("nameEx",
-+        local({
-+ 	   s <- "__{must remake R-ex/*.R}__"
-+            function(new) {
-+                if(!missing(new)) s <<- new else s
-+            }
-+        }),
-+        pos = "CheckExEnv")
-> ## Add some hooks to label plot pages for base and grid graphics
-> assign("base_plot_hook",
-+        function() {
-+            pp <- par(c("mfg","mfcol","oma","mar"))
-+            if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
-+                outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
-+                mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
-+                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
-+                outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
-+            }
-+        },
-+        pos = "CheckExEnv")
-> assign("grid_plot_hook",
-+        function() {
-+            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") -
-+                               grid::unit(1, "lines"), x=0, just="left"))
-+            grid::grid.text(sprintf("help(\"%s\")", nameEx()),
-+                            x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
-+                            y=grid::unit(0.8, "npc"), rot=90,
-+                            gp=grid::gpar(col="orchid"))
-+        },
-+        pos = "CheckExEnv")
-> setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
-> setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
-> setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
-> assign("cleanEx",
-+        function(env = .GlobalEnv) {
-+ 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
-+            RNGkind("default", "default")
-+ 	   set.seed(1)
-+    	   options(warn = 1)
-+ 	   .CheckExEnv <- as.environment("CheckExEnv")
-+ 	   delayedAssign("T", stop("T used instead of TRUE"),
-+ 		  assign.env = .CheckExEnv)
-+ 	   delayedAssign("F", stop("F used instead of FALSE"),
-+ 		  assign.env = .CheckExEnv)
-+ 	   sch <- search()
-+ 	   newitems <- sch[! sch %in% .oldSearch]
-+ 	   for(item in rev(newitems))
-+                eval(substitute(detach(item), list(item=item)))
-+ 	   missitems <- .oldSearch[! .oldSearch %in% sch]
-+ 	   if(length(missitems))
-+ 	       warning("items ", paste(missitems, collapse=", "),
-+ 		       " have been removed from the search path")
-+        },
-+        pos = "CheckExEnv")
-> assign("ptime", proc.time(), pos = "CheckExEnv")
-> ## at least one package changes these via ps.options(), so do this
-> ## before loading the package.
-> ## Use postscript as incomplete files may be viewable, unlike PDF.
-> ## Choose a size that is close to on-screen devices, fix paper
-> grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
-> grDevices::postscript("multcomp-Ex.ps")
-> 
-> assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
-> options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+> pkgname <- "multcomp"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
 > library('multcomp')
 Loading required package: mvtnorm
@@ -91,8 +26,8 @@ Loading required package: survival
 Loading required package: splines
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
-> assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
-> cleanEx(); nameEx("cftest")
+> cleanEx()
+> nameEx("cftest")
 > ### * cftest
 > 
 > flush(stderr()); flush(stdout())
@@ -150,7 +85,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > 
-> cleanEx(); nameEx("cholesterol")
+> cleanEx()
+> nameEx("cholesterol")
 > ### * cholesterol
 > 
 > flush(stderr()); flush(stdout())
@@ -280,7 +216,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > 
-> cleanEx(); nameEx("cld")
+> cleanEx()
+> nameEx("cld")
 > ### * cld
 > 
 > flush(stderr()); flush(stdout())
@@ -334,7 +271,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
-> cleanEx(); nameEx("contrMat")
+> cleanEx()
+> nameEx("contrMat")
 > ### * contrMat
 > 
 > flush(stderr()); flush(stdout())
@@ -455,7 +393,8 @@ C 4   -0.1   -0.2   -0.3    0.6
 > 
 > 
 > 
-> cleanEx(); nameEx("detergent")
+> cleanEx()
+> nameEx("detergent")
 > ### * detergent
 > 
 > flush(stderr()); flush(stdout())
@@ -582,7 +521,71 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > 
-> cleanEx(); nameEx("glht")
+> cleanEx()
+> nameEx("fattyacid")
+> ### * fattyacid
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fattyacid
+> ### Title: Fatty Acid Content of Bacillus simplex.
+> ### Aliases: fattyacid
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> 
+> if (require("sandwich")) {
++     data("fattyacid")
++     ### all-pairwise comparisons of the means of fatty acid content 
++     ### FA between different putative ecotypes PE accounting for 
++     ### heteroscedasticity by using a heteroscedastic consistent 
++     ### covariance estimation
++     amod <- aov(FA ~ PE, data = fattyacid)
++     amod_glht <- glht(amod, mcp(PE = "Tukey"), vcov = vcovHC)
++     summary(amod_glht)
++ 
++     ### simultaneous confidence intervals for the differences of 
++     ### means of fatty acid content between the putative ecotypes
++     confint(amod_glht)
++ }
+Loading required package: sandwich
+Loading required package: zoo
+
+	 Simultaneous Confidence Intervals
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Fit: aov(formula = FA ~ PE, data = fattyacid)
+
+Estimated Quantile = 2.8942
+95% family-wise confidence level
+ 
+
+Linear Hypotheses:
+               Estimate  lwr       upr      
+PE4 - PE3 == 0 -0.012820 -0.114108  0.088468
+PE5 - PE3 == 0 -0.084398 -0.182355  0.013558
+PE6 - PE3 == 0  0.019286 -0.084210  0.122781
+PE7 - PE3 == 0 -0.010048 -0.120043  0.099948
+PE9 - PE3 == 0  0.075536 -0.028027  0.179098
+PE5 - PE4 == 0 -0.071579 -0.128779 -0.014379
+PE6 - PE4 == 0  0.032105 -0.034133  0.098344
+PE7 - PE4 == 0  0.002772 -0.073223  0.078767
+PE9 - PE4 == 0  0.088355  0.022012  0.154699
+PE6 - PE5 == 0  0.103684  0.042661  0.164707
+PE7 - PE5 == 0  0.074351  0.002856  0.145845
+PE9 - PE5 == 0  0.159934  0.098797  0.221071
+PE7 - PE6 == 0 -0.029333 -0.108246  0.049579
+PE9 - PE6 == 0  0.056250 -0.013417  0.125917
+PE9 - PE7 == 0  0.085583  0.006582  0.164584
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("glht")
 > ### * glht
 > 
 > flush(stderr()); flush(stdout())
@@ -719,7 +722,8 @@ H - M == 0   -4.722
 > 
 > 
 > 
-> cleanEx(); nameEx("litter")
+> cleanEx()
+> nameEx("litter")
 > ### * litter
 > 
 > flush(stderr()); flush(stdout())
@@ -870,7 +874,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > 
-> cleanEx(); nameEx("methods")
+> cleanEx()
+> nameEx("methods")
 > ### * methods
 > 
 > flush(stderr()); flush(stdout())
@@ -1014,7 +1019,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > 
-> cleanEx(); nameEx("parm")
+> cleanEx()
+> nameEx("parm")
 > ### * parm
 > 
 > flush(stderr()); flush(stdout())
@@ -1057,7 +1063,8 @@ V4 - V1 >= 0 -1.66670     -Inf -0.03588
 > 
 > 
 > 
-> cleanEx(); nameEx("plot.cld")
+> cleanEx()
+> nameEx("plot.cld")
 > ### * plot.cld
 > 
 > flush(stderr()); flush(stdout())
@@ -1175,7 +1182,8 @@ Attaching package: 'lme4'
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
-> cleanEx(); nameEx("recovery")
+> cleanEx()
+> nameEx("recovery")
 > ### * recovery
 > 
 > flush(stderr()); flush(stdout())
@@ -1229,21 +1237,22 @@ Multiple Comparisons of Means: User-defined Contrasts
 
 Fit: aov(formula = minutes ~ blanket, data = recovery)
 
-Estimated Quantile = -1.8431
+Estimated Quantile = -1.843
 90% family-wise confidence level
  
 
 Linear Hypotheses:
              Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82262
-b2 - b0 >= 0 -7.46667     -Inf -4.51072
-b3 - b0 >= 0 -1.66667     -Inf -0.03594
+b1 - b0 >= 0 -2.13333     -Inf  0.82247
+b2 - b0 >= 0 -7.46667     -Inf -4.51087
+b3 - b0 >= 0 -1.66667     -Inf -0.03602
 
 > 
 > 
 > 
 > 
-> cleanEx(); nameEx("trees513")
+> cleanEx()
+> nameEx("trees513")
 > ### * trees513
 > 
 > flush(stderr()); flush(stdout())
@@ -1269,7 +1278,8 @@ b3 - b0 >= 0 -1.66667     -Inf -0.03594
 > 
 > 
 > 
-> cleanEx(); nameEx("waste")
+> cleanEx()
+> nameEx("waste")
 > ### * waste
 > 
 > flush(stderr()); flush(stdout())
@@ -1425,7 +1435,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  26.217 0.228 26.566 0 0 
+Time elapsed:  31.445 0.172 31.742 0 0 
 > grDevices::dev.off()
 null device 
           1 

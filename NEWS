@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 1.1-4
+
+    o   more example data sets
+
+
 		CHANGES in `multcomp' VERSION 1.1-3
 
     o   bugfix for models without intercept and more than one factor
