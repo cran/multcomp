@@ -1,5 +1,5 @@
 
-# $Id: glht.R 270 2009-09-08 15:17:51Z thothorn $
+# $Id: glht.R 286 2010-01-22 13:52:15Z thothorn $
 
 ### general linear hypotheses
 glht <- function(model, linfct, ...) {
@@ -81,7 +81,7 @@ glht.mcp <- function(model, linfct, ...) {
 
     ### extract factors and contrast matrices from `model'
     ia <- attr(linfct, "interaction_average")
-    ca <- attr(linfct, "interaction_average")
+    ca <- attr(linfct, "covariate_average")
     if (ia || ca) {
         ### experimental version
         tmp <- mcp2matrix2(model, linfct = linfct, interaction_average = ia,

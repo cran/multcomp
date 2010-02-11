@@ -25,7 +25,8 @@ extr <- function(object) {
     x <- mf[[object$focus]]
     xname <- object$focus
 
-    lp <- fitted(object$model)
+    f <- if (inherits(object$model, "coxph")) predict else fitted
+    lp <- f(object$model)
 
     ret <- list(y = y, yname = yname,  
                 x = x, xname = xname, 
@@ -73,11 +74,11 @@ plot.cld <- function(x, type = c("response", "lp"), ...) {
     type <- match.arg(type)
     dat <- x[c("x", "y", "lp")]
     if (is.null(x$weights)) {
-        dat$weights <- rep(1, length(x$y))
+        dat$weights <- rep(1, NROW(x$y))
     } else {
         dat$weights <- x$weights
     }
-    class(dat) <- "data.frame"
+    dat <- as.data.frame(dat)
     xn <- x$xname
     yn <- x$yname
     if (!is.null(list(...)$xlab)) xn <- list(...)$xlab
@@ -88,7 +89,8 @@ plot.cld <- function(x, type = c("response", "lp"), ...) {
         boxplot(lp ~ x, data = dat, xlab = xn, ylab = "linear predictor", ...)
         axis(3, at = 1:nlevels(dat$x), labels = vletters)
     } else {
-        switch(class(x$y), 
+        if (is.integer(dat$y)) dat$y <- as.numeric(dat$y)
+        switch(class(dat$y), 
             "numeric" = {
                 ### boxplot to make use of "..." argument
                 boxplot(y ~ x, data = dat, xlab = xn, ylab = yn, ...)

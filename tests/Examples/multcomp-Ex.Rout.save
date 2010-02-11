@@ -423,7 +423,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
-Estimated Quantile = 3.0638
+Quantile = 3.0638
 95% family-wise confidence level
  
 
@@ -559,7 +559,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = FA ~ PE, data = fattyacid)
 
-Estimated Quantile = 2.8942
+Quantile = 2.8942
 95% family-wise confidence level
  
 
@@ -906,7 +906,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
-Estimated Quantile = 2.4159
+Quantile = 2.4159
 95% family-wise confidence level
  
 
@@ -1049,7 +1049,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Fit: NULL
 
-Estimated Quantile = -1.8432
+Quantile = -1.8432
 90% family-wise confidence level
  
 
@@ -1213,7 +1213,7 @@ Multiple Comparisons of Means: Dunnett Contrasts
 
 Fit: aov(formula = minutes ~ blanket, data = recovery)
 
-Estimated Quantile = -1.8432
+Quantile = -1.8432
 90% family-wise confidence level
  
 
@@ -1237,7 +1237,7 @@ Multiple Comparisons of Means: User-defined Contrasts
 
 Fit: aov(formula = minutes ~ blanket, data = recovery)
 
-Estimated Quantile = -1.843
+Quantile = -1.843
 90% family-wise confidence level
  
 
@@ -1367,7 +1367,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = waste ~ temp * envir, data = waste)
 
-Estimated Quantile = 2.5984
+Quantile = 2.5984
 95% family-wise confidence level
  
 
@@ -1435,7 +1435,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  31.445 0.172 31.742 0 0 
+Time elapsed:  31.525 0.1 31.622 0 0 
 > grDevices::dev.off()
 null device 
           1 

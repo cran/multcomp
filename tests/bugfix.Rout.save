@@ -105,7 +105,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0xa714278>
+<environment: 0x92682e8>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -124,7 +124,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0xa714278>
+<environment: 0x92682e8>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -272,7 +272,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = breaks ~ wool * tension, data = warpbreaks)
 
-Estimated Quantile = 2
+Quantile = 2
 95% confidence level
  
 

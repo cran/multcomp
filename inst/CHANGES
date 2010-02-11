@@ -1,4 +1,10 @@
 
+		CHANGES in `multcomp' VERSION 1.1-5
+
+    o   fix small problems in `cld' spotted by 
+        Peter B. Mandeville <mandevip@hotmail.com>
+
+
 		CHANGES in `multcomp' VERSION 1.1-4
 
     o   more example data sets
