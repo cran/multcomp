@@ -154,7 +154,7 @@ Multiple Comparisons of Means: Mean Contrasts
 
 Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
-Estimated Quantile = 2.5559
+Quantile = 2.5559
 95% family-wise confidence level
  
 

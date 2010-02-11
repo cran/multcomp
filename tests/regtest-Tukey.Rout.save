@@ -47,7 +47,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
-Estimated Quantile = 2.4156
+Quantile = 2.4156
 95% family-wise confidence level
  
 
@@ -95,7 +95,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
-Estimated Quantile = 2.0086
+Quantile = 2.0086
 95% family-wise confidence level
  
 

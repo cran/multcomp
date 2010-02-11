@@ -86,7 +86,7 @@ print.confint.glht <- function(x, digits = max(3, getOption("digits") - 3),
     error <- attr(x$confint, "error")
     if (!is.null(error) && error > .Machine$double.eps)
         digits <- min(digits, which.min(abs(1 / error - (10^(1:10)))))
-    cat("Estimated Quantile =", round(attr(x$confint, "calpha"), digits))
+    cat("Quantile =", round(attr(x$confint, "calpha"), digits))
     cat("\n")
     if (attr(x, "type") == "adjusted") {
         cat(paste(level * 100, 
