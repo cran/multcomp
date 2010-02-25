@@ -1,5 +1,5 @@
 
-# $Id: print.R 273 2009-09-16 11:20:55Z thothorn $
+# $Id: print.R 287 2010-02-11 15:10:42Z thothorn $
 
 ### print methods
 print.glht <- function(x, digits = max(3, getOption("digits") - 3), ...) 

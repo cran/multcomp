@@ -1,5 +1,5 @@
 
-# $Id: methods.R 255 2009-02-10 15:45:59Z thothorn $
+# $Id: methods.R 288 2010-02-22 16:52:09Z thothorn $
 
 ### methods for `glht' objects
 coef.glht <- function(object, rhs = FALSE, ...) 
@@ -44,9 +44,9 @@ confint.glht <- function(object, parm, level = 0.95, calpha = adjusted_calpha(),
             UpperCL <- betahat + calpha * ses
         }, "less" = {
             LowerCL <- rep(-Inf, length(ses))
-            UpperCL <- betahat - calpha * ses
+            UpperCL <- betahat + calpha * ses
         }, "greater" = {
-            LowerCL <- betahat - calpha * ses
+            LowerCL <- betahat + calpha * ses
             UpperCL <- rep( Inf, length(ses))
     })
 

@@ -1,5 +1,5 @@
 
-# $Id: pqfunctions.R 240 2008-05-05 17:18:42Z thothorn $
+# $Id: pqfunctions.R 288 2010-02-22 16:52:09Z thothorn $
 
 pqglht <- function(object) 
 {
@@ -68,8 +68,8 @@ pqglht <- function(object)
     qfunction <- function(conf.level, adjusted = TRUE, ...) {
 
         tail <- switch(object$alternative, "two.sided" = "both.tails",
-                                    "less"      = "upper.tail",
-                                    "greater"   = "lower.tail")
+                                    "less"      = "lower.tail",
+                                    "greater"   = "upper.tail")
         if (adjusted) {
             calpha <- qmvt(conf.level, df = df, corr = cr, tail = tail, 
                            ...)
