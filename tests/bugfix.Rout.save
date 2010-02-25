@@ -105,13 +105,13 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x92682e8>
+<environment: 0xa5f4304>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
 {
     tail <- switch(object$alternative, two.sided = "both.tails", 
-        less = "upper.tail", greater = "lower.tail")
+        less = "lower.tail", greater = "upper.tail")
     if (adjusted) {
         calpha <- qmvt(conf.level, df = df, corr = cr, tail = tail, 
             ...)
@@ -124,7 +124,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x92682e8>
+<environment: 0xa5f4304>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 

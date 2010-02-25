@@ -1,4 +1,19 @@
 
+		CHANGES in `multcomp' VERSION 1.1-6
+
+    o   quantiles for confidence intervals
+        used `tail = upper.tail' for `alternative = less'
+        and `tail = lower.tail' for `alternative = greater'.
+        This has been changed.
+
+    o   prepare for multcomp book:
+        - SAS code in inst/MCMT
+        - new demos
+
+    o   source code for simulations with unbalanced heteroscedstic
+        designs added
+
+
 		CHANGES in `multcomp' VERSION 1.1-5
 
     o   fix small problems in `cld' spotted by 
