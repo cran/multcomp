@@ -110,7 +110,12 @@ mcp2matrix <- function(model, linfct) {
                     tmp <-  chrlinfct2matrix(kch, levels(mf[[nm]]))
                     tmpK <- tmp$K
                     m <<- c(m, tmp$m)
-                    alternative <<- tmp$alternative
+                    if (is.null(alternative)) {
+                        alternative <<- tmp$alternative
+                    } else {
+                        if (tmp$alternative != alternative)
+                            stop("mix of alternatives currently not implemented")
+                    }
                 }
                 if (is.null(rownames(tmpK)))
                     rownames(tmpK) <- paste(kch, 1:nrow(tmpK), sep = "_")
@@ -246,7 +251,12 @@ mcp2matrix2 <- function (model, linfct, interaction_average = FALSE,
                   tmp <- chrlinfct2matrix(kch, levels(mf[[nm]]))
                   tmpK <- tmp$K
                   m <<- c(m, tmp$m)
-                  alternative <<- tmp$alternative
+                  if (is.null(alternative)) {
+                      alternative <<- tmp$alternative
+                  } else {
+                      if (tmp$alternative != alternative)
+                          stop("mix of alternatives currently not implemented")
+                  }
                 }
                 if (is.null(rownames(tmpK))) 
                   rownames(tmpK) <- paste(kch, 1:nrow(tmpK), 

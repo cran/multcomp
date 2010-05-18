@@ -1,4 +1,10 @@
 
+		CHANGES in `multcomp' VERSION 1.1-7
+
+    o   mix of alternatives is currently not supported 
+        and also mcp() gives and error now.
+
+
 		CHANGES in `multcomp' VERSION 1.1-6
 
     o   quantiles for confidence intervals
