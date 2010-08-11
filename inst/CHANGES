@@ -1,4 +1,16 @@
 
+		CHANGES in `multcomp' VERSION 1.2-0
+
+    o   demos for "Multiple Comparisons Using R" by
+        Bretz, Hothorn & Westfall (2010)
+
+
+		CHANGES in `multcomp' VERSION 1.1-8
+
+    o   example on simultaneous tests against one- and
+        two-sided alternatives in ?glht.
+
+
 		CHANGES in `multcomp' VERSION 1.1-7
 
     o   mix of alternatives is currently not supported 

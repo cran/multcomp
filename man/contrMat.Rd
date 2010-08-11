@@ -23,6 +23,10 @@ contrMat(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
   The matrix of contrasts with appropriate row names is returned. 
 }
 \references{
+  Frank Bretz, Torsten Hothorn and Peter Westfall (2010),
+  \emph{Multiple Comparisons Using R}, CRC Press, Boca Raton.
+
+
   Frank Bretz, Alan Genz and Ludwig A. Hothorn (2001), On the numerical 
   availability of multiple comparison procedures. \emph{Biometrical Journal},
   \bold{43}(5), 645--656.

@@ -96,7 +96,7 @@ univariate_calpha(...)
   implemented in package \code{mvtnorm}.
 
   A more detailed description of the underlying methodology is
-  available from Hothorn et al. (2008).
+  available from Hothorn et al. (2008) and Bretz et al. (2010).
 
 
 }
@@ -109,6 +109,9 @@ univariate_calpha(...)
 
 }
 \references{
+
+   Frank Bretz, Torsten Hothorn and Peter Westfall (2010),
+   \emph{Multiple Comparisons Using R}, CRC Press, Boca Raton.
 
    Juliet P. Shaffer (1986), 
    Modified sequentially rejective multiple test procedures. 
