@@ -61,7 +61,7 @@
   }
 }
 \references{
-  Hans-Peter Piepho (2004), AAn Algorithm for a Letter-Based
+  Hans-Peter Piepho (2004), An Algorithm for a Letter-Based
   Representation of All-Pairwise Comparisons, \emph{Journal of
   Computational and Graphical Statistics}, \bold{13}(2), 456--466.
 }

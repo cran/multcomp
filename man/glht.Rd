@@ -135,7 +135,7 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
   and \code{\link{confint.glht}} methods, respectively.
 
   A more detailed description of the underlying methodology is
-  available from Hothorn et al. (2008).
+  available from Hothorn et al. (2008) and Bretz et al. (2010).
 
 }
 \value{
@@ -159,6 +159,9 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
 
 }
 \references{
+
+    Frank Bretz, Torsten Hothorn and Peter Westfall (2010),
+    \emph{Multiple Comparisons Using R}, CRC Press, Boca Raton.
 
     Shayle R. Searle (1971), \emph{Linear Models}.
     John Wiley \& Sons, New York.
@@ -221,6 +224,28 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
   ### instead of contrasts for `tension'
   ### (take model contrasts and intercept into account)
   glht(amod, linfct = cbind(0, contr \%*\% contr.treatment(3)))
+
+
+  ### mix of one- and two-sided alternatives
+  warpbreaks.aov <- aov(breaks ~ wool + tension,
+                      data = warpbreaks)
+
+  ### contrasts for `tension'
+  K <- rbind("L - M" = c( 1, -1,  0),     
+             "M - L" = c(-1,  1,  0),       
+             "L - H" = c( 1,  0, -1),     
+             "M - H" = c( 0,  1, -1))
+
+  warpbreaks.mc <- glht(warpbreaks.aov, 
+                        linfct = mcp(tension = K),
+                        alternative = "less")
+
+  ### correlation of first two tests is -1
+  cov2cor(vcov(warpbreaks.mc))
+
+  ### use smallest of the two one-sided
+  ### p-value as two-sided p-value -> 0.0232
+  summary(warpbreaks.mc)
 
 }
 \keyword{htest}
