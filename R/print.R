@@ -1,5 +1,5 @@
 
-# $Id: print.R 287 2010-02-11 15:10:42Z thothorn $
+# $Id: print.R 299 2010-08-25 14:25:31Z thothorn $
 
 ### print methods
 print.glht <- function(x, digits = max(3, getOption("digits") - 3), ...) 
@@ -32,6 +32,7 @@ print.summary.glht <- function(x, digits = max(3, getOption("digits") - 3),
         cat("\n")
     }
 
+    ### <FIXME>: compute coefmat in summary.glht for easier access???
     pq <- x$test
     mtests <- cbind(pq$coefficients, pq$sigma, pq$tstat, pq$pvalues)
     error <- attr(pq$pvalues, "error")
@@ -54,8 +55,11 @@ print.summary.glht <- function(x, digits = max(3, getOption("digits") - 3),
     alt <- switch(x$alternative,
                   "two.sided" = "==", "less" = ">=", "greater" = "<=")
     rownames(mtests) <- paste(rownames(mtests), alt, x$rhs)
+    ### </FIXME>
+
     printCoefmat(mtests, digits = digits, 
                  has.Pvalue = TRUE, P.values = TRUE, eps.Pvalue = sig)
+
     switch(type, 
         "univariate" = cat("(Univariate p values reported)"),
         "single-step" = cat("(Adjusted p values reported -- single-step method)"),
