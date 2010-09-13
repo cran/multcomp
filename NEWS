@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 1.2-1
+
+    o   fix dependencies
+
+
 		CHANGES in `multcomp' VERSION 1.2-0
 
     o   demos for "Multiple Comparisons Using R" by
