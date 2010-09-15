@@ -1,6 +1,6 @@
 
-R version 2.10.1 (2009-12-14)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.11.1 (2010-05-31)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -53,9 +53,9 @@ Quantile = 2.4156
 
 Linear Hypotheses:
            Estimate lwr      upr     
-M - L == 0 -10.0000 -19.3543  -0.6457
-H - L == 0 -14.7222 -24.0765  -5.3679
-H - M == 0  -4.7222 -14.0765   4.6321
+M - L == 0 -10.0000 -19.3541  -0.6459
+H - L == 0 -14.7222 -24.0763  -5.3681
+H - M == 0  -4.7222 -14.0763   4.6319
 
 > summary(glht(fm1, linfct = mcp(tension = "Tukey")))
 

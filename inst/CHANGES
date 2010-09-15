@@ -1,4 +1,11 @@
 
+		CHANGES in `multcomp' VERSION 1.2-2
+
+    o   fix dependencies, really
+
+    o   add book to DESCRIPTION file
+
+
 		CHANGES in `multcomp' VERSION 1.2-1
 
     o   fix dependencies

@@ -1,6 +1,6 @@
 
-R version 2.10.1 (2009-12-14)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.11.1 (2010-05-31)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -76,17 +76,13 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
         pmvt(lower = low, upper = upp, df = df, corr = cr, ...)
     }
     switch(object$alternative, two.sided = {
-        if (df > 0) 
-            pvals <- 2 * (1 - pt(abs(tstat), df))
-        else pvals <- 2 * (1 - pnorm(abs(tstat)))
+        if (df > 0) pvals <- 2 * (1 - pt(abs(tstat), df)) else pvals <- 2 * 
+            (1 - pnorm(abs(tstat)))
     }, less = {
-        if (df > 0) 
-            pvals <- pt(tstat, df)
-        else pvals <- pnorm(tstat)
+        if (df > 0) pvals <- pt(tstat, df) else pvals <- pnorm(tstat)
     }, greater = {
-        if (df > 0) 
-            pvals <- 1 - pt(tstat, df)
-        else pvals <- 1 - pnorm(tstat)
+        if (df > 0) pvals <- 1 - pt(tstat, df) else pvals <- 1 - 
+            pnorm(tstat)
     })
     if (type == "univariate") 
         return(pvals)
@@ -105,7 +101,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0xa5f4304>
+<environment: 0x9be18c8>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -124,7 +120,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0xa5f4304>
+<environment: 0x9be18c8>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
