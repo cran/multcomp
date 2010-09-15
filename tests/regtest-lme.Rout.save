@@ -1,6 +1,6 @@
 
-R version 2.10.1 (2009-12-14)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.11.1 (2010-05-31)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -29,6 +29,13 @@ Loading required package: splines
 Loading required package: lme4
 Loading required package: Matrix
 Loading required package: lattice
+
+Attaching package: 'Matrix'
+
+The following object(s) are masked from 'package:base':
+
+    det
+
 > if (lme4OK) {
 + 
 +     data("ergoStool", package = "nlme")
@@ -75,13 +82,8 @@ Loading required package: nlme
 
 Attaching package: 'nlme'
 
+The following object(s) are masked from 'package:lme4':
 
-	The following object(s) are masked from package:lme4 :
-
-	 BIC,
-	 fixef,
-	 lmList,
-	 ranef,
-	 VarCorr 
+    fixef, lmList, ranef, VarCorr
 
 > 

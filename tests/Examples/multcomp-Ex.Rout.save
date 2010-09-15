@@ -1,6 +1,6 @@
 
-R version 2.10.1 (2009-12-14)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.11.1 (2010-05-31)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -423,22 +423,22 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = plates ~ block + detergent, data = detergent)
 
-Quantile = 3.0638
+Quantile = 3.0631
 95% family-wise confidence level
  
 
 Linear Hypotheses:
            Estimate lwr      upr     
-B - A == 0  -2.1333  -4.7925   0.5259
-C - A == 0   3.6000   0.9408   6.2592
-D - A == 0   2.2000  -0.4592   4.8592
-E - A == 0  -4.3333  -6.9925  -1.6741
-C - B == 0   5.7333   3.0741   8.3925
-D - B == 0   4.3333   1.6741   6.9925
-E - B == 0  -2.2000  -4.8592   0.4592
-D - C == 0  -1.4000  -4.0592   1.2592
-E - C == 0  -7.9333 -10.5925  -5.2741
-E - D == 0  -6.5333  -9.1925  -3.8741
+B - A == 0  -2.1333  -4.7920   0.5253
+C - A == 0   3.6000   0.9414   6.2586
+D - A == 0   2.2000  -0.4586   4.8586
+E - A == 0  -4.3333  -6.9920  -1.6747
+C - B == 0   5.7333   3.0747   8.3920
+D - B == 0   4.3333   1.6747   6.9920
+E - B == 0  -2.2000  -4.8586   0.4586
+D - C == 0  -1.4000  -4.0586   1.2586
+E - C == 0  -7.9333 -10.5920  -5.2747
+E - D == 0  -6.5333  -9.1920  -3.8747
 
 > 
 >   ### see Westfall et al. (1999, p. 192)
@@ -504,7 +504,7 @@ Fit: aov(formula = plates ~ block + detergent, data = detergent)
 Linear Hypotheses:
            Estimate Std. Error t value Pr(>|t|)    
 B - A == 0  -2.1333     0.8679  -2.458  0.05002 .  
-C - A == 0   3.6000     0.8679   4.148  0.00275 ** 
+C - A == 0   3.6000     0.8679   4.148  0.00266 ** 
 D - A == 0   2.2000     0.8679   2.535  0.04297 *  
 E - A == 0  -4.3333     0.8679  -4.993  < 0.001 ***
 C - B == 0   5.7333     0.8679   6.606  < 0.001 ***
@@ -559,32 +559,35 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = FA ~ PE, data = fattyacid)
 
-Quantile = 2.8942
+Quantile = 2.8941
 95% family-wise confidence level
  
 
 Linear Hypotheses:
                Estimate  lwr       upr      
-PE4 - PE3 == 0 -0.012820 -0.114108  0.088468
+PE4 - PE3 == 0 -0.012820 -0.114107  0.088468
 PE5 - PE3 == 0 -0.084398 -0.182355  0.013558
-PE6 - PE3 == 0  0.019286 -0.084210  0.122781
-PE7 - PE3 == 0 -0.010048 -0.120043  0.099948
-PE9 - PE3 == 0  0.075536 -0.028027  0.179098
-PE5 - PE4 == 0 -0.071579 -0.128779 -0.014379
-PE6 - PE4 == 0  0.032105 -0.034133  0.098344
-PE7 - PE4 == 0  0.002772 -0.073223  0.078767
+PE6 - PE3 == 0  0.019286 -0.084209  0.122780
+PE7 - PE3 == 0 -0.010048 -0.120042  0.099947
+PE9 - PE3 == 0  0.075536 -0.028026  0.179098
+PE5 - PE4 == 0 -0.071579 -0.128778 -0.014380
+PE6 - PE4 == 0  0.032105 -0.034133  0.098343
+PE7 - PE4 == 0  0.002772 -0.073222  0.078766
 PE9 - PE4 == 0  0.088355  0.022012  0.154699
-PE6 - PE5 == 0  0.103684  0.042661  0.164707
-PE7 - PE5 == 0  0.074351  0.002856  0.145845
+PE6 - PE5 == 0  0.103684  0.042662  0.164707
+PE7 - PE5 == 0  0.074351  0.002857  0.145845
 PE9 - PE5 == 0  0.159934  0.098797  0.221071
 PE7 - PE6 == 0 -0.029333 -0.108246  0.049579
 PE9 - PE6 == 0  0.056250 -0.013417  0.125917
-PE9 - PE7 == 0  0.085583  0.006582  0.164584
+PE9 - PE7 == 0  0.085583  0.006583  0.164584
 
 > 
 > 
 > 
 > cleanEx()
+
+detaching ‘package:sandwich’, ‘package:zoo’
+
 > nameEx("glht")
 > ### * glht
 > 
@@ -717,6 +720,51 @@ Linear Hypotheses:
 M - L == 0  -10.000
 H - L == 0  -14.722
 H - M == 0   -4.722
+
+> 
+> 
+>   ### mix of one- and two-sided alternatives
+>   warpbreaks.aov <- aov(breaks ~ wool + tension,
++                       data = warpbreaks)
+> 
+>   ### contrasts for `tension'
+>   K <- rbind("L - M" = c( 1, -1,  0),     
++              "M - L" = c(-1,  1,  0),       
++              "L - H" = c( 1,  0, -1),     
++              "M - H" = c( 0,  1, -1))
+> 
+>   warpbreaks.mc <- glht(warpbreaks.aov, 
++                         linfct = mcp(tension = K),
++                         alternative = "less")
+> 
+>   ### correlation of first two tests is -1
+>   cov2cor(vcov(warpbreaks.mc))
+      L - M M - L L - H M - H
+L - M   1.0  -1.0   0.5  -0.5
+M - L  -1.0   1.0  -0.5   0.5
+L - H   0.5  -0.5   1.0   0.5
+M - H  -0.5   0.5   0.5   1.0
+> 
+>   ### use smallest of the two one-sided
+>   ### p-value as two-sided p-value -> 0.0232
+>   summary(warpbreaks.mc)
+
+	 Simultaneous Tests for General Linear Hypotheses
+
+Multiple Comparisons of Means: User-defined Contrasts
+
+
+Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
+
+Linear Hypotheses:
+           Estimate Std. Error t value Pr(<t)  
+L - M >= 0   10.000      3.872   2.582 1.0000  
+M - L >= 0  -10.000      3.872  -2.582 0.0232 *
+L - H >= 0   14.722      3.872   3.802 1.0000  
+M - H >= 0    4.722      3.872   1.219 1.0000  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+(Adjusted p values reported -- single-step method)
 
 > 
 > 
@@ -906,15 +954,15 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
-Quantile = 2.4159
+Quantile = 2.416
 95% family-wise confidence level
  
 
 Linear Hypotheses:
            Estimate lwr      upr     
-M - L == 0 -10.0000 -19.3552  -0.6448
-H - L == 0 -14.7222 -24.0774  -5.3670
-H - M == 0  -4.7222 -14.0774   4.6330
+M - L == 0 -10.0000 -19.3557  -0.6443
+H - L == 0 -14.7222 -24.0779  -5.3665
+H - M == 0  -4.7222 -14.0779   4.6335
 
 > 
 >   ### the same (for balanced designs only)
@@ -943,9 +991,9 @@ Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
 Linear Hypotheses:
            Estimate Std. Error t value Pr(>|t|)   
-M - L == 0  -10.000      3.872  -2.582  0.03370 * 
-H - L == 0  -14.722      3.872  -3.802  0.00115 **
-H - M == 0   -4.722      3.872  -1.219  0.44743   
+M - L == 0  -10.000      3.872  -2.582  0.03365 * 
+H - L == 0  -14.722      3.872  -3.802  0.00111 **
+H - M == 0   -4.722      3.872  -1.219  0.44745   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 (Adjusted p values reported -- single-step method)
@@ -1020,6 +1068,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > 
 > cleanEx()
+
+detaching ‘package:MASS’
+
 > nameEx("parm")
 > ### * parm
 > 
@@ -1049,15 +1100,15 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Fit: NULL
 
-Quantile = 1.8433
+Quantile = 1.843
 90% family-wise confidence level
  
 
 Linear Hypotheses:
              Estimate lwr      upr     
-V2 - V1 >= 0 -2.13330     -Inf  0.82288
-V3 - V1 >= 0 -7.46670     -Inf -4.51052
-V4 - V1 >= 0 -1.66670     -Inf -0.03584
+V2 - V1 >= 0 -2.13330     -Inf  0.82253
+V3 - V1 >= 0 -7.46670     -Inf -4.51087
+V4 - V1 >= 0 -1.66670     -Inf -0.03604
 
 > 
 > 
@@ -1167,22 +1218,28 @@ Loading required package: lme4
 Loading required package: Matrix
 Loading required package: lattice
 
+Attaching package: 'Matrix'
+
+The following object(s) are masked from 'package:base':
+
+    det
+
+
 Attaching package: 'lme4'
 
+The following object(s) are masked from 'package:nlme':
 
-	The following object(s) are masked from package:nlme :
-
-	 BIC,
-	 fixef,
-	 lmList,
-	 ranef,
-	 VarCorr 
+    lmList, VarCorr
 
 > 
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’, ‘package:lattice’,
+  ‘package:nlme’, ‘package:MASS’
+
 > nameEx("recovery")
 > ### * recovery
 > 
@@ -1213,15 +1270,15 @@ Multiple Comparisons of Means: Dunnett Contrasts
 
 Fit: aov(formula = minutes ~ blanket, data = recovery)
 
-Quantile = 1.8433
+Quantile = 1.843
 90% family-wise confidence level
  
 
 Linear Hypotheses:
-             Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82285
-b2 - b0 >= 0 -7.46667     -Inf -4.51048
-b3 - b0 >= 0 -1.66667     -Inf -0.03581
+             Estimate lwr     upr    
+b1 - b0 >= 0 -2.1333     -Inf  0.8225
+b2 - b0 >= 0 -7.4667     -Inf -4.5108
+b3 - b0 >= 0 -1.6667     -Inf -0.0360
 
 > 
 >   ### the same
@@ -1237,15 +1294,15 @@ Multiple Comparisons of Means: User-defined Contrasts
 
 Fit: aov(formula = minutes ~ blanket, data = recovery)
 
-Quantile = 1.8429
+Quantile = 1.8432
 90% family-wise confidence level
  
 
 Linear Hypotheses:
              Estimate lwr      upr     
-b1 - b0 >= 0 -2.13333     -Inf  0.82222
-b2 - b0 >= 0 -7.46667     -Inf -4.51112
-b3 - b0 >= 0 -1.66667     -Inf -0.03616
+b1 - b0 >= 0 -2.13333     -Inf  0.82281
+b2 - b0 >= 0 -7.46667     -Inf -4.51052
+b3 - b0 >= 0 -1.66667     -Inf -0.03583
 
 > 
 > 
@@ -1367,15 +1424,15 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = waste ~ temp * envir, data = waste)
 
-Quantile = 2.5984
+Quantile = 2.5986
 95% family-wise confidence level
  
 
 Linear Hypotheses:
                    Estimate lwr     upr    
-low - high == 0    -2.0150  -3.2745 -0.7555
-medium - high == 0 -2.2560  -3.5155 -0.9965
-medium - low == 0  -0.2410  -1.5005  1.0185
+low - high == 0    -2.0150  -3.2746 -0.7554
+medium - high == 0 -2.2560  -3.5156 -0.9964
+medium - low == 0  -0.2410  -1.5006  1.0186
 
 > 
 >   ### same as TukeyHSD
@@ -1435,7 +1492,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  31.109 0.12 31.8 0 0 
+Time elapsed:  25.673 0.108 26.593 0 0 
 > grDevices::dev.off()
 null device 
           1 
