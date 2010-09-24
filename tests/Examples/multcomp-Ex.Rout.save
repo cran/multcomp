@@ -272,6 +272,42 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
+> nameEx("cml")
+> ### * cml
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cml
+> ### Title: Chronic Myelogenous Leukemia survival data.
+> ### Aliases: cml
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> 
+> if (require("coxme")) {
++     data("cml")
++     ### one-sided simultaneous confidence intervals for many-to-one 
++     ### comparisons of treatment effects concerning time of survival 
++     ### modeled by a frailty Cox model with adjustment for further 
++     ### covariates and center-specific random effect.
++     cml_coxme <- coxme(Surv(time, status) ~ treatment + sex + age + riskgroup + (1|center), data = cml)
++     glht_coxme <- glht(model = cml_coxme, linfct = mcp(treatment = "Dunnett"), alternative = "greater")
++     ci_coxme <- confint(glht_coxme)
++     exp(ci_coxme$confint)[1:2,]
++ }
+Loading required package: coxme
+Loading required package: bdsmatrix
+            Estimate      lwr upr
+trt2 - trt1 1.551157 1.184130 Inf
+trt3 - trt1 1.396387 1.068788 Inf
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:coxme’, ‘package:bdsmatrix’
+
 > nameEx("contrMat")
 > ### * contrMat
 > 
@@ -1492,7 +1528,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  25.673 0.108 26.593 0 0 
+Time elapsed:  26.781 0.096 27.082 0 0 
 > grDevices::dev.off()
 null device 
           1 
