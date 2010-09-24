@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 1.2-3
+
+    o   new example on frailty models, see ?cml
+
+
 		CHANGES in `multcomp' VERSION 1.2-2
 
     o   fix dependencies, really
