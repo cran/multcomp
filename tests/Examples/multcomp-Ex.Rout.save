@@ -1,7 +1,8 @@
 
-R version 2.11.1 (2010-05-31)
+R version 2.12.0 (2010-10-15)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: i686-pc-linux-gnu (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1265,7 +1266,11 @@ Attaching package: 'lme4'
 
 The following object(s) are masked from 'package:nlme':
 
-    lmList, VarCorr
+    BIC, VarCorr, lmList
+
+The following object(s) are masked from 'package:stats':
+
+    AIC
 
 > 
 > 
@@ -1528,7 +1533,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  26.781 0.096 27.082 0 0 
+Time elapsed:  15.22 0.196 15.436 0 0 
 > grDevices::dev.off()
 null device 
           1 

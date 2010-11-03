@@ -1,5 +1,5 @@
 
-# $Id: plot.R 270 2009-09-08 15:17:51Z thothorn $
+# $Id: plot.R 305 2010-10-29 14:45:59Z thothorn $
 
 ### uhhh -- mainly copy and paste from plot.TukeyHSD
 ### with modifications by Richard M. Heiberger <rmh@temple.edu>
@@ -21,8 +21,8 @@ plot.confint.glht <- function(x, xlim, xlab, ylim, ...) {
     axis(1, ...)
     axis(2, at = nrow(xi):1, labels = dimnames(xi)[[1]], 
          las = 1, ...)
-    abline(h = yvals, lty = 1, lwd = 0, col = "lightgray")
-    abline(v = 0, lty = 2, lwd = 0, ...)
+    abline(h = yvals, lty = 1, lwd = 1, col = "lightgray")
+    abline(v = 0, lty = 2, lwd = 1, ...)
     left <- xi[, "lwr"]
     left[!is.finite(left)] <- min(c(0, xrange[1] * 2))
     right <- xi[, "upr"]

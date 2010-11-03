@@ -646,12 +646,15 @@ that would be computed by \Rcmd{mcp()} with \Rcmd{"Dunnett"} option. The same
 problem occurs when interaction terms are present in a two-way ANOVA model,
 where the hypotheses might depend on the sample sizes.
 Because it is impossible to determine the parameters of interest
-automatically in this case, \Rcmd{mcp()} in \Rpackage{multcomp} 
-version 1.0-0 and higher generates comparisons for the main effects
-$\gamma_j$ only, ignoring covariates and interactions (older versions
-automatically averaged over interaction terms). 
-We suggest to the users that they write out, manually, the set of contrasts they
-want. One should do this whenever there is doubt about what the
+automatically in this case, \Rcmd{mcp()} in \Rpackage{multcomp}
+will by default generate comparisons for the main effects
+$\gamma_j$ only, ignoring covariates and interactions. 
+Since version 1.1-2, one can specify to average over interaction
+terms and covariates using arguments \verb|interaction_average = TRUE|
+and \verb|covariate_average = TRUE| respectively, whereas versions
+older than 1.0-0 automatically averaged over interaction terms.
+We suggest to the users, however, that they write out, manually, the set 
+of contrasts they want. One should do this whenever there is doubt about what the
 default contrasts measure, which typically happens in models with higher
 order interaction terms. We refer to
 \cite{Hsu1996}, Chapter~7, and \cite{Searle1971}, Chapter~7.3, 
