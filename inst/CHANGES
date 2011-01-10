@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 1.2-5
+
+    o    missing comment in multcomp_VA.R
+
+
 		CHANGES in `multcomp' VERSION 1.2-4
 
     o   fix problem with plot.glht (lwd = 0 does not make sense)
