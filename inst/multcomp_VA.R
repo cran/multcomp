@@ -192,7 +192,7 @@ save(results, file = "AOV_het2.Rda")
 
 
 ###############################################
-Simulation setup for beta distributed data
+### Simulation setup for beta distributed data
 ###############################################
 
 ###################################################################################
