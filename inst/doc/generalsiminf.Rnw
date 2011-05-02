@@ -777,9 +777,9 @@ plot(ci2, xlim = c(-0.6, 2.6), main = expression(paste("Tukey (sandwich ", bold(
 \end{center}
 \end{figure}
 
-<<tmp, echo = FALSE, results = hide>>=
-dev.off()
-@
+%%<<tmp, echo = FALSE, results = hide>>=
+%%dev.off()
+%%@
 
 \subsection{Prediction of Total Body Fat} \label{bodyfat}
 
@@ -829,9 +829,12 @@ and caused the rejection of $H_0$. Alternatively, an MM-estimator
 \citep{Yohai1987} as implemented by \Rcmd{lmrob()} from package 
 \Rpackage{lmrob} \citep{pkg:robustbase} 
 can be used to fit a robust version of the above linear
-model, the results coincide rather nicely:
+model, the results coincide rather nicely (note that the control
+arguments to \Rcmd{lmrob()} were changed in \Rpackage{multcomp} version 1.2-6
+and thus the results have slightly changed):
 <<bodyfat-robust, echo = TRUE>>=
-summary(glht(lmrob(DEXfat ~ ., data = bodyfat), linfct = K))
+summary(glht(lmrob(DEXfat ~ ., data = bodyfat,
+             control = lmrob.control(setting = "KS2011")), linfct = K))
 @
 and the result reported above holds under very mild 
 model assumptions.
@@ -925,7 +928,7 @@ K
 @
 \normalsize
 and can easily be used to compute the confidence intervals described above
-<<alzheimer-probci, echo = TRUE, echo = FALSE>>=
+<<alzheimer-probci, echo = TRUE, eval = FALSE>>=
 gmod_ci <- confint(glht(gmod, linfct = K))
 gmod_ci$confint <- apply(gmod_ci$confint, 2, binomial()$linkinv)
 plot(gmod_ci, xlab = "Probability of Developing Alzheimer", 
@@ -939,7 +942,8 @@ compared to all other configurations of the two covariates.
 \setkeys{Gin}{width=0.8\textwidth}
 \begin{figure}[h]
 \begin{center}
-<<alzheimer-plot, echo = FALSE, fig = TRUE, mai2 = TRUE, width = 7, height = 5>>=
+<<alzheimer-plot, echo = FALSE, fig = TRUE, width = 7, height = 5>>=
+par(mai = par("mai") * c(1, 1.5, 1, 1))
 gmod_ci <- confint(glht(gmod, linfct = K))
 gmod_ci$confint <- apply(gmod_ci$confint, 2, binomial()$linkinv)
 plot(gmod_ci, xlab = "Probability of Developing Alzheimer", 
@@ -982,9 +986,9 @@ summary(glht(smod, linfct = mcp(risk = "Tukey")))
 Again, a sandwich estimator of the covariance matrix $\Sraw$ can
 be plugged-in but the results stay very much the same in this case.
 
-<<tmp, echo = FALSE, results = hide>>=
-dev.off()
-@ 
+%%<<tmp, echo = FALSE, results = hide>>=
+%%dev.off()
+%%@ 
 
 \subsection{Forest Regeneration} \label{forest}
 
@@ -1047,7 +1051,8 @@ trees is caused by the small sample size.
 \setkeys{Gin}{width=0.8\textwidth}
 \begin{figure}[t]
 \begin{center}
-<<trees-plot, echo = FALSE, mai3 = TRUE, fig = TRUE, width = 7, height = 4.5>>=
+<<trees-plot, echo = FALSE, fig = TRUE, width = 7, height = 4.5>>=
+par(mai = par("mai") * c(1, 1.2, 1, 0.8))
 plot(ci, xlab = "Probability of Damage Caused by Browsing", xlim = c(0, 1), main = "",
      ylim = c(0.5, 6.5))
 @

@@ -1,7 +1,8 @@
 
-R version 2.11.1 (2010-05-31)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.0 (2011-04-13)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: i686-pc-linux-gnu (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -154,15 +155,15 @@ Multiple Comparisons of Means: Mean Contrasts
 
 Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
-Quantile = 2.5556
+Quantile = 2.5559
 95% family-wise confidence level
  
 
 Linear Hypotheses:
          Estimate lwr     upr    
-0 == 0   32.3651  30.0806 34.6496
-5 == 0   29.0127  26.6374 31.3881
-50 == 0  30.0743  27.5241 32.6244
-500 == 0 29.6899  27.1593 32.2205
+0 == 0   32.3651  30.0804 34.6499
+5 == 0   29.0127  26.6372 31.3883
+50 == 0  30.0743  27.5239 32.6246
+500 == 0 29.6899  27.1590 32.2208
 
 > 
