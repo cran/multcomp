@@ -1,4 +1,12 @@
 
+		CHANGES in `multcomp' VERSION 1.2-6
+
+    o    `manual' na.omit before stepAIC is called in
+          chfls1.Rnw vignette
+
+    o    use lmrob.control(setting = "KS2011") in generalsiminf.Rnw
+
+
 		CHANGES in `multcomp' VERSION 1.2-5
 
     o    missing comment in multcomp_VA.R

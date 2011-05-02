@@ -40,6 +40,10 @@ download.file(dataurl, destfile = file.path(td, "chfls1.sav"), mode = "wb")
 ### data see http://popcenter.uchicago.edu/data/chfls.shtml
 chfls1 <- read.spss(file.path(td, "chfls1.sav"), to.data.frame = TRUE)
 
+### warnings: Variables DC04, MZ09, and MZ11 contain duplicated
+### levels. These are not needed anyway, so we ignore the warning
+### for the time being.
+
 ### choose neccessary variables
 org <- chfls1[, c("REGION6", "ZJ05", "ZJ06", "A35", "ZJ07", "ZJ16M", "INCRM",
                   "JK01", "JK02", "JK20", "HY04", "HY07", "A02", "AGEGAPM", 
@@ -108,7 +112,9 @@ orgA$wealthdiff <- orgA$RincomeComp - orgA$AincomeComp
 orgA$wealthdiffSD <- orgA$wealthdiff/sd(orgA$wealthdiff, na.rm=TRUE)
 orgA$RAdurationSD <- orgA$RAduration/sd(orgA$RAduration, na.rm=TRUE)
 
+### Data set as used by Pollet & Nettle (2009)
 save(orgA, file = "orgA.Rda")
+
 
 @
 \section*{Summary}
@@ -305,15 +311,27 @@ BIC                     & \Sexpr{paste(bic[1:4], collapse = " & ")} & & \Sexpr{b
 
 <<table-summary-stepAIC, cache = TRUE>>=
 
+### stepAIC does not automatically remove missing values as of R 2.13.0
+orgAtmp <- orgA[, c("orgasm", "AincomeSD", "AheightSD", "RAdurationSD",
+                 "RageSD", "edudiffSD", "wealthdiffSD", "Redu", "Rhealth",
+                 "Rhappy", "Region")]
+cc <- complete.cases(orgAtmp)
+summary(cc)
+orgAcc <- subset(orgA, cc)
+
 step_AIC <- stepAIC(polr(orgasm ~ AincomeSD + AheightSD + RAdurationSD + RageSD + edudiffSD 
-+ wealthdiffSD + Redu + Rhealth + Rhappy + Region, data=orgA, Hess=TRUE), trace = FALSE)
++ wealthdiffSD + Redu + Rhealth + Rhappy + Region, data=orgAcc, Hess=TRUE), trace = FALSE)
 aic <- formatC(step_AIC$anova[,6], digits = 1, format = "f")
 
 @
 
 The stepwise backward selection starts with the saturated model, which includes all variables. Variables are omitted one at a time starting with the 
 variable that reduces the AIC most. Variable 
-selection stops, when the AIC cannot be reduced further by removing a variable. 
+selection stops, when the AIC cannot be reduced further by removing a variable. Note that the original data
+contains three missing values in variable \texttt{edudiffSD}. The corresponding observations have been
+removed from the data set before fitting all models presented in Table~\ref{stepAIC} but only for
+models involving these variable presented in Table~\ref{Pollet_korr} (since we assume the same approach
+was taken in SPSS).
 
 In our data a stepwise backward selection results in a reduction of the AIC from \Sexpr{aic[1]} in the saturated model to \Sexpr{aic[5]} in the reduced 
 model. The steps of the backwise selection are shown
@@ -387,7 +405,8 @@ colnames(siminf) <- c("Variable", "Estimate", "Adjusted $p$-value")
 In the following, the relevant factors for orgasm frequency are assessed using the procedure for simultaneous inference introduced by \citet{Hothorn2008b} 
 instead of using model fit criterions like AIC and BIC. Therefore, we fit a cumulative logit model, which includes all covariates and use the max-$t$-test 
 to select important variables based on adjusted $p$-values. The hypotheses are $$H_j^0: \beta_j = 0, \; j = 1, \ldots, p,$$ and can be specified as linear 
-hypotheses $K \beta = 0$ with the matrix $K$ being the $p \times p$ identity matrix. 
+hypotheses $K \beta = 0$ with the matrix $K$ being the $p \times p$ identity matrix. Three observations with
+missings in variable \texttt{edudiffSD} have been removed prior to fitting the model.
 
 The parameter estimates and associated adjusted $p$-values are shown in table \ref{simOrgA}. The respondant's education is the relevant factor for orgasm 
 frequency with a cumulative odds ratio of
