@@ -254,6 +254,72 @@ into account:
 glht(aov.ex, linfct = mcp(x = "Tukey"))
 @
 
+\section{Two-way ANOVA}
+
+For two-way ANOVA models, one might be interested in comparing the levels of the
+two factors simultaneously. For the model
+<<twoway-mod, echo = TRUE>>=
+mod <- lm(breaks ~ wool + tension, data = warpbreaks)
+@
+one can extract the appropriate contrast matrices for both factors via
+<<twoway-K, echo = TRUE>>=
+K1 <- glht(mod, mcp(wool = "Tukey"))$linfct
+K2 <- glht(mod, mcp(tension = "Tukey"))$linfct
+@
+and we can simultaneously compare the levels of each factor using
+<<twoway-sim, echo = TRUE>>=
+summary(glht(mod, linfct = rbind(K1, K2)))
+@
+where the first comparison is with respect to \Robject{wool} and the remaining
+three to \Robject{tension}.
+
+For models with interaction term
+<<twowayi-mod, echo = TRUE>>=
+mod <- lm(breaks ~ wool * tension, data = warpbreaks)
+@
+one might be interested in comparing the levels of \Robject{tension} within the levels
+of \Robject{wool}. There are two ways to do this. First, we compute the means of the response 
+for all six combinations of the levels of \Robject{wool} and \Robject{tension}:
+<<twowayi-mod2, echo = TRUE>>=
+tmp <- expand.grid(tension = unique(warpbreaks$tension),
+                   wool = unique(warpbreaks$wool))
+X <- model.matrix(~ wool * tension, data = tmp)
+glht(mod, linfct = X)
+@
+which is the same as
+<<twowayi-mod3, echo = TRUE>>=
+predict(mod, newdata = tmp)
+@
+We now construct a contrast matrix based on Tukey-contrasts for \Robject{tension} in a 
+block-diagonal way, i.e., for each level of \Robject{wool}:
+<<twowayi-K, echo = TRUE>>=
+Tukey <- contrMat(table(warpbreaks$tension), "Tukey")
+K1 <- cbind(Tukey, matrix(0, nrow = nrow(Tukey), ncol = ncol(Tukey)))
+rownames(K1) <- paste(levels(warpbreaks$wool)[1], rownames(K1), sep = ":")
+K2 <- cbind(matrix(0, nrow = nrow(Tukey), ncol = ncol(Tukey)), Tukey)
+rownames(K2) <- paste(levels(warpbreaks$wool)[2], rownames(K1), sep = ":")
+K <- rbind(K1, K2) 
+colnames(K) <- c(colnames(Tukey), colnames(Tukey))
+@
+and perform the tests via
+<<twowayi-sim, echo = TRUE>>=
+summary(glht(mod, linfct = K %*% X))
+@
+where the effects are the same as
+<<twowayi-eff, echo = TRUE>>=
+K %*% predict(mod, newdata = tmp)
+@
+We see that the groups (M, L) and (H, L) are different, however, only for wool A 
+(in contrast to the additive model above).
+
+Note that the same results can be obtained by fitting the so-called cell-means model
+based on a new factor derived as the interaction of \Robject{wool} and \Robject{tension}:
+<<cellmeans, echo = TRUE>>=
+warpbreaks$tw <- with(warpbreaks, interaction(tension, wool))
+cell <- lm(breaks ~ tw - 1, data = warpbreaks)
+summary(glht(cell, linfct = K))
+@
+
 \section{Test Procedures}
 
 Several global and multiple test procedures are available from the
