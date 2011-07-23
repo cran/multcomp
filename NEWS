@@ -1,4 +1,10 @@
 
+		CHANGES in `multcomp' VERSION 1.2-7
+
+    o    new examples on 2-way ANOVA models, potentially with interactions,
+         in vignette `multcomp-examples'
+
+
 		CHANGES in `multcomp' VERSION 1.2-6
 
     o    `manual' na.omit before stepAIC is called in
