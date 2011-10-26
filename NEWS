@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 1.2-8
+
+    o    new argument `decreasing' for cld(), code donated
+         by Luciano Selzer <luciano.selzer@gmail.com>
+
 		CHANGES in `multcomp' VERSION 1.2-7
 
     o    new examples on 2-way ANOVA models, potentially with interactions,
