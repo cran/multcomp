@@ -10,9 +10,9 @@
   and plot compact letter displays of all pair-wise comparisons.
 }
 \usage{
-\method{cld}{summary.glht}(object, level = 0.05, ...)
-\method{cld}{glht}(object, level = 0.05, ...)
-\method{cld}{confint.glht}(object,...)
+\method{cld}{summary.glht}(object, level = 0.05, decreasing = FALSE, ...)
+\method{cld}{glht}(object, level = 0.05, decreasing = FALSE, ...)
+\method{cld}{confint.glht}(object, decreasing = FALSE, ...)
 }
 \arguments{
   \item{object}{
@@ -21,6 +21,9 @@
   \item{level}{
     Significance-level to be used to term a specific pair-wise
     comparison significant.
+  }
+  \item{decreasing}{
+  logical. Should the order of the letters be increasing or decreasing?
   }
   \item{...}{additional arguments.}
 }

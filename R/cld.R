@@ -3,8 +3,8 @@
 cld <- function(object, ...)
     UseMethod("cld")
 
-cld.glht <- function(object, level = 0.05, ...)
-    cld(summary(object), level = level)
+cld.glht <- function(object, level = 0.05, decreasing = FALSE, ...)
+    cld(summary(object), level = level, decreasing = decreasing)
 
 extr <- function(object) {
 
@@ -35,25 +35,25 @@ extr <- function(object) {
     return(ret)
 }
 
-cld.summary.glht <- function(object, level = 0.05, ...) {
+cld.summary.glht <- function(object, level = 0.05, decreasing = FALSE, ...) {
 
     ret <- extr(object)
     signif <- (object$test$pvalues < level)
     names(signif) <- gsub("\\s", "", rownames(object$linfct))
     ret$signif <- signif
-    ret$mcletters <- insert_absorb(signif)
+    ret$mcletters <- insert_absorb(signif, decreasing = decreasing,)
     class(ret) <- "cld"
     ret
 }
 
-cld.confint.glht <- function(object, ...) {
+cld.confint.glht <- function(object, decreasing = FALSE, ...) {
 
     ret <- extr(object)
     ### significant, if confidence interval does not contains 0
     signif <- !(object$confint[, "lwr"] < 0 & object$confint[, "upr"] > 0)
     names(signif) <- gsub("\\s", "", rownames(object$linfct))
     ret$signif <- signif
-    ret$mcletters <- insert_absorb(signif)
+    ret$mcletters <- insert_absorb(signif, decreasing = decreasing)
     class(ret) <- "cld" 
     ret
 }
@@ -125,8 +125,9 @@ plot.cld <- function(x, type = c("response", "lp"), ...) {
 # separator ... a separating character used to produce a sufficiently large set of
 #               characters for a compact letter display (default is separator=".") in case
 #               the number of letters required exceeds the number of letters available
+# Decreasing ... Inverse the order of the letters 
 
-insert_absorb <- function( x, Letters=c(letters, LETTERS), separator="." ){
+insert_absorb <- function( x, Letters=c(letters, LETTERS), separator=".", decreasing = decreasing ){
 
   obj_x <- deparse(substitute(x))
   namx <- names(x)
@@ -193,7 +194,8 @@ insert_absorb <- function( x, Letters=c(letters, LETTERS), separator="." ){
                                  separator=separator)
   lmat <- lmat[,order(apply(lmat, 2, sum))]                                                   # 2nd sweep
   lmat <- sweepLetters(lmat)
-  lmat <- lmat[,names(sort(apply(lmat,2, function(x) return(min(which(x))))))]                # reorder columns
+  lmat <- lmat[,names(sort(apply(lmat,2, function(x) return(min(which(x)))), 
+                           decreasing = decreasing))]                # reorder columns
   colnames(lmat) <- get_letters( ncol(lmat),  Letters=Letters,
                                  separator=separator)
   ltrs <- apply(lmat,1,function(x) return(paste(names(x)[which(x)], sep="", collapse="") ) )
