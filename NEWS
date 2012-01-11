@@ -1,4 +1,8 @@
 
+		CHANGES in `multcomp' VERSION 1.2-9
+
+    o    new coxme methods
+
 		CHANGES in `multcomp' VERSION 1.2-8
 
     o    new argument `decreasing' for cld(), code donated
