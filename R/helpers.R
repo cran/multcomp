@@ -70,31 +70,6 @@ model.matrix.survreg <- function(object, ...) {
 }
 
 ### coxme objects
-coxmecoef <- function(object)
-   object$coef$fixed
-
-coxmevcov <- function(object) {
-   cf <- object$coef$fixed 
-   vcov <- object$variance 
-   ### fix effects are last
-   indx <- sort(rev(1:nrow(vcov))[1:length(cf)])
-   vcov <- vcov[indx, indx, drop = FALSE]
-   rownames(vcov) <- names(cf)
-   colnames(vcov) <- names(cf)
-   vcov
-}
-
-model.frame.coxme <- function(formula, ...) {
-    fm <- formula$formulaList$fixed
-    mf <- formula$call
-    m <- match(c("formula", "data"), names(mf), 0L)
-    mf <- mf[c(1L, m)]
-    mf[[1L]] <- as.name("model.frame")
-    mf[[2L]] <- fm
-    mf <- eval(mf, environment(fm))
-    mf
-}
-
 model.matrix.coxme <- multcomp:::model.matrix.coxph
 
 
@@ -189,7 +164,7 @@ modelparm.survreg <- function(model, coef. = coef, vcov. = vcovsurvreg, df = NUL
 modelparm.aovlist <- function(model, coef. = coef, vcov. = vcov, df = NULL, ...)
     stop(sQuote("glht"), " does not support objects of class ", sQuote("aovlist"))
 
-modelparm.coxme <- function(model, coef. = coxmecoef, vcov. = coxmevcov, df = NULL, ...)
+modelparm.coxme <- function(model, coef. = coef, vcov. = vcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
 
 modelparm.coxph.penal <- function(model, coef. = coxph.penalcoef, 
