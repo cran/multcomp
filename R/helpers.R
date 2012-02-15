@@ -1,5 +1,5 @@
 
-# $Id: helpers.R 280 2009-11-18 16:38:20Z thothorn $
+# $Id: helpers.R 320 2012-02-15 13:48:51Z thothorn $
 
 ### model.matrix.coxph doesn't return contrasts etc.
 model.matrix.coxph <- function(object, ...) {
@@ -169,6 +169,15 @@ modelparm.coxme <- function(model, coef. = coef, vcov. = vcov, df = NULL, ...)
 
 modelparm.coxph.penal <- function(model, coef. = coxph.penalcoef, 
                                   vcov. = coxph.penalvcov, df = NULL, ...)
+    modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
+
+polrvcov <- function(object) {
+   cf <- coef(object)
+   vcov <- vcov(object)
+   vcov[names(cf), names(cf)]
+}
+
+modelparm.polr <- function(model, coef. = coef, vcov. = polrvcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
 
 ### modified from package MASS  
