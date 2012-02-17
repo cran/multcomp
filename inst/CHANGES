@@ -1,12 +1,21 @@
 
+		CHANGES in `multcomp' VERSION 1.2-10
+
+    o    handle polr objects in package, not only in vignette
+
+    o    move vignettes
+
+
 		CHANGES in `multcomp' VERSION 1.2-9
 
     o    new coxme methods
+
 
 		CHANGES in `multcomp' VERSION 1.2-8
 
     o    new argument `decreasing' for cld(), code donated
          by Luciano Selzer <luciano.selzer@gmail.com>
+
 
 		CHANGES in `multcomp' VERSION 1.2-7
 
