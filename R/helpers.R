@@ -1,5 +1,5 @@
 
-# $Id: helpers.R 320 2012-02-15 13:48:51Z thothorn $
+# $Id: helpers.R 330 2012-03-09 13:16:12Z thothorn $
 
 ### model.matrix.coxph doesn't return contrasts etc.
 model.matrix.coxph <- function(object, ...) {
@@ -147,6 +147,10 @@ modelparm.default <- function(model, coef. = coef, vcov. = vcov,
 modelparm.mer <- function(model, coef. = fixef, vcov. = vcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
 
+### mixed effects models (package `lme4Eigen')
+modelparm.merMod <- function(model, coef. = fixef, vcov. = vcov, df = NULL, ...)
+    modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
+
 ### package `nlme'
 modelparm.lme <- function(model, coef. = nlme:::fixef, vcov. = vcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
@@ -170,6 +174,8 @@ modelparm.coxme <- function(model, coef. = coef, vcov. = vcov, df = NULL, ...)
 modelparm.coxph.penal <- function(model, coef. = coxph.penalcoef, 
                                   vcov. = coxph.penalvcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
+
+model.matrix.polr <- model.matrix.coxph
 
 polrvcov <- function(object) {
    cf <- coef(object)

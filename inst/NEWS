@@ -1,4 +1,14 @@
 
+		CHANGES in `multcomp' VERSION 1.2-12
+
+    o    model.matrix.polr returns intercept which needs to be removed
+
+
+		CHANGES in `multcomp' VERSION 1.2-11
+
+    o    handle merMod objects (package lme4 aka lme4Eigen)
+
+
 		CHANGES in `multcomp' VERSION 1.2-10
 
     o    handle polr objects in package, not only in vignette
