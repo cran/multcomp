@@ -378,14 +378,9 @@ AIC                      & \Sexpr{paste(aic, collapse = " & ")} \\
 ordRegr <- polr(orgasm ~ AincomeSD + AheightSD + RAdurationSD 
 + RageSD + edudiffSD + wealthdiffSD + Redu + Rhealth + Rhappy 
 + Region, data=orgA, Hess=TRUE)
-polrvcov <- function(object) {
-   cf <- coef(object)
-   vcov <- vcov(object)
-   vcov[names(cf), names(cf)]
-}
 K <- diag(1,length(coef(ordRegr)))
 rownames(K) <- names(coef(ordRegr))
-s <- summary(glht(ordRegr, linfct = K, vcov = polrvcov))
+s <- summary(glht(ordRegr, linfct = K))
 variable <- c("Partner income", "Partner height", "Duration of relationship", "Age", "Difference in education", "Difference in income", 
 "Education", "$\\quad$ University (reference category)", "$\\quad$ Junior college", "$\\quad$ Upper middle", "$\\quad$ Lower middle", "$\\quad$ Primary", 
 "$\\quad$ No school", 
@@ -432,14 +427,11 @@ linear hypothesis of model parameters, is defined in the form that consecutive l
 associated $p$-values of the simultaneous comparisons based on the max-$t$-test are summarized in table \ref{simRedu}.
 
 <<table-summary-comp-edu, cache = TRUE>>=
-
-K <- multcomp:::mcp2matrix(ordRegr, linfct = mcp(Redu = 
-c("univ - jcol = 0",
-  "jcol - upmid = 0", 
-  "upmid - lowmid = 0", 
-  "lowmid - primary = 0", 
-  "primary - noschool = 0")))$K[,-1]
-s <- summary(glht(ordRegr, linfct = K, vcov = polrvcov))
+s <- summary(glht(ordRegr, linfct = mcp(Redu = c("univ - jcol = 0",
+                                                 "jcol - upmid = 0",
+                                                 "upmid - lowmid = 0",
+                                                 "lowmid - primary = 0",
+                                                 "primary - noschool = 0"))))
 comparison <- c("University - Junior college", "Junior college - Upper middle", "Upper middle - Lower middle", "Lower middle - Primary", 
 "Primary - No school")
 estimate <- formatC(as.vector(s$test$coef), digits = 2, format = "f")

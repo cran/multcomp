@@ -140,3 +140,7 @@ coef(glht(m1b, linfct = mcp(tension = "Tukey")))))
 stopifnot(all.equal(
 coef(glht(m2a, linfct = mcp(tension = "Tukey"))),
 coef(glht(m2b, linfct = mcp(tension = "Tukey")))))
+
+library("MASS")
+xdf <- data.frame(y = gl(3, 10, ordered = TRUE), grp = sample(gl(3, 10)))
+glht(polr(y ~ grp, data = xdf), mcp(grp = "Dunnett"))
