@@ -144,3 +144,9 @@ coef(glht(m2b, linfct = mcp(tension = "Tukey")))))
 library("MASS")
 xdf <- data.frame(y = gl(3, 10, ordered = TRUE), grp = sample(gl(3, 10)))
 glht(polr(y ~ grp, data = xdf), mcp(grp = "Dunnett"))
+
+### interactions of two factors
+dat <- expand.grid(f = gl(2, 3), f2 = gl(3, 2))
+dat$y <- rnorm(nrow(dat))
+lf <- glht(lm(y ~ f : f2 - 1, data = dat), 'f1:f21 - f2:f22 = 0')$linfct
+stopifnot(all.equal(max(abs(lf - c(1, 0, 0, -1, 0, 0))), 0))

@@ -1,5 +1,5 @@
 
-# $Id: expressions.R 246 2008-10-15 09:08:37Z thothorn $
+# $Id: expressions.R 331 2012-04-08 15:47:35Z thothorn $
 
 ### determine if an expression `x' can be interpreted as numeric
 is_num <- function(x) {
@@ -107,8 +107,8 @@ expression2coef <- function(ex) {
         cf <- c(cf, tmp$coef)
         nm <- c(nm, tmp$var)
 
-        ### x == "A"
-        if (is.name(x)) break
+        ### x == "A" or x == "A:B"
+        if (is.name(x) || x[[1]] == ":") break
         ### x == "-1"
         if (is_num(x)) break
         ### x == "3 * A"
