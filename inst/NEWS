@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 1.2-13
+
+    o    interaction terms can now be part of linear function
+
+
 		CHANGES in `multcomp' VERSION 1.2-12
 
     o    model.matrix.polr returns intercept which needs to be removed

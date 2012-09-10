@@ -102,7 +102,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x9fec740>
+<environment: 0x8cc26b4>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -121,7 +121,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x9fec740>
+<environment: 0x8cc26b4>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -408,4 +408,10 @@ Linear Hypotheses:
 2 - 1 == 0   0.3085
 3 - 1 == 0  -0.9180
 
+> 
+> ### interactions of two factors
+> dat <- expand.grid(f = gl(2, 3), f2 = gl(3, 2))
+> dat$y <- rnorm(nrow(dat))
+> lf <- glht(lm(y ~ f : f2 - 1, data = dat), 'f1:f21 - f2:f22 = 0')$linfct
+> stopifnot(all.equal(max(abs(lf - c(1, 0, 0, -1, 0, 0))), 0))
 > 
