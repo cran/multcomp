@@ -1,5 +1,5 @@
 
-R version 2.14.2 (2012-02-29)
+R Under development (unstable) (2012-10-07 r60893) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i686-pc-linux-gnu (32-bit)
@@ -102,7 +102,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x8cc26b4>
+<environment: 0xa2c41f8>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -121,7 +121,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x8cc26b4>
+<environment: 0xa2c41f8>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -415,3 +415,6 @@ Linear Hypotheses:
 > lf <- glht(lm(y ~ f : f2 - 1, data = dat), 'f1:f21 - f2:f22 = 0')$linfct
 > stopifnot(all.equal(max(abs(lf - c(1, 0, 0, -1, 0, 0))), 0))
 > 
+> proc.time()
+   user  system elapsed 
+  1.456   0.112   1.562 

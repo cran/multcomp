@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 1.2-14
+
+    o    catch download errors in vignette
+
+
 		CHANGES in `multcomp' VERSION 1.2-13
 
     o    interaction terms can now be part of linear function
