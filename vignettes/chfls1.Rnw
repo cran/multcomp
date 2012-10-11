@@ -23,7 +23,7 @@ aboveskip=0em,belowskip=0em]{caption}
 
 \SweaveOpts{engine = R, echo = FALSE, eps = TRUE}
 
-<<setup, results = hide, cache = TRUE >>=
+<<setup, results = tex, cache = TRUE >>=
 options(SweaveHooks = list(leftpar = 
     function() par(mai = par("mai") * c(1, 1.1, 1, 1))))
 #options(width = 70)
@@ -35,7 +35,12 @@ library("foreign")
 
 dataurl <- "http://www.src.uchicago.edu/datalib/chfls/data/chfls1.sav"
 td <- tempdir()
-download.file(dataurl, destfile = file.path(td, "chfls1.sav"), mode = "wb")
+derror <- try(download.file(dataurl, destfile = file.path(td, "chfls1.sav"),
+                           mode = "wb"))
+if (inherits(derror, "try-error")) {
+    cat("Vignette could not be processed -- download error.\n",
+        "\\end{document}\n")
+} else {
 
 ### data see http://popcenter.uchicago.edu/data/chfls.shtml
 chfls1 <- read.spss(file.path(td, "chfls1.sav"), to.data.frame = TRUE)
@@ -114,9 +119,14 @@ orgA$RAdurationSD <- orgA$RAduration/sd(orgA$RAduration, na.rm=TRUE)
 
 ### Data set as used by Pollet & Nettle (2009)
 save(orgA, file = "orgA.Rda")
-
+}
 
 @
+
+<<check-error, echo = FALSE, results = hide>>=
+if (inherits(derror, "try-error")) q("no", status = 0)
+@
+
 \section*{Summary}
 In this paper, we first explain the statistical model underlying the ordinal regression technique used by \citet{Pollet2009}, including the two possible 
 ways of calculating the likelihood function (section 1). We then show that the model fit criteria reported were in fact invalid, and calculate the correct 

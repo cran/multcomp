@@ -1,6 +1,6 @@
 
-R version 2.14.1 (2011-12-22)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R Under development (unstable) (2012-10-07 r60893) -- "Unsuffered Consequences"
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i686-pc-linux-gnu (32-bit)
 
@@ -302,21 +302,13 @@ Loading required package: bdsmatrix
 
 Attaching package: ‘bdsmatrix’
 
-The following object(s) are masked from ‘package:base’:
+The following object is masked from ‘package:base’:
 
     backsolve
 
 Loading required package: nlme
 Loading required package: Matrix
 Loading required package: lattice
-
-Attaching package: ‘Matrix’
-
-The following object(s) are masked from ‘package:base’:
-
-    det
-
-Warning: replacing previous import ‘diag’ when loading ‘Matrix’
 Warning in Ops.factor(1, center) : | not meaningful for factors
 Warning in Ops.factor(1, center) : | not meaningful for factors
             Estimate      lwr upr
@@ -612,7 +604,7 @@ Loading required package: zoo
 
 Attaching package: ‘zoo’
 
-The following object(s) are masked from ‘package:base’:
+The following object is masked from ‘package:base’:
 
     as.Date, as.Date.numeric
 
@@ -1283,20 +1275,13 @@ Loading required package: lme4
 Loading required package: Matrix
 Loading required package: lattice
 
-Attaching package: ‘Matrix’
-
-The following object(s) are masked from ‘package:base’:
-
-    det
-
-
 Attaching package: ‘lme4’
 
-The following object(s) are masked from ‘package:nlme’:
+The following object is masked from ‘package:nlme’:
 
     VarCorr, lmList
 
-The following object(s) are masked from ‘package:stats’:
+The following object is masked from ‘package:stats’:
 
     AIC, BIC
 
@@ -1561,7 +1546,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  15.861 0.264 16.152 0 0 
+Time elapsed:  15.556 0.316 15.904 0 0 
 > grDevices::dev.off()
 null device 
           1 

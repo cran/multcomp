@@ -20,35 +20,6 @@
 
 \SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
 
-<<setup, echo = FALSE, results = hide>>=
-set.seed(290875)
-options(prompt = "R> ")
-options(SweaveHooks = list(mai2 = function() par(mai = par("mai") * c(1, 2, 1, 1)),
-                           mai3 = function() par(mai = par("mai") * c(1, 3, 1, 1)),
-                           mai4 = function() par(mai = par("mai") * c(1, 2.1, 1, 0.5)),
-                           cex = function() par(cex.lab = 1.3, cex.axis = 1.3)))
-library("multcomp")
-library("survival")
-library("sandwich")
-library("robustbase")
-data("alpha", package = "coin")
-data("bodyfat", package = "mboost")
-data("alzheimer", package = "coin")
-if (!file.exists("AML_Bullinger.rda"))
-    load(url("http://www.stat.uni-muenchen.de/~hothorn/data/AML_Bullinger.rda", open = "r"))
-risk <- rep(0, nrow(clinical))
-rlev <- levels(clinical[, "Cytogenetic.group"])
-risk[clinical[, "Cytogenetic.group"] %in% rlev[c(7,8,4)]] <- "low"
-risk[clinical[, "Cytogenetic.group"] %in% rlev[c(5, 9)]] <- "intermediate"
-risk[clinical[, "Cytogenetic.group"] %in% rlev[-c(4,5, 7,8,9)]] <- "high"
-risk <- as.factor(risk)
-names(clinical)[6] <- "FLT3"
-vcov.lmrob <- function(object) object$cov
-library("lme4")
-data("trees513", package = "multcomp")
-@
-
-
 \begin{document}
 
 \title{Simultaneous Inference \\
@@ -97,6 +68,48 @@ convenient interface to the general approach adopted here.
 \textbf{Key words}: multiple tests, multiple comparisons, simultaneous
 confidence intervals, \newline
 adjusted $p$-values, multivariate normal distribution, robust statistics.
+
+
+<<setup, echo = FALSE, results = tex>>=
+set.seed(290875)
+options(prompt = "R> ")
+options(SweaveHooks = list(mai2 = function() par(mai = par("mai") * c(1, 2, 1, 1)),
+                           mai3 = function() par(mai = par("mai") * c(1, 3, 1, 1)),
+                           mai4 = function() par(mai = par("mai") * c(1, 2.1, 1, 0.5)),
+                           cex = function() par(cex.lab = 1.3, cex.axis = 1.3)))
+library("multcomp")
+library("survival")
+library("sandwich")
+library("robustbase")
+data("alpha", package = "coin")
+data("bodyfat", package = "mboost")
+data("alzheimer", package = "coin")
+if (!file.exists("AML_Bullinger.rda")) {
+    derror <- try(load(url("http://www.stat.uni-muenchen.de/~hothorn/data/AML_Bullinger.rda", open = "r")))
+    if (inherits(derror, "try-error"))
+        cat("Vignette could not be processed -- download error.\n",
+            "\\end{document}\n")
+}
+@
+
+<<check-error, echo = FALSE, results = hide>>=
+if (inherits(derror, "try-error")) q("no", status = 0)
+@
+
+<<setup-2, echo = FALSE, results = hide>>=
+risk <- rep(0, nrow(clinical))
+rlev <- levels(clinical[, "Cytogenetic.group"])
+risk[clinical[, "Cytogenetic.group"] %in% rlev[c(7,8,4)]] <- "low"
+risk[clinical[, "Cytogenetic.group"] %in% rlev[c(5, 9)]] <- "intermediate"
+risk[clinical[, "Cytogenetic.group"] %in% rlev[-c(4,5, 7,8,9)]] <- "high"
+risk <- as.factor(risk)
+names(clinical)[6] <- "FLT3"
+vcov.lmrob <- function(object) object$cov
+library("lme4")
+data("trees513", package = "multcomp")
+@
+
+
 
 \section{Introduction}
 
