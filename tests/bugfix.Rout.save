@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-10-07 r60893) -- "Unsuffered Consequences"
-Copyright (C) 2012 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-01-10 r61617) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i686-pc-linux-gnu (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -102,7 +102,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0xa2c41f8>
+<environment: 0x2dc6ab0>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -121,7 +121,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0xa2c41f8>
+<environment: 0x2dc6ab0>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -142,8 +142,8 @@ $tstat
        4.251282        8.121617        2.069031        5.939366        3.870335 
 
 $pvalues
- [1] 1.380883e-01 3.524764e-04 9.394029e-07 2.897682e-14 2.050268e-01
- [6] 9.917862e-04 6.540450e-10 2.512705e-01 3.447725e-06 3.042641e-03
+ [1] 1.380883e-01 3.524764e-04 3.563710e-07 2.897682e-14 2.050268e-01
+ [6] 9.917862e-04 6.540452e-10 2.512705e-01 3.447725e-06 3.042641e-03
 attr(,"error")
 [1] 0.0001910665
 
@@ -181,7 +181,7 @@ b - a == 0   -5.833
 Warning messages:
 1: In mcp2matrix(model, linfct = linfct) :
   covariate interactions found -- default contrast might be inappropriate
-2: In glht.matrix(model = list(coefficients = c(14.4166666666667, -5.83333333333333,  :
+2: In glht.matrix(model = list(coefficients = c(14.4166666666667, -5.83333333333334,  :
   6 out of 19 coefficients not estimable in 'model'
 > try(glht(tmp.aov, linfct=mcp(FF="Tukey")))
 
@@ -199,7 +199,7 @@ E - D == 0      4.5
 Warning messages:
 1: In mcp2matrix(model, linfct = linfct) :
   covariate interactions found -- default contrast might be inappropriate
-2: In glht.matrix(model = list(coefficients = c(14.4166666666667, -5.83333333333333,  :
+2: In glht.matrix(model = list(coefficients = c(14.4166666666667, -5.83333333333334,  :
   6 out of 19 coefficients not estimable in 'model'
 > glht(tmp.aov, linfct=mcp(GG="Tukey"))
 
@@ -220,7 +220,7 @@ i - h == 0     -5.0
 Warning messages:
 1: In mcp2matrix(model, linfct = linfct) :
   covariate interactions found -- default contrast might be inappropriate
-2: In glht.matrix(model = list(coefficients = c(14.4166666666667, -5.83333333333333,  :
+2: In glht.matrix(model = list(coefficients = c(14.4166666666667, -5.83333333333334,  :
   6 out of 19 coefficients not estimable in 'model'
 > 
 > ### covariate interactions: fire a warning
@@ -417,4 +417,4 @@ Linear Hypotheses:
 > 
 > proc.time()
    user  system elapsed 
-  1.456   0.112   1.562 
+  2.720   0.070   2.744 

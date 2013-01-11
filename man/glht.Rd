@@ -105,6 +105,10 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
   \code{\link{contrMat}} may serve as a symbolic description of 
   contrasts as well.
 
+  4) The \code{\link[lsmeans]{lsmeans}} function offers a symbolic
+  interface for the definition of least-squares means for factor combinations
+  which is very helpful when more complex contrasts are of special interest.
+
   The \code{mcp} function must be used with care when defining parameters
   of interest in two-way ANOVA or ANCOVA models. Here, the definition
   of treatment differences (such as Tukey's all-pair comparisons or Dunnett's
