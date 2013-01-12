@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 1.2-15
+
+    o    fix DESCRIPTION file entries
+
+
 		CHANGES in `multcomp' VERSION 1.2-14
 
     o    catch download errors in vignette

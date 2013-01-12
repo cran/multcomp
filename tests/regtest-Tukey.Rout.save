@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-10-07 r60893) -- "Unsuffered Consequences"
-Copyright (C) 2012 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-01-10 r61617) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i686-pc-linux-gnu (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -73,7 +73,7 @@ M - L == 0  -10.000      3.872  -2.582  0.03367 *
 H - L == 0  -14.722      3.872  -3.802  0.00115 **
 H - M == 0   -4.722      3.872  -1.219  0.44739   
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Adjusted p values reported -- single-step method)
 
 > 
@@ -117,10 +117,10 @@ Linear Hypotheses:
            Estimate Std. Error t value Pr(>|t|)  
 B - A == 0   -5.778      3.162  -1.827   0.0736 .
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Adjusted p values reported -- single-step method)
 
 > 
 > proc.time()
    user  system elapsed 
-  0.372   0.048   0.417 
+  0.730   0.150   0.843 

@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-10-07 r60893) -- "Unsuffered Consequences"
-Copyright (C) 2012 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-01-10 r61617) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i686-pc-linux-gnu (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -76,4 +76,4 @@ The following object is masked from 'package:base':
 > 
 > proc.time()
    user  system elapsed 
-  0.424   0.060   0.476 
+  0.920   0.090   0.968 
