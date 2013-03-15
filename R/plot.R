@@ -1,5 +1,5 @@
 
-# $Id: plot.R 305 2010-10-29 14:45:59Z thothorn $
+# $Id: plot.R 345 2013-02-07 14:11:04Z thothorn $
 
 ### uhhh -- mainly copy and paste from plot.TukeyHSD
 ### with modifications by Richard M. Heiberger <rmh@temple.edu>
@@ -40,6 +40,8 @@ plot.confint.glht <- function(x, xlim, xlab, ylim, ...) {
             main <- paste(format(100 * attr(x$confint, "conf.level"), 2),
                           "% confidence level\n", sep = "")
         }
+    } else {
+        main <- NULL ### main was already plotted in plot() via ...
     }
     if (missing(xlab))
           xlab <- "Linear Function"
