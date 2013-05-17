@@ -1,5 +1,5 @@
 
-# $Id: plot.R 345 2013-02-07 14:11:04Z thothorn $
+# $Id: plot.R 351 2013-05-17 13:08:54Z thothorn $
 
 ### uhhh -- mainly copy and paste from plot.TukeyHSD
 ### with modifications by Richard M. Heiberger <rmh@temple.edu>
@@ -24,9 +24,9 @@ plot.confint.glht <- function(x, xlim, xlab, ylim, ...) {
     abline(h = yvals, lty = 1, lwd = 1, col = "lightgray")
     abline(v = 0, lty = 2, lwd = 1, ...)
     left <- xi[, "lwr"]
-    left[!is.finite(left)] <- min(c(0, xrange[1] * 2))
+    left[!is.finite(left)] <- min(c(0, xlim[1] * 2))
     right <- xi[, "upr"]
-    right[!is.finite(right)] <- max(c(0, xrange[2] * 2))
+    right[!is.finite(right)] <- max(c(0, xlim[2] * 2))
     segments(left, yvals, right, yvals, ...)
     points(xi[, "lwr"], yvals, pch = "(", ...)
     points(xi[, "upr"], yvals, pch = ")", ...)

@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 1.2-18
+
+    o    improve plotting one-sided confidence intervals
+
+
 		CHANGES in `multcomp' VERSION 1.2-17
 
     o    fix typo in DESCRIPTION file
