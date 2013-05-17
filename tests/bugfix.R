@@ -150,3 +150,10 @@ dat <- expand.grid(f = gl(2, 3), f2 = gl(3, 2))
 dat$y <- rnorm(nrow(dat))
 lf <- glht(lm(y ~ f : f2 - 1, data = dat), 'f1:f21 - f2:f22 = 0')$linfct
 stopifnot(all.equal(max(abs(lf - c(1, 0, 0, -1, 0, 0))), 0))
+
+### plotting one-sided confidence intervals
+amod <- aov(breaks ~ wool + tension, data = warpbreaks)
+wht <- glht(amod, linfct = mcp(tension = "Tukey"), alternative="greater")
+plot(wht, xlim=c(-30, 30), main="right side was missing")
+wht <- glht(amod, linfct = mcp(tension = "Tukey"), alternative="less")
+plot(wht, xlim=c(-40, 20), main="left side was missing")

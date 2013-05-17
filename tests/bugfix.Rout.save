@@ -1,7 +1,6 @@
 
-R Under development (unstable) (2013-01-10 r61617) -- "Unsuffered Consequences"
+R version 3.0.0 (2013-04-03) -- "Masked Marvel"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -102,7 +101,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x2dc6ab0>
+<environment: 0x26ce208>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -121,7 +120,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x2dc6ab0>
+<environment: 0x26ce208>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -369,8 +368,8 @@ Error in chrlinfct2matrix(kch, levels(mf[[nm]])) :
 +     cld(hsd1)
 + }
 Loading required package: nlme
-Female   Male 
-   "a"    "b" 
+  Male Female 
+   "b"    "a" 
 > 
 > ### spotted by <chris.chizinski@gmail.com>
 > ### example code by Achim Zeileis <Achim.Zeileis@wu.ac.at>
@@ -415,6 +414,13 @@ Linear Hypotheses:
 > lf <- glht(lm(y ~ f : f2 - 1, data = dat), 'f1:f21 - f2:f22 = 0')$linfct
 > stopifnot(all.equal(max(abs(lf - c(1, 0, 0, -1, 0, 0))), 0))
 > 
+> ### plotting one-sided confidence intervals
+> amod <- aov(breaks ~ wool + tension, data = warpbreaks)
+> wht <- glht(amod, linfct = mcp(tension = "Tukey"), alternative="greater")
+> plot(wht, xlim=c(-30, 30), main="right side was missing")
+> wht <- glht(amod, linfct = mcp(tension = "Tukey"), alternative="less")
+> plot(wht, xlim=c(-40, 20), main="left side was missing")
+> 
 > proc.time()
    user  system elapsed 
-  2.720   0.070   2.744 
+  1.800   0.088   1.886 
