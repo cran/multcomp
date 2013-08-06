@@ -1,5 +1,5 @@
 
-# $Id: mcp.R 293 2010-05-18 14:47:41Z thothorn $
+# $Id: mcp.R 354 2013-06-27 13:37:55Z thothorn $
 
 ### multiple comparison procedures for levels of 
 ### factors in AN(C)OVA models
@@ -357,7 +357,7 @@ mcp2matrix2 <- function (model, linfct, interaction_average = FALSE,
                      stop("inconsistent covariate_average")
                    c.a <-
                      if (covariate_average=="mean" || covariate_average==TRUE)
-                       mean(mf[, ivar, drop = FALSE])
+                       colMeans(mf[, ivar, drop = FALSE])
                      else
                        unlist(covariate_average)
                    whichCols <- grep(names(classes), dimnames(Ktotal)[[2]])

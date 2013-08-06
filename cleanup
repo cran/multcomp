@@ -28,6 +28,10 @@ for f in ./tests/*.ps; do
     rm -f $f
 done
 
+for f in ./inst/doc; do
+    rm -f $f
+done
+
 find . -name "*~" -exec rm -f {} \;
 
 find . -name "DEADJOE" -exec rm -f {} \;
