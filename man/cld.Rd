@@ -82,7 +82,7 @@
   ### extract information
   tuk.cld <- cld(tuk)
   ### use sufficiently large upper margin
-  old.par <- par( mai=c(1,1,1.25,1))
+  old.par <- par(mai=c(1,1,1.25,1), no.readonly = TRUE)
   ### plot
   plot(tuk.cld)
   par(old.par)
@@ -95,7 +95,7 @@
   ### extract information
   tuk.cld2 <- cld(tuk2)
   ### use sufficiently large upper margin
-  old.par <- par( mai=c(1,1,1.25,1))
+  old.par <- par(mai=c(1,1,1.25,1), no.readonly = TRUE)
   ### plot using different colors
   plot(tuk.cld2, col=c("black", "red", "blue"))
   par(old.par)
@@ -108,8 +108,8 @@
   ### extract information
   mod.cld <- cld(glht.mod)
   ### use sufficiently large upper margin
-  old.par <- par(mai=c(1,1,1.5,1))
-  ### plott
+  old.par <- par(mai=c(1,1,1.5,1), no.readonly = TRUE)
+  ### plot
   plot(mod.cld)
   par(old.par)
 }

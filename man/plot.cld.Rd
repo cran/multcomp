@@ -67,7 +67,7 @@
   ### extract information
   tuk.cld <- cld(tuk)
   ### use sufficiently large upper margin
-  old.par <- par( mai=c(1,1,1.25,1))
+  old.par <- par(mai=c(1,1,1.25,1), no.readonly=TRUE)
   ### plot
   plot(tuk.cld)
   par(old.par)
@@ -76,7 +76,7 @@
   amod2 <- aov(breaks ~ tension + wool, data = warpbreaks)
   tuk2 <- glht(amod2, linfct = mcp(tension = "Tukey"))
   tuk.cld2 <- cld(tuk2)
-  old.par <- par( mai=c(1,1,1.25,1))
+  old.par <- par(mai=c(1,1,1.25,1), no.readonly=TRUE)
   ### use different colors for boxes
   plot(tuk.cld2, col=c("green", "red", "blue"))
   par(old.par)
@@ -85,7 +85,7 @@
   ci.glht <- confint(tuk)
   ### plot them
   plot(ci.glht)
-  old.par <- par( mai=c(1,1,1.25,1))
+  old.par <- par(mai=c(1,1,1.25,1), no.readonly=TRUE)
   ### use 'confint.glht' object to plot all pair-wise comparisons
   plot(cld(ci.glht), col=c("white", "blue", "green"))
   par(old.par)
@@ -99,7 +99,7 @@
   ### extract information
   mod.cld <- cld(glht.mod)
   ### use sufficiently large upper margin
-  old.par <- par(mai=c(1,1,1.5,1))
+  old.par <- par(mai=c(1,1,1.5,1), no.readonly=TRUE)
   ### plot
   plot(mod.cld)
   par(old.par)
@@ -118,7 +118,7 @@
     ### specify all pair-wise comparisons among levels of "Cage"
     cm.glht <- glht(cm, mcp(Cage = "Tukey"))
     # extract information & plot
-    old.par <- par()
+    old.par <- par(no.readonly=TRUE)
     ### use mono font family
     if (dev.interactive())
         old.par <- par(family = "mono")
@@ -133,7 +133,7 @@
                        data = ergoStool)
     glme41 <- glht(stool.lmer, mcp(Type = "Tukey"))
 
-    old.par <- par(mai=c(1,1,1.5,1))
+    old.par <- par(mai=c(1,1,1.5,1), no.readonly=TRUE)
     plot(cld(glme41))
     par(old.par)
   }
