@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-05-16 r62756) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-09-01 r63796) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -237,7 +237,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 >   ### extract information
 >   tuk.cld <- cld(tuk)
 >   ### use sufficiently large upper margin
->   old.par <- par( mai=c(1,1,1.25,1))
+>   old.par <- par(mai=c(1,1,1.25,1), no.readonly = TRUE)
 >   ### plot
 >   plot(tuk.cld)
 >   par(old.par)
@@ -250,7 +250,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 >   ### extract information
 >   tuk.cld2 <- cld(tuk2)
 >   ### use sufficiently large upper margin
->   old.par <- par( mai=c(1,1,1.25,1))
+>   old.par <- par(mai=c(1,1,1.25,1), no.readonly = TRUE)
 >   ### plot using different colors
 >   plot(tuk.cld2, col=c("black", "red", "blue"))
 >   par(old.par)
@@ -263,8 +263,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 >   ### extract information
 >   mod.cld <- cld(glht.mod)
 >   ### use sufficiently large upper margin
->   old.par <- par(mai=c(1,1,1.5,1))
->   ### plott
+>   old.par <- par(mai=c(1,1,1.5,1), no.readonly = TRUE)
+>   ### plot
 >   plot(mod.cld)
 >   par(old.par)
 > 
@@ -605,7 +605,7 @@ Loading required package: zoo
 
 Attaching package: ‘zoo’
 
-The following object is masked from ‘package:base’:
+The following objects are masked from ‘package:base’:
 
     as.Date, as.Date.numeric
 
@@ -1195,7 +1195,7 @@ V4 - V1 >= 0 -1.66670     -Inf -0.03584
 >   ### extract information
 >   tuk.cld <- cld(tuk)
 >   ### use sufficiently large upper margin
->   old.par <- par( mai=c(1,1,1.25,1))
+>   old.par <- par(mai=c(1,1,1.25,1), no.readonly=TRUE)
 >   ### plot
 >   plot(tuk.cld)
 >   par(old.par)
@@ -1204,7 +1204,7 @@ V4 - V1 >= 0 -1.66670     -Inf -0.03584
 >   amod2 <- aov(breaks ~ tension + wool, data = warpbreaks)
 >   tuk2 <- glht(amod2, linfct = mcp(tension = "Tukey"))
 >   tuk.cld2 <- cld(tuk2)
->   old.par <- par( mai=c(1,1,1.25,1))
+>   old.par <- par(mai=c(1,1,1.25,1), no.readonly=TRUE)
 >   ### use different colors for boxes
 >   plot(tuk.cld2, col=c("green", "red", "blue"))
 >   par(old.par)
@@ -1213,7 +1213,7 @@ V4 - V1 >= 0 -1.66670     -Inf -0.03584
 >   ci.glht <- confint(tuk)
 >   ### plot them
 >   plot(ci.glht)
->   old.par <- par( mai=c(1,1,1.25,1))
+>   old.par <- par(mai=c(1,1,1.25,1), no.readonly=TRUE)
 >   ### use 'confint.glht' object to plot all pair-wise comparisons
 >   plot(cld(ci.glht), col=c("white", "blue", "green"))
 >   par(old.par)
@@ -1227,7 +1227,7 @@ V4 - V1 >= 0 -1.66670     -Inf -0.03584
 >   ### extract information
 >   mod.cld <- cld(glht.mod)
 >   ### use sufficiently large upper margin
->   old.par <- par(mai=c(1,1,1.5,1))
+>   old.par <- par(mai=c(1,1,1.5,1), no.readonly=TRUE)
 >   ### plot
 >   plot(mod.cld)
 >   par(old.par)
@@ -1246,7 +1246,7 @@ V4 - V1 >= 0 -1.66670     -Inf -0.03584
 +     ### specify all pair-wise comparisons among levels of "Cage"
 +     cm.glht <- glht(cm, mcp(Cage = "Tukey"))
 +     # extract information & plot
-+     old.par <- par()
++     old.par <- par(no.readonly=TRUE)
 +     ### use mono font family
 +     if (dev.interactive())
 +         old.par <- par(family = "mono")
@@ -1254,11 +1254,6 @@ V4 - V1 >= 0 -1.66670     -Inf -0.03584
 +     par(old.par)
 +   }
 Loading required package: MASS
-Warning in par(old.par) : graphical parameter "cin" cannot be set
-Warning in par(old.par) : graphical parameter "cra" cannot be set
-Warning in par(old.par) : graphical parameter "csi" cannot be set
-Warning in par(old.par) : graphical parameter "cxy" cannot be set
-Warning in par(old.par) : graphical parameter "din" cannot be set
 > 
 >   if (require("nlme") && require("lme4")) {
 +     data("ergoStool", package = "nlme")
@@ -1267,7 +1262,7 @@ Warning in par(old.par) : graphical parameter "din" cannot be set
 +                        data = ergoStool)
 +     glme41 <- glht(stool.lmer, mcp(Type = "Tukey"))
 + 
-+     old.par <- par(mai=c(1,1,1.5,1))
++     old.par <- par(mai=c(1,1,1.5,1), no.readonly=TRUE)
 +     plot(cld(glme41))
 +     par(old.par)
 +   }
@@ -1278,11 +1273,11 @@ Loading required package: lattice
 
 Attaching package: ‘lme4’
 
-The following object is masked from ‘package:nlme’:
+The following objects are masked from ‘package:nlme’:
 
     VarCorr, lmList
 
-The following object is masked from ‘package:stats’:
+The following objects are masked from ‘package:stats’:
 
     AIC, BIC
 
@@ -1548,7 +1543,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.812 0.152 11.986 0 0 
+Time elapsed:  10.556 0.192 10.767 0 0 
 > grDevices::dev.off()
 null device 
           1 

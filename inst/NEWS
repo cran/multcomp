@@ -1,4 +1,9 @@
 
+		CHANGES in `multcomp' VERSION 1.2-20
+
+    o    make sure to use par(no.readonly = TRUE)
+         TH.data
+
 		CHANGES in `multcomp' VERSION 1.2-19
 
     o    fix broken vignette PDFs

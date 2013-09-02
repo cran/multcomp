@@ -1,7 +1,6 @@
 
-R Under development (unstable) (2013-01-10 r61617) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-09-01 r63796) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -169,4 +168,4 @@ Linear Hypotheses:
 > 
 > proc.time()
    user  system elapsed 
-  0.820   0.070   0.847 
+  0.236   0.036   0.268 

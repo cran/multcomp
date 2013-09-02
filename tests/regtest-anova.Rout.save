@@ -1,7 +1,6 @@
 
-R Under development (unstable) (2013-01-10 r61617) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-09-01 r63796) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -68,7 +67,7 @@ Loading required package: zoo
 
 Attaching package: 'zoo'
 
-The following object is masked from 'package:base':
+The following objects are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -76,4 +75,4 @@ The following object is masked from 'package:base':
 > 
 > proc.time()
    user  system elapsed 
-  0.920   0.090   0.968 
+  0.288   0.028   0.308 

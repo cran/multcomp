@@ -1,7 +1,6 @@
 
-R Under development (unstable) (2013-01-10 r61617) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-09-01 r63796) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -33,7 +32,7 @@ Loading required package: lattice
 
 Attaching package: 'lme4'
 
-The following object is masked from 'package:stats':
+The following objects are masked from 'package:stats':
 
     AIC, BIC
 
@@ -83,11 +82,11 @@ Loading required package: nlme
 
 Attaching package: 'nlme'
 
-The following object is masked from 'package:lme4':
+The following objects are masked from 'package:lme4':
 
     VarCorr, fixef, lmList, ranef
 
 > 
 > proc.time()
    user  system elapsed 
-  6.210   0.120   6.284 
+  2.248   0.048   2.294 

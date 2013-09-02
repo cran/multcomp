@@ -13,6 +13,7 @@ library("MASS")
 library("multcomp")
 library("foreign")
 
+if (FALSE) {
 dataurl <- "http://www.src.uchicago.edu/datalib/chfls/data/chfls1.sav"
 td <- tempdir()
 derror <- try(download.file(dataurl, destfile = file.path(td, "chfls1.sav"),
@@ -24,6 +25,12 @@ if (inherits(derror, "try-error")) {
 
 ### data see http://popcenter.uchicago.edu/data/chfls.shtml
 chfls1 <- read.spss(file.path(td, "chfls1.sav"), to.data.frame = TRUE)
+}
+}
+
+library("TH.data")
+load(file.path(path.package(package="TH.data"), "rda", "CHFLS.rda"))
+derror <- FALSE
 
 ### warnings: Variables DC04, MZ09, and MZ11 contain duplicated
 ### levels. These are not needed anyway, so we ignore the warning
@@ -99,7 +106,6 @@ orgA$RAdurationSD <- orgA$RAduration/sd(orgA$RAduration, na.rm=TRUE)
 
 ### Data set as used by Pollet & Nettle (2009)
 save(orgA, file = "orgA.Rda")
-}
 
 
 

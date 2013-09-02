@@ -1,5 +1,5 @@
 
-R version 3.0.0 (2013-04-03) -- "Masked Marvel"
+R Under development (unstable) (2013-09-01 r63796) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -101,7 +101,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x26ce208>
+<environment: 0x341a6f8>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -120,7 +120,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x26ce208>
+<environment: 0x341a6f8>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -423,4 +423,4 @@ Linear Hypotheses:
 > 
 > proc.time()
    user  system elapsed 
-  1.800   0.088   1.886 
+  0.992   0.044   1.034 
