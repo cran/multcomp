@@ -17,28 +17,12 @@ library("TH.data")
 data("alpha", package = "coin")
 data("bodyfat", package = "mboost")
 data("alzheimer", package = "coin")
-
-if (FALSE) {
-if (!file.exists("AML_Bullinger.rda")) {
-    derror <- try(load(url("http://www.stat.uni-muenchen.de/~hothorn/data/AML_Bullinger.rda", open = "r")))
-    if (inherits(derror, "try-error"))
-        cat("Vignette could not be processed -- download error.\n",
-            "\\end{document}\n")
-}
-}
 load(file.path(path.package(package = "TH.data"), "rda", "AML_Bullinger.rda"))
-derror <- FALSE
 
 
 
 ###################################################
-### code chunk number 2: check-error
-###################################################
-if (inherits(derror, "try-error")) q("no", status = 0)
-
-
-###################################################
-### code chunk number 3: setup-2
+### code chunk number 2: setup-2
 ###################################################
 risk <- rep(0, nrow(clinical))
 rlev <- levels(clinical[, "Cytogenetic.group"])
@@ -53,7 +37,7 @@ data("trees513", package = "multcomp")
 
 
 ###################################################
-### code chunk number 4: alpha-data-figure
+### code chunk number 3: alpha-data-figure
 ###################################################
 getOption("SweaveHooks")[["cex"]]()
 n <- table(alpha$alength)
@@ -64,7 +48,7 @@ rankif <- function(data) trafo(data, numeric_trafo = rank)
 
 
 ###################################################
-### code chunk number 5: alpha-aov-tukey
+### code chunk number 4: alpha-aov-tukey
 ###################################################
 data("alpha", package = "coin")
 amod <- aov(elevel ~ alength, data = alpha)
@@ -73,21 +57,21 @@ amod_glht$linfct
 
 
 ###################################################
-### code chunk number 6: alpha-aov-coefvcov
+### code chunk number 5: alpha-aov-coefvcov
 ###################################################
 coef(amod_glht)
 vcov(amod_glht)
 
 
 ###################################################
-### code chunk number 7: alpha-aov-results
+### code chunk number 6: alpha-aov-results
 ###################################################
 confint(amod_glht)
 summary(amod_glht)
 
 
 ###################################################
-### code chunk number 8: alpha-aov-tukey-sandwich
+### code chunk number 7: alpha-aov-tukey-sandwich
 ###################################################
 amod_glht_sw <- glht(amod, linfct = mcp(alength = "Tukey"), 
                       vcov = sandwich)
@@ -95,7 +79,7 @@ summary(amod_glht_sw)
 
 
 ###################################################
-### code chunk number 9: alpha-confint-plot
+### code chunk number 8: alpha-confint-plot
 ###################################################
 getOption("SweaveHooks")[["mai4"]]()
 layout(matrix(1:2, ncol = 2))
@@ -108,14 +92,14 @@ plot(ci2, xlim = c(-0.6, 2.6), main = expression(paste("Tukey (sandwich ", bold(
 
 
 ###################################################
-### code chunk number 10: bodyfat-lm-fit
+### code chunk number 9: bodyfat-lm-fit
 ###################################################
 data("bodyfat", package = "mboost")
 summary(lmod <- lm(DEXfat ~ ., data = bodyfat))
 
 
 ###################################################
-### code chunk number 11: bodyfat-lm-maxtest
+### code chunk number 10: bodyfat-lm-maxtest
 ###################################################
 K <- cbind(0, diag(length(coef(lmod)) - 1))
 rownames(K) <- names(coef(lmod))[-1]
@@ -123,26 +107,26 @@ lmod_glht <- glht(lmod, linfct = K)
 
 
 ###################################################
-### code chunk number 12: bodyfat-lm-Ftest
+### code chunk number 11: bodyfat-lm-Ftest
 ###################################################
 summary(lmod_glht, test = Ftest())
 
 
 ###################################################
-### code chunk number 13: bodyfat-lm-maxtest
+### code chunk number 12: bodyfat-lm-maxtest
 ###################################################
 summary(lmod_glht)
 
 
 ###################################################
-### code chunk number 14: bodyfat-robust
+### code chunk number 13: bodyfat-robust
 ###################################################
 summary(glht(lmrob(DEXfat ~ ., data = bodyfat,
              control = lmrob.control(setting = "KS2011")), linfct = K))
 
 
 ###################################################
-### code chunk number 15: alzheimer-demographics
+### code chunk number 14: alzheimer-demographics
 ###################################################
 total <- nrow(alzheimer)
 stopifnot(total == 538) 
@@ -159,7 +143,7 @@ atab <- xtabs(~ smoking + + disease + gender, data = alzheimer)
 
 
 ###################################################
-### code chunk number 16: alzheimer-glm
+### code chunk number 15: alzheimer-glm
 ###################################################
 data("alzheimer", package = "coin")
 y <- factor(alzheimer$disease == "Alzheimer", 
@@ -170,7 +154,7 @@ summary(gmod)
 
 
 ###################################################
-### code chunk number 17: alzheimer-K
+### code chunk number 16: alzheimer-K
 ###################################################
 a <- cbind(levels(alzheimer$smoking), "Female")
 b <- cbind(levels(alzheimer$smoking), "Male")
@@ -188,13 +172,13 @@ attr(K, "contrasts") <- NULL
 
 
 ###################################################
-### code chunk number 18: alzheimer-K
+### code chunk number 17: alzheimer-K
 ###################################################
 K
 
 
 ###################################################
-### code chunk number 19: alzheimer-probci (eval = FALSE)
+### code chunk number 18: alzheimer-probci (eval = FALSE)
 ###################################################
 ## gmod_ci <- confint(glht(gmod, linfct = K))
 ## gmod_ci$confint <- apply(gmod_ci$confint, 2, binomial()$linkinv)
@@ -203,7 +187,7 @@ K
 
 
 ###################################################
-### code chunk number 20: alzheimer-plot
+### code chunk number 19: alzheimer-plot
 ###################################################
 par(mai = par("mai") * c(1, 1.5, 1, 1))
 gmod_ci <- confint(glht(gmod, linfct = K))
@@ -213,7 +197,7 @@ plot(gmod_ci, xlab = "Probability of Developing Alzheimer",
 
 
 ###################################################
-### code chunk number 21: bullinger-survreg
+### code chunk number 20: bullinger-survreg
 ###################################################
 smod <- survreg(Surv(time, event) ~ Sex + Age + WBC + LDH + FLT3 + risk, 
                  data = clinical)
@@ -221,14 +205,14 @@ summary(glht(smod, linfct = mcp(risk = "Tukey")))
 
 
 ###################################################
-### code chunk number 22: trees-setup
+### code chunk number 21: trees-setup
 ###################################################
 trees513 <- subset(trees513, !species %in% c("fir", "softwood (other)"))
 trees513$species <- trees513$species[,drop = TRUE]
 
 
 ###################################################
-### code chunk number 23: trees-lmer
+### code chunk number 22: trees-lmer
 ###################################################
 mmod <- lmer(damage ~ species - 1 + (1 | lattice / plot),
               data = trees513, family = binomial())
@@ -236,7 +220,7 @@ K <- diag(length(fixef(mmod)))
 
 
 ###################################################
-### code chunk number 24: trees-K-cosmetics
+### code chunk number 23: trees-K-cosmetics
 ###################################################
 colnames(K) <- rownames(K) <- 
     paste(gsub("species", "", names(fixef(mmod))), 
@@ -244,7 +228,7 @@ colnames(K) <- rownames(K) <-
 
 
 ###################################################
-### code chunk number 25: trees-ci
+### code chunk number 24: trees-ci
 ###################################################
 ci <- confint(glht(mmod, linfct = K))
 ci$confint <- 1 - binomial()$linkinv(ci$confint)
@@ -252,7 +236,7 @@ ci$confint[,2:3] <- ci$confint[,3:2]
 
 
 ###################################################
-### code chunk number 26: trees-plot
+### code chunk number 25: trees-plot
 ###################################################
 par(mai = par("mai") * c(1, 1.2, 1, 0.8))
 plot(ci, xlab = "Probability of Damage Caused by Browsing", xlim = c(0, 1), main = "",

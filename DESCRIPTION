@@ -1,7 +1,7 @@
 Package: multcomp
 Title: Simultaneous Inference in General Parametric Models
-Version: 1.2-20
-Date: 2013-09-02
+Version: 1.2-21
+Date: 2013-09-20
 Authors@R: c(person("Torsten", "Hothorn", role = c("aut", "cre"), 
                     email = "Torsten.Hothorn@R-project.org"), 
         person("Frank", "Bretz", role = "aut"), 
@@ -22,7 +22,7 @@ URL: The publishers web page is
         http://www.crcpress.com/product/isbn/9781584885740
 LazyData: yes
 License: GPL-2
-Packaged: 2013-09-02 09:52:41 UTC; hothorn
+Packaged: 2013-09-20 08:40:34 UTC; hothorn
 Author: Torsten Hothorn [aut, cre],
   Frank Bretz [aut],
   Peter Westfall [aut],
@@ -31,4 +31,4 @@ Author: Torsten Hothorn [aut, cre],
 Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2013-09-02 14:26:18
+Date/Publication: 2013-09-20 10:55:23

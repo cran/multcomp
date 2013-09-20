@@ -1,5 +1,5 @@
 
-# $Id: helpers.R 330 2012-03-09 13:16:12Z thothorn $
+# $Id: helpers.R 362 2013-09-02 12:55:44Z thothorn $
 
 ### model.matrix.coxph doesn't return contrasts etc.
 model.matrix.coxph <- function(object, ...) {
@@ -70,7 +70,7 @@ model.matrix.survreg <- function(object, ...) {
 }
 
 ### coxme objects
-model.matrix.coxme <- multcomp:::model.matrix.coxph
+model.matrix.coxme <- model.matrix.coxph
 
 
 
@@ -152,7 +152,7 @@ modelparm.merMod <- function(model, coef. = fixef, vcov. = vcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
 
 ### package `nlme'
-modelparm.lme <- function(model, coef. = nlme:::fixef, vcov. = vcov, df = NULL, ...)
+modelparm.lme <- function(model, coef. = nlme::fixef, vcov. = vcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
 
 ### survreg models (package `survival')

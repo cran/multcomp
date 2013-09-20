@@ -1,4 +1,11 @@
 
+		CHANGES in `multcomp' VERSION 1.2-21
+
+    o    fix broken vignette PDF files
+
+    o    remove all Rout.save files; these can be downloaded
+         from R-forge.R-project.org now
+
 		CHANGES in `multcomp' VERSION 1.2-20
 
     o    make sure to use par(no.readonly = TRUE)
