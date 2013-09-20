@@ -13,24 +13,20 @@ library("MASS")
 library("multcomp")
 library("foreign")
 
-if (FALSE) {
-dataurl <- "http://www.src.uchicago.edu/datalib/chfls/data/chfls1.sav"
-td <- tempdir()
-derror <- try(download.file(dataurl, destfile = file.path(td, "chfls1.sav"),
-                           mode = "wb"))
-if (inherits(derror, "try-error")) {
-    cat("Vignette could not be processed -- download error.\n",
-        "\\end{document}\n")
-} else {
-
-### data see http://popcenter.uchicago.edu/data/chfls.shtml
-chfls1 <- read.spss(file.path(td, "chfls1.sav"), to.data.frame = TRUE)
-}
-}
+#dataurl <- "http://www.src.uchicago.edu/datalib/chfls/data/chfls1.sav"
+#td <- tempdir()
+#derror <- try(download.file(dataurl, destfile = file.path(td, "chfls1.sav"),
+#                           mode = "wb"))
+#if (inherits(derror, "try-error")) {
+#    cat("Vignette could not be processed -- download error.\n",
+#        "\\end{document}\n")
+#} else {
+#### data see http://popcenter.uchicago.edu/data/chfls.shtml
+#chfls1 <- read.spss(file.path(td, "chfls1.sav"), to.data.frame = TRUE)
+#}
 
 library("TH.data")
 load(file.path(path.package(package="TH.data"), "rda", "CHFLS.rda"))
-derror <- FALSE
 
 ### warnings: Variables DC04, MZ09, and MZ11 contain duplicated
 ### levels. These are not needed anyway, so we ignore the warning
@@ -110,13 +106,7 @@ save(orgA, file = "orgA.Rda")
 
 
 ###################################################
-### code chunk number 2: check-error
-###################################################
-if (inherits(derror, "try-error")) q("no", status = 0)
-
-
-###################################################
-### code chunk number 3: table-summary-PN
+### code chunk number 2: table-summary-PN
 ###################################################
 start <- polr(orgasm ~ AincomeSD + AheightSD, data=orgA, Hess=TRUE)
 step1 <- polr(orgasm ~ AincomeSD, data=orgA, Hess=TRUE)
@@ -129,7 +119,7 @@ logLikel <- formatC(-2* c(logLik(start), logLik(step1), logLik(step2)), digits =
 
 
 ###################################################
-### code chunk number 4: table-summary-PN_corr
+### code chunk number 3: table-summary-PN_corr
 ###################################################
 
 step2 <- polr(orgasm ~ AincomeSD + Redu, data=orgA, Hess=TRUE)
@@ -146,7 +136,7 @@ AIC(step4b, k=log(nrow(orgA))), AIC(step5, k=log(nrow(orgA)))), digits = 1, form
 
 
 ###################################################
-### code chunk number 5: table-summary-stepAIC
+### code chunk number 4: table-summary-stepAIC
 ###################################################
 
 ### stepAIC does not automatically remove missing values as of R 2.13.0
@@ -164,7 +154,7 @@ aic <- formatC(step_AIC$anova[,6], digits = 1, format = "f")
 
 
 ###################################################
-### code chunk number 6: table-summary-siminf
+### code chunk number 5: table-summary-siminf
 ###################################################
 
 ordRegr <- polr(orgasm ~ AincomeSD + AheightSD + RAdurationSD 
@@ -190,7 +180,7 @@ colnames(siminf) <- c("Variable", "Estimate", "Adjusted $p$-value")
 
 
 ###################################################
-### code chunk number 7: table-summary-siminf-tex
+### code chunk number 6: table-summary-siminf-tex
 ###################################################
 
 siminfPrint <- xtable(siminf, caption="Parameter estimates of the saturated cumulative logit model with associated adjusted $p$-values of the max-$t$-test.",
@@ -201,7 +191,7 @@ print(siminfPrint, table.placement = "h!", include.rownames = FALSE, sanitize.te
 
 
 ###################################################
-### code chunk number 8: table-summary-comp-edu
+### code chunk number 7: table-summary-comp-edu
 ###################################################
 s <- summary(glht(ordRegr, linfct = mcp(Redu = c("univ - jcol = 0",
                                                  "jcol - upmid = 0",
@@ -218,7 +208,7 @@ colnames(comp_edu) <- c("Compared levels of education", "Estimated log odds rati
 
 
 ###################################################
-### code chunk number 9: table-summary-comp-edu-tex
+### code chunk number 8: table-summary-comp-edu-tex
 ###################################################
 
 comp_eduPrint <- xtable(comp_edu, caption="Estimated log odds ratios for comparisons of consecutive levels of education and associated adjusted $p$-values 

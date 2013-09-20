@@ -85,22 +85,8 @@ library("TH.data")
 data("alpha", package = "coin")
 data("bodyfat", package = "mboost")
 data("alzheimer", package = "coin")
-
-if (FALSE) {
-if (!file.exists("AML_Bullinger.rda")) {
-    derror <- try(load(url("http://www.stat.uni-muenchen.de/~hothorn/data/AML_Bullinger.rda", open = "r")))
-    if (inherits(derror, "try-error"))
-        cat("Vignette could not be processed -- download error.\n",
-            "\\end{document}\n")
-}
-}
 load(file.path(path.package(package = "TH.data"), "rda", "AML_Bullinger.rda"))
-derror <- FALSE
 
-@
-
-<<check-error, echo = FALSE, results = hide>>=
-if (inherits(derror, "try-error")) q("no", status = 0)
 @
 
 <<setup-2, echo = FALSE, results = hide>>=
