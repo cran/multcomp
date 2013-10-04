@@ -4,6 +4,7 @@
 \alias{glht.character}
 \alias{glht.expression}
 \alias{glht.mcp}
+\alias{glht.mlf}
 \alias{mcp}
 \title{ General Linear Hypotheses }
 \description{
@@ -18,6 +19,7 @@
 \method{glht}{character}(model, linfct, ...)
 \method{glht}{expression}(model, linfct, ...)
 \method{glht}{mcp}(model, linfct, ...)
+\method{glht}{mlf}(model, linfct, ...)
 mcp(..., interaction_average = FALSE, covariate_average = FALSE)
 }
 \arguments{
