@@ -1,6 +1,10 @@
 
+importFrom(sandwich, estfun, meat, bread, sandwich)
+import(mvtnorm)
+import(survival)
+
 export(glht, contrMat, univariate, adjusted, Ftest, Chisqtest, mcp, modelparm,
-       adjusted_calpha, univariate_calpha, parm, cftest, cld)
+       adjusted_calpha, univariate_calpha, parm, cftest, cld, mmm, mlf)
 
 S3method(summary, glht)
 S3method(confint, glht)
@@ -18,6 +22,7 @@ S3method(glht, matrix)
 S3method(glht, character)
 S3method(glht, expression)
 S3method(glht, mcp)
+S3method(glht, mlf)
 S3method(glht, means)
 S3method(coef, parm)
 S3method(vcov, parm)
@@ -25,3 +30,8 @@ S3method(cld, summary.glht)
 S3method(cld, confint.glht)
 S3method(cld, glht)
 S3method(plot, cld)
+
+S3method(coef, mmm)
+S3method(vcov, mmm)
+S3method(bread, mmm)
+S3method(estfun, mmm)
