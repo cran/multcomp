@@ -62,9 +62,15 @@ coef.mmm <- function(object, ...) {
      ret
 }
 
+Estfun <- function(x, ...) {
+     e <- estfun(x, ...)
+     e[is.na(e)] <- 0
+     e
+}
+
 ### extract estimating functions
 estfun.mmm <- function(x, ...)
-    do.call("cbind", lapply(x, estfun, ...))
+    do.call("cbind", lapply(x, Estfun, ...))
 
 ### extract bread
 bread.mmm <- function(x, ...)
