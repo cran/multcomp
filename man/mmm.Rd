@@ -33,6 +33,15 @@ mlf(...)
   The implementation assumes that the model were fitted to the same data,
   i.e., the rows of the matrices returned by \code{estfun} belong to the
   same observations for each model.
+
+  The reference distribution is always multivariate normal, if you want
+  to use the multivariate t, please specify the corresponding degrees of
+  freedom as an additional \code{df} argument to \code{\link{glht}}.
+
+  Observations with missing values contribute zero to the score function.
+  Models have to be fitted using \code{\link{na.exclude}} as \code{na.action}
+  argument.
+
 }
 
 \value{
@@ -113,7 +122,7 @@ summary(g)
 confint(g)
 
 ### attitude towards science data
-data("mn6.9", package = "multmod")
+data("mn6.9", package = "TH.data")
 
 ### one model for each item
 mn6.9.y1 <- glm(y1 ~ group, family = binomial(), 
