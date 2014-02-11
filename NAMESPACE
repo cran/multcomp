@@ -2,6 +2,7 @@
 importFrom(sandwich, estfun, meat, bread, sandwich)
 import(mvtnorm)
 import(survival)
+import(TH.data)
 
 export(glht, contrMat, univariate, adjusted, Ftest, Chisqtest, mcp, modelparm,
        adjusted_calpha, univariate_calpha, parm, cftest, cld, mmm, mlf)
