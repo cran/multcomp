@@ -1,6 +1,6 @@
 
-R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R Under development (unstable) (2014-02-11 r64974) -- "Unsuffered Consequences"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -24,6 +24,7 @@ Type 'q()' to quit R.
 Loading required package: mvtnorm
 Loading required package: survival
 Loading required package: splines
+Loading required package: TH.data
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > cleanEx()
@@ -309,7 +310,6 @@ The following object is masked from ‘package:base’:
 
 Loading required package: nlme
 Loading required package: Matrix
-Loading required package: lattice
 Warning in Ops.factor(1, center) : | not meaningful for factors
 Warning in Ops.factor(1, center) : | not meaningful for factors
             Estimate      lwr upr
@@ -320,8 +320,8 @@ trt3 - trt1 1.396362 1.068776 Inf
 > 
 > cleanEx()
 
-detaching ‘package:coxme’, ‘package:Matrix’, ‘package:lattice’,
-  ‘package:nlme’, ‘package:bdsmatrix’
+detaching ‘package:coxme’, ‘package:Matrix’, ‘package:nlme’,
+  ‘package:bdsmatrix’
 
 > nameEx("contrMat")
 > ### * contrMat
@@ -1976,7 +1976,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.9 0.24 11.161 0 0 
+Time elapsed:  10.592 0.196 10.808 0 0 
 > grDevices::dev.off()
 null device 
           1 

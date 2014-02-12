@@ -376,10 +376,13 @@ load(system.file("MCMT/MCMT.rda", package = "multcomp"))
   lmod <- lmer(plates ~ detergent + (1 | block), data = detergent, 
                model = TRUE)
 
+### non-integer df are not allowed anymore
+if (FALSE) {
   gh <- glht(lmod, mcp(detergent = "Tukey"), df = 17.6)
 
   # page 211 -- FIXME: df??? / inaccuracies?
   confint(gh)
+}
 
 
 ### waste data
@@ -436,3 +439,5 @@ amod <- aov(score ~ therapy * since + age, data = alz)
 gh <- glht(amod, linfct = mcp(therapy = "Tukey"))
 gh$linfct[,8:11] <- gh$linfct[,8:11] * 2
 confint(gh)
+
+sessionInfo()
