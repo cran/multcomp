@@ -12,7 +12,7 @@ modelparm(model, coef., vcov., df, ...)
   \item{model}{a fitted model,
                for example an object returned by \code{\link{lm}},
                \code{\link{glm}}, \code{\link{aov}}, \code{\link[survival]{survreg}},
-               or \code{lmer} etc. }
+               or \code{\link[lme4]{lmer}} etc. }
   \item{coef.}{ an accessor function for the model parameters. }
   \item{vcov.}{ an accessor function for the covariance matrix of the
                 model parameters. }
@@ -29,7 +29,7 @@ modelparm(model, coef., vcov., df, ...)
 
   The \code{coef.} and \code{vcov.} arguments can be used to define
   modified \code{coef} or \code{vcov} methods for a specific model.
-  Methods for \code{lmer} and \code{\link[survival]{survreg}}
+  Methods for \code{\link[lme4]{lmer}} and \code{\link[survival]{survreg}}
   objects are available (internally).
 
   For objects inheriting from class \code{\link{lm}} the degrees of 

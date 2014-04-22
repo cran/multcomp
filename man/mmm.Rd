@@ -80,46 +80,48 @@ mlf(...)
 ### DOI: 10.2202/1557-4679.1258
 
 ### see ?coagulation
-data("coagulation", package = "SimComp")
+if (require("SimComp")) {
+    data("coagulation", package = "SimComp")
 
-### level "S" is the standard, "H" and "B" are novel procedures
-coagulation$Group <- relevel(coagulation$Group, ref = "S")
+    ### level "S" is the standard, "H" and "B" are novel procedures
+    coagulation$Group <- relevel(coagulation$Group, ref = "S")
 
-### fit marginal models
-(m1 <- lm(Thromb.count ~ Group, data = coagulation))
-(m2 <- lm(ADP ~ Group, data = coagulation))
-(m3 <- lm(TRAP ~ Group, data = coagulation))
+    ### fit marginal models
+    (m1 <- lm(Thromb.count ~ Group, data = coagulation))
+    (m2 <- lm(ADP ~ Group, data = coagulation))
+    (m3 <- lm(TRAP ~ Group, data = coagulation))
 
-### set-up Dunnett comparisons for H - S and B - S 
-### for all three models
-g <- glht(mmm(Thromb = m1, ADP = m2, TRAP = m3),
-          mlf(mcp(Group = "Dunnett")), alternative = "greater")
+    ### set-up Dunnett comparisons for H - S and B - S 
+    ### for all three models
+    g <- glht(mmm(Thromb = m1, ADP = m2, TRAP = m3),
+              mlf(mcp(Group = "Dunnett")), alternative = "greater")
 
-### joint correlation
-cov2cor(vcov(g))
+    ### joint correlation
+    cov2cor(vcov(g))
 
-### simultaneous p-values adjusted by taking the correlation
-### between the score contributions into account
-summary(g)
-### simultaneous confidence intervals
-confint(g)
+    ### simultaneous p-values adjusted by taking the correlation
+    ### between the score contributions into account
+    summary(g)
+    ### simultaneous confidence intervals
+    confint(g)
 
-### compare with
-\dontrun{
-    library("SimComp")
-    SimCiDiff(data = coagulation, grp = "Group",
-              resp = c("Thromb.count","ADP","TRAP"), 
-              type = "Dunnett", alternative = "greater",
-              covar.equal = TRUE)
+    ### compare with
+    \dontrun{
+        library("SimComp")
+        SimCiDiff(data = coagulation, grp = "Group",
+                  resp = c("Thromb.count","ADP","TRAP"), 
+                  type = "Dunnett", alternative = "greater",
+                  covar.equal = TRUE)
+    }
+ 
+    ### use sandwich variance matrix
+    library("sandwich")
+    g <- glht(mmm(Thromb = m1, ADP = m2, TRAP = m3),
+              mlf(mcp(Group = "Dunnett")), 
+              alternative = "greater", vcov = sandwich)
+    summary(g)
+    confint(g)
 }
-
-### use sandwich variance matrix
-library("sandwich")
-g <- glht(mmm(Thromb = m1, ADP = m2, TRAP = m3),
-          mlf(mcp(Group = "Dunnett")), 
-          alternative = "greater", vcov = sandwich)
-summary(g)
-confint(g)
 
 ### attitude towards science data
 data("mn6.9", package = "TH.data")

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-02-11 r64974) -- "Unsuffered Consequences"
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1141,132 +1141,50 @@ detaching ‘package:MASS’
 > ### DOI: 10.2202/1557-4679.1258
 > 
 > ### see ?coagulation
-> data("coagulation", package = "SimComp")
-> 
-> ### level "S" is the standard, "H" and "B" are novel procedures
-> coagulation$Group <- relevel(coagulation$Group, ref = "S")
-> 
-> ### fit marginal models
-> (m1 <- lm(Thromb.count ~ Group, data = coagulation))
-
-Call:
-lm(formula = Thromb.count ~ Group, data = coagulation)
-
-Coefficients:
-(Intercept)       GroupB       GroupH  
-    0.87219      0.12170      0.04351  
-
-> (m2 <- lm(ADP ~ Group, data = coagulation))
-
-Call:
-lm(formula = ADP ~ Group, data = coagulation)
-
-Coefficients:
-(Intercept)       GroupB       GroupH  
-    0.80801      0.21211      0.08422  
-
-> (m3 <- lm(TRAP ~ Group, data = coagulation))
-
-Call:
-lm(formula = TRAP ~ Group, data = coagulation)
-
-Coefficients:
-(Intercept)       GroupB       GroupH  
-    0.72529      0.10525      0.07109  
-
-> 
-> ### set-up Dunnett comparisons for H - S and B - S 
-> ### for all three models
-> g <- glht(mmm(Thromb = m1, ADP = m2, TRAP = m3),
-+           mlf(mcp(Group = "Dunnett")), alternative = "greater")
-> 
-> ### joint correlation
-> cov2cor(vcov(g))
-              Thromb: B - S Thromb: H - S ADP: B - S ADP: H - S TRAP: B - S
-Thromb: B - S     1.0000000     0.2841127  0.8492078  0.1712958   0.3142199
-Thromb: H - S     0.2841127     1.0000000  0.1339935  0.8869262   0.3423331
-ADP: B - S        0.8492078     0.1339935  1.0000000  0.1162019   0.2396233
-ADP: H - S        0.1712958     0.8869262  0.1162019  1.0000000   0.2236344
-TRAP: B - S       0.3142199     0.3423331  0.2396233  0.2236344   1.0000000
-TRAP: H - S       0.3765291     0.7054480  0.1924089  0.5818189   0.5560384
-              TRAP: H - S
-Thromb: B - S   0.3765291
-Thromb: H - S   0.7054480
-ADP: B - S      0.1924089
-ADP: H - S      0.5818189
-TRAP: B - S     0.5560384
-TRAP: H - S     1.0000000
-> 
-> ### simultaneous p-values adjusted by taking the correlation
-> ### between the score contributions into account
-> summary(g)
-
-	 Simultaneous Tests for General Linear Hypotheses
-
-Linear Hypotheses:
-                   Estimate Std. Error z value Pr(>z)  
-Thromb: B - S <= 0  0.12170    0.10468   1.163 0.3747  
-Thromb: H - S <= 0  0.04351    0.10238   0.425 0.7267  
-ADP: B - S <= 0     0.21211    0.08394   2.527 0.0263 *
-ADP: H - S <= 0     0.08422    0.08209   1.026 0.4401  
-TRAP: B - S <= 0    0.10525    0.14287   0.737 0.5828  
-TRAP: H - S <= 0    0.07109    0.13973   0.509 0.6902  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-(Adjusted p values reported -- single-step method)
-
-> ### simultaneous confidence intervals
-> confint(g)
-
-	 Simultaneous Confidence Intervals
-
-Fit: NULL
-
-Quantile = -2.2713
-95% family-wise confidence level
- 
-
-Linear Hypotheses:
-                   Estimate lwr      upr     
-Thromb: B - S <= 0  0.12170 -0.11606      Inf
-Thromb: H - S <= 0  0.04351 -0.18903      Inf
-ADP: B - S <= 0     0.21211  0.02146      Inf
-ADP: H - S <= 0     0.08422 -0.10223      Inf
-TRAP: B - S <= 0    0.10525 -0.21925      Inf
-TRAP: H - S <= 0    0.07109 -0.24628      Inf
-
-> 
-> ### compare with
-> ## Not run: 
-> ##D     library("SimComp")
-> ##D     SimCiDiff(data = coagulation, grp = "Group",
-> ##D               resp = c("Thromb.count","ADP","TRAP"), 
-> ##D               type = "Dunnett", alternative = "greater",
-> ##D               covar.equal = TRUE)
-> ## End(Not run)
-> 
-> ### use sandwich variance matrix
-> library("sandwich")
-> g <- glht(mmm(Thromb = m1, ADP = m2, TRAP = m3),
-+           mlf(mcp(Group = "Dunnett")), 
-+           alternative = "greater", vcov = sandwich)
-> summary(g)
-
-	 Simultaneous Tests for General Linear Hypotheses
-
-Linear Hypotheses:
-                   Estimate Std. Error z value Pr(>z)  
-Thromb: B - S <= 0  0.12170    0.08719   1.396 0.2728  
-Thromb: H - S <= 0  0.04351    0.09814   0.443 0.7190  
-ADP: B - S <= 0     0.21211    0.07664   2.767 0.0135 *
-ADP: H - S <= 0     0.08422    0.06749   1.248 0.3358  
-TRAP: B - S <= 0    0.10525    0.13590   0.774 0.5644  
-TRAP: H - S <= 0    0.07109    0.13909   0.511 0.6892  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-(Adjusted p values reported -- single-step method)
-
-> confint(g)
+> if (require("SimComp")) {
++     data("coagulation", package = "SimComp")
++ 
++     ### level "S" is the standard, "H" and "B" are novel procedures
++     coagulation$Group <- relevel(coagulation$Group, ref = "S")
++ 
++     ### fit marginal models
++     (m1 <- lm(Thromb.count ~ Group, data = coagulation))
++     (m2 <- lm(ADP ~ Group, data = coagulation))
++     (m3 <- lm(TRAP ~ Group, data = coagulation))
++ 
++     ### set-up Dunnett comparisons for H - S and B - S 
++     ### for all three models
++     g <- glht(mmm(Thromb = m1, ADP = m2, TRAP = m3),
++               mlf(mcp(Group = "Dunnett")), alternative = "greater")
++ 
++     ### joint correlation
++     cov2cor(vcov(g))
++ 
++     ### simultaneous p-values adjusted by taking the correlation
++     ### between the score contributions into account
++     summary(g)
++     ### simultaneous confidence intervals
++     confint(g)
++ 
++     ### compare with
++     ## Not run: 
++ ##D         library("SimComp")
++ ##D         SimCiDiff(data = coagulation, grp = "Group",
++ ##D                   resp = c("Thromb.count","ADP","TRAP"), 
++ ##D                   type = "Dunnett", alternative = "greater",
++ ##D                   covar.equal = TRUE)
++ ##D     
++ ## End(Not run)
++  
++     ### use sandwich variance matrix
++     library("sandwich")
++     g <- glht(mmm(Thromb = m1, ADP = m2, TRAP = m3),
++               mlf(mcp(Group = "Dunnett")), 
++               alternative = "greater", vcov = sandwich)
++     summary(g)
++     confint(g)
++ }
+Loading required package: SimComp
 
 	 Simultaneous Confidence Intervals
 
@@ -1564,7 +1482,7 @@ m2: groupB == 0   0.4015     0.4021   0.999    0.318
 > 
 > cleanEx()
 
-detaching ‘package:sandwich’
+detaching ‘package:sandwich’, ‘package:SimComp’
 
 > nameEx("parm")
 > ### * parm
@@ -1705,8 +1623,8 @@ Loading required package: MASS
 +   }
 Loading required package: nlme
 Loading required package: lme4
-Loading required package: lattice
 Loading required package: Matrix
+Loading required package: Rcpp
 
 Attaching package: ‘lme4’
 
@@ -1720,7 +1638,7 @@ The following object is masked from ‘package:nlme’:
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
-detaching ‘package:lme4’, ‘package:Matrix’, ‘package:lattice’,
+detaching ‘package:lme4’, ‘package:Rcpp’, ‘package:Matrix’,
   ‘package:nlme’, ‘package:MASS’
 
 > nameEx("recovery")
@@ -1976,7 +1894,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.592 0.196 10.808 0 0 
+Time elapsed:  10.416 0.268 10.711 0 0 
 > grDevices::dev.off()
 null device 
           1 

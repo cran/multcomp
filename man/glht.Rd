@@ -107,7 +107,7 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
   \code{\link{contrMat}} may serve as a symbolic description of 
   contrasts as well.
 
-  4) The \code{\link[lsmeans]{lsm}} function offers a symbolic
+  4) The \code{lsm} function in package \code{lsmeans} offers a symbolic
   interface for the definition of least-squares means for factor combinations
   which is very helpful when more complex contrasts are of special interest.
 
