@@ -310,8 +310,8 @@ The following object is masked from ‘package:base’:
 
 Loading required package: nlme
 Loading required package: Matrix
-Warning in Ops.factor(1, center) : | not meaningful for factors
-Warning in Ops.factor(1, center) : | not meaningful for factors
+Warning in Ops.factor(1, center) : '|' not meaningful for factors
+Warning in Ops.factor(1, center) : '|' not meaningful for factors
             Estimate      lwr upr
 trt2 - trt1 1.551055 1.184063 Inf
 trt3 - trt1 1.396362 1.068776 Inf
@@ -331,7 +331,7 @@ detaching ‘package:coxme’, ‘package:Matrix’, ‘package:nlme’,
 > ### Name: contrMat
 > ### Title: Contrast Matrices
 > ### Aliases: contrMat
-> ### Keywords: misc
+> ### Keywords: misc Dunnett Tukey
 > 
 > ### ** Examples
 > 

@@ -52,3 +52,5 @@ contrMat(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
 
 }
 \keyword{misc}
+\keyword{Dunnett}
+\keyword{Tukey}
