@@ -13,9 +13,9 @@ modelparm(model, coef., vcov., df, ...)
                for example an object returned by \code{\link{lm}},
                \code{\link{glm}}, \code{\link{aov}}, \code{\link[survival]{survreg}},
                or \code{\link[lme4]{lmer}} etc. }
-  \item{coef.}{ an accessor function for the model parameters. }
+  \item{coef.}{ an accessor function for the model parameters. Alternatively, the vector of coefficients.}
   \item{vcov.}{ an accessor function for the covariance matrix of the
-                model parameters. }
+                model parameters. Alternatively, the covariance matrix directly.}
   \item{df}{ an optional specification of the degrees of freedom to be used in
              subsequent computations. }
   \item{\dots}{ additional arguments, currently ignored. }

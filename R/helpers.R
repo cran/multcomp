@@ -1,5 +1,5 @@
 
-# $Id: helpers.R 362 2013-09-02 12:55:44Z thothorn $
+# $Id: helpers.R 401 2014-07-21 11:29:44Z thothorn $
 
 ### model.matrix.coxph doesn't return contrasts etc.
 model.matrix.coxph <- function(object, ...) {
@@ -92,6 +92,16 @@ modelparm <- function(model, coef., vcov., df, ...)
 modelparm.default <- function(model, coef. = coef, vcov. = vcov, 
                               df = NULL, ...) 
 {
+
+    ### allow specification of coef and vcov directly
+    if (!is.function(coef.)) {
+        beta <- coef.
+        coef. <- function(model) return(beta)
+    }
+    if (!is.function(vcov.)) {
+        sigma <- vcov.
+        vcov. <- function(model) return(sigma)
+    }
 
     ### extract coefficients and their covariance matrix
     beta <- try(coef.(model))

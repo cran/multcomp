@@ -1,4 +1,9 @@
 
+Changes in 1.3-5 (2014-07-23)
+
+    o    allow coefficients and covariance matrices to be
+         fed into modelparm via coef. and vcov. directly
+
 Changes in 1.3-4 (2014-07-09)
 
     o    suggest ISwR (for demo())
