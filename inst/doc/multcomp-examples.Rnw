@@ -297,7 +297,7 @@ Tukey <- contrMat(table(warpbreaks$tension), "Tukey")
 K1 <- cbind(Tukey, matrix(0, nrow = nrow(Tukey), ncol = ncol(Tukey)))
 rownames(K1) <- paste(levels(warpbreaks$wool)[1], rownames(K1), sep = ":")
 K2 <- cbind(matrix(0, nrow = nrow(Tukey), ncol = ncol(Tukey)), Tukey)
-rownames(K2) <- paste(levels(warpbreaks$wool)[2], rownames(K1), sep = ":")
+rownames(K2) <- paste(levels(warpbreaks$wool)[2], rownames(K2), sep = ":")
 K <- rbind(K1, K2) 
 colnames(K) <- c(colnames(Tukey), colnames(Tukey))
 @

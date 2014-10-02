@@ -15,7 +15,7 @@ library("sandwich")
 library("robustbase")
 library("TH.data")
 data("alpha", package = "coin")
-data("bodyfat", package = "mboost")
+data("bodyfat", package = "TH.data")
 data("alzheimer", package = "coin")
 load(file.path(path.package(package = "TH.data"), "rda", "AML_Bullinger.rda"))
 
@@ -94,7 +94,7 @@ plot(ci2, xlim = c(-0.6, 2.6), main = expression(paste("Tukey (sandwich ", bold(
 ###################################################
 ### code chunk number 9: bodyfat-lm-fit
 ###################################################
-data("bodyfat", package = "mboost")
+data("bodyfat", package = "TH.data")
 summary(lmod <- lm(DEXfat ~ ., data = bodyfat))
 
 

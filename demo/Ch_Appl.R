@@ -450,7 +450,7 @@ summary(litter.mc2, test = adjusted(type = "free"))
 ###################################################
 ### chunk number 54: body-1
 ###################################################
-data("bodyfat", package = "mboost")
+data("bodyfat", package = "TH.data")
 bodyfat.lm <- lm(DEXfat ~ ., data = bodyfat)
 summary(bodyfat.lm)
 

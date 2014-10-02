@@ -1,5 +1,5 @@
 %%\VignetteIndexEntry{Simultaneous Inference in General Parametric Models}
-%%VignetteDepends{multcomp,mboost,survival,robustbase,lme4,coin}
+%%VignetteDepends{multcomp,TH.data,survival,robustbase,lme4,coin}
 %%\usepackage{Sweave}
 \documentclass[12pt,a4paper]{article}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,7 +83,7 @@ library("sandwich")
 library("robustbase")
 library("TH.data")
 data("alpha", package = "coin")
-data("bodyfat", package = "mboost")
+data("bodyfat", package = "TH.data")
 data("alzheimer", package = "coin")
 load(file.path(path.package(package = "TH.data"), "rda", "AML_Bullinger.rda"))
 
@@ -808,7 +808,7 @@ over all $t$-statistics to select important variables based on
 adjusted $p$-values. The linear model including all covariates and
 the classical unadjusted $p$-values are given by
 <<bodyfat-lm-fit, echo = TRUE>>=
-data("bodyfat", package = "mboost")
+data("bodyfat", package = "TH.data")
 summary(lmod <- lm(DEXfat ~ ., data = bodyfat))
 @
 The marix of linear functions $\K$ is basically the identity matrix, except 
