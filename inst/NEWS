@@ -1,4 +1,8 @@
 
+Changes in 1.3-8 (2014-12-01)
+
+    o    report pmv{t,norm}() warnings (spotted by Christian Ritz)
+
 Changes in 1.3-7 (2014-10-01)
 
     o    bodyfat is in TH.data and not mboost anymore

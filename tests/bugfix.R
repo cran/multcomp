@@ -157,3 +157,9 @@ wht <- glht(amod, linfct = mcp(tension = "Tukey"), alternative="greater")
 plot(wht, xlim=c(-30, 30), main="right side was missing")
 wht <- glht(amod, linfct = mcp(tension = "Tukey"), alternative="less")
 plot(wht, xlim=c(-40, 20), main="left side was missing")
+
+### reported by Christian Ritz
+summary(glht(parm(1:4,matrix(c(1,0.97,0.89,0.74,
+                               0.97,1,0.97,0.89,
+                               0.89,0.97,1,0.97,
+                               0.74,0.89,0.97,1), 4, 4))))

@@ -1,5 +1,5 @@
 
-# $Id: pqfunctions.R 288 2010-02-22 16:52:09Z thothorn $
+# $Id: pqfunctions.R 409 2014-12-01 15:58:09Z thothorn $
 
 pqglht <- function(object) 
 {
@@ -52,6 +52,9 @@ pqglht <- function(object)
             error <- 0
             for (i in 1:length(tstat)) {
                 tmp <- pfct(tstat[i])
+                if (attr(tmp, "msg") != "Normal Completion" &&  
+                    length(grep("^univariate", attr(tmp, "msg"))) == 0)
+                    warning(attr(tmp, "msg"))
                 if (error < attr(tmp, "error")) 
                     error <- attr(tmp, "error")
                 ret[i] <- tmp

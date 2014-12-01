@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2013-09-01 r63796) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -20,6 +20,7 @@ Type 'q()' to quit R.
 Loading required package: mvtnorm
 Loading required package: survival
 Loading required package: splines
+Loading required package: TH.data
 > set.seed(290875)
 > 
 > ### mcp didn't accept objects of class `contrMat'
@@ -91,6 +92,9 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
         error <- 0
         for (i in 1:length(tstat)) {
             tmp <- pfct(tstat[i])
+            if (attr(tmp, "msg") != "Normal Completion" && length(grep("^univariate", 
+                attr(tmp, "msg"))) == 0) 
+                warning(attr(tmp, "msg"))
             if (error < attr(tmp, "error")) 
                 error <- attr(tmp, "error")
             ret[i] <- tmp
@@ -101,7 +105,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x341a6f8>
+<environment: 0x319ba30>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -120,7 +124,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x341a6f8>
+<environment: 0x319ba30>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -421,6 +425,32 @@ Linear Hypotheses:
 > wht <- glht(amod, linfct = mcp(tension = "Tukey"), alternative="less")
 > plot(wht, xlim=c(-40, 20), main="left side was missing")
 > 
+> ### reported by Christian Ritz
+> summary(glht(parm(1:4,matrix(c(1,0.97,0.89,0.74,
++                                0.97,1,0.97,0.89,
++                                0.89,0.97,1,0.97,
++                                0.74,0.89,0.97,1), 4, 4))))
+
+	 Simultaneous Tests for General Linear Hypotheses
+
+Linear Hypotheses:
+        Estimate Std. Error z value Pr(>|z|)
+V1 == 0        1          1       1        1
+V2 == 0        2          1       2        1
+V3 == 0        3          1       3        1
+V4 == 0        4          1       4        1
+(Adjusted p values reported -- single-step method)
+
+Warning messages:
+1: In RET$pfunction("adjusted", ...) :
+  Covariance matrix not positive semidefinite
+2: In RET$pfunction("adjusted", ...) :
+  Covariance matrix not positive semidefinite
+3: In RET$pfunction("adjusted", ...) :
+  Covariance matrix not positive semidefinite
+4: In RET$pfunction("adjusted", ...) :
+  Covariance matrix not positive semidefinite
+> 
 > proc.time()
    user  system elapsed 
-  0.992   0.044   1.034 
+  1.168   0.028   1.184 
