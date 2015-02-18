@@ -160,7 +160,7 @@ chrlinfct2matrix <- function(ex, var) {
                 stop("mix of alternatives currently not implemented")
         }
 
-        rownames(K)[i] <- tmp$lhs[1]
+        rownames(K)[i] <- paste0(tmp$lhs, collapse = "")
     }
     list(K = K, m = m, alternative = alternative)
 }

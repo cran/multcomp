@@ -1,5 +1,5 @@
 
-# $Id: helpers.R 404 2014-08-15 17:38:50Z thothorn $
+# $Id: helpers.R 412 2015-02-03 17:19:12Z thothorn $
 
 ### model.matrix.coxph doesn't return contrasts etc.
 model.matrix.coxph <- function(object, ...) {
@@ -81,8 +81,11 @@ model.matrix.aovlist <- function(object, ...)
 model.matrix.lme <- function(object, ...)
     model.matrix(terms(object), data = model.frame(object), ...)
 
-model.frame.lme <- function(object, ...)
-    object$data
+model.frame.lme <- function(object, ...) {
+    ret <- object$data
+    if (is.null(ret)) stop("object does not contain any data")
+    ret
+}
 
 ### extract coefficients, covariance matrix and 
 ### degrees of freedom (if available) from `model'
