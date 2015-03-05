@@ -1,5 +1,5 @@
 
-# $Id: expressions.R 331 2012-04-08 15:47:35Z thothorn $
+# $Id: expressions.R 413 2015-02-18 15:47:42Z thothorn $
 
 ### determine if an expression `x' can be interpreted as numeric
 is_num <- function(x) {
@@ -91,35 +91,444 @@ side <- function(ex) {
     return(alternative)
 }
 
-### extract coefficients and variable names
-expression2coef <- function(ex) {
 
-    cf <- c()
-    nm <- c()
+expression2coef <- function(ex, vars, debug = F) {
 
-    m <- rhs(ex)
-    x <- lhs(ex)
-    alternative <- side(ex)
+   ### uses walkCode and makeCodeWalker from codetools
 
-    while (TRUE) {
+   m.rhs <- rhs(ex)
+   m.lhs <- lhs(ex)
 
-        tmp <- coefs(x)
-        cf <- c(cf, tmp$coef)
-        nm <- c(nm, tmp$var)
+   attr( m.lhs, 'coef') <- 1
 
-        ### x == "A" or x == "A:B"
-        if (is.name(x) || x[[1]] == ":") break
-        ### x == "-1"
-        if (is_num(x)) break
-        ### x == "3 * A"
-        if (length(x) == 3 && is_num(x[[2]])) break
-        ### x == "-3 * A"
-        if (length(x) == 3 && is_num(x[[2]])) break
-        x <- x[[2]]   
-    }
-    return(list(coef = cf, names = nm, 
-                m = m, alternative = alternative, 
-                lhs = deparse(lhs(ex))))
+   if ( debug ) {
+        message('expression2coef',': lhs is ', sQuote(paste0(deparse(m.lhs),collapse='')))
+        message('expression2coef',': rhs is ', sQuote(paste0(deparse(m.rhs),collapse='')))
+   }
+
+
+   effects <-
+   walkCode(m.lhs,
+            makeCodeWalker( # dispatch operators
+                            handler = function(v, w) {
+                                      if ( debug ) w$trace('handler',v,w)
+
+                                      switch( v,
+                                             '-'    = w$sub,
+                                             '+'    = w$add,
+                                             '*'    = w$mul,
+                                             '/'    = w$div,
+                                             '('    = w$exp,
+                                             ':'    = w$ita,
+                                 #            w$fatal('handler','operator ', sQuote(v), ' is not supported')
+                                              w$eval
+                                             )
+                            },
+
+                            is.effect<-function(x) {
+                                # vars is visible as a parameter to the enclosing function expression2coef
+                                as.character(x) %in% vars 
+                            },
+
+                            eval = function(v,w) {
+                                   if ( debug ) w$trace('eval',v,w)
+
+                                   parms <- c()
+                                   for ( e in as.list(v)[-1] )  {
+                                         coef <- 1
+                                         if ( debug )
+                                              message('eval',': walking ', sQuote(e), ' with coef = ', coef)
+                                         parms <- c(parms, p <- walkCode(w$setCoef(e,coef),w) )
+                                         if (  is.effect( p ) )
+                                               w$fatal('eval','within ', sQuote(deparse(v)) , ', the term ', sQuote(p),' ',
+                                                       'must not denote an effect. Apart from that, ',
+                                                       'the term must evaluate to a real valued constant')
+                                   }
+
+                                   cparms <- c()
+                                   for ( e in parms ) {
+                                         cparms <- c(cparms,parse(text=paste(e,'*',w$getCoef(e))))
+                                   }
+
+                                   if ( debug ) {
+                                        dumped <- lapply(cparms, function(x,w) paste(x, 'with coef =', w$getCoef(x)),w)
+                                        message('eval',': cparms = ', w$enum(dumped))
+                                   }
+
+                                   res <- try ( do.call(as.character(v[[1]]), as.list(cparms)), silent=T )
+
+                                   if ( class(res) == 'try-error' )
+                                        w$fatal('eval','the evaluation of the expression ', sQuote(deparse(v)),' ',
+                                                       'failed with ', dQuote(attr(res,'condition')$message) )
+
+                                   if ( length(res) != 1 || !is.numeric(res) || !is.finite(res)  )
+                                        w$fatal('eval','the expression ', sQuote(deparse(v)),' ',
+                                                       'did not evaluate to a real valued constant. ',
+                                                       'Result is ', sQuote(res) )
+
+                                   res <- w$setCoef(res*w$getCoef(v),1)
+
+                                   if ( debug ) {
+                                        dumped <- lapply(res, function(x,w) paste(x, 'with coef =', w$getCoef(x)),w)
+                                        message('eval',': res = ', w$enum(dumped))
+                                   }
+                                   res
+                            },
+
+                            # call -- evaluate construct directly ( this should not be reached )
+                            call = function(v,w) {
+                                 if ( debug ) w$trace('call',v,w)
+                                 w$fatal('call',"there is probably a syntax error within subexpression", sQuote(deparse(v)))
+                            },
+
+                            # 'a - b' or '-a' -- support for subtraction of effects or constants (but not both)
+                            sub = function(v,w) {
+                                  if ( debug ) w$trace('sub',v,w)
+
+                                  uminus     <- length(as.list(v)) == 2
+                                  minuend    <- as.list(v)[2]
+                                  subtrahend <- as.list(v)[3]
+
+                                  if ( debug ) {
+                                       message('sub',': minuend is ', sQuote(minuend), ', coef = ', w$getCoef(minuend) )
+                                       message('sub',': subtrahend is ', sQuote(subtrahend), ', coef = ', w$getCoef(subtrahend) )
+                                       message('sub',': uminus is ', uminus)
+                                  }
+
+
+                                  exp.coef <- ifelse( uminus, -w$getCoef(v), w$getCoef(v) )
+                                  res      <- c()
+
+                                  for ( e in minuend ) {
+                                        if ( debug )
+                                             message('sub',': walking minuend ', sQuote(e), ', coef = ', exp.coef)
+                                        res   <- c( res, walkCode(w$setCoef(e, exp.coef ),w))
+                                  }
+
+                                  if ( ! uminus ) {
+                                       # if uminus becomes true, subtrahend is a list of nulls.
+                                       # As a consequence, e would become null and the program would fail
+
+                                       for ( e in subtrahend ) {
+                                             if ( debug )
+                                                  message('sub',': walking subtrahend ', sQuote(e), ', coef = ', -exp.coef)
+                                             res   <- c( res, walkCode(w$setCoef(e, -exp.coef),w))
+                                       }
+                                  }
+
+                                  sum     <- 0
+                                  symbols <- c()
+                                  # split result set into constants and symbols
+                                  for ( e in res ) {
+                                        if ( is.numeric(e) )
+                                             sum <- sum + e
+                                        else
+                                             symbols <- c(symbols, e)
+                                  }
+
+                                  # do not allow a reference a single effect to occur multiple times.
+                                  # to do: could be folded into a single effect by summing up coeffs
+                                  if ( length(dups <- symbols[duplicated(symbols)]) ) {
+                                       w$fatal('sub','multiple occurence of ', w$enum(dups), ' ',
+                                                     'found within expression ', sQuote(deparse(v)))
+                                  }
+
+
+                                  # fold constants into single number
+                                  if ( length(symbols) == 0 ) {
+                                       return(w$setCoef(sum,1))
+                                  }
+
+                                  if ( sum  ) {
+                                       w$fatal('sub','forming a difference between a constant and ',
+                                                     'an effect as in ', sQuote(deparse(v)), ' ',
+                                                     'is not a sensible operation')
+                                  }
+
+                                  symbols
+                            },
+
+                            # ': a b ' -- support for interaction of effects as in A:B:C:D
+                            ita = function(v,w) {
+                                  if ( debug ) w$trace('ita',v,w)
+
+                                  res <- c()
+                                  for ( e in as.list(v)[-1] )  {
+                                        coef <- 1
+
+                                        if ( debug )
+                                             message('ita',': walking interaction ', sQuote(e), ' with coef = ', coef)
+
+                                        res <- c(res, r <- walkCode(w$setCoef(e,coef),w) )
+
+                                        if ( ! is.symbol( r ) ) {
+                                               w$fatal('ita','within expression ', sQuote(deparse(v)),', ',
+                                                             'the term ', sQuote(r), ' does not name an effect')
+                                        }
+                                  }
+
+                                  res <- as.name( paste0(lapply(res, as.character), collapse=':' ) )
+                                  res <- w$setCoef(res, w$getCoef(v) )
+
+                                  if ( debug ) {
+                                       dumped <- lapply(res, function(x,w) paste(x, 'with coef =', w$getCoef(x)),w)
+                                       message('ita',': res = ', w$enum(dumped))
+                                  }
+
+                                  res
+                            },
+
+                            # (expression)
+                            exp = function(v,w) {
+                                  if ( debug ) w$trace('exp',v,w)
+
+                                  res <- c()
+                                  for ( e in as.list(v)[-1] ) {
+                                        res <- c( res, walkCode(w$setCoef(e,1),w) )
+                                  }
+
+                                  symbols <- c()
+                                  for ( e in  res ) {
+                                        symbols <- c( symbols, w$setCoef(e, w$getCoef(e) * w$getCoef(v) ) )
+                                  }
+
+                                  if ( debug ) {
+                                       dumped <- lapply(symbols, function(x,w) paste(x, 'with coef =', w$getCoef(x)),w)
+                                       message('exp',': res = ', w$enum(dumped))
+                                  }
+                                  symbols
+
+                            },
+
+                            # '+ a b' or '+ a' -- support for the addition of constants or effects (but not both)
+                            add = function(v,w) {
+                                  if ( debug ) w$trace('add',v,w)
+
+                                  res <- c()
+                                  for ( e in as.list(v)[-1] ) {
+                                        res <- c( res, walkCode(w$setCoef(e,1),w) )
+                                  }
+
+                                  symbols <- c()
+                                  sum     <- 0
+                                  for ( e in res ) {
+                                        if ( is.numeric(e) )
+                                             sum <- sum + e
+                                        else
+                                             symbols <- c( symbols, e )
+                                  }
+
+
+                                  # fold constants into single number
+                                  if ( length(symbols) == 0 ) {
+                                       return( w$setCoef( sum * w$getCoef(v), 1 ) )
+                                  }
+
+
+                                  # do not allow to reference a single effect multiple times.
+                                  # to do: could be folded into a single effect by summing up coeffs
+                                  if ( length(dups <- symbols[duplicated(symbols)]) != 0 ) {
+                                       w$fatal('add','multiple occurence of ', w$enum(dups),' ',
+                                                     'within subexpression ', sQuote(deparse(v)))
+                                  }
+
+
+                                  if ( sum ) {
+                                       w$fatal('add','adding up a constant and an effect ',
+                                                     'as in ', sQuote(deparse(v)), ' is not a sensible operation')
+                                  }
+
+                                  # associate expression coefficient with all leafs
+                                  res <- c()
+                                  for ( e in symbols ) {
+                                        res <- c( res, w$setCoef(e, w$getCoef(e) * w$getCoef(v) ) )
+                                  }
+
+                                  res
+                            },
+
+                            # '* a b' -- support multiplication of constants or multiplication of an effect by a constant
+                            mul = function(v,w) {
+                                  if ( debug ) w$trace('mul',v,w)
+
+                                  # collect all leafs, including constants
+                                  res      <- c()
+                                  for ( e in as.list(v)[-1] ) {
+                                        res <- c(res, walkCode(w$setCoef(e,1),w) )
+                                  }
+
+                                  # fold literals
+                                  product  <- 1
+                                  symbols  <- c()
+                                  for ( r in res ) {
+                                        if ( is.numeric(r) )
+                                             product <- product * r
+                                        else
+                                             symbols <- c(symbols,r)
+                                  }
+
+                                  if ( product  == 0 && length(symbols) ) {
+                                       w$fatal('mul','The constant part of the expression ', sQuote(deparse(v)),' ',
+                                                     'evaluates to zero. This would zero out the effect(s) ', sQuote(symbols) )
+
+                                  }
+
+                                  # also take the expression coefficient into account
+                                  product <- product * w$getCoef(v)
+
+                                  # if only literals, return constant folding result as single number
+                                  if ( length(symbols) == 0 ) {
+                                       return(w$setCoef(product,1))
+                                  }
+
+                                  # prevent multiplication of fixed effects as in 'A * B' but still
+                                  # allow the multiplication effects by a constant
+                                  if ( length(symbols) > 1 && all(unlist(lapply(res,is.symbol)) ) ) {
+                                       w$fatal('mul','the multiplication of effects ', w$enum(symbols),' ',
+                                                     'as in ', sQuote(deparse(v)), ' is not a sensible operation')
+                                  }
+
+                                  # associate the folded real valued literals as a coefficient with all symbols
+                                  res <- c()
+                                  for ( s in symbols ) {
+                                        res <- c(res, w$setCoef(s, w$getCoef(s) * product ))
+                                  }
+
+                                  if ( debug ) {
+                                       dumped <- lapply(res, function(x,w) paste(x, 'with coef =', w$getCoef(x)),w)
+                                       message('mul',': res = ', w$enum(dumped))
+                                  }
+
+                                  res
+                            },
+
+                            # '/ a b' --  division of an expression 'a' by a constant expression 'b'
+                            div = function(v,w) {
+                                  if ( debug ) w$trace('div',v,w)
+
+                                  # const / const is allowed
+                                  # fixed / const is allowed:  -> coef(fixed) <- 1/const
+                                  # const / fixed is forbidden
+
+                                  # collect all leafs, including constants
+
+                                  if ( (lv<-length(v)) != 3 ) {
+                                        w$fatal('div', 'internal error: length of language object ', sQuote(v), ' ',
+                                                       'is not 3, but ', lv,'. Please file a bug report')
+                                  }
+
+                                  dividend <- c()
+                                  for ( e in as.list(v)[2] ) {
+                                        dividend <- c(dividend, walkCode(w$setCoef(e,1),w))
+                                  }
+
+                                  divisor  <- c()
+                                  for ( e in as.list(v)[3] ) {
+                                        divisor  <- c(divisor, walkCode(w$setCoef(e,1),w))
+                                  }
+
+
+                                  if ( length(divisor) != 1 ) {
+                                       w$fatal('div', "can't divide by ", sQuote(divisor), ' in ', sQuote(deparse(v)))
+                                  }
+
+                                  if ( any(unlist(lapply(divisor,is.effect)))  ) {
+                                       w$fatal('div', "cant't divide by effect ", sQuote(divisor), ' in ', sQuote(deparse(v)))
+                                  }
+
+                                  if ( any(unlist(lapply(divisor,is.symbol)))  ) {
+                                       w$fatal('div', "cant't divide by symbol ", sQuote(divisor), ' in ', sQuote(deparse(v)))
+                                  }
+
+                                  divisor <- as.numeric(divisor)
+
+                                  if ( !is.finite(divisor) || divisor == 0) {
+                                       w$fatal('div', "can't divide by ", sQuote(divisor), ' in ', sQuote(deparse(v)))
+                                  }
+
+                                  res <- c()
+                                  for ( s in dividend ) {
+                                        if ( is.numeric(s) ) {
+                                             res <- c(res, s * w$getCoef(v) / divisor )
+                                        } else {
+                                             res <- c(res, w$setCoef(s, w$getCoef(s) * w$getCoef(v) / divisor ) )
+                                        }
+                                  }
+
+                                  if ( debug ) {
+                                       message("div",": dividend = ", w$enum(dividend))
+                                       message("div",": divisor = ",  w$enum(divisor))
+                                       message("div",": res = ",      w$enum(res))
+                                  }
+                                  res
+                            },
+
+                            # leaf(e,w) -- gets called with `e` being either an effect name or a literal
+                            leaf   = function(e, w) {
+                                     if ( debug ) w$trace('leaf',e,w)
+
+                                     #  leafs holding real valued constants tend to lose the coefficient
+                                     #  attribute during implicit conversions. Hence, multiply the coefficient
+                                     #  with the value and set the coefficient to one.
+                                     if ( is.numeric(e) ) {
+                                          return(w$setCoef(e * w$getCoef(e),1))
+                                     }
+                                     e
+                            },
+
+                            # return associated coefficient, or 1 if coefficient was not set before
+                            getCoef = function(e) {
+                                      a <- attr(e,'coef')
+                                      ifelse( is.null(a), 1, a )
+                            },
+
+                            # set coefficient of `e` to `coef` and return e
+                            setCoef = function(e,coef) {
+                                      attr(e,'coef') <- coef
+                                      e
+                            },
+
+                            enum = function(x) {
+                                 paste0("'" ,x, "'",collapse=', ')
+                            },
+
+                            fatal = function(name,...) {
+                                     stop(paste0('expression2coef::walkCode::',name),': ', ...)
+                            },
+
+                            trace = function(fn,v,w) {
+                                    message(fn,': v = ',       sQuote(v),
+                                               ', mode = ',    mode(v),
+                                               ', typeof = ',  typeof(v),
+                                               ', length = ',  length(v),
+                                               ', coef   = ',  w$getCoef(v))
+                            }
+
+                            )) # end of walkCode(lhs, makeCodeWalker( ... ) )
+
+
+   if ( any(idx <- is.numeric(effects) ) ) {
+        stop('expression2coef',': The lhs expression ', sQuote(deparse(m.lhs)), ' ',
+             'contains a numeric offset term evaluating to ', paste0(effects[idx],collapse=', '), '. ',
+             'This is either an internal error or a misspecification from your part. ',
+             'If so, please pull these offsets to the right-hand side of the equation')
+   }
+
+   effect.names  <- c()
+   effect.coeffs <- c()
+
+   # There might be only a single effect as in 'Agriculture = 0'. Thus use
+   # c(effects) to prevent the for loop from running into an error condition
+   for ( effect in c(effects) ) {
+         effect.names  <- c( effect.names, as.character(effect))
+         effect.coeffs <- c( effect.coeffs, attr(effect,'coef'))
+   }
+
+   list( coef        =  effect.coeffs,
+         names       = effect.names,
+         m           = m.rhs,
+         alternative = side(ex),
+         lhs         = deparse( m.lhs, width.cutoff = 500 ) )
 }
 
 ### interpret character representations of linear functions
@@ -127,6 +536,7 @@ chrlinfct2matrix <- function(ex, var) {
 
     if (!is.character(ex))
         stop("argument ", sQuote(ex), " is not of type character")
+        
     if (!is.character(var))
         stop("argument ", sQuote(var), " is not of type character")
 
@@ -142,7 +552,7 @@ chrlinfct2matrix <- function(ex, var) {
             stop("argument ", sQuote(ex[i]), 
                  " cannot be interpreted as expression")
 
-        tmp <- expression2coef(expr)
+        tmp <- expression2coef(expr,vars=var)
 
         if (!all(tmp$names %in% var))
             stop("variable(s) ", sQuote(tmp$names[!tmp$names %in% var]), 

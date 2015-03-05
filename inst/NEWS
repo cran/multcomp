@@ -1,4 +1,11 @@
 
+Changes in 1.4-0 (2015-03-05)
+
+    o    much more complex functions of parameters can
+         be specified now thanks to Susan Scheibe
+         <Susan.Scheibe _at_ innere.med.uni-giessen.de> now
+         listed as a contributor.
+
 Changes in 1.3-9 (2015-02-18)
 
     o    allow longer names of contrasts (patch by Susan Scheibe
