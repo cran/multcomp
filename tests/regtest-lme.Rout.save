@@ -1,6 +1,6 @@
 
-R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R Under development (unstable) (2015-07-21 r68714) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -23,11 +23,10 @@ Type 'q()' to quit R.
 > library("multcomp")
 Loading required package: mvtnorm
 Loading required package: survival
-Loading required package: splines
+Loading required package: TH.data
 > 
 > lme4OK <- require("lme4")
 Loading required package: lme4
-Loading required package: lattice
 Loading required package: Matrix
 > if (lme4OK) {
 + 
@@ -82,4 +81,4 @@ The following object is masked from 'package:lme4':
 > 
 > proc.time()
    user  system elapsed 
-  2.172   0.048   2.219 
+  2.585   0.134   2.717 

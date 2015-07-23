@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2013-09-01 r63796) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R Under development (unstable) (2015-06-30 r68608) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -19,7 +19,7 @@ Type 'q()' to quit R.
 > library("multcomp")
 Loading required package: mvtnorm
 Loading required package: survival
-Loading required package: splines
+Loading required package: TH.data
 > set.seed(290875)
 > 
 > testdata <- data.frame(y = rnorm(21), 
@@ -161,11 +161,11 @@ Quantile = 2.5559
 Linear Hypotheses:
          Estimate lwr     upr    
 0 == 0   32.3651  30.0804 34.6499
-5 == 0   29.0127  26.6372 31.3883
-50 == 0  30.0743  27.5239 32.6246
+5 == 0   29.0127  26.6371 31.3883
+50 == 0  30.0743  27.5239 32.6247
 500 == 0 29.6899  27.1590 32.2208
 
 > 
 > proc.time()
    user  system elapsed 
-  0.236   0.036   0.268 
+  0.406   0.043   0.439 

@@ -1,5 +1,5 @@
 
-# $Id: glht.R 286 2010-01-22 13:52:15Z thothorn $
+# $Id: glht.R 422 2015-07-20 13:13:04Z thothorn $
 
 ### general linear hypotheses
 glht <- function(model, linfct, ...) {

@@ -1,7 +1,7 @@
 Package: multcomp
 Title: Simultaneous Inference in General Parametric Models
-Version: 1.4-0
-Date: 2015-03-05
+Version: 1.4-1
+Date: 2015-07-20
 Authors@R: c(person("Torsten", "Hothorn", role = c("aut", "cre"), 
                     email = "Torsten.Hothorn@R-project.org"), 
         person("Frank", "Bretz", role = "aut"), 
@@ -15,7 +15,7 @@ Description: Simultaneous tests and confidence intervals
   The package includes demos reproducing analyzes presented
   in the book "Multiple Comparisons Using R" (Bretz, Hothorn, 
   Westfall, 2010, CRC Press).
-Depends: stats, graphics, mvtnorm (>= 0.8-0), survival (>= 2.35-7),
+Depends: stats, graphics, mvtnorm (>= 1.0-3), survival (>= 2.35-7),
         TH.data (>= 1.0-2)
 Imports: sandwich (>= 2.3-0), codetools
 Suggests: lme4 (>= 0.999375-16), nlme, robustbase, coin, MASS, car,
@@ -24,7 +24,8 @@ URL: http://multcomp.R-forge.R-project.org The publishers web page is
         http://www.crcpress.com/product/isbn/9781584885740
 LazyData: yes
 License: GPL-2
-Packaged: 2015-03-05 15:59:58 UTC; hothorn
+NeedsCompilation: no
+Packaged: 2015-07-22 14:59:27 UTC; hothorn
 Author: Torsten Hothorn [aut, cre],
   Frank Bretz [aut],
   Peter Westfall [aut],
@@ -32,6 +33,5 @@ Author: Torsten Hothorn [aut, cre],
   Andre Schuetzenmeister [ctb],
   Susan Scheibe [ctb]
 Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
-NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2015-03-05 22:32:29
+Date/Publication: 2015-07-23 05:46:01

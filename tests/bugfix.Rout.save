@@ -1,6 +1,6 @@
 
-R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R Under development (unstable) (2015-06-30 r68608) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -19,7 +19,6 @@ Type 'q()' to quit R.
 > library("multcomp")
 Loading required package: mvtnorm
 Loading required package: survival
-Loading required package: splines
 Loading required package: TH.data
 > set.seed(290875)
 > 
@@ -105,7 +104,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x319ba30>
+<environment: 0x1c869c8>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -124,7 +123,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x319ba30>
+<environment: 0x1c869c8>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -453,4 +452,4 @@ Warning messages:
 > 
 > proc.time()
    user  system elapsed 
-  1.168   0.028   1.184 
+  1.305   0.042   1.341 

@@ -1,4 +1,10 @@
 
+Changes in 1.4-1 (2015-07-21)
+
+    o    new qmv{t,norm} algorithm in mvtnorm 1.0-3 leads to
+         slightly different quantiles and thus results for
+         confidence intervals; update output
+
 Changes in 1.4-0 (2015-03-05)
 
     o    much more complex functions of parameters can

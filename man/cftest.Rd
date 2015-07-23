@@ -2,7 +2,7 @@
 \alias{cftest}
 \title{ Testing Estimated Coefficients }
 \description{
-  A convenience function for univariate testing z- and t-tests of 
+  A convenience function for univariate testing via z- and t-tests of 
   estimated model coefficients
 }
 \usage{
@@ -14,7 +14,7 @@ cftest(model, ...)
 }
 \details{
   The usual z- or t-tests are tested without adjusting for 
-  multiplicity
+  multiplicity.
 }
 \value{
   An object of class \code{summary.glht}.

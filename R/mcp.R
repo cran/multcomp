@@ -1,5 +1,5 @@
 
-# $Id: mcp.R 354 2013-06-27 13:37:55Z thothorn $
+# $Id: mcp.R 422 2015-07-20 13:13:04Z thothorn $
 
 ### multiple comparison procedures for levels of 
 ### factors in AN(C)OVA models
