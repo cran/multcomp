@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2015-06-30 r68608) -- "Unsuffered Consequences"
+R version 3.2.3 (2015-12-10) -- "Wooden Christmas-Tree"
 Copyright (C) 2015 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -47,15 +47,15 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
-Quantile = 2.4156
+Quantile = 2.4154
 95% family-wise confidence level
  
 
 Linear Hypotheses:
            Estimate lwr      upr     
-M - L == 0 -10.0000 -19.3542  -0.6458
-H - L == 0 -14.7222 -24.0764  -5.3681
-H - M == 0  -4.7222 -14.0764   4.6319
+M - L == 0 -10.0000 -19.3533  -0.6467
+H - L == 0 -14.7222 -24.0756  -5.3689
+H - M == 0  -4.7222 -14.0756   4.6311
 
 > summary(glht(fm1, linfct = mcp(tension = "Tukey")))
 
@@ -122,4 +122,4 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > proc.time()
    user  system elapsed 
-  0.396   0.028   0.410 
+  0.340   0.024   0.363 

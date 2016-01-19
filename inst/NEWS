@@ -1,4 +1,8 @@
 
+Changes in 1.4-2 (2016-01-19)
+
+    o    update Rout.save to mvtnorm 1.0-4
+
 Changes in 1.4-1 (2015-07-21)
 
     o    new qmv{t,norm} algorithm in mvtnorm 1.0-3 leads to
