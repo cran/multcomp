@@ -1,4 +1,8 @@
 
+Changes in 1.4-3 (2016-01-02)
+
+    o    update Rout.save to mvtnorm 1.0-5
+
 Changes in 1.4-2 (2016-01-19)
 
     o    update Rout.save to mvtnorm 1.0-4

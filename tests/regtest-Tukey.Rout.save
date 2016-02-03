@@ -20,6 +20,14 @@ Type 'q()' to quit R.
 Loading required package: mvtnorm
 Loading required package: survival
 Loading required package: TH.data
+Loading required package: MASS
+
+Attaching package: 'TH.data'
+
+The following object is masked from 'package:MASS':
+
+    geyser
+
 > 
 > set.seed(290875)
 > 
@@ -47,15 +55,15 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = breaks ~ wool + tension, data = warpbreaks)
 
-Quantile = 2.4154
+Quantile = 2.4156
 95% family-wise confidence level
  
 
 Linear Hypotheses:
            Estimate lwr      upr     
-M - L == 0 -10.0000 -19.3533  -0.6467
-H - L == 0 -14.7222 -24.0756  -5.3689
-H - M == 0  -4.7222 -14.0756   4.6311
+M - L == 0 -10.0000 -19.3542  -0.6458
+H - L == 0 -14.7222 -24.0764  -5.3681
+H - M == 0  -4.7222 -14.0764   4.6319
 
 > summary(glht(fm1, linfct = mcp(tension = "Tukey")))
 
@@ -122,4 +130,4 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > proc.time()
    user  system elapsed 
-  0.340   0.024   0.363 
+  0.364   0.012   0.373 

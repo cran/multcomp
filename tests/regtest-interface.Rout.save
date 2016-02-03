@@ -20,6 +20,14 @@ Type 'q()' to quit R.
 Loading required package: mvtnorm
 Loading required package: survival
 Loading required package: TH.data
+Loading required package: MASS
+
+Attaching package: 'TH.data'
+
+The following object is masked from 'package:MASS':
+
+    geyser
+
 > set.seed(290875)
 > 
 > testdata <- data.frame(y = rnorm(21), 
@@ -154,18 +162,18 @@ Multiple Comparisons of Means: Mean Contrasts
 
 Fit: aov(formula = weight ~ dose + gesttime + number, data = litter)
 
-Quantile = 2.556
+Quantile = 2.5558
 95% family-wise confidence level
  
 
 Linear Hypotheses:
          Estimate lwr     upr    
-0 == 0   32.3651  30.0803 34.6500
-5 == 0   29.0127  26.6371 31.3884
-50 == 0  30.0743  27.5238 32.6247
-500 == 0 29.6899  27.1589 32.2209
+0 == 0   32.3651  30.0805 34.6498
+5 == 0   29.0127  26.6372 31.3883
+50 == 0  30.0743  27.5239 32.6246
+500 == 0 29.6899  27.1591 32.2207
 
 > 
 > proc.time()
    user  system elapsed 
-  0.316   0.024   0.338 
+  0.516   0.012   0.525 

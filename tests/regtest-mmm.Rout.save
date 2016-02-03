@@ -20,6 +20,14 @@ Type 'q()' to quit R.
 Loading required package: mvtnorm
 Loading required package: survival
 Loading required package: TH.data
+Loading required package: MASS
+
+Attaching package: 'TH.data'
+
+The following object is masked from 'package:MASS':
+
+    geyser
+
 > 
 > ###<FIXME> compare results of mmod and glht.mlf </FIXME>
 > 
@@ -154,15 +162,15 @@ m1 == 0   -0.4220     0.2801  -1.507    0.274
 
 Fit: NULL
 
-Quantile = 2.3084
+Quantile = 2.3087
 95% family-wise confidence level
  
 
 Linear Hypotheses:
          Estimate lwr     upr    
-m1 == 0  -0.3537  -1.0018  0.2944
-m1 == 0  -0.4220  -1.0687  0.2246
- m2 == 0 -0.8264  -2.1823  0.5296
+m1 == 0  -0.3537  -1.0019  0.2945
+m1 == 0  -0.4220  -1.0687  0.2247
+ m2 == 0 -0.8264  -2.1825  0.5297
 
 > 
 > 
@@ -215,4 +223,4 @@ modely2.2 == 0   0.2412     0.4015   0.601    0.548
 > 
 > proc.time()
    user  system elapsed 
-  0.320   0.008   0.325 
+  0.352   0.012   0.359 
