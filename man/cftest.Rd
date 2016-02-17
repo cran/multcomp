@@ -6,10 +6,13 @@
   estimated model coefficients
 }
 \usage{
-cftest(model, ...)
+cftest(model, parm, test = univariate(), ...)
 }
 \arguments{
   \item{model}{a fitted model.}
+  \item{parm}{a vector of parameters to be tested, either a character vector
+              of names or an integer.}
+  \item{test}{ a function for computing p values, see \code{\link{summary.glht}}.}  
   \item{\dots}{additional arguments passed to \code{\link{summary.glht}}.}
 }
 \details{
@@ -23,10 +26,6 @@ cftest(model, ...)
   \code{\link[lmtest]{coeftest}}
 }
 \examples{
-
-  ## The function is currently defined as
-  function(model, ...)
-      summary(glht(model), test = univariate(), ...)
 
   lmod <- lm(dist ~ speed, data = cars)
   summary(lmod)

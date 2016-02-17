@@ -1,5 +1,5 @@
 
-# $Id: methods.R 288 2010-02-22 16:52:09Z thothorn $
+# $Id: methods.R 431 2016-02-03 10:58:04Z thothorn $
 
 ### methods for `glht' objects
 coef.glht <- function(object, rhs = FALSE, ...) 
@@ -63,5 +63,19 @@ confint.glht <- function(object, parm, level = 0.95, calpha = adjusted_calpha(),
     return(object)
 }
 
-cftest <- function(model, ...)
-    summary(glht(model), test = univariate(), ...)
+cftest <- function(model, parm, test = univariate(), ...) {
+    if (missing(parm))
+        return(summary(glht(model), test = test, ...))
+    cf <- coef(model)
+    if (is.character(parm)) {
+        iparm <- match(parm, names(cf))
+    } else {
+        iparm <- match(parm, 1:length(cf))
+    }
+    if (any(is.na(iparm)))
+        stop("cannot find variable(s): ", paste(parm[is.na(iparm)], 
+             collapse = ","))
+    K <- diag(length(cf))[iparm, , drop = FALSE]
+    rownames(K) <- names(cf)[iparm]
+    summary(glht(model, linfct = K), test = test, ...)
+}
