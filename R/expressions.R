@@ -1,5 +1,5 @@
 
-# $Id: expressions.R 422 2015-07-20 13:13:04Z thothorn $
+# $Id: expressions.R 435 2016-05-04 01:46:55Z sks $
 
 ### determine if an expression `x' can be interpreted as numeric
 is_num <- function(x) {
@@ -252,23 +252,7 @@ expression2coef <- function(ex, vars, debug = F) {
                             ita = function(v,w) {
                                   if ( debug ) w$trace('ita',v,w)
 
-                                  res <- c()
-                                  for ( e in as.list(v)[-1] )  {
-                                        coef <- 1
-
-                                        if ( debug )
-                                             message('ita',': walking interaction ', sQuote(e), ' with coef = ', coef)
-
-                                        res <- c(res, r <- walkCode(w$setCoef(e,coef),w) )
-
-                                        if ( ! is.symbol( r ) ) {
-                                               w$fatal('ita','within expression ', sQuote(deparse(v)),', ',
-                                                             'the term ', sQuote(r), ' does not name an effect')
-                                        }
-                                  }
-
-                                  res <- as.name( paste0(lapply(res, as.character), collapse=':' ) )
-                                  res <- w$setCoef(res, w$getCoef(v) )
+                                  res <- w$setCoef(as.name(deparse(v)), w$getCoef(v) )
 
                                   if ( debug ) {
                                        dumped <- lapply(res, function(x,w) paste(x, 'with coef =', w$getCoef(x)),w)
@@ -542,7 +526,7 @@ chrlinfct2matrix <- function(ex, var) {
 
     K <- matrix(0, nrow = length(ex), ncol = length(var))
     colnames(K) <- var
-    rownames(K) <- 1:length(ex)
+    rownames(K) <- seq_along(ex)
     m <- rep(0, length(ex))
 
     for (i in 1:length(ex)) {
@@ -555,8 +539,7 @@ chrlinfct2matrix <- function(ex, var) {
         tmp <- expression2coef(expr,vars=var)
 
         if (!all(tmp$names %in% var))
-            stop("variable(s) ", sQuote(tmp$names[!tmp$names %in% var]), 
-                 " not found")
+            stop("variable(s) ", paste(sQuote(tmp$names[!tmp$names %in% var]),collapse=', '), " not found")
 
         for (n in tmp$names)
             K[i, var == n] <- tmp$coef[tmp$names == n]

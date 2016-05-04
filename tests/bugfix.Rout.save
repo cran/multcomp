@@ -1,6 +1,6 @@
 
-R version 3.2.3 (2015-12-10) -- "Wooden Christmas-Tree"
-Copyright (C) 2015 The R Foundation for Statistical Computing
+R version 3.2.4 (2016-03-10) -- "Very Secure Dishes"
+Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -112,7 +112,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x10e8880>
+<environment: 0x18a4ec0>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -131,7 +131,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x10e8880>
+<environment: 0x18a4ec0>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -458,6 +458,67 @@ Warning messages:
 4: In RET$pfunction("adjusted", ...) :
   Covariance matrix not positive semidefinite
 > 
+>                                
+> 
+> library("multcomp")
+> set.seed(2343)
+> 
+> X <- data.frame(X1 = rep(c(1,0),c(20,30)),
++   X2 = rep(rep(c(1,0),3),c(rep(10,4),0,10)),
++   X3 = rep(rep(c(1,0),5),each=5))
+> Y <- rnorm(50,4 + 4*X[,1] + 4*X[,2] + X[,3] + .5*X[,1]*X[,3] + .4*X[,2]*X[,3],.25)
+> 
+> model <- lm(Y ~ (X1 + X2) * X3,data=X)
+> coef(model)
+(Intercept)          X1          X2          X3       X1:X3       X2:X3 
+  3.9847713   4.0607950   4.0317907   0.9166263   0.4455296   0.4604559 
+> 
+> my.contrasts<- c(
++   "X1 - X2 + .5*X1:X3 - .5*X2:X3 = 0",  # previously wrong answer (actually got X1 + X2 + 0.5* X1)
++   "X1 + .5*X1:X3 - X2 - .5*X2:X3 = 0",  # previously wrong answer
++   "X1 + .5*X1:X3 - .5*X2:X3 - X2 = 0")  # right answer
+> 
+> (contrast.result <- glht(model,lin = my.contrasts))
+
+	 General Linear Hypotheses
+
+Linear Hypotheses:
+                                         Estimate
+X1 - X2 + 0.5 * X1:X3 - 0.5 * X2:X3 == 0  0.02154
+X1 + 0.5 * X1:X3 - X2 - 0.5 * X2:X3 == 0  0.02154
+X1 + 0.5 * X1:X3 - 0.5 * X2:X3 - X2 == 0  0.02154
+
+> 
+> # right calculation
+> (ok <- sum(coef(model) * c(0,1,-1,0,.5,-.5)))
+[1] 0.02154112
+> 
+> stopifnot(all.equal(as.numeric(coef(contrast.result)), rep(sum(coef(model) * c(0,1,-1,0,.5,-.5)),3)))
+> 
+> 
+> # actual calculation - note that -1 has changed to 1
+> #sum(coef(model) * c(0, 1, 1, 0, .5, -.5))
+> 
+> 
+> (mc <- multcomp:::chrlinfct2matrix(my.contrasts, names(coef(model))))
+$K
+                                    (Intercept) X1 X2 X3 X1:X3 X2:X3
+X1 - X2 + 0.5 * X1:X3 - 0.5 * X2:X3           0  1 -1  0   0.5  -0.5
+X1 + 0.5 * X1:X3 - X2 - 0.5 * X2:X3           0  1 -1  0   0.5  -0.5
+X1 + 0.5 * X1:X3 - 0.5 * X2:X3 - X2           0  1 -1  0   0.5  -0.5
+
+$m
+[1] 0 0 0
+
+$alternative
+[1] "two.sided"
+
+> 
+> stopifnot(all.equal(as.numeric(mc$K[1,c('(Intercept)', 'X1','X2', 'X3','X1:X3','X2:X3')]),c( 0,1,-1 ,0, 0.5,-0.5)))
+> stopifnot(all.equal(as.numeric(mc$K[2,c('(Intercept)', 'X1','X2', 'X3','X1:X3','X2:X3')]),c( 0,1,-1 ,0, 0.5,-0.5)))
+> stopifnot(all.equal(as.numeric(mc$K[3,c('(Intercept)', 'X1','X2', 'X3','X1:X3','X2:X3')]),c( 0,1,-1 ,0, 0.5,-0.5)))
+> 
+> 
 > proc.time()
    user  system elapsed 
-  1.044   0.028   1.069 
+  1.080   0.032   1.112 

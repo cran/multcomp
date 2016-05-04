@@ -163,3 +163,40 @@ summary(glht(parm(1:4,matrix(c(1,0.97,0.89,0.74,
                                0.97,1,0.97,0.89,
                                0.89,0.97,1,0.97,
                                0.74,0.89,0.97,1), 4, 4))))
+
+                               
+
+library("multcomp")
+set.seed(2343)
+
+X <- data.frame(X1 = rep(c(1,0),c(20,30)),
+  X2 = rep(rep(c(1,0),3),c(rep(10,4),0,10)),
+  X3 = rep(rep(c(1,0),5),each=5))
+Y <- rnorm(50,4 + 4*X[,1] + 4*X[,2] + X[,3] + .5*X[,1]*X[,3] + .4*X[,2]*X[,3],.25)
+
+model <- lm(Y ~ (X1 + X2) * X3,data=X)
+coef(model)
+
+my.contrasts<- c(
+  "X1 - X2 + .5*X1:X3 - .5*X2:X3 = 0",  # previously wrong answer (actually got X1 + X2 + 0.5* X1)
+  "X1 + .5*X1:X3 - X2 - .5*X2:X3 = 0",  # previously wrong answer
+  "X1 + .5*X1:X3 - .5*X2:X3 - X2 = 0")  # right answer
+
+(contrast.result <- glht(model,lin = my.contrasts))
+
+# right calculation
+(ok <- sum(coef(model) * c(0,1,-1,0,.5,-.5)))
+
+stopifnot(all.equal(as.numeric(coef(contrast.result)), rep(sum(coef(model) * c(0,1,-1,0,.5,-.5)),3)))
+
+
+# actual calculation - note that -1 has changed to 1
+#sum(coef(model) * c(0, 1, 1, 0, .5, -.5))
+
+
+(mc <- multcomp:::chrlinfct2matrix(my.contrasts, names(coef(model))))
+
+stopifnot(all.equal(as.numeric(mc$K[1,c('(Intercept)', 'X1','X2', 'X3','X1:X3','X2:X3')]),c( 0,1,-1 ,0, 0.5,-0.5)))
+stopifnot(all.equal(as.numeric(mc$K[2,c('(Intercept)', 'X1','X2', 'X3','X1:X3','X2:X3')]),c( 0,1,-1 ,0, 0.5,-0.5)))
+stopifnot(all.equal(as.numeric(mc$K[3,c('(Intercept)', 'X1','X2', 'X3','X1:X3','X2:X3')]),c( 0,1,-1 ,0, 0.5,-0.5)))
+

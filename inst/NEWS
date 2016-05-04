@@ -1,4 +1,11 @@
 
+Changes in 1.4-5 (2016-05-04)
+
+    o    fix bug in linfct specified as a character (aka expression).
+         Coefficients of main effects may have been incorrect in the
+         presence of interaction terms as reported by Melissa Chester Key
+         <melkey_at_iu.edu>
+
 Changes in 1.4-4 (2016-01-17)
 
     o    make cftest() a little more flexible with parm and test arguments
@@ -137,7 +144,7 @@ Changes in 1.2-9 (2012-01-11)
 Changes in 1.2-8 (2011-10-26)
 
     o    new argument `decreasing' for cld(), code donated
-         by Luciano Selzer <luciano.selzer@gmail.com>
+         by Luciano Selzer <luciano.selzer_at_gmail.com>
 
 
 Changes in 1.2-7 (2011-07-23)
@@ -214,7 +221,7 @@ Changes in 1.1-6 (2010-02-25)
 Changes in 1.1-5 (2010-02-11)
 
     o   fix small problems in `cld' spotted by 
-        Peter B. Mandeville <mandevip@hotmail.com>
+        Peter B. Mandeville <mandevip_at_hotmail.com>
 
 
 Changes in 1.1-4 (2010-01-21)
@@ -351,12 +358,12 @@ Changes in 0.993-1 (2008-03-05)
 Changes in 0.992-8 (2007-12-20)
 
     o    add model.frame and model.matrix methods for class `lme'
-         (feature request by Antonio Rausell <arausell@cnio.es>)
+         (feature request by Antonio Rausell <arausell_at_cnio.es>)
 
     o    new data set `trees513'
 
     o    new contrasts `UmbrellaWilliams' and `GrandMean'
-         (thanks to Daniel Gerhard <gerhard@biostat.uni-hannover.de>)
+         (thanks to Daniel Gerhard <gerhard_at_biostat.uni-hannover.de>)
 
 
 Changes in 0.992-6 (2007-10-18))
@@ -364,7 +371,7 @@ Changes in 0.992-6 (2007-10-18))
     o    add support for lme4::(g)lmer2 objects (thanks to Manuel Eugster)
 
     o    coef. and vcov. didn't always pass through, spotted by
-         John Deke <jdeke73@gmail.com>
+         John Deke <jdeke73_at_gmail.com>
 
 
 Changes in 0.992-5 (2007-10-08)
@@ -383,8 +390,8 @@ Changes in 0.992-4 (2007-07-23)
 Changes in 0.992-2 (2007-07-07)
 
     o    add support for `lme' objects (feature request by
-         John Wilkinson <jnwilks@btinternet.com> and Dieter Menne
-         <dieter.menne@menne-biomed.de>)
+         John Wilkinson <jnwilks_at_btinternet.com> and Dieter Menne
+         <dieter.menne_at_menne-biomed.de>)
 
 
 Changes in 0.992-1 (2007-06-21)
@@ -422,7 +429,7 @@ Changes in 0.991-7 (2006-12-19)
          modify `linfct' manually.
 
     o    add mcp(<name> = "Means"), contribution by Richard M. Heiberger
-         <rmh@temple.edu>
+         <rmh_at_temple.edu>
 
     o    add Rich to DESCRIPTION file
 
@@ -443,7 +450,7 @@ Changes in 0.991-4 (2006-12-07)
 
 Changes in 0.991-3 (2006-11-30)
 
-    Implement feature requests by Rich Heiberger <rmh@temple.edu>:
+    Implement feature requests by Rich Heiberger <rmh_at_temple.edu>:
 
     o    glht.mcp adds a `focus' element to the returned object
          containing the names of the factors under test
@@ -458,5 +465,5 @@ Changes in 0.991-3 (2006-11-30)
 Changes in 0.991-2 (2006-10-27)
 
     o    mcp(fact = K) with K = contrMat(...) didn't work
-         spotted by Yves Brostaux <brostaux.y@fsagx.ac.be>
+         spotted by Yves Brostaux <brostaux.y_at_fsagx.ac.be>
 
