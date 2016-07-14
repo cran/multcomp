@@ -1,4 +1,15 @@
 
+Changes in 1.4-6 (2016-07-14)
+
+    o    allow for strata and cluster in coxph and survreg models.
+
+    o    use \code{model.matrix} and \code{model.frame} from survival
+         for \code{coxph}, \code{survreg} and also \code{coxme} objects
+         now these come with contrasts.
+
+    o    fix another problem with interaction terms (signed interactions
+         -x2:x3)
+
 Changes in 1.4-5 (2016-05-04)
 
     o    fix bug in linfct specified as a character (aka expression).

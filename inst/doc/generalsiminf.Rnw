@@ -980,8 +980,13 @@ cytogenetic information helpful to define a risk score (`low': karyotype
 t(8;21), t(15;17) and inv(16); `intermediate': normal karyotype and t(9;11);   
 and `high': all other forms). One interesting question might be the
 usefulness of this risk score. Here, we fit a Weibull survival model
-to the data including all above mentioned covariates as well
-as their interactions with the patient's gender. Tukey's all-pairwise comparisons
+to the data including all above mentioned covariates.
+%% The published paper has:
+%% as well
+%% as their interactions with the patient's gender. 
+%% but this is not what the code does (probably a copy and paste error)
+%% spotted by David Winsemius <dwinsemius@comcast.net>
+Tukey's all-pairwise comparisons
 highlight that there seems to be a difference between `high' scores
 and both `low' and `intermediate' ones but the latter two aren't distinguishable:
 <<bullinger-survreg, echo = TRUE>>=

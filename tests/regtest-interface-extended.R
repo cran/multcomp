@@ -74,24 +74,74 @@ expectFail <- function(testname, x) {
  message(testname, ' expectedly failed. Message is: ', attr(x,'condition')$message, '\n')
 }
 
-expectFail('test 01',  try( multcomp:::chrlinfct2matrix(c(l1 = "x1 - x1  = 0"), c('x1','x2')), silent=T))
+expectSucc <- function(testname, x,expected) {
+ if ( class(x) == 'try-error' ) {
+      stop(testname, ' unexpectedly failed. Message is: ', attr(x,'condition')$message, '\n')
+ }
+      message(testname, ' expectedly succeeded.',
+                        ' Expected result is: ', paste(x, collapse = ', '), ', ',
+                        ' actual result is: ',   paste(x, collapse = ', '), '\n')
 
-expectFail('test 02',  try( multcomp:::chrlinfct2matrix(c(l1 = "x1 - X2  = 0"), c('x1','x2')), silent=T))
+      stopifnot(all.equal(as.vector(x$K),expected$K))
+      stopifnot(all.equal(as.vector(x$m),expected$m))
+      stopifnot(all(as.vector(x$alternative) %in% expected$alternative))
+}
 
-expectFail('test 03',  try( multcomp:::chrlinfct2matrix(c(l1 = "x1 - x2 -1 = 0"), c('x1','x2')), silent=T))
+expectFail('test 01',  try( multcomp:::chrlinfct2matrix( c('x1 - x1  = 0'), c('x1','x2')), silent = T))
 
-expectFail('test 04',  try( multcomp:::chrlinfct2matrix(c(l1 = "x1 * x2  = 0"), c('x1','x2')), silent=T))
+expectFail('test 02',  try( multcomp:::chrlinfct2matrix( c('x1 - X2  = 0'), c('x1','x2')), silent = T))
 
-expectFail('test 05',  try( multcomp:::chrlinfct2matrix(c(l1 = "x1 / x2  = 0"), c('x1','x2')), silent=T))
+expectFail('test 03',  try( multcomp:::chrlinfct2matrix( c('x1 - x2 -1 = 0'), c('x1','x2')), silent = T))
 
-expectFail('test 06',  try( multcomp:::chrlinfct2matrix(c(l1 = "x1 - exp(x2)  = 0"), c('x1','x2')), silent=T))
+expectFail('test 04',  try( multcomp:::chrlinfct2matrix( c('x1 * x2  = 0'), c('x1','x2')), silent = T))
 
-expectFail('test 07',  try( multcomp:::chrlinfct2matrix(c(l1 = "sin(Pi)*x1   = 0"), c('x1','x2')), silent=T))
+expectFail('test 05',  try( multcomp:::chrlinfct2matrix( c('x1 / x2  = 0'), c('x1','x2')), silent = T))
 
-expectFail('test 08',  try( multcomp:::chrlinfct2matrix(c(l1 = "3*4 = 0"), c('x1','x2')), silent=T))
+expectFail('test 06',  try( multcomp:::chrlinfct2matrix( c('x1 - exp(x2)  = 0'), c('x1','x2')), silent = T))
 
-expectFail('test 09',  try( multcomp:::chrlinfct2matrix(c(l1 = "x1 + 3*(4-5+1)*x2 = 0"), c('x1','x2')), silent=T))
+expectFail('test 07',  try( multcomp:::chrlinfct2matrix( c('sin(Pi)*x1   = 0'), c('x1','x2')), silent = T))
 
-expectFail('test 10',  try( multcomp:::chrlinfct2matrix(c(l1 = "x1*3/0 = 0"), c('x1','x2')), silent=T))
+expectFail('test 08',  try( multcomp:::chrlinfct2matrix( c('3*4 = 0'), c('x1','x2')), silent = T))
 
-expectFail('test 11',  try( multcomp:::chrlinfct2matrix(c(l1 = "log(-1)*x1 = 0"), c('x1','x2')), silent=T))
+expectFail('test 09',  try( multcomp:::chrlinfct2matrix( c('x1 + 3*(4-5+1)*x2 = 0'), c('x1','x2')), silent = T))
+
+expectFail('test 10',  try( multcomp:::chrlinfct2matrix( c('x1*3/0 = 0'), c('x1','x2')), silent = T))
+
+expectFail('test 11',  try( multcomp:::chrlinfct2matrix( c('log(-1)*x1 = 0'), c('x1','x2')), silent = T))
+
+expectSucc('test 12',  try( multcomp:::chrlinfct2matrix( c('x1 -x2 -1/2*(-x2:x3 + x4:x5) = 0'), 
+                                                         c( 'x1', 'x2', 'x3', 'x4', 'x5', 'x2:x3','x4:x5')), silent = T),
+                                    expected = list( K = c(    1,   -1,    0,    0,    0,     1/2,  -1/2),
+                                                     m = 0, alternative = 'two.sided'))
+
+expectSucc('test 13',  try( multcomp:::chrlinfct2matrix( c( 'x1 -x2 -1/2*(--x2:x3 + x4:x5) = 0'), 
+                                                         c( 'x1', 'x2', 'x3', 'x4', 'x5', 'x2:x3','x4:x5')), silent = T),
+                                    expected = list( K = c(    1,   -1,    0,    0,    0,     -1/2,  -1/2),
+                                                     m = 0, alternative = 'two.sided'))
+
+expectSucc('test 14',  try( multcomp:::chrlinfct2matrix( c( 'x1 -x2 -1/2*(`-x2:x3` + x4:x5) = 0'), 
+                                                         c( 'x1', 'x2', 'x3', 'x4', 'x5', '-x2:x3','x4:x5')), silent = T),
+                                    expected = list( K = c(    1,   -1,    0,    0,    0,     -1/2,  -1/2),
+                                                     m = 0, alternative = 'two.sided'))                                                   
+
+expectSucc('test 15',  try( multcomp:::chrlinfct2matrix( c( 'x1 -x2 -1/2*(-(x2:x3) + x4:x5) = 0'), 
+                                                         c( 'x1', 'x2', 'x3', 'x4', 'x5', 'x2:x3','x4:x5')), silent = T),
+                                    expected = list( K = c(    1,   -1,    0,    0,    0,      1/2,  -1/2),
+                                                     m = 0, alternative = 'two.sided'))                                                   
+
+expectSucc('test 16',  try( multcomp:::chrlinfct2matrix( c( 'x1 -x2 -1/2*(-1*x2:x3 + x4:x5) = 0'), 
+                                                         c( 'x1', 'x2', 'x3', 'x4', 'x5', 'x2:x3','x4:x5')), silent = T),
+                                    expected = list( K = c(    1,   -1,    0,    0,    0,      1/2,  -1/2),
+                                                     m = 0, alternative = 'two.sided'))                                                   
+
+
+
+expectSucc('test 17',  try( multcomp:::chrlinfct2matrix( c( 'x1 -x2 -1/2*(+-+--x2:x3:x4 + x4:x5) = 0'), 
+                                                         c( 'x1', 'x2', 'x3', 'x4', 'x5', 'x2:x3:x4','x4:x5')), silent = T),
+                                    expected = list( K = c(    1,   -1,    0,    0,    0,      1/2,  -1/2),
+                                                     m = 0, alternative = 'two.sided'))                                                   
+
+expectFail('test 18',  try( multcomp:::chrlinfct2matrix( c( 'x1 - x2 - 1/2 * ( x2:-x3 + x4:x5 ) = 0'), 
+                                                         c( 'x1','x2','x2:x3','x4:x5')), silent = T))
+
+

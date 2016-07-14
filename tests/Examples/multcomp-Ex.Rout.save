@@ -309,8 +309,6 @@ The following object is masked from ‘package:base’:
 
     backsolve
 
-Warning in Ops.factor(1, center) : ‘|’ not meaningful for factors
-Warning in Ops.factor(1, center) : ‘|’ not meaningful for factors
             Estimate      lwr upr
 trt2 - trt1 1.551055 1.184052 Inf
 trt3 - trt1 1.396362 1.068766 Inf
@@ -1893,7 +1891,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.976 0.096 12.085 0 0 
+Time elapsed:  11.828 0.084 11.903 0 0 
 > grDevices::dev.off()
 null device 
           1 

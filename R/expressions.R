@@ -1,5 +1,5 @@
 
-# $Id: expressions.R 435 2016-05-04 01:46:55Z sks $
+# $Id: expressions.R 438 2016-05-06 19:11:07Z sks $
 
 ### determine if an expression `x' can be interpreted as numeric
 is_num <- function(x) {
@@ -14,49 +14,18 @@ as.char <- function(ex) {
     if (length(ex) == 3 && ex[[1]] == ":")
         return(paste(as.char(ex[[2]]), ":", 
                as.char(ex[[3]]), sep = ""))
-    stop("Failed to convert expression ", ex, " to character")
-}
-
-### extract coefficients and variable names
-coefs <- function(ex) {
-
-    ### `a'
-    if (length(ex) == 1 && !is_num(ex))
-        return(list(coef = 1, var = as.char(ex)))
-
-    ### `-a'
-    if (length(ex) == 2 && (ex[[1]] == "-" && !is_num(ex[[2]])))
-        return(list(coef = -1, var = as.char(ex[[2]])))
-
-    if (length(ex) == 3) {
-
-        ### x:y
-        if (ex[[1]] == ":")
-            return(list(coef = 1, 
-                        var = as.char(ex)))
-
-        ### `2 * a'
-        if (ex[[1]] == "*" && (is_num(ex[[2]]) && !is_num(ex[[3]])))
-            return(list(coef = eval(ex[[2]]), var = as.char(ex[[3]])))
-
-        cf <- coefs(ex[[3]])
-        if (ex[[1]] == "-") 
-            cf$coef <- cf$coef * (-1)
-
-        return(cf)
-    }
-    stop("cannot interpret expression ", sQuote(ex), " as linear function")
+    stop("multcomp::as.char: Failed to convert expression ", ex, " to character")
 }
 
 ### extract left hand side of an expression
 lhs <- function(ex) {
 
     if (length(ex) != 1)
-        stop("expression is not of length 1")
+        stop("multcomp:::lhs: expression is not of length 1", call. = FALSE )
 
     if (length(ex[[1]]) != 3)
-        stop("expression ", sQuote(ex), 
-             " does not contain a left and right hand side")
+        stop("multcomp:::lhs: expression ", sQuote(ex), 
+             " does not contain a left and right hand side", call. = FALSE )
 
     return(ex[[1]][[2]])
 }
@@ -65,15 +34,15 @@ lhs <- function(ex) {
 rhs <- function(ex) {
 
     if (length(ex) != 1)
-        stop("expression is not of length 1")
+        stop("multcomp:::rhs: expression is not of length 1", call. = FALSE )
 
     if (length(ex[[1]][[3]]) == 2)
         return(-ex[[1]][[3]][[2]])
 
     rhs <- ex[[1]][[3]]
     if (!is_num(rhs) || length(rhs) > 1)
-        stop("right hand side of expression ", sQuote(ex), 
-             " is not a scalar numeric")
+        stop("multcomp:::rhs: right hand side of expression ", sQuote(ex), 
+             " is not a scalar numeric", call. = FALSE )
     return(rhs)
 }
 
@@ -82,7 +51,7 @@ side <- function(ex) {
 
     side <- as.char(ex[[1]][[1]])
     if (!(side %in% c("<=", ">=", "==", "=")))
-        stop("does not contain ", sQuote("<=, >=, =="))
+        stop("multcomp:::side: does not contain ", sQuote("<=, >=, =="), call. = FALSE )
     alternative <- switch(side, 
         "<=" = "greater",
         ">=" = "less",
@@ -242,17 +211,34 @@ expression2coef <- function(ex, vars, debug = F) {
                                   if ( sum  ) {
                                        w$fatal('sub','forming a difference between a constant and ',
                                                      'an effect as in ', sQuote(deparse(v)), ' ',
-                                                     'is not a sensible operation')
+                                                     'is not supported')
                                   }
 
                                   symbols
                             },
 
-                            # ': a b ' -- support for interaction of effects as in A:B:C:D
+                            # `:` `a` `b`  -- support for interaction of effects as in A:B:C:D
+                            # `:` `-a` `b`  -- also support one or more signs before the first term
                             ita = function(v,w) {
                                   if ( debug ) w$trace('ita',v,w)
 
-                                  res <- w$setCoef(as.name(deparse(v)), w$getCoef(v) )
+                                  tmp     <- deparse(v)
+                                  prefix  <- gsub('^([+-]*)(.*)','\\1',tmp)
+                                  name    <- gsub('^([+-]*)(.*)','\\2',tmp)
+                                  sign    <- 1
+
+                                  if ( prefix != '' ) {
+                                       for ( x in base::unlist(base::strsplit(prefix,'')) ) {
+                                             sign <- sign * switch( x, 
+                                                                   '-' = -1, 
+                                                                   '+' =  1, 
+                                                                   w$fatal('ita', 'strange character ', sQuote(x), 
+                                                                                  ' seen in ', sQuote(deparse(v))))
+                                             
+                                       }
+                                  }
+
+                                  res <- w$setCoef(as.name(name), sign*w$getCoef(v) )
 
                                   if ( debug ) {
                                        dumped <- lapply(res, function(x,w) paste(x, 'with coef =', w$getCoef(x)),w)
@@ -319,7 +305,7 @@ expression2coef <- function(ex, vars, debug = F) {
 
                                   if ( sum ) {
                                        w$fatal('add','adding up a constant and an effect ',
-                                                     'as in ', sQuote(deparse(v)), ' is not a sensible operation')
+                                                     'as in ', sQuote(deparse(v)), ' is not supported')
                                   }
 
                                   # associate expression coefficient with all leafs
@@ -369,7 +355,7 @@ expression2coef <- function(ex, vars, debug = F) {
                                   # allow the multiplication effects by a constant
                                   if ( length(symbols) > 1 && all(unlist(lapply(res,is.symbol)) ) ) {
                                        w$fatal('mul','the multiplication of effects ', w$enum(symbols),' ',
-                                                     'as in ', sQuote(deparse(v)), ' is not a sensible operation')
+                                                     'as in ', sQuote(deparse(v)), ' is not supported')
                                   }
 
                                   # associate the folded real valued literals as a coefficient with all symbols
@@ -477,7 +463,7 @@ expression2coef <- function(ex, vars, debug = F) {
                             },
 
                             fatal = function(name,...) {
-                                     stop(paste0('expression2coef::walkCode::',name),': ', ...)
+                                     stop(paste0('multcomp:::expression2coef::walkCode::',name),': ',  ..., call. = FALSE )
                             },
 
                             trace = function(fn,v,w) {
@@ -492,23 +478,23 @@ expression2coef <- function(ex, vars, debug = F) {
 
 
    if ( any(idx <- is.numeric(effects) ) ) {
-        stop('expression2coef',': The lhs expression ', sQuote(deparse(m.lhs)), ' ',
+        stop('multcomp:::expression2coef: The lhs expression ', sQuote(deparse(m.lhs)), ' ',
              'contains a numeric offset term evaluating to ', paste0(effects[idx],collapse=', '), '. ',
              'This is either an internal error or a misspecification from your part. ',
-             'If so, please pull these offsets to the right-hand side of the equation')
+             'If so, please pull these offsets to the right-hand side of the equation', call. = FALSE )
    }
 
    effect.names  <- c()
-   effect.coeffs <- c()
+   effect.coefs <- c()
 
    # There might be only a single effect as in 'Agriculture = 0'. Thus use
    # c(effects) to prevent the for loop from running into an error condition
    for ( effect in c(effects) ) {
          effect.names  <- c( effect.names, as.character(effect))
-         effect.coeffs <- c( effect.coeffs, attr(effect,'coef'))
+         effect.coefs  <- c( effect.coefs, attr(effect,'coef'))
    }
 
-   list( coef        =  effect.coeffs,
+   list( coef        = effect.coefs,
          names       = effect.names,
          m           = m.rhs,
          alternative = side(ex),
@@ -519,10 +505,10 @@ expression2coef <- function(ex, vars, debug = F) {
 chrlinfct2matrix <- function(ex, var) {
 
     if (!is.character(ex))
-        stop("argument ", sQuote(ex), " is not of type character")
+        stop("multcomp:::chrlinfct2matrix: argument ", sQuote(ex), " is not of type character", call. = FALSE )
         
     if (!is.character(var))
-        stop("argument ", sQuote(var), " is not of type character")
+        stop("multcomp:::chrlinfct2matrix: argument ", sQuote(var), " is not of type character", call. = FALSE )
 
     K <- matrix(0, nrow = length(ex), ncol = length(var))
     colnames(K) <- var
@@ -533,13 +519,14 @@ chrlinfct2matrix <- function(ex, var) {
 
         expr <- parse(text = ex[i])
         if (length(expr[[1]]) != 3)
-            stop("argument ", sQuote(ex[i]), 
-                 " cannot be interpreted as expression")
+            stop("multcomp:::chrlinfct2matrix: argument ", sQuote(ex[i]), 
+                 " cannot be interpreted as expression", call. = FALSE )
 
         tmp <- expression2coef(expr,vars=var)
 
         if (!all(tmp$names %in% var))
-            stop("variable(s) ", paste(sQuote(tmp$names[!tmp$names %in% var]),collapse=', '), " not found")
+            stop("multcomp:::chrlinfct2matrix: variable(s) ", 
+                  paste(sQuote(tmp$names[!tmp$names %in% var]),collapse=', '), " not found", call. = FALSE )
 
         for (n in tmp$names)
             K[i, var == n] <- tmp$coef[tmp$names == n]
@@ -550,7 +537,7 @@ chrlinfct2matrix <- function(ex, var) {
             alternative <- tmp$alternative
         } else {
             if (tmp$alternative != alternative)
-                stop("mix of alternatives currently not implemented")
+                stop("multcomp:::chrlinfct2matrix: mix of alternatives currently not implemented", call. = FALSE )
         }
 
         rownames(K)[i] <- paste0(tmp$lhs, collapse = "")

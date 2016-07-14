@@ -112,7 +112,7 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<environment: 0x18a4ec0>
+<environment: 0x7752a78>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -131,7 +131,7 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<environment: 0x18a4ec0>
+<environment: 0x7752a78>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -367,8 +367,7 @@ Linear Hypotheses:
 > ### suggested by Rich
 > amod <- aov(breaks ~ tension, data = warpbreaks)
 > try(glht(amod, linfct = mcp(tension = "Warp")))
-Error in chrlinfct2matrix(kch, levels(mf[[nm]])) : 
-  argument 'Warp' cannot be interpreted as expression
+Error : multcomp:::chrlinfct2matrix: argument 'Warp' cannot be interpreted as expression
 > 
 > ### cld did not find a terms component
 > ### spotted by Peter B. Mandeville <mandevip@hotmail.com>
@@ -459,8 +458,7 @@ Warning messages:
   Covariance matrix not positive semidefinite
 > 
 >                                
-> 
-> library("multcomp")
+> ### reported by Melissa Chester Key (Apr 22, 2016)
 > set.seed(2343)
 > 
 > X <- data.frame(X1 = rep(c(1,0),c(20,30)),
@@ -521,4 +519,4 @@ $alternative
 > 
 > proc.time()
    user  system elapsed 
-  1.080   0.032   1.112 
+  1.780   0.064   1.841 

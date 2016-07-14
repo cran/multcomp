@@ -165,8 +165,7 @@ summary(glht(parm(1:4,matrix(c(1,0.97,0.89,0.74,
                                0.74,0.89,0.97,1), 4, 4))))
 
                                
-
-library("multcomp")
+### reported by Melissa Chester Key (Apr 22, 2016)
 set.seed(2343)
 
 X <- data.frame(X1 = rep(c(1,0),c(20,30)),

@@ -1,18 +1,18 @@
 
-# $Id: helpers.R 412 2015-02-03 17:19:12Z thothorn $
+# $Id: helpers.R 440 2016-05-27 13:09:46Z thothorn $
 
 ### model.matrix.coxph doesn't return contrasts etc.
-model.matrix.coxph <- function(object, ...) {
-    mm <- model.matrix(delete.response(terms(object)),
-                       data = model.frame(object))
-    at <- attributes(mm)
-    mm <- mm[,-1]
-    at$dim[2] <- at$dim[2] - 1
-    at$dimnames[[2]] <- at$dimnames[[2]][-1]
-    at$assign <- at$assign[-1]
-    attributes(mm) <- at
-    mm
-}
+#model.matrix.coxph <- function(object, ...) {
+#    mm <- model.matrix(delete.response(terms(object)),
+#                       data = model.frame(object))
+#    at <- attributes(mm)
+#    mm <- mm[,-1]
+#    at$dim[2] <- at$dim[2] - 1
+#    at$dimnames[[2]] <- at$dimnames[[2]][-1]
+#    at$assign <- at$assign[-1]
+#    attributes(mm) <- at
+#    mm
+#}
 
 model.matrix.coxph.penal <- function(object, ...) {
 
@@ -64,15 +64,22 @@ coxph.penalvcov <- function(object, ...) {
 }
 
 
-model.matrix.survreg <- function(object, ...) {
-   model.matrix(delete.response(terms(object)),
-                       data = model.frame(object))
+#model.matrix.survreg <- function(object, ...) {
+#   model.matrix(delete.response(terms(object)),
+#                       data = model.frame(object))
+#}
+
+### coxme objects
+model.matrix.coxme <- function(object, ...) {
+    class(object) <- "coxph"
+    model.matrix(object)
 }
 
 ### coxme objects
-model.matrix.coxme <- model.matrix.coxph
-
-
+model.frame.coxme <- function(object, ...) {
+    class(object) <- "coxph"
+    model.frame(object)
+}
 
 model.matrix.aovlist <- function(object, ...)
     stop(sQuote("glht"), " does not support objects of class ", 
@@ -188,7 +195,18 @@ modelparm.coxph.penal <- function(model, coef. = coxph.penalcoef,
                                   vcov. = coxph.penalvcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
 
-model.matrix.polr <- model.matrix.coxph
+model.matrix.polr <- function(object, ...) {
+    mm <- model.matrix(delete.response(terms(object)),
+                      data = model.frame(object))
+    at <- attributes(mm)
+    mm <- mm[,-1]
+    at$dim[2] <- at$dim[2] - 1
+    at$dimnames[[2]] <- at$dimnames[[2]][-1]
+    at$assign <- at$assign[-1]
+    attributes(mm) <- at
+    mm
+}
+
 
 polrvcov <- function(object) {
    cf <- coef(object)
