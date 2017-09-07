@@ -1,4 +1,9 @@
 
+Changes in 1.4-7 (2017-09-05)
+
+    o    Don't add attributes to symbols when parsing character representations
+         of contrasts. Many thanks to Tomas Kalibera for the patch.
+
 Changes in 1.4-6 (2016-07-14)
 
     o    allow for strata and cluster in coxph and survreg models.

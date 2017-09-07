@@ -28,7 +28,7 @@ mlf(...)
   i.i.d.  decomposition of parameter estimates by means of score components
   (first derivatives of the log likelihood).  The method is less
   conservative than the Bonferroni correction.  The details are provided by
-  Pipper and Ritz (2012).
+  Pipper, Ritz and Bisgaard (2012).
 
   The implementation assumes that the model were fitted to the same data,
   i.e., the rows of the matrices returned by \code{estfun} belong to the

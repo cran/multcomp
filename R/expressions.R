@@ -1,5 +1,5 @@
 
-# $Id: expressions.R 438 2016-05-06 19:11:07Z sks $
+# $Id: expressions.R 447 2017-09-05 18:49:05Z thothorn $
 
 ### determine if an expression `x' can be interpreted as numeric
 is_num <- function(x) {
@@ -61,14 +61,44 @@ side <- function(ex) {
 }
 
 
-expression2coef <- function(ex, vars, debug = F) {
+expression2coef <- function(ex, vars, debug = FALSE) {
 
    ### uses walkCode and makeCodeWalker from codetools
 
    m.rhs <- rhs(ex)
    m.lhs <- lhs(ex)
 
-   attr( m.lhs, 'coef') <- 1
+   # get_coef_attr and set_coef_attr are replacements for attr and attr<-
+   
+   # expression2coef originally added 'coef' attributes to symbols directly,
+   # but this is no longer allowed in R. Adding/accessing 'coef' attributes
+   # on symbols has a "global" effect within a single invocation of
+   # expression2coef - they are held in an environment named symcoef.
+   # Previously adding/accessing 'coef' attributes on symbols had a global
+   # effect in the whole R session. expression2coef never allows a binary
+   # operation that would have the same effect (variable) in both operands,
+   # but if that was ever supported, the scope of the 'coef' attributes on
+   # symbols may have to be revisited.
+
+   symcoef <- new.env(parent = emptyenv())
+   get_coef_attr <- function(x) {
+        if (is.symbol(x))
+             get0(as.character(x), envir = symcoef, ifnotfound = NULL)
+        else
+             attr(x, 'coef')
+   }
+   set_coef_attr <- function(x, val) {
+        if (is.symbol(x)) {
+	     if (is.null(x))
+                  rm(as.character(x), envir = symcoef)
+             else
+                  assign(as.character(x), val, envir = symcoef)
+        } else
+             attr(x, 'coef') <- val
+        x
+   }
+
+   set_coef_attr( m.lhs, 1 )
 
    if ( debug ) {
         message('expression2coef',': lhs is ', sQuote(paste0(deparse(m.lhs),collapse='')))
@@ -448,14 +478,13 @@ expression2coef <- function(ex, vars, debug = F) {
 
                             # return associated coefficient, or 1 if coefficient was not set before
                             getCoef = function(e) {
-                                      a <- attr(e,'coef')
+                                      a <- get_coef_attr(e)
                                       ifelse( is.null(a), 1, a )
                             },
 
                             # set coefficient of `e` to `coef` and return e
                             setCoef = function(e,coef) {
-                                      attr(e,'coef') <- coef
-                                      e
+                                      set_coef_attr(e, coef)
                             },
 
                             enum = function(x) {
@@ -491,7 +520,7 @@ expression2coef <- function(ex, vars, debug = F) {
    # c(effects) to prevent the for loop from running into an error condition
    for ( effect in c(effects) ) {
          effect.names  <- c( effect.names, as.character(effect))
-         effect.coefs  <- c( effect.coefs, attr(effect,'coef'))
+         effect.coefs  <- c( effect.coefs, get_coef_attr(effect))
    }
 
    list( coef        = effect.coefs,

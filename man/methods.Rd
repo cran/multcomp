@@ -93,7 +93,9 @@ univariate_calpha(...)
   the family-wise error rate (FWER). Multivariate
   normal and t distributions, the latter one only for models of 
   class \code{\link{lm}}, are evaluated using the procedures
-  implemented in package \code{mvtnorm}.
+  implemented in package \code{mvtnorm}. Note that the default
+  procedure is stochastic. Reproducible p-values and confidence
+  intervals require appropriate settings of seeds.
 
   A more detailed description of the underlying methodology is
   available from Hothorn et al. (2008) and Bretz et al. (2010).
