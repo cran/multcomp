@@ -1,5 +1,5 @@
 
-# $Id: helpers.R 440 2016-05-27 13:09:46Z thothorn $
+# $Id: helpers.R 449 2017-11-08 10:53:28Z thothorn $
 
 ### model.matrix.coxph doesn't return contrasts etc.
 #model.matrix.coxph <- function(object, ...) {
@@ -99,7 +99,8 @@ model.frame.lme <- function(object, ...) {
 modelparm <- function(model, coef., vcov., df, ...) 
     UseMethod("modelparm")
 
-modelparm.default <- function(model, coef. = coef, vcov. = vcov, 
+modelparm.default <- function(model, coef. = coef, 
+                              vcov. = function(x) vcov(x, complete = FALSE), 
                               df = NULL, ...) 
 {
 

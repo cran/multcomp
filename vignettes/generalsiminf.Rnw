@@ -97,7 +97,6 @@ risk[clinical[, "Cytogenetic.group"] %in% rlev[c(5, 9)]] <- "intermediate"
 risk[clinical[, "Cytogenetic.group"] %in% rlev[-c(4,5, 7,8,9)]] <- "high"
 risk <- as.factor(risk)
 names(clinical)[6] <- "FLT3"
-vcov.lmrob <- function(object) object$cov
 library("lme4")
 data("trees513", package = "multcomp")
 @

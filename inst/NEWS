@@ -1,4 +1,8 @@
 
+Changes in 1.4-8 (2017-11-08)
+
+    o    use vcov(x, complete = FALSE) to make R-devel happy again.
+
 Changes in 1.4-7 (2017-09-05)
 
     o    Don't add attributes to symbols when parsing character representations
