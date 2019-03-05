@@ -1,5 +1,5 @@
 
-# $Id: mcp.R 422 2015-07-20 13:13:04Z thothorn $
+# $Id: mcp.R 456 2019-02-27 16:16:46Z thothorn $
 
 ### multiple comparison procedures for levels of 
 ### factors in AN(C)OVA models
@@ -21,9 +21,13 @@ mcp <- function(..., interaction_average = FALSE, covariate_average = FALSE) {
     classes <- sapply(linfct, function(x) inherits(x, "matrix") || 
                                           inherits(x, "character"))
 
-    if (length(linfct) == 1 && linfct[[1]] == "Means") {
-        class(linfct) <- "means"
-        return(linfct)
+    
+    if (length(linfct) == 1) {
+        lf <- linfct[[1]][1]
+        if (lf == "Means") {
+            class(linfct) <- "means"
+            return(linfct)
+        }   
     }
 
     attr(linfct, "interaction_average") <- interaction_average

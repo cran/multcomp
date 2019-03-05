@@ -253,5 +253,12 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
   ### p-value as two-sided p-value -> 0.0232
   summary(warpbreaks.mc)
 
+  ### more complex models: Continuous outcome logistic
+  ### regression; parameters are log-odds ratios
+  if (require("tram")) {
+      confint(glht(Colr(breaks ~ wool + tension, 
+                        data = warpbreaks), 
+                   linfct = mcp("tension" = "Tukey")))
+  }
 }
 \keyword{htest}

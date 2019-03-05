@@ -1,5 +1,6 @@
 
 library("multcomp")
+RNGversion("3.5.2")
 set.seed(290875)
 
 ### mcp didn't accept objects of class `contrMat'

@@ -1,4 +1,12 @@
 
+Changes in 1.4-10 (2019-03-04)
+
+    o    new example using tram::Colr()
+
+Changes in 1.4-9 (2018-08-24)
+
+    o    use levels as names for "GrandMean" contrasts
+
 Changes in 1.4-8 (2017-11-08)
 
     o    use vcov(x, complete = FALSE) to make R-devel happy again.

@@ -127,6 +127,8 @@ plot.cld <- function(x, type = c("response", "lp"), ...) {
 
     if (x$covar || type == "lp") {
         ### boxplot to make use of "..." argument
+        yn <- "linear predictor"
+        if (!is.null(list(...)$ylab)) yn <- list(...)$ylab
         boxplot(lp ~ x, data = dat, xlab = xn, ylab = "linear predictor", ...)
         axis(3, at = 1:nlevels(dat$x), labels = vletters)
     } else {

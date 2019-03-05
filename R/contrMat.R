@@ -1,4 +1,4 @@
-# $Id: contrMat.R 230 2008-04-04 11:51:10Z thothorn $
+# $Id: contrMat.R 454 2018-08-24 09:25:47Z thothorn $
 
 contrMat <- function(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
                                  "Changepoint", "Williams", "Marcus",
@@ -125,7 +125,7 @@ contrMat <- function(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
     }, "GrandMean" = {
         CM <- matrix(rep(-n/sum(n), k), nrow = k, byrow = TRUE)
         diag(CM) <- diag(CM) + 1
-        rnames <- c(rnames, paste("C", 1:nrow(CM)))
+        rnames <- varnames
     })
 
     rownames(CM) <- rnames

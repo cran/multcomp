@@ -2,7 +2,7 @@
 \documentclass[11pt]{article}
 
 %%\VignetteIndexEntry{Supplementary Material for "A re-evaluation of the model selection procedure in Pollet \& Nettle (2009)"}
-%%\VignetteDepends{xtable,car,MASS,multcomp,foreign,TH.data}
+%%\VignetteDepends{xtable,MASS,multcomp,foreign,TH.data}
 
 \usepackage{amsmath}
 \usepackage[round,authoryear]{natbib}
@@ -28,7 +28,6 @@ options(SweaveHooks = list(leftpar =
     function() par(mai = par("mai") * c(1, 1.1, 1, 1))))
 #options(width = 70)
 library("xtable")
-library("car")
 library("MASS")
 library("multcomp")
 library("foreign")

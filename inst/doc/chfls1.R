@@ -8,7 +8,6 @@ options(SweaveHooks = list(leftpar =
     function() par(mai = par("mai") * c(1, 1.1, 1, 1))))
 #options(width = 70)
 library("xtable")
-library("car")
 library("MASS")
 library("multcomp")
 library("foreign")

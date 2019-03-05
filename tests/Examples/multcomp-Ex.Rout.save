@@ -1,6 +1,6 @@
 
-R version 3.2.4 (2016-03-10) -- "Very Secure Dishes"
-Copyright (C) 2016 The R Foundation for Statistical Computing
+R version 3.5.2 (2018-12-20) -- "Eggshell Igloo"
+Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -34,6 +34,7 @@ The following object is masked from ‘package:MASS’:
 
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
 > nameEx("cftest")
 > ### * cftest
@@ -431,11 +432,11 @@ C 6     -1 1.0000 0.0000 0.0000
 
 	 Multiple Comparisons of Means: GrandMean Contrasts
 
-    group1 group2 group3 group4
-C 1    0.9   -0.2   -0.3   -0.4
-C 2   -0.1    0.8   -0.3   -0.4
-C 3   -0.1   -0.2    0.7   -0.4
-C 4   -0.1   -0.2   -0.3    0.6
+       group1 group2 group3 group4
+group1    0.9   -0.2   -0.3   -0.4
+group2   -0.1    0.8   -0.3   -0.4
+group3   -0.1   -0.2    0.7   -0.4
+group4   -0.1   -0.2   -0.3    0.6
 > 
 > 
 > 
@@ -814,10 +815,43 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 (Adjusted p values reported -- single-step method)
 
 > 
+>   ### more complex models: Continuous outcome logistic
+>   ### regression; parameters are log-odds ratios
+>   if (require("tram")) {
++       confint(glht(Colr(breaks ~ wool + tension, 
++                         data = warpbreaks), 
++                    linfct = mcp("tension" = "Tukey")))
++   }
+Loading required package: tram
+Loading required package: mlt
+Loading required package: basefun
+Loading required package: variables
+
+	 Simultaneous Confidence Intervals
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Fit: Colr(formula = breaks ~ wool + tension, data = warpbreaks)
+
+Quantile = 2.3437
+95% family-wise confidence level
+ 
+
+Linear Hypotheses:
+           Estimate lwr     upr    
+M - L == 0  1.1969  -0.2336  2.6275
+H - L == 0  2.1613   0.6761  3.6464
+H - M == 0  0.9643  -0.4297  2.3584
+
 > 
 > 
 > 
 > cleanEx()
+
+detaching ‘package:tram’, ‘package:mlt’, ‘package:basefun’,
+  ‘package:variables’
+
 > nameEx("litter")
 > ### * litter
 > 
@@ -1889,9 +1923,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### * <FOOTER>
 > ###
+> cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.828 0.084 11.903 0 0 
+Time elapsed:  9.53 0.068 9.62 0 0 
 > grDevices::dev.off()
 null device 
           1 
