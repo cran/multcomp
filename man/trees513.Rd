@@ -45,7 +45,7 @@ by deer browsing.
   
    Bayerisches Staatsministerium fuer Landwirtschaft und Forsten (2006),
    Forstliche Gutachten zur Situation der Waldverjuengung 2006.
-   \url{www.forst.bayern.de}
+   \url{http://www.forst.bayern.de}
 
    Torsten Hothorn, Frank Bretz and Peter Westfall (2008),
    Simultaneous Inference in General Parametric Models.   

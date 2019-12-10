@@ -1,4 +1,8 @@
 
+Changes in 1.4-11 (2019-12-09)
+
+    o    update reference output
+
 Changes in 1.4-10 (2019-03-04)
 
     o    new example using tram::Colr()
