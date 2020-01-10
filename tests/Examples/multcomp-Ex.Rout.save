@@ -1,6 +1,6 @@
 
-R version 3.5.2 (2018-12-20) -- "Eggshell Igloo"
-Copyright (C) 2018 The R Foundation for Statistical Computing
+R version 3.6.2 (2019-12-12) -- "Dark and Stormy Night"
+Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -515,56 +515,11 @@ E - D == 0  -6.5333     0.8679  -7.527 1.21e-06 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 (Univariate p values reported)
 
->   summary(dht, test = adjusted("Shaffer"))
-
-	 Simultaneous Tests for General Linear Hypotheses
-
-Multiple Comparisons of Means: Tukey Contrasts
-
-
-Fit: aov(formula = plates ~ block + detergent, data = detergent)
-
-Linear Hypotheses:
-           Estimate Std. Error t value Pr(>|t|)    
-B - A == 0  -2.1333     0.8679  -2.458 0.051524 .  
-C - A == 0   3.6000     0.8679   4.148 0.003028 ** 
-D - A == 0   2.2000     0.8679   2.535 0.044149 *  
-E - A == 0  -4.3333     0.8679  -4.993 0.000531 ***
-C - B == 0   5.7333     0.8679   6.606 3.63e-05 ***
-D - B == 0   4.3333     0.8679   4.993 0.000531 ***
-E - B == 0  -2.2000     0.8679  -2.535 0.044149 *  
-D - C == 0  -1.4000     0.8679  -1.613 0.126291    
-E - C == 0  -7.9333     0.8679  -9.140 9.45e-07 ***
-E - D == 0  -6.5333     0.8679  -7.527 7.26e-06 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-(Adjusted p values reported -- Shaffer method)
-
->   summary(dht, test = adjusted("Westfall"))
-
-	 Simultaneous Tests for General Linear Hypotheses
-
-Multiple Comparisons of Means: Tukey Contrasts
-
-
-Fit: aov(formula = plates ~ block + detergent, data = detergent)
-
-Linear Hypotheses:
-           Estimate Std. Error t value Pr(>|t|)    
-B - A == 0  -2.1333     0.8679  -2.458  0.05002 .  
-C - A == 0   3.6000     0.8679   4.148  0.00271 ** 
-D - A == 0   2.2000     0.8679   2.535  0.04297 *  
-E - A == 0  -4.3333     0.8679  -4.993  < 0.001 ***
-C - B == 0   5.7333     0.8679   6.606  < 0.001 ***
-D - B == 0   4.3333     0.8679   4.993  < 0.001 ***
-E - B == 0  -2.2000     0.8679  -2.535  0.04297 *  
-D - C == 0  -1.4000     0.8679  -1.613  0.12629    
-E - C == 0  -7.9333     0.8679  -9.140  < 0.001 ***
-E - D == 0  -6.5333     0.8679  -7.527  < 0.001 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-(Adjusted p values reported -- Westfall method)
-
+>   ## Not run: 
+> ##D   summary(dht, test = adjusted("Shaffer"))
+> ##D   summary(dht, test = adjusted("Westfall"))
+> ##D   
+> ## End(Not run)
 > 
 > 
 > 
@@ -1459,8 +1414,8 @@ m2: x13 == 0  -0.8264     0.5824  -1.419    0.317
 > 
 > ### Examples for binomial data
 > ### Two independent outcomes
-> y1.1 <- rbinom(100, 1, 0.5)
-> y1.2 <- rbinom(100, 1, 0.5)
+> y1.1 <- rbinom(100, 1, 0.45)
+> y1.2 <- rbinom(100, 1, 0.55)
 > group <- factor(rep(c("A", "B"), 50))
 > 
 > m1 <- glm(y1.1 ~ group, family = binomial)
@@ -1472,14 +1427,14 @@ m2: x13 == 0  -0.8264     0.5824  -1.419    0.317
 	 Simultaneous Tests for General Linear Hypotheses
 
 Linear Hypotheses:
-                 Estimate Std. Error z value Pr(>|z|)
-m1: groupB == 0 4.855e-01  4.043e-01   1.201    0.407
-m2: groupB == 0 9.356e-16  4.013e-01   0.000    1.000
+                Estimate Std. Error z value Pr(>|z|)
+m1: groupB == 0  0.41502    0.40905   1.015    0.523
+m2: groupB == 0  0.08161    0.40407   0.202    0.974
 (Adjusted p values reported -- single-step method)
 
 > 
 > ### Two perfectly correlated outcomes
-> y2.1 <- rbinom(100, 1, 0.5)
+> y2.1 <- rbinom(100, 1, 0.45)
 > y2.2 <- y2.1
 > group <- factor(rep(c("A", "B"), 50))
 > 
@@ -1493,8 +1448,8 @@ m2: groupB == 0 9.356e-16  4.013e-01   0.000    1.000
 
 Linear Hypotheses:
                 Estimate Std. Error z value Pr(>|z|)
-m1: groupB == 0   0.4015     0.4021   0.999    0.318
-m2: groupB == 0   0.4015     0.4021   0.999    0.318
+m1: groupB == 0   0.2427     0.4028   0.603    0.547
+m2: groupB == 0   0.2427     0.4028   0.603    0.547
 (Adjusted p values reported -- single-step method)
 
 > 
@@ -1506,8 +1461,8 @@ m2: groupB == 0   0.4015     0.4021   0.999    0.318
 
 Linear Hypotheses:
                 Estimate Std. Error z value Pr(>|z|)
-m1: groupB == 0   0.4015     0.4021   0.999    0.318
-m2: groupB == 0   0.4015     0.4021   0.999    0.318
+m1: groupB == 0   0.2427     0.4028   0.603    0.547
+m2: groupB == 0   0.2427     0.4028   0.603    0.547
 (Adjusted p values reported -- single-step method)
 
 > 
@@ -1926,7 +1881,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  9.53 0.068 9.62 0 0 
+Time elapsed:  8.816 0.095 8.933 0 0 
 > grDevices::dev.off()
 null device 
           1 

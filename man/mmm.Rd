@@ -217,8 +217,8 @@ summary(glht(mmm(m1 = m1, m2 = m2),
 
 ### Examples for binomial data
 ### Two independent outcomes
-y1.1 <- rbinom(100, 1, 0.5)
-y1.2 <- rbinom(100, 1, 0.5)
+y1.1 <- rbinom(100, 1, 0.45)
+y1.2 <- rbinom(100, 1, 0.55)
 group <- factor(rep(c("A", "B"), 50))
 
 m1 <- glm(y1.1 ~ group, family = binomial)
@@ -228,7 +228,7 @@ summary(glht(mmm(m1 = m1, m2 = m2),
              mlf("groupB = 0")))
 
 ### Two perfectly correlated outcomes
-y2.1 <- rbinom(100, 1, 0.5)
+y2.1 <- rbinom(100, 1, 0.45)
 y2.2 <- y2.1
 group <- factor(rep(c("A", "B"), 50))
 

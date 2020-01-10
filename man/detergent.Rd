@@ -46,8 +46,10 @@
 
   ### see Westfall et al. (1999, p. 192)
   summary(dht, test = univariate())
+  \dontrun{
   summary(dht, test = adjusted("Shaffer"))
   summary(dht, test = adjusted("Westfall"))
+  }
 
 }
 \keyword{datasets}
