@@ -1,4 +1,8 @@
 
+Changes in 1.4-13 (2020-04-08)
+
+    o    call glmer directly in vignette
+
 Changes in 1.4-12 (2020-01-07)
 
     o    update reference output
