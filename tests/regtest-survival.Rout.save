@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2019-12-08 r77542) -- "Unsuffered Consequences"
-Copyright (C) 2019 The R Foundation for Statistical Computing
+R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -67,8 +67,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Multiple Comparisons of Means: Dunnett Contrasts
 
 
-Fit: survreg(formula = Surv(stop, event) ~ rx + size + number + strata(enum) + 
-    cluster(id), data = bladder1)
+Fit: survreg(formula = Surv(stop, event) ~ rx + size + number + strata(enum), 
+    data = bladder1, cluster = id)
 
 Linear Hypotheses:
            Estimate Std. Error z value Pr(>|z|)    
@@ -86,4 +86,4 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > proc.time()
    user  system elapsed 
-  1.668   0.132   1.797 
+  1.208   0.079   1.282 
