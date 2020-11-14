@@ -200,3 +200,13 @@ stopifnot(all.equal(as.numeric(mc$K[1,c('(Intercept)', 'X1','X2', 'X3','X1:X3','
 stopifnot(all.equal(as.numeric(mc$K[2,c('(Intercept)', 'X1','X2', 'X3','X1:X3','X2:X3')]),c( 0,1,-1 ,0, 0.5,-0.5)))
 stopifnot(all.equal(as.numeric(mc$K[3,c('(Intercept)', 'X1','X2', 'X3','X1:X3','X2:X3')]),c( 0,1,-1 ,0, 0.5,-0.5)))
 
+### "(Intercept)" in char exprs for linfct
+x <- runif(100)
+y <- rnorm(length(x))
+m <- lm(y ~ x)
+
+stopifnot(all.equal(coef(glht(m, linfct = "(Intercept) = 0")),
+                    coef(m)["(Intercept)"], check.attrributes = FALSE))
+stopifnot(all.equal(coef(glht(m, linfct = "(Intercept) + x = 0")),
+                    sum(coef(m)), check.attributes = FALSE))
+

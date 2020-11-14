@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2019-02-28 r76174) -- "Unsuffered Consequences"
-Copyright (C) 2019 The R Foundation for Statistical Computing
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -116,8 +116,8 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<bytecode: 0xa3701d0>
-<environment: 0xa37f038>
+<bytecode: 0x557dffeefb28>
+<environment: 0x557dffefe890>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -136,8 +136,8 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<bytecode: 0xa377ad8>
-<environment: 0xa37f038>
+<bytecode: 0x557dffef9290>
+<environment: 0x557dffefe890>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -522,7 +522,17 @@ $alternative
 > stopifnot(all.equal(as.numeric(mc$K[2,c('(Intercept)', 'X1','X2', 'X3','X1:X3','X2:X3')]),c( 0,1,-1 ,0, 0.5,-0.5)))
 > stopifnot(all.equal(as.numeric(mc$K[3,c('(Intercept)', 'X1','X2', 'X3','X1:X3','X2:X3')]),c( 0,1,-1 ,0, 0.5,-0.5)))
 > 
+> ### "(Intercept)" in char exprs for linfct
+> x <- runif(100)
+> y <- rnorm(length(x))
+> m <- lm(y ~ x)
+> 
+> stopifnot(all.equal(coef(glht(m, linfct = "(Intercept) = 0")),
++                     coef(m)["(Intercept)"], check.attrributes = FALSE))
+> stopifnot(all.equal(coef(glht(m, linfct = "(Intercept) + x = 0")),
++                     sum(coef(m)), check.attributes = FALSE))
+> 
 > 
 > proc.time()
    user  system elapsed 
-  2.872   0.136   3.006 
+  1.822   0.048   1.865 

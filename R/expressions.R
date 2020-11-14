@@ -1,5 +1,5 @@
 
-# $Id: expressions.R 447 2017-09-05 18:49:05Z thothorn $
+# $Id: expressions.R 473 2020-11-12 10:57:00Z thothorn $
 
 ### determine if an expression `x' can be interpreted as numeric
 is_num <- function(x) {
@@ -552,6 +552,10 @@ chrlinfct2matrix <- function(ex, var) {
                  " cannot be interpreted as expression", call. = FALSE )
 
         tmp <- expression2coef(expr,vars=var)
+
+        ### (Intercept) lost () in expression2coef
+        if ("(Intercept)" %in% var)
+            tmp$names[tmp$names == "Intercept"] <- "(Intercept)"
 
         if (!all(tmp$names %in% var))
             stop("multcomp:::chrlinfct2matrix: variable(s) ", 

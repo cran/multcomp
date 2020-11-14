@@ -1,4 +1,8 @@
 
+Changes in 1.4-15 (2020-09-23)
+
+    o    allow char expressions involving "(Intercept)" in linfct
+
 Changes in 1.4-14 (2020-09-23)
 
     o    update demos
