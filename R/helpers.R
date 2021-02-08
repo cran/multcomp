@@ -1,5 +1,5 @@
 
-# $Id: helpers.R 449 2017-11-08 10:53:28Z thothorn $
+# $Id: helpers.R 474 2021-01-26 12:30:23Z thothorn $
 
 ### model.matrix.coxph doesn't return contrasts etc.
 #model.matrix.coxph <- function(object, ...) {
@@ -174,6 +174,13 @@ modelparm.merMod <- function(model, coef. = lme4::fixef, vcov. = vcov, df = NULL
 
 ### package `nlme'
 modelparm.lme <- function(model, coef. = nlme::fixef, vcov. = vcov, df = NULL, ...)
+    modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
+
+### package glmmTMB
+modelparm.glmmTMB <- function(model, 
+    coef. = function(object) glmmTMB::fixef(object)$cond, 
+    vcov. = function(object) vcov(object)$cond, 
+    df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
 
 ### survreg models (package `survival')
