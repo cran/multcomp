@@ -1,5 +1,11 @@
 
-Changes in 1.4-15 (2020-09-23)
+Changes in 1.4-17 (2021-04-29)
+
+    o    add library("sandwich") to ?mmm
+
+    o    fix typo in print.summary.glht (both issues spotted by Sebastian Meyer)
+
+Changes in 1.4-16 (2021-02-08)
 
     o    Fix LaTeX problem
 

@@ -79,6 +79,8 @@ mlf(...)
 ### The International Journal of Biostatistics: Vol. 7: Iss. 1, Article 3.
 ### DOI: 10.2202/1557-4679.1258
 
+library("sandwich")
+
 ### see ?coagulation
 if (require("SimComp")) {
     data("coagulation", package = "SimComp")
@@ -115,7 +117,6 @@ if (require("SimComp")) {
     }
  
     ### use sandwich variance matrix
-    library("sandwich")
     g <- glht(mmm(Thromb = m1, ADP = m2, TRAP = m3),
               mlf(mcp(Group = "Dunnett")), 
               alternative = "greater", vcov = sandwich)
