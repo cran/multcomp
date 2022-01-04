@@ -1,5 +1,5 @@
 
-# $Id: helpers.R 475 2021-02-08 10:06:08Z thothorn $
+# $Id: helpers.R 482 2021-12-21 16:02:28Z thothorn $
 
 ### model.matrix.coxph doesn't return contrasts etc.
 #model.matrix.coxph <- function(object, ...) {
@@ -115,12 +115,12 @@ modelparm.default <- function(model, coef. = coef,
     }
 
     ### extract coefficients and their covariance matrix
-    beta <- try(coef.(model))
+    beta <- try(coef.(model, ...))
     if (inherits(beta, "try-error"))
         stop("no ", sQuote("coef"), " method for ",
              sQuote("model"), " found!")
 
-    sigma <- try(vcov.(model))
+    sigma <- try(vcov.(model, ...))
     if (inherits(sigma, "try-error"))
         stop("no ", sQuote("vcov"), " method for ",
              sQuote("model"), " found!")       
@@ -146,7 +146,7 @@ modelparm.default <- function(model, coef. = coef,
     ### try to identify non-estimable coefficients
     ### coef.aov removes NAs, thus touch coefficients 
     ### directly
-    ocoef <- coef.(model)
+    ocoef <- coef.(model, ...)
     if (inherits(model, "aov")) ocoef <- model$coefficients
     estimable <- rep(TRUE, length(ocoef))
     if (any(is.na(ocoef))) {
@@ -224,6 +224,15 @@ polrvcov <- function(object) {
 
 modelparm.polr <- function(model, coef. = coef, vcov. = polrvcov, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
+
+### fixed effects models (package fixest). Contributed by Grant McDermott 2021-12-17
+modelparm.fixest <- function(model, coef. = coef, vcov. = vcov, df = NULL, ...) {
+    model <- summary(model, vcov = vcov.)
+    vcov. <- vcov(model)
+    if (is.null(df))
+        df <- fixest::degrees_freedom(model, type = "resid")
+    modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
+}
 
 ### modified from package MASS  
 MPinv <- function (X, tol = sqrt(.Machine$double.eps))
