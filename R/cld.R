@@ -21,7 +21,7 @@ extr <- function(object) {
     
 
     ### <FIXME> not very nice    
-    if(any(class(object$model) == "lme")){
+    if(inherits(object$model, "lme")){
       mf <- get_all_vars(tm, mf)
     }
     ### </FIXME>

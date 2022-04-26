@@ -170,7 +170,7 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
     \emph{Multiple Comparisons Using R}, CRC Press, Boca Raton.
 
     Shayle R. Searle (1971), \emph{Linear Models}.
-    John Wiley \& Sons, New York.
+    John Wiley & Sons, New York.
 
     Jason C. Hsu (1996), \emph{Multiple Comparisons}.
     Chapman & Hall, London.

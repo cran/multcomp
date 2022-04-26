@@ -156,7 +156,7 @@ expression2coef <- function(ex, vars, debug = FALSE) {
 
                                    res <- try ( do.call(as.character(v[[1]]), as.list(cparms)), silent=T )
 
-                                   if ( class(res) == 'try-error' )
+                                   if ( inherits(res, 'try-error' ))
                                         w$fatal('eval','the evaluation of the expression ', sQuote(deparse(v)),' ',
                                                        'failed with ', dQuote(attr(res,'condition')$message) )
 
