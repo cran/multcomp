@@ -1,5 +1,5 @@
 
-# $Id: expressions.R 473 2020-11-12 10:57:00Z thothorn $
+# $Id: expressions.R 485 2022-04-25 14:35:22Z thothorn $
 
 ### determine if an expression `x' can be interpreted as numeric
 is_num <- function(x) {
