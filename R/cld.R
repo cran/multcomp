@@ -49,18 +49,18 @@ extr <- function(object) {
 }
 
 cld.summary.glht <- function(object, level = 0.05, decreasing = FALSE, ...) {
-
+	stopifnot(inherits(object, "glht"))
     ret <- extr(object)
     signif <- (object$test$pvalues < level)
     # Order the levels according to its mean
     # Tidy up: ret$y[1:length(ret$x)]], cox models concatenates a vector of live/dead
-    # I think this way is easier than to deal with gsub later and it's more general
+    # I think this way is easier than to deal with gsub later and it's more general	
     lvl_order <- levels(ret$x)[order(tapply(as.numeric(ret$y)[1:length(ret$x)], ret$x, mean))]
     # names(signif) <- gsub("\\s", "", rownames(object$linfct))
     ret$signif <- signif
     ret$mcletters <- insert_absorb(signif, decreasing = decreasing, 
-                                   comps = ret$comps, lvl_order = lvl_order, ...)
-                           
+                                   comps = ret$comps, lvl_order = lvl_order, 
+								   levels.x=levels(ret$x), ...)
    # start edit
     
     ret$mcletters$Letters <- ret$mcletters$Letters[levels(ret$x)]
@@ -68,14 +68,13 @@ cld.summary.glht <- function(object, level = 0.05, decreasing = FALSE, ...) {
     ret$mcletters$LetterMatrix <- ret$mcletters$LetterMatrix[levels(ret$x),]
     
    # end edit
-                           
-                          
+	
     class(ret) <- "cld"
     ret
 }
 
 cld.confint.glht <- function(object, decreasing = FALSE, ...) {
-
+	stopifnot(inherits(object, "glht"))
     ret <- extr(object)
     ### significant, if confidence interval does not contains 0
     signif <- !(object$confint[, "lwr"] < 0 & object$confint[, "upr"] > 0)
@@ -85,7 +84,8 @@ cld.confint.glht <- function(object, decreasing = FALSE, ...) {
     # names(signif) <- gsub("\\s", "", rownames(object$linfct))
     ret$signif <- signif
     ret$mcletters <- insert_absorb(signif, decreasing = decreasing, 
-                                   comps = ret$comps, lvl_order = lvl_order, ...)
+                                   comps = ret$comps, lvl_order = lvl_order,
+								   levels.x=levels(ret$x), ...)
                            
     # start edit
                            
@@ -162,16 +162,17 @@ plot.cld <- function(x, type = c("response", "lp"), ...) {
 # Function implements the insert-absorb (sweep) heuristic of Piepho 2004:
 # "An Algorithm for a Letter-Based Representation of All-Pairwise Comparisons"
 #
-# x         ... vector of logicals indicating significant comparisons with hyphenated
-#               names e.g. A-B, treatmentA-treatmentB, ...
-# Letters   ... a set of user defined letters { default is Letters=c(letters, LETTERS) }
-# separator ... a separating character used to produce a sufficiently large set of
-#               characters for a compact letter display (default is separator=".") in case
-#               the number of letters required exceeds the number of letters available
-# Decreasing ... Inverse the order of the letters 
+# x         	... vector of logicals indicating significant comparisons with hyphenated
+#               	names e.g. A-B, treatmentA-treatmentB, ...
+# Letters   	... a set of user defined letters { default is Letters=c(letters, LETTERS) }
+# separator 	... a separating character used to produce a sufficiently large set of
+#               	characters for a compact letter display (default is separator=".") in case
+#               	the number of letters required exceeds the number of letters available
+# Decreasing 	... Inverse the order of the letters 
+# levels.x		... levels of the grouping variable 
 
 insert_absorb <- function( x, Letters=c(letters, LETTERS), separator=".", decreasing = FALSE, 
-                           comps = NULL, lvl_order){
+                           comps = NULL, lvl_order, levels.x){
 
   obj_x <- deparse(substitute(x))
   if (is.null(comps)) {
@@ -233,19 +234,19 @@ insert_absorb <- function( x, Letters=c(letters, LETTERS), separator=".", decrea
       }
     }
   }
-  lmat <- lmat[,order(apply(lmat, 2, sum))]
-  lmat <- sweepLetters(lmat)                                                                  # 1st
-  lmat <- lmat[,names(sort(apply(lmat,2, function(x) return(min(which(x))))))]                # reorder columns
-  colnames(lmat) <- get_letters( ncol(lmat),  Letters=Letters,
-                                 separator=separator)
-  lmat <- lmat[,order(apply(lmat, 2, sum))]                                                   # 2nd sweep
-  lmat <- sweepLetters(lmat)
-  lmat <- lmat[,names(sort(apply(lmat,2, function(x) return(min(which(x)))), 
-                           decreasing = decreasing))]                # reorder columns
-  colnames(lmat) <- get_letters( ncol(lmat),  Letters=Letters,
-                                 separator=separator)
+  
+  lmat	<- lmat[levels.x,]									# consider order of levels.x which will be applied later on ensuring that argument decreasing correclty functions (AS 2022-10-14)
+  lmat 	<- lmat[,order(apply(lmat, 2, sum))]
+  lmat 	<- sweepLetters(lmat)                               # 1st sweeping
+  lmat 	<- lmat[,names(sort(apply(lmat,2, function(x) return(min(which(x)))), decreasing = decreasing))]        # reorder columns
+  colnames(lmat) <- get_letters( ncol(lmat),  Letters=Letters, separator=separator)
+  lmat <- lmat[,order(apply(lmat, 2, sum))]                  
+  lmat <- sweepLetters(lmat)								# 2nd sweeping
+  lmat <- lmat[,names(sort(apply(lmat,2, function(x) return(min(which(x)))), decreasing = decreasing))]        # reorder columns
+  colnames(lmat) <- get_letters( ncol(lmat),  Letters=Letters, separator=separator)
   ltrs <- apply(lmat,1,function(x) return(paste(names(x)[which(x)], sep="", collapse="") ) )
-  msl <- matrix(ncol=ncol(lmat), nrow=nrow(lmat))                                             # prepare monospaced letters
+
+  msl <- matrix(ncol=ncol(lmat), nrow=nrow(lmat))           # prepare monospaced letters
   for( i in 1:nrow(lmat) ){
     msl[i,which(lmat[i,])] <- colnames(lmat)[which(lmat[i,])]
     absent <- which(!lmat[i,])

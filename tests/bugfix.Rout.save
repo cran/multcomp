@@ -1,6 +1,6 @@
 
-R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R version 4.2.2 (2022-10-31) -- "Innocent and Trusting"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -116,8 +116,8 @@ function (type = c("univariate", "adjusted", p.adjust.methods),
     }
     return(p.adjust(pvals, method = type))
 }
-<bytecode: 0x557dffeefb28>
-<environment: 0x557dffefe890>
+<bytecode: 0x55bc93b02ee0>
+<environment: 0x55bc93b0de08>
 
 $qfunction
 function (conf.level, adjusted = TRUE, ...) 
@@ -136,8 +136,8 @@ function (conf.level, adjusted = TRUE, ...)
     attr(ret, "error") <- calpha$estim.prec
     return(ret)
 }
-<bytecode: 0x557dffef9290>
-<environment: 0x557dffefe890>
+<bytecode: 0x55bc93b0a728>
+<environment: 0x55bc93b0de08>
 
 $coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
@@ -385,7 +385,7 @@ Error : multcomp:::chrlinfct2matrix: argument 'Warp' cannot be interpreted as ex
 + }
 Loading required package: nlme
   Male Female 
-   "b"    "a" 
+   "a"    "b" 
 > 
 > ### spotted by <chris.chizinski@gmail.com>
 > ### example code by Achim Zeileis <Achim.Zeileis@wu.ac.at>
@@ -535,4 +535,4 @@ $alternative
 > 
 > proc.time()
    user  system elapsed 
-  1.822   0.048   1.865 
+  1.281   0.056   1.332 
