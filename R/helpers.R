@@ -26,8 +26,9 @@ model.matrix.coxph.penal <- function(object, ...) {
     ret
 }
 
-model.frame.coxph.penal <- function(object, ...) {
+model.frame.coxph.penal <- function(formula, ...) {
 
+    object <- formula
     tm <- terms(object)
     class(object) <- "coxph"
     mf <- model.frame(object)
@@ -36,10 +37,10 @@ model.frame.coxph.penal <- function(object, ...) {
     ret
 }
 
-terms.coxph.penal <- function(object, ...) {
+terms.coxph.penal <- function(x, ...) {
 
-    class(object) <- "coxph"           
-    tm <- terms(object)
+    class(x) <- "coxph"           
+    tm <- terms(x)
     ctm <- as.character(tm)
     x <- strsplit(ctm[3], "+", fixed = TRUE)[[1]]
     x <- x[-grep("frailty", x)]
@@ -76,7 +77,8 @@ model.matrix.coxme <- function(object, ...) {
 }
 
 ### coxme objects
-model.frame.coxme <- function(object, ...) {
+model.frame.coxme <- function(formula, ...) {
+    object <- formula
     class(object) <- "coxph"
     model.frame(object)
 }
@@ -88,7 +90,8 @@ model.matrix.aovlist <- function(object, ...)
 model.matrix.lme <- function(object, ...)
     model.matrix(terms(object), data = model.frame(object), ...)
 
-model.frame.lme <- function(object, ...) {
+model.frame.lme <- function(formula, ...) {
+    object <- formula
     ret <- object$data
     if (is.null(ret)) stop("object does not contain any data")
     ret
@@ -194,11 +197,11 @@ vcovsurvreg <- function(object, ...) {
 model.matrix.gls <- function(object, ...)
     model.matrix(terms(object), data = nlme::getData(object), ...)
 
-model.frame.gls <- function(object, ...)
-    model.frame(formula(object), data = nlme::getData(object), ...)
+model.frame.gls <- function(formula, ...)
+    model.frame(formula(formula), data = nlme::getData(formula), ...)
 
-terms.gls <- function(object, ...)
-    terms(model.frame(object), ...)
+terms.gls <- function(x, ...)
+    terms(model.frame(x), ...)
 
 modelparm.survreg <- function(model, coef. = coef, vcov. = vcovsurvreg, df = NULL, ...)
     modelparm.default(model, coef. = coef., vcov. = vcov., df = df, ...)
