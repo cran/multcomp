@@ -236,7 +236,7 @@ BIC                           & \Sexpr{paste(bic, collapse = " & ")}\\
 \hline	
 \vspace*{-0.3cm} 				
 \end{tabularx}
-\caption{\label{Pollet}Summary of variable selection in \citet{Pollet2009}.}
+\caption{\label{Pollet} Summary of variable selection by Pollet and Nettle.}
 \end{table}
 Start model and step 1 are the same as in table \ref{Pollet}. In the subsequent models further variables were added one at a time starting with the 
 variable which improved model fit the most. The selected variables were the same using AIC and BIC to assess model fit except for step 4a/4b. Using BIC 

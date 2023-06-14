@@ -1,4 +1,6 @@
 
+options(digits = 4)
+
 library("multcomp")
 RNGversion("3.5.2")
 set.seed(290875)
@@ -18,7 +20,7 @@ stopifnot(all.equal(coef(cht1), coef(cht2)))
 stopifnot(identical(cht1, print(cht1)))
 
 ### was: error
-summary(cht1)$test
+summary(cht1)$test$coefficients
 
 
 ### NAs in coefficients

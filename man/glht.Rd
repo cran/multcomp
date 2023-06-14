@@ -255,7 +255,7 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
 
   ### more complex models: Continuous outcome logistic
   ### regression; parameters are log-odds ratios
-  if (require("tram")) {
+  if (require("tram", quietly = TRUE, warn.conflicts = FALSE)) {
       confint(glht(Colr(breaks ~ wool + tension, 
                         data = warpbreaks), 
                    linfct = mcp("tension" = "Tukey")))

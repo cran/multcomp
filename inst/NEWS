@@ -1,4 +1,8 @@
 
+Changes in 1.4-24 (2023-06-13)
+
+    o    texlive on fedora has problems with citet inside captions.
+
 Changes in 1.4-23 (2023-03-09)
 
     o    S3 methods registration

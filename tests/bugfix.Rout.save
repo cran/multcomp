@@ -1,6 +1,6 @@
 
-R version 4.2.2 (2022-10-31) -- "Innocent and Trusting"
-Copyright (C) 2022 The R Foundation for Statistical Computing
+R version 4.3.0 (2023-04-21) -- "Already Tomorrow"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -15,6 +15,8 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+> 
+> options(digits = 4)
 > 
 > library("multcomp")
 Loading required package: mvtnorm
@@ -55,119 +57,24 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Linear Hypotheses:
                      Estimate
-2times - 1time == 0     3.443
-4times - 1time == 0     6.593
-drugD - 1time == 0      9.579
-drugE - 1time == 0     15.166
-4times - 2times == 0    3.150
-drugD - 2times == 0     6.136
-drugE - 2times == 0    11.723
-drugD - 4times == 0     2.986
-drugE - 4times == 0     8.573
-drugE - drugD == 0      5.586
+2times - 1time == 0      3.44
+4times - 1time == 0      6.59
+drugD - 1time == 0       9.58
+drugE - 1time == 0      15.17
+4times - 2times == 0     3.15
+drugD - 2times == 0      6.14
+drugE - 2times == 0     11.72
+drugD - 4times == 0      2.99
+drugE - 4times == 0      8.57
+drugE - drugD == 0       5.59
 
 > 
 > ### was: error
-> summary(cht1)$test
-$pfunction
-function (type = c("univariate", "adjusted", p.adjust.methods), 
-    ...) 
-{
-    type <- match.arg(type)
-    pfct <- function(q) {
-        switch(object$alternative, two.sided = {
-            low <- rep(-abs(q), dim)
-            upp <- rep(abs(q), dim)
-        }, less = {
-            low <- rep(q, dim)
-            upp <- rep(Inf, dim)
-        }, greater = {
-            low <- rep(-Inf, dim)
-            upp <- rep(q, dim)
-        })
-        pmvt(lower = low, upper = upp, df = df, corr = cr, ...)
-    }
-    switch(object$alternative, two.sided = {
-        if (df > 0) pvals <- 2 * (1 - pt(abs(tstat), df)) else pvals <- 2 * 
-            (1 - pnorm(abs(tstat)))
-    }, less = {
-        if (df > 0) pvals <- pt(tstat, df) else pvals <- pnorm(tstat)
-    }, greater = {
-        if (df > 0) pvals <- 1 - pt(tstat, df) else pvals <- 1 - 
-            pnorm(tstat)
-    })
-    if (type == "univariate") 
-        return(pvals)
-    if (type == "adjusted") {
-        ret <- numeric(length(tstat))
-        error <- 0
-        for (i in 1:length(tstat)) {
-            tmp <- pfct(tstat[i])
-            if (attr(tmp, "msg") != "Normal Completion" && length(grep("^univariate", 
-                attr(tmp, "msg"))) == 0) 
-                warning(attr(tmp, "msg"))
-            if (error < attr(tmp, "error")) 
-                error <- attr(tmp, "error")
-            ret[i] <- tmp
-        }
-        ret <- 1 - ret
-        attr(ret, "error") <- error
-        return(ret)
-    }
-    return(p.adjust(pvals, method = type))
-}
-<bytecode: 0x55bc93b02ee0>
-<environment: 0x55bc93b0de08>
-
-$qfunction
-function (conf.level, adjusted = TRUE, ...) 
-{
-    tail <- switch(object$alternative, two.sided = "both.tails", 
-        less = "lower.tail", greater = "upper.tail")
-    if (adjusted) {
-        calpha <- qmvt(conf.level, df = df, corr = cr, tail = tail, 
-            ...)
-    }
-    else {
-        calpha <- qmvt(conf.level, df = df, corr = matrix(1), 
-            tail = tail, ...)
-    }
-    ret <- calpha$quantile
-    attr(ret, "error") <- calpha$estim.prec
-    return(ret)
-}
-<bytecode: 0x55bc93b0a728>
-<environment: 0x55bc93b0de08>
-
-$coefficients
+> summary(cht1)$test$coefficients
  2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
-        3.44300         6.59281         9.57920        15.16555         3.14981 
+          3.443           6.593           9.579          15.166           3.150 
  drugD - 2times  drugE - 2times  drugD - 4times  drugE - 4times   drugE - drugD 
-        6.13620        11.72255         2.98639         8.57274         5.58635 
-
-$sigma
- 2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
-       1.443376        1.443376        1.443376        1.443376        1.443376 
- drugD - 2times  drugE - 2times  drugD - 4times  drugE - 4times   drugE - drugD 
-       1.443376        1.443376        1.443376        1.443376        1.443376 
-
-$tstat
- 2times - 1time  4times - 1time   drugD - 1time   drugE - 1time 4times - 2times 
-       2.385379        4.567631        6.636661       10.506996        2.182251 
- drugD - 2times  drugE - 2times  drugD - 4times  drugE - 4times   drugE - drugD 
-       4.251282        8.121617        2.069031        5.939366        3.870335 
-
-$pvalues
- [1] 1.380883e-01 3.524764e-04 3.563710e-07 2.897682e-14 2.050268e-01
- [6] 9.917862e-04 6.540452e-10 2.512705e-01 3.447725e-06 3.042641e-03
-attr(,"error")
-[1] 0.0001910665
-
-$type
-[1] "single-step"
-
-attr(,"class")
-[1] "mtest"
+          6.136          11.723           2.986           8.573           5.586 
 > 
 > 
 > ### NAs in coefficients
@@ -192,7 +99,7 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Linear Hypotheses:
            Estimate
-b - a == 0   -5.833
+b - a == 0    -5.83
 
 Warning messages:
 1: In mcp2matrix(model, linfct = linfct) :
@@ -250,12 +157,12 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Linear Hypotheses:
            Estimate
-g - f == 0   9.4468
-h - f == 0  -0.1103
-i - f == 0  -4.3988
-h - g == 0  -9.5571
-i - g == 0 -13.8456
-i - h == 0  -4.2885
+g - f == 0     9.45
+h - f == 0    -0.11
+i - f == 0    -4.40
+h - g == 0    -9.56
+i - g == 0   -13.85
+i - h == 0    -4.29
 
 Warning message:
 In mcp2matrix(model, linfct = linfct) :
@@ -290,10 +197,10 @@ Quantile = 2
  
 
 Linear Hypotheses:
-           Estimate lwr      upr     
-M - L == 0 -20.5556 -30.8702 -10.2410
-H - L == 0 -20.0000 -30.3146  -9.6854
-H - M == 0   0.5556  -9.7590  10.8702
+           Estimate lwr     upr    
+M - L == 0 -20.556  -30.870 -10.241
+H - L == 0 -20.000  -30.315  -9.685
+H - M == 0   0.556   -9.759  10.870
 
 > 
 > ### coef. and vcov. didn't pass through
@@ -364,9 +271,9 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Linear Hypotheses:
            Estimate
-2 - 1 == 0  0.04674
-3 - 1 == 0  0.11693
-3 - 2 == 0  0.07020
+2 - 1 == 0   0.0467
+3 - 1 == 0   0.1169
+3 - 2 == 0   0.0702
 
 > 
 > ### better error message
@@ -420,8 +327,8 @@ Multiple Comparisons of Means: Dunnett Contrasts
 
 Linear Hypotheses:
            Estimate
-2 - 1 == 0   0.3085
-3 - 1 == 0  -0.9180
+2 - 1 == 0    0.308
+3 - 1 == 0   -0.918
 
 > 
 > ### interactions of two factors
@@ -475,7 +382,7 @@ Warning messages:
 > model <- lm(Y ~ (X1 + X2) * X3,data=X)
 > coef(model)
 (Intercept)          X1          X2          X3       X1:X3       X2:X3 
-  3.9847713   4.0607950   4.0317907   0.9166263   0.4455296   0.4604559 
+     3.9848      4.0608      4.0318      0.9166      0.4455      0.4605 
 > 
 > my.contrasts<- c(
 +   "X1 - X2 + .5*X1:X3 - .5*X2:X3 = 0",  # previously wrong answer (actually got X1 + X2 + 0.5* X1)
@@ -488,14 +395,14 @@ Warning messages:
 
 Linear Hypotheses:
                                          Estimate
-X1 - X2 + 0.5 * X1:X3 - 0.5 * X2:X3 == 0  0.02154
-X1 + 0.5 * X1:X3 - X2 - 0.5 * X2:X3 == 0  0.02154
-X1 + 0.5 * X1:X3 - 0.5 * X2:X3 - X2 == 0  0.02154
+X1 - X2 + 0.5 * X1:X3 - 0.5 * X2:X3 == 0   0.0215
+X1 + 0.5 * X1:X3 - X2 - 0.5 * X2:X3 == 0   0.0215
+X1 + 0.5 * X1:X3 - 0.5 * X2:X3 - X2 == 0   0.0215
 
 > 
 > # right calculation
 > (ok <- sum(coef(model) * c(0,1,-1,0,.5,-.5)))
-[1] 0.02154112
+[1] 0.02154
 > 
 > stopifnot(all.equal(as.numeric(coef(contrast.result)), rep(sum(coef(model) * c(0,1,-1,0,.5,-.5)),3)))
 > 
@@ -535,4 +442,4 @@ $alternative
 > 
 > proc.time()
    user  system elapsed 
-  1.281   0.056   1.332 
+  1.164   0.064   1.224 
