@@ -54,7 +54,7 @@
   \code{\link{cld.glht}}
   \code{\link{boxplot}}
   \code{\link{mosaicplot}}
-  \code{\link{plot.survfit}}
+  \code{\link[survival]{plot.survfit}}
 }
 \examples{
 

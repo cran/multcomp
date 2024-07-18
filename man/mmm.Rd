@@ -56,7 +56,7 @@ mlf(...)
 
 \references{
   
-  Christian Bressen Pipper, Christian Ritz and Hans Bisgaard (2012),
+  Christian Bressen Pipper, Christian Ritz and Hans Bisgaard (2011),
   A Versatile Method for Confirmatory Evaluation of the Effects 
   of a Covariate in Multiple Models,
   \emph{Journal of the Royal Statistical Society, 
