@@ -168,7 +168,7 @@ univariate_calpha(...)
 
   ### a grid of speeds
   speeds <- seq(from = min(cars$speed), to = max(cars$speed), 
-                length = 10)
+                length.out = 10)
 
   ### linear hypotheses: 10 selected points on the regression line != 0
   K <- cbind(1, speeds)                                                        

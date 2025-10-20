@@ -30,7 +30,7 @@ if (require("sandwich")) {
     ### heteroscedasticity by using a heteroscedastic consistent 
     ### covariance estimation
     amod <- aov(FA ~ PE, data = fattyacid)
-    amod_glht <- glht(amod, mcp(PE = "Tukey"), vcov = vcovHC)
+    amod_glht <- glht(amod, mcp(PE = "Tukey"), vcov. = vcovHC)
     summary(amod_glht)
 
     ### simultaneous confidence intervals for the differences of 

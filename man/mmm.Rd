@@ -119,7 +119,7 @@ if (require("SimComp")) {
     ### use sandwich variance matrix
     g <- glht(mmm(Thromb = m1, ADP = m2, TRAP = m3),
               mlf(mcp(Group = "Dunnett")), 
-              alternative = "greater", vcov = sandwich)
+              alternative = "greater", vcov. = sandwich)
     summary(g)
     confint(g)
 }
@@ -241,7 +241,7 @@ summary(glht(mmm(m1 = m1, m2 = m2),
 
 ### use sandwich covariance matrix
 summary(glht(mmm(m1 = m1, m2 = m2), 
-             mlf("groupB = 0"), vcov = sandwich))
+             mlf("groupB = 0"), vcov. = sandwich))
 
 }
 \keyword{models}
