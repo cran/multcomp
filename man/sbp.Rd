@@ -16,9 +16,8 @@
     \item{\code{age}}{age in years}
   }
 }
-\source{
-  D. G. Kleinbaum, L. L. Kupper, K. E. Muller, A. Nizam, A. (1998),
-  \emph{Applied Regression Analysis and Other Multivariable Methods},
-  Duxbury Press, North Scituate, MA.
+\details{
+Data were obtained from \bibcitet{multcomp::kleinbaum1998}.
 }
+\references{\bibshow{*}}
 \keyword{datasets}

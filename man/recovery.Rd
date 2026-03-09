@@ -21,16 +21,11 @@
   body heat following a surgical procedure. Four types of blankets
   were tried on surgical patients with the aim of comparing the
   recovery time of patients. One of the blanket was a standard blanket
-  that had been in use already in various hospitals. 
+  that had been in use already in various hospitals. Data were published by
+  \bibcitet{multcomp::westfall1999}, page 66.
 
 }
-\source{
-
-  P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
-  \emph{Multiple Comparisons and Multiple Tests Using the SAS System}.
-  Cary, NC: SAS Institute Inc., page 66.
-
-}
+\references{\bibshow{*}}
 \examples{
 
   ### set up one-way ANOVA

@@ -30,7 +30,8 @@
 \details{
   This function extracts all the information from \code{glht},
   \code{summary.glht} or \code{confint.glht} objects that is required
-  to create a compact letter display of all pair-wise comparisons.
+  to create a compact letter display of all pair-wise comparisons
+  \bibcitep{multcomp::piepho2004}.
   In case the contrast matrix is not of type \code{"Tukey"}, an error
   is issued. In case of \code{confint.glht} objects, a pair-wise comparison
   is termed significant whenever a particular confidence interval contains 0.
@@ -63,11 +64,7 @@
     hyphenated names that identify pair-wise comparisons.
   }
 }
-\references{
-  Hans-Peter Piepho (2004), An Algorithm for a Letter-Based
-  Representation of All-Pairwise Comparisons, \emph{Journal of
-  Computational and Graphical Statistics}, \bold{13}(2), 456--466.
-}
+\references{\bibshow{*}}
 \seealso{
   \code{\link{glht}}
   \code{\link{plot.cld}}

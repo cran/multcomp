@@ -1,7 +1,7 @@
 
-R version 4.3.0 (2023-04-21) -- "Already Tomorrow"
-Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2026-03-09 r89580) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -313,9 +313,10 @@ Loading required package: nlme
 + coef(glht(m2a, linfct = mcp(tension = "Tukey"))),
 + coef(glht(m2b, linfct = mcp(tension = "Tukey")))))
 > 
-> library("MASS")
-> xdf <- data.frame(y = gl(3, 10, ordered = TRUE), grp = sample(gl(3, 10)))
-> glht(polr(y ~ grp, data = xdf), mcp(grp = "Dunnett"))
+> if (requireNamespace("MASS")) {
++     xdf <- data.frame(y = gl(3, 10, ordered = TRUE), grp = sample(gl(3, 10)))
++     print(glht(polr(y ~ grp, data = xdf), mcp(grp = "Dunnett")))
++ }
 
 Re-fitting to get Hessian
 
@@ -442,4 +443,4 @@ $alternative
 > 
 > proc.time()
    user  system elapsed 
-  1.164   0.064   1.224 
+  0.990   0.052   1.037 

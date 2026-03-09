@@ -1,7 +1,7 @@
 
-R version 4.0.2 (2020-06-22) -- "Taking Off Again"
-Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2026-03-09 r89580) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -16,9 +16,9 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > 
-> library("survival")
 > library("multcomp")
 Loading required package: mvtnorm
+Loading required package: survival
 Loading required package: TH.data
 Loading required package: MASS
 
@@ -30,12 +30,20 @@ The following object is masked from 'package:MASS':
 
 > set.seed(29)
 > 
-> bladder1 <- bladder[bladder$enum < 5, ] 
-> bladder1$number <- as.factor(bladder1$number)
-> 
-> cm <- coxph(Surv(stop, event) ~ rx + size + number + strata(enum) + 
+> if (requireNamespace("survival")) {
++ 
++ bladder1 <- bladder[bladder$enum < 5, ] 
++ bladder1$number <- as.factor(bladder1$number)
++ 
++ cm <- coxph(Surv(stop, event) ~ rx + size + number + strata(enum) + 
 +             cluster(id), data = bladder1)
-> summary(glht(cm, mcp(number = "Dunnett")))
++ print(summary(glht(cm, mcp(number = "Dunnett"))))
++ 
++ wm <- survreg(Surv(stop, event) ~ rx + size + number + strata(enum) + 
++               cluster(id), data = bladder1)
++ print(summary(glht(wm, mcp(number = "Dunnett"))))
++ 
++ }
 
 	 Simultaneous Tests for General Linear Hypotheses
 
@@ -57,10 +65,6 @@ Linear Hypotheses:
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Adjusted p values reported -- single-step method)
 
-> 
-> wm <- survreg(Surv(stop, event) ~ rx + size + number + strata(enum) + 
-+               cluster(id), data = bladder1)
-> summary(glht(wm, mcp(number = "Dunnett")))
 
 	 Simultaneous Tests for General Linear Hypotheses
 
@@ -83,7 +87,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Adjusted p values reported -- single-step method)
 
 > 
-> 
 > proc.time()
    user  system elapsed 
-  1.208   0.079   1.282 
+  0.565   0.043   0.605 

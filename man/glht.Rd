@@ -120,8 +120,8 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
   version 1.0-0 and higher generates comparisons for the main effects
   only, ignoring covariates and interactions (older versions
   automatically averaged over interaction terms). A warning is given. We refer to
-  Hsu (1996), Chapter 7, and Searle (1971), Chapter 7.3, 
-  for further discussions and examples on this
+  \bibcitet{multcomp::hsu1996}, Chapter 7, and
+  \bibcitet{multcomp::searle1971}, Chapter 7.3, for further discussions and examples on this
   issue.
 
   \code{glht} extracts the number of degrees of freedom
@@ -141,7 +141,8 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
   and \code{\link{confint.glht}} methods, respectively.
 
   A more detailed description of the underlying methodology is
-  available from Hothorn et al. (2008) and Bretz et al. (2010).
+  available from \bibcitet{hothorn2008b} and 
+  \bibcitet{Bretz+Hothorn+Westfall_2010}.
 
 }
 \value{
@@ -164,23 +165,7 @@ mcp(..., interaction_average = FALSE, covariate_average = FALSE)
   storing the names of the factors under test.
 
 }
-\references{
-
-    Frank Bretz, Torsten Hothorn and Peter Westfall (2010),
-    \emph{Multiple Comparisons Using R}, CRC Press, Boca Raton.
-
-    Shayle R. Searle (1971), \emph{Linear Models}.
-    John Wiley & Sons, New York.
-
-    Jason C. Hsu (1996), \emph{Multiple Comparisons}.
-    Chapman & Hall, London.
-
-    Torsten Hothorn, Frank Bretz and Peter Westfall (2008),
-    Simultaneous Inference in General Parametric Models.
-    \emph{Biometrical Journal}, \bold{50}(3), 346--363;
-    See \code{vignette("generalsiminf", package = "multcomp")}.
-
-}
+\references{\bibshow{*}}
 \examples{
 
   ### multiple linear model, swiss data

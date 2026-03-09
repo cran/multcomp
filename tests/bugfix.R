@@ -144,9 +144,10 @@ stopifnot(all.equal(
 coef(glht(m2a, linfct = mcp(tension = "Tukey"))),
 coef(glht(m2b, linfct = mcp(tension = "Tukey")))))
 
-library("MASS")
-xdf <- data.frame(y = gl(3, 10, ordered = TRUE), grp = sample(gl(3, 10)))
-glht(polr(y ~ grp, data = xdf), mcp(grp = "Dunnett"))
+if (requireNamespace("MASS")) {
+    xdf <- data.frame(y = gl(3, 10, ordered = TRUE), grp = sample(gl(3, 10)))
+    print(glht(polr(y ~ grp, data = xdf), mcp(grp = "Dunnett")))
+}
 
 ### interactions of two factors
 dat <- expand.grid(f = gl(2, 3), f2 = gl(3, 2))

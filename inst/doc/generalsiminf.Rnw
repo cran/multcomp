@@ -4,6 +4,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{Sweave}
 \usepackage{a4wide}
+\usepackage{hyperref}
 %%\usepackage[lists,heads]{endfloat}
 
 \input{header}
@@ -28,7 +29,7 @@ in General Parametric Models
 Biometrical Journal, Volume 50, Number 3, 346--363.                                      
 Copyright \copyright{} 2008 WILEY-VCH Verlag GmbH \& Co. KGaA, Weinheim;
 available online
-\url{http://www.biometrical-journal.com}.}}
+\url{https://doi.org/10.1002/bimj.200810425}.}}
 \author{\textbf{Torsten Hothorn} \\
 %EndAName
 Institut f{\"u}r Statistik \\
@@ -968,7 +969,7 @@ extended tumor classification scheme incorporating molecular subgroups of the di
 obtained by gene expression profiling. The analyses reported here
 are based on clinical data only (thus omitting available gene expression data) 
 published online at 
-\url{http://www.ncbi.nlm.nih.gov/geo}, accession number GSE425. The
+\url{https://www.ncbi.nlm.nih.gov/geo/}, accession number GSE425. The
 overall survival time and censoring indicator as well as the   
 clinical variables age, sex, lactic dehydrogenase level (LDH), 
 white blood cell count (WBC), and treatment group are taken from Supplementary
@@ -1096,13 +1097,13 @@ At first, the presented approach helps to formulate simultaneous inference
 procedures in situations that were previously hard to deal with and, at
 second, a flexible open-source implementation offers tools to actually
 perform such procedures rather easily. With the \Rpackage{multcomp} package,
-freely available from \url{http://CRAN.R-project.org}, honest simultaneous
+freely available from \url{https://CRAN.R-project.org}, honest simultaneous
 inference is only two simple \RR{} commands away. The analyses shown
 in Section~\ref{illustrations} are reproducible via the \Rpackage{multcomp}
 package vignette ``\Rcmd{generalsiminf}''.
 
 
-\bibliographystyle{plainnat}
-\bibliography{references}
+\bibliographystyle{jss}
+\bibliography{\Sexpr{gsub("\\.bib", "", system.file("REFERENCES.bib", package = "multcomp"))}}
 
 \end{document}

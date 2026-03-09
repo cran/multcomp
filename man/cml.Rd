@@ -21,17 +21,9 @@
 }
 \details{
 The data are simulated according to structure of the data by the German CML 
-Study Group used in Hehlmann (1994).}
-
-\source{
-
-  R. Hehlmann, H. Heimpel, J. Hasford, H.J. Kolb, H. Pralle, D.K. Hossfeld, 
-  W. Queisser, H. Loeffler, A. Hochhaus, B. Heinze (1994), Randomized 
-  comparison of interferon-alpha with busulfan and hydroxyurea in chronic 
-  myelogenous leukemia. The German CML study group. \emph{Blood}
-  \bold{84}(12):4064-4077.
-
+Study Group used in \bibcitet{hehlmann1994}.
 }
+\references{\bibshow{*}}
 \examples{
 
 if (require("coxme")) {

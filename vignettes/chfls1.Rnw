@@ -14,6 +14,7 @@
 %%\usepackage[justification=justified,singlelinecheck=false,labe lfont={bf,small,sf},font={small,sf},
 %%aboveskip=0em,belowskip=0em]{caption}
 %%\renewcommand{\captionfont}{\small}
+\usepackage{hyperref}
 \title{Supplementary Material for \emph{A re-evaluation of the model selection 
        procedure in Pollet \& Nettle (2009)}}
 \author{Esther Herberich, Torsten Hothorn, Daniel Nettle \& Thomas Pollet}
@@ -324,7 +325,7 @@ orgAtmp <- orgA[, c("orgasm", "AincomeSD", "AheightSD", "RAdurationSD",
                  "RageSD", "edudiffSD", "wealthdiffSD", "Redu", "Rhealth",
                  "Rhappy", "Region")]
 cc <- complete.cases(orgAtmp)
-summary(cc)
+# summary(cc)
 orgAcc <- subset(orgA, cc)
 
 step_AIC <- stepAIC(polr(orgasm ~ AincomeSD + AheightSD + RAdurationSD + RageSD + edudiffSD 
@@ -466,5 +467,5 @@ frequent orgasms with cumulative odds ratios of \Sexpr{formatC(exp(s$test$coef[5
 
 
 \bibliographystyle{jss}
-\bibliography{chfls1}
+\bibliography{\Sexpr{gsub("\\.bib", "", system.file("REFERENCES.bib", package = "multcomp"))}}
 \end{document}

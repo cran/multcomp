@@ -19,13 +19,9 @@ Measurements on four endpoints in a two-arm clinical trial.
   }
 }
 \details{
-The data (from Westfall et al., 1999) contain measurements of patients
+The data, from \bibcitet{multcomp::westfall1999}, contain measurements of patients
 in treatment (\code{Drug}) and control (\code{Placebo}) groups, with four
 outcome variables.
 }
-\source{
-  P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
-  \emph{Multiple Comparisons and Multiple Tests Using the SAS System}.
-  Cary, NC: SAS Institute Inc.
-}
+\references{\bibshow{*}}
 \keyword{datasets}

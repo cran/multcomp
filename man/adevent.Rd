@@ -43,13 +43,9 @@ Indicators of 28 adverse events in a two-arm clinical trial.
   }
 }
 \details{
-The data is provided by Westfall et al. (1999, p. 242) and contains binary
+The data is provided by \bibcitet{multcomp::westfall1999}, page 242, and contains binary
 indicators of 28 adverse events (\code{E1},..., \code{E28}) for
 two arms (\code{group}).
 }
-\source{
-  P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
-  \emph{Multiple Comparisons and Multiple Tests Using the SAS System}.
-  Cary, NC: SAS Institute Inc.
-}
+\references{\bibshow{*}}
 \keyword{datasets}

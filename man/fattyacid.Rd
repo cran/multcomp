@@ -15,12 +15,10 @@
 }
 \details{
 The data give the fatty acid content for different putative ecotypes of Bacillus simplex. 
-Variances of the values of fatty acid are heterogeneous among the putative ecotypes.}
-\source{
-J. Sikorski, E. Brambilla, R. M. Kroppenstedt, B. J. Tindal (2008), The temperature 
-adaptive fatty acid content in Bacillus simplex strains from 
-''Evolution Canyon``, Israel. \emph{Microbiology} \bold{154}, 2416-2426.
+Variances of the values of fatty acid are heterogeneous among the putative ecotypes
+\bibcitep{multcomp::sikorski2008}.
 }
+\references{\bibshow{*}}
 \examples{
 
 if (require("sandwich")) {

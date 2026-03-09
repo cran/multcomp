@@ -18,19 +18,13 @@ contrMat(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
 }
 \details{
   Computes the requested matrix of contrasts for comparisons of mean levels.
+  The general concept and specific choices are discussed by \bibcitet{hothorn2008b} and 
+  \bibcitet{Bretz+Hothorn+Westfall_2010}.
 }
 \value{
   The matrix of contrasts with appropriate row names is returned. 
 }
-\references{
-  Frank Bretz, Torsten Hothorn and Peter Westfall (2010),
-  \emph{Multiple Comparisons Using R}, CRC Press, Boca Raton.
-
-
-  Frank Bretz, Alan Genz and Ludwig A. Hothorn (2001), On the numerical 
-  availability of multiple comparison procedures. \emph{Biometrical Journal},
-  \bold{43}(5), 645--656.
-} 
+\references{\bibshow{*}}
 \examples{
  n <- c(10,20,30,40)
  names(n) <- paste("group", 1:4, sep="")

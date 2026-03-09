@@ -22,16 +22,11 @@
   four times a day (\code{4times}). In addition, two competing drugs
   were used as control group (\code{drugD} and \code{drugE}). The purpose of 
   the study was to find which of the formulations, if any, is efficacious and how
-  these formulations compare with the existing drugs.
+  these formulations compare with the existing drugs. The data were
+  published by \bibcitet{multcomp::westfall1999}, page 153.
 
 }
-\source{
-
-  P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
-  \emph{Multiple Comparisons and Multiple Tests Using the SAS System}.
-  Cary, NC: SAS Institute Inc., page 153.
-
-}
+\references{\bibshow{*}}
 \examples{
 
   ### adjusted p-values for all-pairwise comparisons in a one-way layout 

@@ -46,32 +46,21 @@ mlf(...)
 
 \value{
 
+  The procedure implements multiple marginal models as introduced by
+  \bibcitet{multcomp::pipper2011}.
+
   An object of class \code{mmm} or \code{mlf}, basically a named list of the
   arguments with a special method for \code{\link{glht}} being available for
   the latter.  \code{vcov}, \code{\link[sandwich]{estfun}}, and
   \code{\link[sandwich]{bread}} methods are available for objects of class
   \code{mmm}.
-
 }
-
-\references{
-  
-  Christian Bressen Pipper, Christian Ritz and Hans Bisgaard (2011),
-  A Versatile Method for Confirmatory Evaluation of the Effects 
-  of a Covariate in Multiple Models,
-  \emph{Journal of the Royal Statistical Society, 
-  Series C (Applied Statistics)}, \bold{61}, 315--326.
-
-}
-
+\references{\bibshow{*}}
 \author{
-
   Code for the computation of the joint covariance and 
   sandwich matrices was contributed by Christian Ritz and 
   Christian B. Pipper.
-
 }
-
 \examples{
 
 ### replicate analysis of Hasler & Hothorn (2011), 

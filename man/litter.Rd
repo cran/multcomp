@@ -21,20 +21,11 @@
 
   Pregnant mice were divided into four groups and the compound in four
   different doses was administered during pregnancy. Their litters
-  were evaluated for birth weights.
+  were evaluated for birth weights, see \bibcitet{multcomp::westfall1999},
+  page 109, and \bibcitet{multcomp::westfall1997}.
 
 }
-\source{
-
-  P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
-  \emph{Multiple Comparisons and Multiple Tests Using the SAS System}.
-  Cary, NC: SAS Institute Inc., page 109.
-
-  P. H. Westfall (1997). Multiple Testing of General Contrasts Using
-  Logical Constraints and Correlations. \emph{Journal of the American
-  Statistical Association}, \bold{92}(437), 299--306.
-
-}
+\references{\bibshow{*}}
 \examples{
 
   ### fit ANCOVA model to data

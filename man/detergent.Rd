@@ -21,18 +21,11 @@
   Plates were washed with five detergent varieties, in ten blocks. A complete
   design would have 50 combinations, here only three detergent varieties 
   in each block were applied in a balanced incomplete block design. Note that
-  there are six observations taken at each detergent level.
+  there are six observations taken at each detergent level. The data were
+  published by \bibcitet{multcomp::westfall1999}.
 
 }
-\source{
-
-  H. Scheffe (1959). \emph{The Analysis of Variance}. 
-  New York: John Wiley & Sons, page 189.
-
-  P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
-  \emph{Multiple Comparisons and Multiple Tests Using the SAS System}.
-  Cary, NC: SAS Institute Inc., page 189.
-}
+\references{\bibshow{*}}
 \examples{
 
   ### set up two-way ANOVA without interactions

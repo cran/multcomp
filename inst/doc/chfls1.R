@@ -142,7 +142,7 @@ orgAtmp <- orgA[, c("orgasm", "AincomeSD", "AheightSD", "RAdurationSD",
                  "RageSD", "edudiffSD", "wealthdiffSD", "Redu", "Rhealth",
                  "Rhappy", "Region")]
 cc <- complete.cases(orgAtmp)
-summary(cc)
+# summary(cc)
 orgAcc <- subset(orgA, cc)
 
 step_AIC <- stepAIC(polr(orgasm ~ AincomeSD + AheightSD + RAdurationSD + RageSD + edudiffSD 

@@ -1,5 +1,6 @@
 \name{trees513}
 \alias{trees513}
+\encoding{utf-8}
 \docType{data}
 \title{ Frankonian Tree Damage Data }
 \description{
@@ -35,25 +36,15 @@ the implementation or modification of deer management plans are made.
 The survey takes place in all 756 game management districts
 (`Hegegemeinschaften') in Bavaria. The data given here are from 
 the game management district number 513 `Unterer Aischgrund'
-(located in Frankonia between Erlangen and H\"ochstadt) in 2006. The data
+(located in Frankonia between Erlangen and Höchstadt) in 2006. The data
 of 2700 trees include the species and a binary
 variable indicating whether or not the tree suffers from damage caused
 by deer browsing.
 
-}
-\source{
-  
-   Bayerisches Staatsministerium fuer Landwirtschaft und Forsten (2006),
-   Forstliche Gutachten zur Situation der Waldverjuengung 2006.
-   \url{https://www.stmelf.bayern.de/wald/}
-
-   Torsten Hothorn, Frank Bretz and Peter Westfall (2008),
-   Simultaneous Inference in General Parametric Models.   
-   \emph{Biometrical Journal}, \bold{50}(3), 346--363;
-   See \code{vignette("generalsiminf", package = "multcomp")}.
-
+Data and analysis are presented by \bibcitet{hothorn2008b}.
 
 }
+\references{\bibshow{*}}
 \examples{
 
   summary(trees513)

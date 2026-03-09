@@ -19,15 +19,10 @@
   The data are from an experiment designed to study the effect of temperature
   (\code{temp}) and environment (\code{envir}) on waste output in a manufactoring plant.
   Two replicate measurements were taken at each temperature / environment combination.
+  Data were obtained from \bibcitet{multcomp::westfall1999}, page 177.
 
 }
-\source{
-
-  P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
-  \emph{Multiple Comparisons and Multiple Tests Using the SAS System}.
-  Cary, NC: SAS Institute Inc., page 177.
-
-}
+\references{\bibshow{*}}
 \examples{
 
   ### set up two-way ANOVA with interactions
