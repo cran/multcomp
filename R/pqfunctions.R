@@ -1,5 +1,5 @@
 
-# $Id: pqfunctions.R 481 2021-08-23 15:09:18Z thothorn $
+# $Id$
 
 pqglht <- function(object) 
 {

@@ -1,5 +1,5 @@
 
-# $Id: methods.R 431 2016-02-03 10:58:04Z thothorn $
+# $Id$
 
 ### methods for `glht' objects
 coef.glht <- function(object, rhs = FALSE, ...) 

@@ -1,5 +1,5 @@
 
-# $Id: print.R 508 2025-09-01 06:49:12Z thothorn $
+# $Id$
 
 ### print methods
 print.glht <- function(x, digits = max(3, getOption("digits") - 3), ...) 

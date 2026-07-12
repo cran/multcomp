@@ -1,5 +1,5 @@
 
-# $Id: parm.R 243 2008-07-22 16:33:38Z thothorn $
+# $Id$
 
 parm <- function(coef, vcov, df = 0) {
 

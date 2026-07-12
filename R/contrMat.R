@@ -1,4 +1,4 @@
-# $Id: contrMat.R 454 2018-08-24 09:25:47Z thothorn $
+# $Id$
 
 contrMat <- function(n, type = c("Dunnett", "Tukey", "Sequen", "AVE",
                                  "Changepoint", "Williams", "Marcus",

@@ -1,5 +1,5 @@
 
-# $Id: helpers.R 494 2023-03-09 11:25:54Z thothorn $
+# $Id$
 
 ### model.matrix.coxph doesn't return contrasts etc.
 #model.matrix.coxph <- function(object, ...) {

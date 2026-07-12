@@ -242,3 +242,15 @@ plot(ci, xlab = "Probability of Damage Caused by Browsing", xlim = c(0, 1), main
      ylim = c(0.5, 6.5))
 
 
+###################################################
+### code chunk number 26: bib
+###################################################
+thisdir <- getwd()
+bibfile <- system.file("REFERENCES.bib", package = "multcomp")
+### bibfile may contain spaces LaTeX is unable to deal with on MacOS it seems
+if (file.copy(bibfile, to = thisdir, overwrite = TRUE)) {
+    bibfile <- "REFERENCES.bib"
+} else {
+    ### hope for the best
+    bibfile <- file.path("..", "inst", "REFERENCES.bib")
+}

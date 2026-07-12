@@ -1,5 +1,5 @@
 
-# $Id: plot.R 351 2013-05-17 13:08:54Z thothorn $
+# $Id$
 
 ### uhhh -- mainly copy and paste from plot.TukeyHSD
 ### with modifications by Richard M. Heiberger <rmh@temple.edu>

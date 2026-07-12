@@ -246,3 +246,15 @@ cell <- lm(breaks ~ tw - 1, data = warpbreaks)
 summary(glht(cell, linfct = K))
 
 
+###################################################
+### code chunk number 34: bib
+###################################################
+thisdir <- getwd()
+bibfile <- system.file("REFERENCES.bib", package = "multcomp")
+### bibfile may contain spaces LaTeX is unable to deal with on MacOS it seems
+if (file.copy(bibfile, to = thisdir, overwrite = TRUE)) {
+    bibfile <- "REFERENCES.bib"
+} else {
+    ### hope for the best
+    bibfile <- file.path("..", "inst", "REFERENCES.bib")
+}

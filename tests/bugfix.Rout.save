@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-03-09 r89580) -- "Unsuffered Consequences"
+R version 4.6.1 (2026-06-24) -- "Happy Hop"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -243,7 +243,7 @@ Error in mcp2matrix(model, linfct = linfct) :
 + 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
 + 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
 + 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
-+ 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L), .Label = c("1", 
++ 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L), levels = c("1", 
 + "2", "3"), class = "factor"), age = c(39L, 40L, 41L, 41L, 45L, 
 + 49L, 52L, 47L, 61L, 65L, 58L, 59L, 29L, 29L, 33L, 32L, 31L, 29L, 
 + 29L, 30L, 21L, 28L, 23L, 35L, 38L, 38L, 43L, 39L, 38L, 42L, 43L, 
@@ -258,7 +258,7 @@ Error in mcp2matrix(model, linfct = linfct) :
 + 5.82, 4.77, 5.71, 4.47, 4.55, 4.61, 5.86, 5.2, 4.44, 5.52, 4.97, 
 + 4.99, 4.89, 4.09, 4.24, 3.88, 4.85, 4.79, 4.36, 4.02, 3.77, 4.22, 
 + 4.94, 4.04, 4.51, 4.06, 4.02, 4.99, 3.86, 4.68, 4.74, 3.76, 3.98, 
-+ 5, 3.31, 3.11, 4.76, 3.95, 4.6, 4.83, 3.18, 3.03)), .Names = c("gr", 
++ 5, 3.31, 3.11, 4.76, 3.95, 4.6, 4.83, 3.18, 3.03)), names = c("gr", 
 + "age", "y"), row.names = c(NA, -84L), class = "data.frame")
 > 
 > amod <- aov(y ~ gr + age, data = tmp)
@@ -443,4 +443,4 @@ $alternative
 > 
 > proc.time()
    user  system elapsed 
-  0.990   0.052   1.037 
+  0.951   0.086   1.024 

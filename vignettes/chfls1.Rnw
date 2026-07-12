@@ -15,6 +15,11 @@
 %%aboveskip=0em,belowskip=0em]{caption}
 %%\renewcommand{\captionfont}{\small}
 \usepackage{hyperref}
+
+%% hyperlinked dois in jss refstyle
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{\normalfont\texttt{\@doi{#1}}}}
+
+
 \title{Supplementary Material for \emph{A re-evaluation of the model selection 
        procedure in Pollet \& Nettle (2009)}}
 \author{Esther Herberich, Torsten Hothorn, Daniel Nettle \& Thomas Pollet}
@@ -467,5 +472,19 @@ frequent orgasms with cumulative odds ratios of \Sexpr{formatC(exp(s$test$coef[5
 
 
 \bibliographystyle{jss}
-\bibliography{\Sexpr{gsub("\\.bib", "", system.file("REFERENCES.bib", package = "multcomp"))}}
+
+<<bib, echo = FALSE>>=
+thisdir <- getwd()
+bibfile <- system.file("REFERENCES.bib", package = "multcomp")
+### bibfile may contain spaces LaTeX is unable to deal with on MacOS it seems
+if (file.copy(bibfile, to = thisdir, overwrite = TRUE)) {
+    bibfile <- "REFERENCES.bib"
+} else {
+    ### hope for the best
+    bibfile <- file.path("..", "inst", "REFERENCES.bib")
+}
+@
+\bibliography{\Sexpr{bibfile}}
+
+
 \end{document}

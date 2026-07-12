@@ -37,6 +37,8 @@
 \newcommand{\Rlevel}[1]{\texttt{#1}}
 \newcommand{\file}[1]{\hbox{\rm\texttt{#1}}}
 
+%% hyperlinked dois in jss refstyle
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{\normalfont\texttt{\@doi{#1}}}}
 
 \begin{document}
 
@@ -350,7 +352,20 @@ The analyses shown in \cite{Westfall1999} can be reproduced using \Rpackage{mult
 by running the \RR{} transcript file in \file{inst/MCMT}.
 
 \bibliographystyle{jss}
-\bibliography{\Sexpr{gsub("\\.bib", "", system.file("REFERENCES.bib", package = "multcomp"))}}
+
+<<bib, echo = FALSE>>=
+thisdir <- getwd()
+bibfile <- system.file("REFERENCES.bib", package = "multcomp")
+### bibfile may contain spaces LaTeX is unable to deal with on MacOS it seems
+if (file.copy(bibfile, to = thisdir, overwrite = TRUE)) {
+    bibfile <- "REFERENCES.bib"
+} else {
+    ### hope for the best
+    bibfile <- file.path("..", "inst", "REFERENCES.bib")
+}
+@
+\bibliography{\Sexpr{bibfile}}
+
 
 \end{document}
 
