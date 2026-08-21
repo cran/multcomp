@@ -13,6 +13,7 @@
   linear mixed effects models, and survival models.
 }
 \usage{
+glht(model, linfct, ...)
 \method{glht}{matrix}(model, linfct, 
     alternative = c("two.sided", "less", "greater"), 
     rhs = 0, ...)

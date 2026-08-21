@@ -1,5 +1,5 @@
 
-R version 4.6.1 (2026-06-24) -- "Happy Hop"
+R Under development (unstable) (2026-08-20 r90437) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -30,10 +30,9 @@ The following object is masked from 'package:MASS':
 
     geyser
 
+> options(warn = -1L) ### turn off warnings about buggy RNGs
 > RNGversion("3.5.2")
-Warning message:
-In RNGkind("Mersenne-Twister", "Inversion", "Rounding") :
-  non-uniform 'Rounding' sampler used
+> options(warn = 0L)
 > set.seed(290875)
 > 
 > ### mcp didn't accept objects of class `contrMat'
@@ -443,4 +442,4 @@ $alternative
 > 
 > proc.time()
    user  system elapsed 
-  0.951   0.086   1.024 
+  2.186   0.086   1.084 

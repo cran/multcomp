@@ -1,5 +1,5 @@
 
-R version 4.6.1 (2026-06-24) -- "Happy Hop"
+R Under development (unstable) (2026-08-20 r90437) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -223,4 +223,4 @@ modely2.2 == 0   0.2412     0.4015   0.601    0.548
 > 
 > proc.time()
    user  system elapsed 
-  0.599   0.070   0.657 
+  1.818   0.067   0.687 

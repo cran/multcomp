@@ -198,6 +198,8 @@ adjusted <- function(type = c("single-step", "Shaffer", "Westfall", "free", p.ad
                             "less" = RET$tstat,
                             "greater" = -RET$tstat,
                             "two.sided" = -abs(RET$tstat))
+            ### make order() platform independent
+            tstat <- signif(tstat, digits = 10L)
             C <- object$linfct
             Corder <- C[order(tstat), , drop = FALSE]
             Cm <- m[order(tstat)]

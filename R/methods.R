@@ -65,8 +65,8 @@ confint.glht <- function(object, parm, level = 0.95, calpha = adjusted_calpha(),
 
 cftest <- function(model, parm, test = univariate(), ...) {
     if (missing(parm))
-        return(summary(glht(model), test = test, ...))
-    cf <- coef(model)
+        return(summary(glht(model, ...), test = test))
+    cf <- coef(glht(model, ...)) ### uses coef. supplied via ...
     if (is.character(parm)) {
         iparm <- match(parm, names(cf))
     } else {
@@ -77,5 +77,5 @@ cftest <- function(model, parm, test = univariate(), ...) {
              collapse = ","))
     K <- diag(length(cf))[iparm, , drop = FALSE]
     rownames(K) <- names(cf)[iparm]
-    summary(glht(model, linfct = K), test = test, ...)
+    summary(glht(model, linfct = K, ...), test = test)
 }

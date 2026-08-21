@@ -10,6 +10,7 @@
   and plot compact letter displays of all pair-wise comparisons.
 }
 \usage{
+cld(object, ...)
 \method{cld}{summary.glht}(object, level = 0.05, decreasing = FALSE, ...)
 \method{cld}{glht}(object, level = 0.05, decreasing = FALSE, ...)
 \method{cld}{confint.glht}(object, decreasing = FALSE, ...)

@@ -2,7 +2,9 @@
 options(digits = 4)
 
 library("multcomp")
+options(warn = -1L) ### turn off warnings about buggy RNGs
 RNGversion("3.5.2")
+options(warn = 0L)
 set.seed(290875)
 
 ### mcp didn't accept objects of class `contrMat'
